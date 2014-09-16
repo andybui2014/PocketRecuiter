@@ -1,0 +1,282 @@
+/* 
+    Document   : main
+    Created on : Jun 23, 2012, 12:14:48 PM
+    Author     : haunguyen
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body {
+    margin:0px;
+    margin-top:10px;
+    margin-bottom:5px;
+    font-family: Arial,Verdana,Helvetica, sans-serif;
+    font-size:11px;
+    background-color:#999999;
+    color:#230101;
+}
+
+.footer {
+    color: #897D81;
+    font-size: 10px;
+    padding-bottom: 10px;
+    padding-top: 15px;
+    text-align: right;
+}
+
+.containerTable {
+    background-color: #FFFFFF;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 98%;
+}
+
+/* Start Confirm Box */
+.layercenter .xboxcontent{overflow:hidden;}
+.layercenter .btnCont{width:111px;margin:0 auto}
+.layercenter .btnCont a{margin:0 5px;}    
+.layercenter p{padding:20px;}
+/* End Confirm Box */
+
+/* Start Confirm Box */
+.layercenterLoading .xboxcontent{overflow:hidden;}
+.layercenterLoading .btnCont{width:111px;margin:0 auto}
+.layercenterLoading .btnCont a{margin:0 5px;}    
+.layercenterLoading p{padding:20px;}
+.confirmLayer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 5px solid #999999;
+    border-radius: 5px 5px 5px 5px;
+    color: #000000;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    max-width: 600px;
+    min-width: 300px;
+}
+#popup_title {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("../../standard/img/title.gif") repeat-x scroll center top #CCCCCC;
+    border-color: #FFFFFF #FFFFFF #999999;
+    border-style: solid;
+    border-width: 1px;
+    color: #666666;
+    cursor: default;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.75em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+/* End Confirm Box */
+
+.validate-error
+{
+    color: red;
+    font-weight: bold;
+}
+
+a {
+    color: #2A4100;
+    text-decoration: underline;
+}
+
+.information
+{
+    font-weight: bold;
+    text-align: left;
+}
+
+.informationlabel
+{
+    text-align: right;
+}
+
+input[type="button"]
+{
+    background-color:#2a4100;
+    color:#fff; border:0px;
+    padding:2px 8px;
+    cursor:pointer;
+}
+
+.layercenter input[type="button"]
+{
+    background-image: url("../../standard/img/title.gif");
+    color:#000; border:0px;
+    padding:2px 8px;
+    cursor:pointer;
+}
+.layercenter .message 
+{
+    text-align: center;
+}
+
+.splitline {
+    border-bottom: 1px solid #CCCCCC;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.activemenuitem
+{
+    font-size:17px;
+    font-weight:bold;
+    color:#797B78; 
+    /*padding-left:15px; */   
+}
+
+.menuitem
+{
+    font-size:17px;
+    font-weight:bold;
+    color:#C4C4C2;     
+}
+
+.sectionsList td {
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.headerRow {
+    background-color: #666666;
+    border-left: 1px solid #999999;
+    border-right: 1px solid #999999;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.headerRow td {
+    border-bottom: 1px solid #5D0303;
+    border-left: 1px solid #999999;
+    border-top: 1px solid #A0A0A0;
+}
+
+.headerRow a {
+
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.listingTable {
+    width: 100% !important;
+}
+
+.listingDiv {
+    border: 1px solid #CCCCCC;
+    width: 100% !important;
+}
+
+.listingTable td {
+    border-bottom: 1px solid #CCCCCC;
+    padding: 5px;
+}
+
+.paginationRow {
+    background-color: #EEEEEE;
+    border: medium none;
+    color: #2A4100;
+    padding-top: 5px;
+    border: 1px solid #CCCCCC;
+    width: 100% !important;
+}
+
+.pagingtable td{
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.paging-right {
+    font-weight: bold;
+}
+
+.activemenuitem
+{
+}
+
+.menuitem
+{
+    cursor: pointer;
+}
+
+.title {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.headerRowtight {
+    background-color: #A3A3A3;
+    border-left: 1px solid #999999;
+    border-right: 1px solid #999999;
+    color: #000000;
+    font-weight: bold;
+}
+.ajaxLink
+{
+    cursor: pointer;
+    color: blue;
+    text-decoration:underline;
+}
+.sectionheader {
+    background-color: #666666;
+    border: 1px solid #000000;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 5px 0 10px;
+    padding: 5px;
+}
+.appsection {
+    border: 1px solid #999999;
+}
+/*.newpage_heading {
+    color: #FFFFFF;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 5px 0;
+    width: 845px;
+}     */
+.hiddenFrame
+{
+    display: none;
+}
+.newpage_heading {
+    color: #FFFFFF;
+    float: left;
+    font-size: 15px;
+    font-weight: bold;
+    /*padding: 5px 0;*/
+    width: 845px;
+}
+ol.tab {
+  /*background: url(../dot.gif) repeat-x left bottom; */
+  list-style: none;
+  font-size:15px;
+  margin: 0;
+  padding: 6px 0;
+  position: relative;
+
+}
+ol.tab li {
+  background: #FFFFFf;
+  border: 1px solid #D3DDED;
+  display: inline; 
+  color:green;
+ /* font-weight: bold; */
+  margin-right: 0px;
+  padding: 5px 10px; 
+}
+
+ol.tab li.active {
+  background: #FFF;
+  color: green;
+  border-bottom: 2px solid #FFF;
+  font-weight: bold;
+  padding: 5px 10px;
+}
