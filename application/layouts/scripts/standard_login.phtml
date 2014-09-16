@@ -27,11 +27,12 @@
 <body>
 <style>
     .modal-dialog-center {
-        margin-top: 20%;
+        margin-top: 10%;
         transform: translate(0, 50%) !important;
         -ms-transform: translate(0, 50%) !important; /* IE 9 */
         -webkit-transform: translate(0, 50%) !important; /* Safari and Chrome */
     }
+    #form-login .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="login-modal" data-keyboard="false" data-backdrop="static">
@@ -42,30 +43,26 @@
                 <h2 class="modal-title" id="myModalLabel">Sign In</h2>
             </div>
             <div class="modal-body login-modal">
-                <div id='social-icons-conatainer'>
-                    <div class='modal-body-left'>
-                        <div class="form-group">
-                            <input type="text" id="username" placeholder="Enter your name" value="" class="form-control login-field">
-                            <i class="fa fa-user login-field-icon"></i>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="password" id="login-pass" placeholder="Password" value="" class="form-control login-field">
-                            <i class="fa fa-lock login-field-icon"></i>
-                        </div>
-                        <p>
-                            <a href="#" class="login-link text-center">Forgot your password?</a>
-                        </p>
-                        <a href="#" class="btn btn-primary modal-login-btn"><strong> Sign In </strong></a>
-
-                    </div>
-
+                <form id="form-login" name="form-login">
+                <div id="login-message">
 
                 </div>
-                <div class="clearfix"></div>
-
+                <div>
+                    <div class='modal-body-left'>
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" placeholder="User Name" class="form-control login-field">
+                            <span class="message" id="username_message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" placeholder="Password" class="form-control login-field">
+                            <span class="message" id="password_message"></span>
+                        </div>
+                        <p><a href="#" class="login-link text-center">Forgot your password?</a></p>
+                        <button id="cmd-login" type="button" class="btn btn-primary modal-login-btn" data-loading-text="Loading...">Sign In</button>
+                    </div>
+                </div>
+                </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -106,7 +103,7 @@
 
 <div class="row">
     <p style="display:block;line-height: 70px; width:110%; text-align:center; top: 65%; position:absolute;">
-        <a href="#" data-toggle="modal" data-target="#login-modal"><img src="<?=URL_THEMES_MOBILE.'images/btn_login.png'?>" alt="" title="" style="height: 60px"/></a>
+        <a id="show-login" href="#" data-toggle="modal" data-target="#login-modal"><img src="<?=URL_THEMES_MOBILE.'images/btn_login.png'?>" alt="" title="" style="height: 60px"/></a>
     </p>
 </div>
 <!-- Put your page content here! -->
@@ -116,6 +113,7 @@
 
 <!-- Bootstrap Core JavaScript -->
 <script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
+<script src="<?=URL_THEMES_MOBILE.'js/mobile.login.js';?>"></script>
 
 </body>
 
