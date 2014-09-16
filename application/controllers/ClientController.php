@@ -24,4 +24,10 @@ class ClientController extends Application_Controller_Action
     {
         
     }
+    public function profileAction()
+    {
+        $this->render('profile');
+        
+    }
+     
 }
