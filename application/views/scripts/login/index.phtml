@@ -1,0 +1,51 @@
+<div style="padding:20px;">
+    Your account allows you to:
+    <ul>
+        <li> Create an application
+        <li> Access your personal information and grades
+    </ul>
+
+    If you don't have an account yet, you may <a href="index.php?_page=register">APPLY HERE</a>.
+</div>
+<center>
+    <div class="login_box">
+        <form name="frmLogin" id="frmLogin" action="<?= URL_BASE ?>login/do-login" method="post">
+            <table width="100%" border="0" align="center" cellpadding="4" cellspacing="0">
+                <tr>
+                    <td colspan="2">
+                        <div class="validate-error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="36%">
+                        <div align="right">Username:</div>
+                    </td>
+                    <td width="64%" style="padding-right: 20px;">
+                        <input name="username" type="text" id="username" value="" style="width: 100%;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div align="right">Password:</div>
+                    </td>
+                    <td  style="padding-right: 20px;">
+                        <input name="password" type="password"  id="password" style="width: 100%;"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <input type="button" class="btnType1 btnSubmit" name="Submit" value="Login" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        <a href="<?= URL_BASE . "login/forgotpassword" ?>">Forgot your password?</a>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</center>

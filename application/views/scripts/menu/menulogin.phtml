@@ -1,0 +1,19 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="height:100%; padding:0px; margin:0px;">
+    <tr style="padding:0px; margin:0px;">
+        <td style="vertical-align:top; text-align:right; padding:5px; margin:5px; font-style:italic;">
+            <span style="font-style:normal;"><b>School:</b></span>
+            <select>
+                <option>Advantages School Demo</option>
+            </select>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <div style="float:right; padding:5px; position:inherit;" >
+                <img id="imgarrow" src="<?= URL_THEMES . "img/icons/arrow_11.gif" ?>" />
+            </div>
+            <div style="float:right;" class="loginname">Help   |   <span style="color: #387D80;"><?= $this->loginuser['name']; ?></span>
+                <div>
+                    <div id="MyDiv" style="float:right; border:1px solid #000000; width:100px; height:30px; padding-right:5px;display:none" class="loginname"><a href="javascript:;" onclick="gProject.logout('<?= URL_BASE . "client/do-logout" ?>');">Logout</a></div>
+                </div>
+            </div>
+        </td>          
+    </tr>
+</table>

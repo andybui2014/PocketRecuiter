@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="<?= URL_THEMES . "js/jquery/jquery-1.7.2.min.js" ?>"></script>
+        <script type="text/javascript" src="<?= URL_THEMES . "js/jquery/jquery-ui-1.8.21.custom.min.js" ?>"></script>
+        <script type="text/javascript" src="<?= URL_THEMES . "js/fun.js" ?>"></script>
+        <script type="text/javascript" src="<?= URL_THEMES . "js/menu.js" ?>"></script>
+        <script type="text/javascript" src="<?= URL_THEMES . "js/home.js" ?>"></script>
+        <script type="text/javascript" src="<?= URL_THEMES . "js/PrintArea.js" ?>"></script>
+
+        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/ui-lightness/jquery-ui-1.8.21.custom.css" ?>"/>
+        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/main.css" ?>"/>
+        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/porlet.css" ?>"/>
+        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/verticalmenu.css" ?>"/>
+        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/transcript.css" ?>"/>
+
+        <script type="text/javascript">
+            URL_BASE = '<?= URL_BASE ?>';
+            URL_THEMES = '<?= URL_THEMES ?>';
+            
+            function PrintThisPage()
+            {        
+                
+                if (CheckIsIE() == true)
+                {
+             
+                    $('#printable').printArea();
+           
+                }
+                else
+                {
+                    $('#printable').printArea();
+                }
+            }
+
+        </script>
+    </head>
+
+    <body>
+
+        <?= $this->render("menu/layer.phtml") ?>
+        <table border="0" cellspacing="0" cellpadding="0" align="center" class="containerTable" id="containerMainTable" width="100%">
+            <tr>           
+                <td id="headerbg" class="headerbg" colspan="3">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top:10px;width:132px;" valign="top">
+                    <a target="_blank" href="http://www1.advantagesschool.com/applynow.php#en" style="text-decoration: none; color: #ffffff;">
+                        <img src="<?= URL_THEMES . "img/logo/logo.jpg" ?>" style="border:opx;width:132px;" style="border:opx;width:132px;"/>
+                    </a>
+                </td>
+                <td colspan="2" valign="top">
+
+                    <!--Top Right menu-->
+                    <?= $this->render("menu/menulogin.phtml") ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" width="800px">
+                    <div class="container">
+                        <!--Vertical Top menu-->
+                        <?= $this->render("menu/index.phtml") ?>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div id="linemenu" class="students_line">&nbsp;</div>  
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" width="100%">
+                    <div id="contentAjaxPage" class="contentAjaxPage">
+                        <table width="100%" border ="0" cellpadding ="0"  cellspacing="0">
+                            <tr>
+                                <td valign="top" style="padding-left:5px; padding-right:5px;">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr >
+                                            <td valign="bottom" height="16px">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td>
+                                                        </td>
+                                                        <td align="right">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr id="trporlet" valign="top" style="100%">
+                                            <td>
+                                                <div id="contentPage" class="contentPage">
+                                                    <?php echo $this->layout()->content; ?>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>           
+                <td id="footerbg" class="footerbg" colspan="3">
+                    <div class="footer">
+                        <b>Tell A Friend   |   Contact Us   |   Term of Use   |   Privacy Policy</b>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div id="tabul" style="width: 1px; height: 1px;position: relative;">
+            <div style="position: absolute; margin-left: -10000px;margin-top: -10000px">
+                <div class="newmenu_left home_left_hover"></div>
+                <div class="newmenu_bg home_bg_hover">
+                </div>
+                <div class="newmenu_right home_right_hover"></div>
+                <div class="newmenu_left applications_left_hover"></div>
+                <div class="newmenu_bg applications_bg_hover">
+                </div>
+                <div class="newmenu_right applications_right_hover"></div>
+                <div class="newmenu_left students_left_hover"></div>
+                <div class="newmenu_bg students_bg">
+                </div>
+                <div class="newmenu_right students_right"></div>
+                <div class="newmenu_left sections_left"></div>
+                <div class="newmenu_bg sections_bg_hover">
+                </div>
+                <div class="newmenu_right sections_right_hover"></div>
+                <div class="newmenu_left communications_left_hover"></div>
+                <div class="newmenu_bg communications_bg_hover">
+                </div>
+                <div class="newmenu_right communications_right_hover"></div>
+                <div class="newmenu_left reports_left_hover"></div>
+                <div class="newmenu_bg reports_bg_hover">
+                </div>
+                <div class="newmenu_right reports_right_hover"></div>
+                <div class="newmenu_left adminstration_left_hover"></div>
+                <div class="newmenu_bg adminstration_bg_hover">
+                </div>
+                <div class="newmenu_right adminstration_right_hover"></div>
+                <div class="newmenu_left schools_left_hover"></div>
+                <div class="newmenu_bg schools_bg_hover">
+                </div>
+                <div class="newmenu_right schools_right_hover"></div>
+                <div class="newmenu_left teachers_left_hover"></div>
+                <div class="newmenu_bg teachers_bg_hover">
+                </div>
+                <div class="newmenu_right teachers_right_hover"></div>
+                <div class="newmenu_left courses_left_hover"></div>
+                <div class="newmenu_bg courses_bg_hover">
+                </div>
+                <div class="newmenu_right courses_right_hover"></div>
+
+                <div class="adminstration_headerbg" ></div>
+                <div class="adminstration_footerbg" ></div>
+                <div class="adminstration_line">&nbsp;</div>  
+
+                <div class="applications_headerbg" ></div>
+                <div class="applications_footerbg" ></div>
+                <div class="applications_line">&nbsp;</div> 
+
+                <div class="communications_headerbg" ></div>
+                <div class="communications_footerbg" ></div>
+                <div class="communications_line">&nbsp;</div>  
+
+                <div class="courses_headerbg" ></div>
+                <div class="courses_footerbg" ></div>
+                <div class="courses_line">&nbsp;</div>  
+
+                <div class="homes_headerbg" ></div>
+                <div class="home_footerbg" ></div>
+                <div class="home_line">&nbsp;</div>  
+
+                <div class="reports_headerbg" ></div>
+                <div class="reports_footerbg" ></div>
+                <div class="reports_line">&nbsp;</div>  
+
+                <div class="schools_headerbg" ></div>
+                <div class="schools_footerbg" ></div>
+                <div class="schools_line">&nbsp;</div>  
+
+                <div class="sections_headerbg" ></div>
+                <div class="sections_footerbg" ></div>
+                <div class="sections_line">&nbsp;</div> 
+
+                <div class="students_headerbg" ></div>
+                <div class="students_footerbg" ></div>
+                <div class="students_line">&nbsp;</div>
+
+                <div class="teachers_headerbg" ></div>
+                <div class="teachers_footerbg" ></div>
+                <div class="teachers_line">&nbsp;</div> 
+
+            </div></div>
+    </body>
+</html>
