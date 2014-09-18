@@ -61,7 +61,7 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
         {                    
             foreach ($user[0] as $key => $value) 
             {
-                if (property_exists('PR_Api_User', $key)) {
+                if (property_exists('PR_Api_Client', $key)) {
                     $this->{$key} = $value;
                 }
             }        

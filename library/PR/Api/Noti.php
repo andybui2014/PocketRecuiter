@@ -72,20 +72,26 @@ class PR_Api_Noti extends Zend_Db_Table_Abstract
     public function save($data = null){
         $errors = PR_Api_Error::getInstance();
         if( empty($data) ) {
-            $info = $this->info();
-            $data = array();
-            foreach($info['cols'] as $col ) $data[$col] = $this->$col;
+            return;
         }
-
-        if( empty($this->ClientID) ){
+        if( empty($this->NotiID) ){
             $objDateNow = new Zend_Date();
-            $data['RegDate'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
-            
+            $data['cbDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
+            $data['lmDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
+            if(empty($data['NotiType'])){
+                $data['NotiType'] = 1; //public noti.
+            }
+            if(empty($data['NotiType'])){
+                $data['cbUserTypeID'] = 1; //client create nodifications
+            }
             $res = $this->insert($data);
             if( $res ) return new $this($res);
         } else {
             try {
-                $res = $this->update($data, 'ClientID = '.$this->ClientID);
+                unset($data['NotiID']);
+                $objDateNow = new Zend_Date();
+                $data['lmDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
+                $res = $this->update($data, 'NotiID = '.$this->NotiID);
             } catch (Exception $e) {
                     $errors->addError('7', 'Incorrect SQL request');
             }
