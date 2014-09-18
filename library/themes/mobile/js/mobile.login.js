@@ -6,7 +6,7 @@ mobileLogin.prototype = {
     },
     reset: function(){
         $('#login-message').html('');
-        $('#form-login').find('.form-group').removeClass('has-error');
+        $('#form-login').find('.form-group1').removeClass('has-error');
         $('#form-login :input[name="username"]').val('');
         $('#form-login :input[name="password"]').val('');
         $('#form-login #username_message').html('');

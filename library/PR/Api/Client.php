@@ -42,16 +42,16 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
         $errors = PR_Api_Error::getInstance();
         
 
-        $this->UserName = $authData['UserName'];
-        $this->Password = $authData['Password'];
+      //  $this->UserName = $authData['UserName'];
+      //  $this->Password = $authData['Password'];
         
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from('clients',array('*'));
-        $select->where("UserName = ?", $this->UserName);
+        $select->where("UserName = ?", $authData['UserName']);
 
         if (isset($authData['Password'])) {
-            $select->where("Password = ?", $this->Password);
+            $select->where("Password = ?", $authData['Password']);
         }
         
         //print_r($select->__toString());die();
@@ -61,7 +61,7 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
         {                    
             foreach ($user[0] as $key => $value) 
             {
-                if (property_exists('PR_Api_User', $key)) {
+                if (property_exists('PR_Api_Client', $key)) {
                     $this->{$key} = $value;
                 }
             }        

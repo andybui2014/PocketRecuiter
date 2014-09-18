@@ -1,192 +1,268 @@
-<form name="frmprofile" id="frmprofile" method="post" action="<?= URL_BASE . 'client/filter-edit?ajax=1' ?>">
- <div class="panel-body" style="">
-   <h1><span style="color: #357ebd">Profile</span></h1>
-   <div align="center" style="">
-    <table width="100%" cellspacing="10px" cellpadding="10px">
-    <col width="30%">
-    <col width="*">
-        <tr>
-                <td>
-                    Client ID
-                </td>
-                <td>
-                    12345
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    User Name
-                </td>
-                <td>
-                    <input type="text"  name=""  value="pr" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Password
-                </td>
-                <td>
-                    <input type="password"  name=""  value="Test1234" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Company Name
-                </td>
-                <td>
-                    <input type="text"  name=""  value="Test1234" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Company ID
-                </td>
-                <td>
-                    <input type="text"  name=""  value="PocketRecruiter" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Company ID
-                </td>
-                <td>
-                    <input type="text"  name=""  value="12345" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Contact Name
-                </td>
-                <td>
-                    <input type="text"  name=""  value="test" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Contact Phone1
-                </td>
-                <td>
-                    <input type="text"  name=""  value="0123456789" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Contact Phone2
-                </td>
-                <td>
-                    <input type="text"  name=""  value="0123456789" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Email1
-                </td>
-                <td>
-                    <input type="text"  name=""  value="nhunguyet.ntn@gmail.com" />
-                </td>
-        </tr>
-         <tr>
-                <td>
-                    Email2
-                </td>
-                <td>
-                    <input type="text"  name=""  value="nhunguyet.ntn@gmail.com" />
-                </td>
-        </tr>
-         <tr>
-                <td>
-                    Business Address
-                </td>
-                <td>
-                    <input type="text"  name=""  value="HCM city" />
-                </td>
-        </tr>
-         <tr>
-                <td>
-                    Business City
-                </td>
-                <td>
-                    <input type="text"  name=""  value="HCM city" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Business State
-                </td>
-                <td>
-                    <input type="text"  name=""  value="bla bla..." />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Business Zip
-                </td>
-                <td>
-                    <input type="text"  name=""  value="86435" />
-                </td>
-        </tr>
-             
-         <tr>
-                <td>
-                    Country
-                </td>
-                <td>
-                    <select id="Country" name="Country">
-                                <option >test</option>
-                                <option >test1</option>
-                                <option >test2</option>
-                                <option >test3</option>
-                        </select>
-                </td>
-        </tr>
-         <tr>
-                <td>
-                    Account Enabled
-                </td>
-                <td>
-                    <input type="text"  name=""  value="" />
-                </td>
-        </tr>
-        <tr>
-                <td>
-                    Company Logo
-                </td>
-                <td>
-                    <div style="float:left;width:450px; ">
-                                                                  
-                                <div id="Company_Logo_file">
-                                    <input type="file" id="Company_Logo" style="size:20;" name="Company_Logo">
-                                 </div>   
-                                 </div>
-                </td>
-        </tr>
-        
-         <tr>
-                <td colspan="2">
-                    Company Description
-                </td>
-                
-        </tr>
-         <tr>
-                <td colspan="2">
-                    <textarea rows="5" style="width: 47%;" name="CompanyDescription" id="EditRecordCompanyDescription"></textarea>
-                </td>
-                
-        </tr>
-        <tr><td colspan="2"><br/></td></tr>
-        <tr >
-            <td style="">
-            <div class="">
-            
-                <button type="button" class="btn btn-success">
-                    <strong>Update</strong>
-                </button>
-            
-             </div>
-            </td>
-        </tr>
-    </table>
-    </div>
+<style>
+table.ex1 {
+    border-collapse: separate;
+    border-spacing: 5px;
+}
+.ref{
+    color: #ff2525;
+    padding-right: 5px;
+}
+.form-control1 {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 1.42857;
+    padding: 6px 5px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     
- </div>
-</form>
+    
+}
+.form-control1::-moz-placeholder {
+    color: #777;
+    opacity: 1;
+}
+.has-error .form-control1 {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+#form-profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
+</style>
+
+
+
+    
+   
+
+<?php
+$client=$this->client;
+
+?>
+<header class="subhead" id="overview">
+    <div class="panel panel-primary" style="border:0">
+        <div class="panel-heading">
+                <h3 class="panel-title">
+                    <strong>Pocket Recruiter Introduction</strong>
+                    
+                </h3>
+            </div>
+            <div class="panel-body">
+            <h1><span style="color: #357ebd">Company Profile</span></h1>
+        <form name="form-profile" id="form-profile" method="post" action="<?= URL_BASE . 'client/' ?>">
+         
+           <div align="" style="">
+            <table width="60%" class="ex1">
+            <col width="30%">
+            <col width="*" style="float:right">
+            <tbody>
+                <tr>
+                        <td width="">
+                            Company ID
+                        </td>
+                        <td width="">
+                            <?=$client["Company_ID"]?>
+                        </td>
+                </tr>
+                 <tr>
+                        <td width="">
+                        
+                            Company Name<span class="ref">*</span>
+                        </td>
+                        <td width="">
+                       <div class="form-group1">
+                            <input type="text" class="form-control1"    value="<?=$client['CompanyName']?>" size="20" name="CompanyName" />
+                            <span class="message" id="companyname_message"></span>
+                       </div>
+                            
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                            Contact Name<span class="ref">*</span>
+                        </td>
+                        <td>
+                        <div class="form-group1">
+                            
+                            <input type="text"  class="form-control1"  value="<?=$client['ContactName']?>" size="20" name="ContactName" />
+                        <span class="message" id="ContactName_message"></span>
+                       </div>    
+                        
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                            User Name<span class="ref">*</span>
+                        </td>
+                        <td>
+                        <div class="form-group1">
+                            <input type="text"  class="form-control1"  value="<?=$client['UserName']?>" size="20" name="UserName" />
+                            <span class="message" id="UserName_message"></span>
+                       </div>
+                        </td>
+                </tr>
+                 <tr>
+                        <td>
+                            Password<span class="ref">*</span>
+                        </td>
+                        <td>
+                        <div class="form-group1">
+                            <input type="password"  class="form-control1" value="<?=$client['Password']?>" size="20" name="Password" />
+                            <span class="message" id="Password_message"></span>
+                       </div>
+                        </td>
+                </tr>
+                
+               
+                               <tr>
+                        <td>
+                            Primary Phone<span class="ref">*</span>
+                        </td>
+                        <td>
+                        <div class="form-group1">
+                            <input type="text"  class="form-control1"  value="<?=$client['ContactPhone1']?>" size="20" name="ContactPhone1" />
+                            <span class="message" id="ContactPhone1_message"></span>
+                       </div>
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                            Secondary Phone
+                        </td>
+                        <td>
+                            <input type="text"  class="form-control1"  value="<?=$client['ContactPhone2']?>" size="20" name="ContactPhone2" />
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                            Primary Email<span class="ref">*</span>
+                        </td>
+                        <td>
+                        <div class="form-group1">
+                            <input type="text"  class="form-control1"  value="<?=$client['Email1']?>" size="20" name="Email1" />
+                             <span class="message" id="Email1_message"></span>
+                             
+                             
+                       </div>
+                        </td>
+                </tr>
+                 <tr>
+                        <td>
+                            Secondary Email
+                        </td>
+                        <td>
+                            <input type="text"  class="form-control1" value="<?=$client['Email2']?>" size="20" name="Email2" />
+                        </td>
+                </tr>
+                 <tr>
+                        <td>
+                            Business Address
+                        </td>
+                        <td>
+                            <input type="text"  class="form-control1"  value="<?=$client['BusinessAddress']?>" size="20" name="BusinessAddress" />
+                        </td>
+                </tr>
+                 <tr>
+                        <td>
+                            Business City
+                        </td>
+                        <td>
+                            <input type="text"  class="form-control1"  value="<?=$client['BusinessCity']?>" size="20" name="BusinessCity" />
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                            Business State
+                        </td>
+                        <td>
+                            <input type="text"  class="form-control1"  value="<?=$client['BusinessState']?>" size="20" name="BusinessState" />
+                        </td>
+                </tr>
+                <tr>
+                        <td>
+                            Business Zip
+                        </td>
+                        <td>
+                            <input type="text"  class="form-control1"  value="<?=$client['BusinessZip']?>" size="20" name="BusinessZip" />
+                        </td>
+                </tr>
+                     
+                 <tr>
+                        <td>
+                            Country
+                        </td>
+                        <td>
+                            <?=$client['Country']?>
+                        </td>
+                </tr>
+                 <tr>
+                        <td>
+                            Account Enabled
+                        </td>
+                        <td>
+                        
+                 <input type="checkbox" <?=($client['AccountEnabled']==1)?"checked":""?> name="AccountEnabled"  />
+                        </td>
+                </tr>
+               <!-- <tr>
+                        <td>
+                            Company Logo
+                        </td>
+                        <td>
+                            <div style="float:left;width:450px; ">
+                                                                          
+                                        <div id="Company_Logo_file">
+                                            <input type="file" id="Company_Logo" style="size:20;" name="Company_Logo">
+                                         </div>   
+                                         </div>
+                        </td>
+                </tr>
+                
+                 <tr>
+                        <td colspan="2">
+                            Company Description
+                        </td>
+                        
+                </tr>
+                 <tr>
+                        <td colspan="2">
+                            <textarea rows="5" style="width: 47%;" name="CompanyDescription" id="EditRecordCompanyDescription"></textarea>
+                        </td>
+                        
+                </tr>-->
+                <tr><td colspan="2"><br/></td></tr>
+                <tr >
+                    <td style="">
+                    <div class="">
+                    
+                        <button type="button" class="btn btn-success" id="cmd-updateprofile">
+                            <strong>Update</strong>
+                        </button>
+                    
+                     </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            
+         
+        </form>
+        </div>
+    </div>
+</header>
+<!-- jQuery Version 1.11.0 -->
+<script src="<?=URL_THEMES_MOBILE.'js/jquery-1.11.0.js';?>"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
+<script src="<?=URL_THEMES_MOBILE.'js/mobile.profile.js';?>"></script>
+<!--<script type="text/javascript" src="<?=URL_THEMES_MOBILE.'js/bootstrapValidator.js';?>"></script>-->
+<script type="text/javascript">
+
+</script>

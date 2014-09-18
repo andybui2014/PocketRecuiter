@@ -18,7 +18,7 @@ gProject.onReady = function(){
         jShowLayer('#changeLogoBox');
     });
     //init calendar
-    jQuery( ".datepicker" ).datepicker({dateFormat: 'dd/mm/yy'});
+   // jQuery( ".datepicker" ).datepicker({dateFormat: 'dd/mm/yy'});
 };
 
 
