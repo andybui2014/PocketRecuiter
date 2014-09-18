@@ -145,6 +145,7 @@ class PR_Database {
 		return $result;
 	}
 
+
 	public static function getCount(Zend_Db_Select $select)
 	{
 		$countSelect = clone $select;
@@ -211,4 +212,6 @@ class PR_Database {
         //var_dump($select->__toString());exit;
 		return $select;
 	}
+    
+    
 }

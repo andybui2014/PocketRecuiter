@@ -30,7 +30,7 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
     
     public function  __construct($id = null) {
         parent::__construct();
-        $this->user_id = $id;
+        $this->ClientID = $id;
         $errMsg="";
     }
     /**
@@ -134,12 +134,6 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
 		}
 	}
 	
-	public function loginHistory($userName)
-	{		
-		$class = new Core_Api_Class;
-		$class->loginHistory($userName, "Client");
-	}
-
     public function getPassword()
     {
         return $this->Password;
@@ -151,7 +145,7 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
     }
 	
     public function save($data = null){
-        $errors = Core_Api_Error::getInstance();
+        $errors = PR_Api_Error::getInstance();
         if( empty($data) ) {
             $info = $this->info();
             $data = array();
@@ -177,15 +171,5 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
         }
         return null;
     }   
-    
-    public function getUserById($id)
-    {
-        $db = PR_Database::getInstance();
-        $select = $db->select();
-        $select->from(PR_Database::TABLE_users);
-        $select->where("user_id = '$id'");
-        $users = PR_Database::fetchAll($select);
-        if(empty($users)) return NULL;
-        else return $users[0];        
-    } 
+       
 }
