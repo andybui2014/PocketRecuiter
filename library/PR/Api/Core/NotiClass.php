@@ -6,7 +6,11 @@ class PR_Api_Core_NotiClass
     {             
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from("notis",array('*'));
+        $select->from(array('n'=>'notis'),array('*'));
+        $select->joinLeft(array('c'=>'clients'),
+            'c.ClientID = n.cbClientID',
+            array('cbContactName'=>'ContactName')
+        );
         if(count($filters)>0)
         {
             if(isset($filters['ClientID'])){
