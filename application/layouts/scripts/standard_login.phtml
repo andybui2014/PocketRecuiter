@@ -21,11 +21,17 @@
     <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- jQuery Version 1.11.0 -->
+    <script src="<?=URL_THEMES_MOBILE.'js/jquery-1.11.0.js';?>"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
+    <script src="<?=URL_THEMES_MOBILE.'js/mobile.login.js';?>"></script>
 </head>
 
 <body>
 <style>
+
     .modal-dialog-center {
         margin-top: 10%;
         transform: translate(0, 50%) !important;
@@ -36,19 +42,16 @@
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="login-modal" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content modal-dialog-center">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content  modal-dialog-center">
             <div class="modal-header login_modal_header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title" id="myModalLabel">Sign In</h2>
             </div>
             <div class="modal-body login-modal">
                 <form id="form-login" name="form-login">
-                <div id="login-message">
-
-                </div>
-                <div>
-                    <div class='modal-body-left'>
+                <div id="login-message"></div>
+                    <div style="padding: 10px 0">
                         <div class="form-group">
                             <input type="text" name="username" id="username" placeholder="User Name" class="form-control login-field">
                             <span class="message" id="username_message"></span>
@@ -60,7 +63,7 @@
                         <p><a href="#" class="login-link text-center">Forgot your password?</a></p>
                         <button id="cmd-login" type="button" class="btn btn-primary modal-login-btn" data-loading-text="Loading...">Sign In</button>
                     </div>
-                </div>
+
                 </form>
             </div>
         </div>
@@ -78,42 +81,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-
-            <a href="#"><img height="52px" src="<?=URL_THEMES_MOBILE.'images/logo.png'?>" alt="" tilte=""/></a>
-
+            <a class="navbar-brand" href="#">
+                <img src="<?= URL_THEMES_MOBILE . 'images/logo.png' ?>" alt="" tilte=""/>
+            </a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
+
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->
 </nav>
-
+<!-- Put your page content here! -->
 <div class="row">
-    <p style="display:block;line-height: 70px; width:110%; text-align:center; top: 65%; position:absolute;">
-        <a id="show-login" href="#" data-toggle="modal" data-target="#login-modal"><img src="<?=URL_THEMES_MOBILE.'images/btn_login.png'?>" alt="" title="" style="height: 60px"/></a>
+    <p style="display:block;line-height: 70px; width:100%; text-align:center; top:60%; position:absolute;">
+        <button  data-toggle="modal" data-target="#login-modal" id="show-login" class="btn btn-primary" type="button"> <span style="font-size: 2em;padding: 0 20px">Sign In</span></button>
     </p>
 </div>
-<!-- Put your page content here! -->
 
-<!-- jQuery Version 1.11.0 -->
-<script src="<?=URL_THEMES_MOBILE.'js/jquery-1.11.0.js';?>"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
-<script src="<?=URL_THEMES_MOBILE.'js/mobile.login.js';?>"></script>
 
 </body>
 

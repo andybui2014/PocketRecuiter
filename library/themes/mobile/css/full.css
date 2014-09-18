@@ -5,7 +5,7 @@
  */
 
 body {
-    margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
 /* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
@@ -16,4 +16,18 @@ body {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+
+.navbar-fixed-top .navbar-brand {
+    padding: 10px 0;
+}
+.navbar-brand img{height: 35px;}
+@media only screen and (max-width: 800px) {
+    .navbar-brand img{height: 35px;}
+    #header{
+        width: 100%;
+        height: auto;
+        background-size: 100% auto !important;
+    }
 }
