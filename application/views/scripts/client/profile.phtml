@@ -2,6 +2,8 @@
 table.ex1 {
     border-collapse: separate;
     border-spacing: 5px;
+    max-width: 100%;
+    width: 100%
 }
 .ref{
     color: #ff2525;
@@ -57,9 +59,9 @@ $client=$this->client;
         <form name="form-profile" id="form-profile" method="post" action="<?= URL_BASE . 'client/update-profle' ?>">
          
            <div align="" style="">
-            <table width="60%" class="ex1">
-            <col width="30%">
-            <col width="*" style="">
+            <table  class="ex1 ">
+            <col width="20%">
+            <col width="60%" style="">
             <tbody>
                 <tr>
                         <td width="">
