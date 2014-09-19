@@ -128,7 +128,7 @@ mobileProfile.prototype = {
                 pmrp_message.parent().removeClass('has-error').addClass('has-success');
                 pmrp_message.html('');
             }
-            var phone2=scp.val();
+           /* var phone2=scp.val();
              if (phone2.match(phoneno)) {
                 scp_message.parent().removeClass('has-error').addClass('has-success');
                 scp_message.html('');
@@ -137,7 +137,7 @@ mobileProfile.prototype = {
                 error = true;
                 scp_message.parent().addClass('has-error');
                 scp_message.html(fields.ContactPhone2.digits.message).fadeOut().fadeIn();
-            }
+            }*/
             var filter = "/^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/";
            var x = pmrm.val();
             var atpos = x.indexOf("@");
@@ -175,7 +175,7 @@ mobileProfile.prototype = {
             var atpos2 = y.indexOf("@");
             var dotpos2 = y.lastIndexOf(".");
             
-            if (atpos2<1 || dotpos2<atpos2+2 || dotpos2+2>=y.length) {
+          /*  if (atpos2<1 || dotpos2<atpos2+2 || dotpos2+2>=y.length) {
                 error = true;
                 scm_message.parent().addClass('has-error');
                 scm_message.html(fields.Email2.emailAddress.message).fadeOut().fadeIn();
@@ -183,7 +183,7 @@ mobileProfile.prototype = {
             }else{
                 scm_message.parent().removeClass('has-error').addClass('has-success');
                 scm_message.html('');
-            }
+            }*/
             if(error==false){
                 $.ajax({
                     url: 'update-profle',
