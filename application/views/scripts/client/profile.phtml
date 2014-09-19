@@ -48,13 +48,13 @@ $client=$this->client;
     <div class="panel panel-primary" style="border:0">
         <div class="panel-heading">
                 <h3 class="panel-title">
-                    <strong>Pocket Recruiter Introduction</strong>
+                    <strong>Company Profile</strong>
                     
                 </h3>
             </div>
             <div class="panel-body">
-            <h1><span style="color: #357ebd">Company Profile</span></h1>
-        <form name="form-profile" id="form-profile" method="post" action="<?= URL_BASE . 'client/' ?>">
+            
+        <form name="form-profile" id="form-profile" method="post" action="<?= URL_BASE . 'client/update-profle' ?>">
          
            <div align="" style="">
             <table width="60%" class="ex1">
@@ -135,7 +135,10 @@ $client=$this->client;
                             Secondary Phone
                         </td>
                         <td>
+                        <div class="form-group1">
                             <input type="text"  class="form-control1"  value="<?=$client['ContactPhone2']?>" size="20" name="ContactPhone2" />
+                             <span class="message" id="ContactPhone2_message"></span>
+                       </div>
                         </td>
                 </tr>
                 <tr>
@@ -156,7 +159,12 @@ $client=$this->client;
                             Secondary Email
                         </td>
                         <td>
+                        <div class="form-group1">
                             <input type="text"  class="form-control1" value="<?=$client['Email2']?>" size="20" name="Email2" />
+                             <span class="message" id="Email2_message"></span>
+                             
+                             
+                       </div>
                         </td>
                 </tr>
                  <tr>
@@ -206,7 +214,7 @@ $client=$this->client;
                         </td>
                         <td>
                         
-                 <input type="checkbox" <?=($client['AccountEnabled']==1)?"checked":""?> name="AccountEnabled"  />
+                 <input type="checkbox" <?=($client['AccountEnabled']==1)?"checked":""?> name="AccountEnabled" disabled />
                         </td>
                 </tr>
                <!-- <tr>

@@ -1,18 +1,5 @@
 function mobileProfile(){ }
-/*mobileProfile.prototype.isValidContactPhone = function(val, allowExt) {
-    if (val == null || val == "") return true;
-    valStrip = val.replace(/[^0-9]/g, "");
-    if (valStrip.length == 10) {
-        val = massagePhone(val);
-        return isValidPhone(val);
-    }
-    else {
-        if (!allowExt) return false;
-        validFormat = /^[(]?(\d{3})[)]?(?:\s|-|.)*(\d{3})[-\s.]*(\d{4})[^0-9]+([0-9]*)[^0-9]*([0-9]*)$/;
-        parts = val.match(validFormat);
-        return !(parts == null);
-    }
-}*/
+
 mobileProfile.prototype = {
     init: function(){
         $("#cmd-updateprofile").unbind('click').bind('click',this.profile);
@@ -27,29 +14,20 @@ mobileProfile.prototype = {
         $('#form-profile :input[name="ContactName"]').val('');
         $('#form-profile :input[name="UserName"]').val('');
         $('#form-profile :input[name="ContactPhone1"]').val('');
+        $('#form-profile :input[name="ContactPhone2"]').val('');
         $('#form-profile :input[name="Email1"]').val('');
+        $('#form-profile :input[name="Email2"]').val('');
         $('#form-profile #companyname_message').html('');
         $('#form-profile #Password_message').html('');
         $('#form-profile #ContactName_message').html('');
         $('#form-profile #UserName_message').html('');
         $('#form-profile #ContactPhone1_message').html('');
+        $('#form-profile #ContactPhone2_message').html('');
          $('#form-profile #Email1_message').html('');
+         $('#form-profile #Email2_message').html('');
         $('#cmd-updateprofile').button('reset');
     },
-    /*isValidContactPhone: function(val, allowExt) {
-    if (val == null || val == "") return true;
-    valStrip = val.replace(/[^0-9]/g, "");
-    if (valStrip.length == 10) {
-        val = massagePhone(val);
-        return isValidPhone(val);
-    }
-    else {
-        if (!allowExt) return false;
-        validFormat = /^[(]?(\d{3})[)]?(?:\s|-|.)*(\d{3})[-\s.]*(\d{4})[^0-9]+([0-9]*)[^0-9]*([0-9]*)$/;
-        parts = val.match(validFormat);
-        return !(parts == null);
-    }
-},*/
+   
     
     profile: function(){
         var $this = $(this);
@@ -60,10 +38,12 @@ mobileProfile.prototype = {
             Password: { notEmpty: {message: 'The password not empty'}},
             ContactName: { notEmpty: {message: 'The contact name not empty'}},
             UserName: { notEmpty: {message: 'The user name not empty'}},
-            ContactPhone1: { notEmpty: {message: 'The primary phone not empty'}},
-             ContactPhone1: { digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
-            Email1: { notEmpty: {message: 'The primary mail not empty'}},
-            Email1: { emailAddress: {message: 'The primary mail is not a valid email address'}}
+            ContactPhone1: { notEmpty: {message: 'The primary phone not empty'},digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
+           //  ContactPhone1: { digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
+              ContactPhone2: { digits: {message: 'The Secondary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
+            Email1: { notEmpty: {message: 'The primary mail not empty'},emailAddress: {message: 'The primary mail is not a valid email address'}},
+           // Email1: { emailAddress: {message: 'The primary mail is not a valid email address'}},
+            Email2: { emailAddress: {message: 'The Secondary mail is not a valid email address'}}
         }
 
         var uid = $('#form-profile :input[name="CompanyName"]');
@@ -71,20 +51,26 @@ mobileProfile.prototype = {
         var ctn = $('#form-profile :input[name="ContactName"]');
         var usn = $('#form-profile :input[name="UserName"]');
         var pmrp = $('#form-profile :input[name="ContactPhone1"]');
+        var scp = $('#form-profile :input[name="ContactPhone2"]');
         var pmrm = $('#form-profile :input[name="Email1"]');
+        var scm = $('#form-profile :input[name="Email2"]');
         var uid_message = $('#form-profile #companyname_message');
         var pwd_message = $('#form-profile #Password_message');
         var ctn_message = $('#form-profile #ContactName_message');
         var usn_message = $('#form-profile #UserName_message');
         var pmrp_message = $('#form-profile #ContactPhone1_message');
+        var scp_message = $('#form-profile #ContactPhone2_message');
         var pmrm_message = $('#form-profile #Email1_message');
+        var scm_message = $('#form-profile #Email2_message');
         if(
             typeof uid !=='undefined' && typeof uid !==undefined &&  uid.length > 0 && 
             typeof pwd !=='undefined' && typeof pwd !==undefined &&  pwd.length > 0 &&
             typeof ctn !=='undefined' && typeof ctn !==undefined &&  ctn.length > 0 &&
             typeof usn !=='undefined' && typeof usn !==undefined &&  usn.length > 0 &&
             typeof pmrp !=='undefined' && typeof pmrp !==undefined &&  pmrp.length > 0 &&
-            typeof pmrm !=='undefined' && typeof pmrm !==undefined &&  pmrm.length > 0
+            typeof pmrm !=='undefined' && typeof pmrm !==undefined &&  pmrm.length > 0 &&
+            typeof scp !=='undefined' && typeof scp !==undefined &&  scp.length > 0 &&
+            typeof scm !=='undefined' && typeof scm !==undefined &&  scm.length > 0
            ){
             //check value email
             var error = false;
@@ -139,7 +125,16 @@ mobileProfile.prototype = {
                 pmrp_message.parent().addClass('has-error');
                 pmrp_message.html(fields.ContactPhone1.digits.message).fadeOut().fadeIn();
             }
-            
+            var phone2=scp.val();
+             if (phone2.match(phoneno)) {
+                scp_message.parent().removeClass('has-error').addClass('has-success');
+                scp_message.html('');
+                
+            }else{
+                error = true;
+                scp_message.parent().addClass('has-error');
+                scp_message.html(fields.ContactPhone2.digits.message).fadeOut().fadeIn();
+            }
             if(pmrm.val() =='' || pmrm.val().length <= 1){
                 error = true;
                 pmrm_message.parent().addClass('has-error');
@@ -163,14 +158,28 @@ mobileProfile.prototype = {
                 pmrm_message.parent().removeClass('has-error').addClass('has-success');
                 pmrm_message.html('');
             }
+            var y = scm.val();
+            var atpos2 = y.indexOf("@");
+            var dotpos2 = y.lastIndexOf(".");
+            
+            if (atpos2<1 || dotpos2<atpos2+2 || dotpos2+2>=y.length) {
+                error = true;
+                scm_message.parent().addClass('has-error');
+                scm_message.html(fields.Email2.emailAddress.message).fadeOut().fadeIn();
+                
+            }else{
+                scm_message.parent().removeClass('has-error').addClass('has-success');
+                scm_message.html('');
+            }
             if(error==false){
                 $.ajax({
-                    url: 'profile/do-profile',
+                    url: 'update-profle',
                     data: $('#form-profile').serializeArray(),
                     type: 'POST',
                     success: function(xhr){
                         if(xhr.success){
-                           // window.location = 'client/start-profile';
+                            window.location = 'start-profile';
+                          //  window.location = 'update-profle';
                             $this.button('reset');
                             alert("success");
                         }else{
@@ -181,7 +190,7 @@ mobileProfile.prototype = {
                                      '<strong>'+xhr.error+'</strong>'+
                                 '</div>'
                             );
-                            alert("erro");
+                           // alert("erro");
                             //pwd_message.parent().removeClass('has-success').addClass('has-error');
                             //uid.parent().removeClass('has-success').addClass('has-error');
                         }

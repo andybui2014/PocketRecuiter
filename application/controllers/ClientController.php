@@ -32,11 +32,48 @@ class ClientController extends Application_Controller_Action
          $clientApi = new PR_Api_Client();
         $authData = array('UserName' => $username, 'Password' => $password);
         $this->view->client = $clientApi->getClientArray($authData);
-        //$a= $clientApi->getClientArray($authData);
-       // echo ("username:".$username);
-        //echo ("password:".$password);
-       // echo ("test:<pre>");print_r($a);echo("</pre>");
         $this->render('profile');
+        
+    }
+    function updateProfleAction()
+    {
+       $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $params = $request->getParams();
+         $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);
+        $username = $request->getParam("UserName", "");
+        $password = $request->getParam("Password", "");
+        $return = array("success" => 0, "error" => "");
+        $clientID=$client["ClientID"];
+       
+       $clientClass = new PR_Api_Core_ClientClass();
+       $updateFields=array();
+       foreach ($params as $key => $value) {
+            $updateFields[$key]=$value;
+            
+            }
+           
+          
+       $result = $clientClass->updateClientProfile($clientID,$updateFields);
+     
+       if ($result) {
+           $return['success'] = 1;
+                
+             }
+             else{
+                 $return['success'] = 1;
+             // $return['error'] = PR_Api_Error::getInstance()->getFirstError();
+                }
+     
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $return = json_encode($return);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($return), true)
+                ->setBody($return);                    
+
+
         
     }
      
