@@ -3,7 +3,7 @@
     <head>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,8 +18,10 @@
         <script src="<?=URL_THEMES_MOBILE.'js/jquery-1.11.0.js';?>"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
+        <!---Description Javascript Mobile-->
         <script src="<?=URL_THEMES_MOBILE.'js/mobile.login.js';?>"></script>
         <script src="<?=URL_THEMES_MOBILE.'js/mobile.profile.js';?>"></script>
+        <script src="<?=URL_THEMES_MOBILE.'js/mobile.main.js';?>"></script>
     </head>
 
     <body>
@@ -60,7 +62,7 @@
                     </li>
                     <li><a href="javascript: void(0)">Career Match</a></li>
                     <li><a href="javascript: void(0)">Activities</a></li>
-                    <li><a id="cmd-logout" href="javascript: void(0)">Logout</a></li>
+                    <li><a id="cmd-logout" href="javascript: void(0)" data-url="<?=URL_BASE."client/do-logout";?>">Logout</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -73,7 +75,6 @@
     <div class="footer">
     
 </div>
-    <!--new-->
 
     </body>
 </html>
