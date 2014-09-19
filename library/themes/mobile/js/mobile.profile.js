@@ -128,16 +128,17 @@ mobileProfile.prototype = {
                 pmrp_message.parent().removeClass('has-error').addClass('has-success');
                 pmrp_message.html('');
             }
-           /* var phone2=scp.val();
-             if (phone2.match(phoneno)) {
-                scp_message.parent().removeClass('has-error').addClass('has-success');
-                scp_message.html('');
-                
-            }else{
-                error = true;
+            var phone2=scp.val();
+             if (!phone2.match(phoneno) && phone2.length >1) {
+                 error = true;
                 scp_message.parent().addClass('has-error');
                 scp_message.html(fields.ContactPhone2.digits.message).fadeOut().fadeIn();
-            }*/
+                
+                
+            }else{
+                scp_message.parent().removeClass('has-error').addClass('has-success');
+                scp_message.html('');
+            }
             var filter = "/^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/";
            var x = pmrm.val();
             var atpos = x.indexOf("@");
