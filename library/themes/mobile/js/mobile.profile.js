@@ -34,14 +34,14 @@ mobileProfile.prototype = {
         //$this.button('loading');
 
         var fields = {
-            CompanyName: { notEmpty: { message: 'The company name not empty'}} ,
-            Password: { notEmpty: {message: 'The password not empty'}},
-            ContactName: { notEmpty: {message: 'The contact name not empty'}},
-            UserName: { notEmpty: {message: 'The user name not empty'}},
-            ContactPhone1: { notEmpty: {message: 'The primary phone not empty'},digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
-           //  ContactPhone1: { digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
+            CompanyName: { notEmpty: { message: 'The company name is required.'}} ,
+            Password: { notEmpty: {message: 'The password is required.'}},
+            ContactName: { notEmpty: {message: 'The contact name is required.'}},
+            UserName: { notEmpty: {message: 'The user name is required.'}},
+            ContactPhone1: { notEmpty: {message: 'The primary phone is required.'},digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
+           // ContactPhone1: { digits: {message: 'The primary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
               ContactPhone2: { digits: {message: 'The Secondary phone must be a valid 10 digit number with optional extension similar to XXX XXX XXXX '}},
-            Email1: { notEmpty: {message: 'The primary mail not empty'},emailAddress: {message: 'The primary mail is not a valid email address'}},
+            Email1: { notEmpty: {message: 'The primary mail is required.'},emailAddress: {message: 'The primary mail is not a valid email address'}},
            // Email1: { emailAddress: {message: 'The primary mail is not a valid email address'}},
             Email2: { emailAddress: {message: 'The Secondary mail is not a valid email address'}}
         }
@@ -106,24 +106,27 @@ mobileProfile.prototype = {
                 usn_message.parent().removeClass('has-error').addClass('has-success');
                 usn_message.html('');
             }
+            var phone=pmrp.val();
+            var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
             if(pmrp.val() =='' || pmrp.val().length <= 1){
                 error = true;
                 pmrp_message.parent().addClass('has-error');
                 pmrp_message.html(fields.ContactPhone1.notEmpty.message).fadeOut().fadeIn();
-            }else{
-                pmrp_message.parent().removeClass('has-error').addClass('has-success');
-                pmrp_message.html('');
             }
-            var phone=pmrp.val();
-            var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
-            if (phone.match(phoneno)) {
-                pmrp_message.parent().removeClass('has-error').addClass('has-success');
-                pmrp_message.html('');
-                
-            }else{
+           // else{
+             //   pmrp_message.parent().removeClass('has-error').addClass('has-success');
+              //  pmrp_message.html('');
+          //  }
+            
+           else if (!phone.match(phoneno) && phone.length >1) {
                 error = true;
                 pmrp_message.parent().addClass('has-error');
                 pmrp_message.html(fields.ContactPhone1.digits.message).fadeOut().fadeIn();
+                
+            }else{
+                
+                pmrp_message.parent().removeClass('has-error').addClass('has-success');
+                pmrp_message.html('');
             }
             var phone2=scp.val();
              if (phone2.match(phoneno)) {
@@ -135,17 +138,27 @@ mobileProfile.prototype = {
                 scp_message.parent().addClass('has-error');
                 scp_message.html(fields.ContactPhone2.digits.message).fadeOut().fadeIn();
             }
+            var filter = "/^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/";
+           var x = pmrm.val();
+            var atpos = x.indexOf("@");
+            var dotpos = x.lastIndexOf(".");
+            
             if(pmrm.val() =='' || pmrm.val().length <= 1){
                 error = true;
                 pmrm_message.parent().addClass('has-error');
                 pmrm_message.html(fields.Email1.notEmpty.message).fadeOut().fadeIn();
-                
-            }else{
+                }
+                else if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                error = true;
+                pmrm_message.parent().addClass('has-error');
+                pmrm_message.html(fields.Email1.emailAddress.message).fadeOut().fadeIn();
+                }
+                else{
                 pmrm_message.parent().removeClass('has-error').addClass('has-success');
                 pmrm_message.html('');
             }
            // var filter = "/^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/";
-           var x = pmrm.val();
+          /* var x = pmrm.val();
             var atpos = x.indexOf("@");
             var dotpos = x.lastIndexOf(".");
             
@@ -157,7 +170,7 @@ mobileProfile.prototype = {
             }else{
                 pmrm_message.parent().removeClass('has-error').addClass('has-success');
                 pmrm_message.html('');
-            }
+            }*/
             var y = scm.val();
             var atpos2 = y.indexOf("@");
             var dotpos2 = y.lastIndexOf(".");
