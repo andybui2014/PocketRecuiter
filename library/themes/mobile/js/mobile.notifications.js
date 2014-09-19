@@ -143,6 +143,6 @@ notifications.prototype = {
 }
 
 $(function() {
-    var mobile= new notifications();
-    mobile.init();
+    var mbNot= new notifications();
+    mbNot.init();
 });

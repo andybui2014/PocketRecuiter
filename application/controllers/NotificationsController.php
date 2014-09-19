@@ -14,7 +14,7 @@ class NotificationsController extends Application_Controller_Action
     
     public function listAction()
     {
-        $this->_helper->layout->disableLayout();
+        //$this->_helper->layout->disableLayout();
         //$this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
         $sestionClient = PR_Session::getSession(PR_Session::SESSION_CLIENT);
