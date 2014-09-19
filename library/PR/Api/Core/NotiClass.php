@@ -23,4 +23,15 @@ class PR_Api_Core_NotiClass
         $records = PR_Database::fetchAll($select);
         return $records;
     }
+    
+    public function delete($notiIDArray)
+    {
+        if(!is_array($notiIDArray) || count($notiIDArray)==0)
+        {
+            return;        
+        }
+        $criteria = "NotiID IN (".implode(",",$notiIDArray).")";
+        $db = PR_Database::getInstance();
+        $result = $db->delete('notis', $criteria);
+    }
 }
