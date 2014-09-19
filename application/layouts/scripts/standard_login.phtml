@@ -36,7 +36,7 @@
 </style>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="login-modal" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header login_modal_header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -102,8 +102,9 @@
 </nav>
 
 <div class="row">
-    <p style="display:block;line-height: 70px; width:110%; text-align:center; top: 65%; position:absolute;">
-        <a id="show-login" href="#" data-toggle="modal" data-target="#login-modal"><img src="<?=URL_THEMES_MOBILE.'images/btn_login.png'?>" alt="" title="" style="height: 60px"/></a>
+    <p style="display:block; width:100%; text-align:center; top: 65%; position:absolute;">
+        <button style="padding: 10px 50px"  id="show-login" href="#"  class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login-modal"><strong>Sign In</strong></button>
+
     </p>
 </div>
 <!-- Put your page content here! -->
