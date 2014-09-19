@@ -56,20 +56,25 @@
 
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">Start Profile</a>
+
+                    <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Dashboard">Dashboard <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Start Profile</a></li>
+                            <li><a href="#">Recent Notifications</a></li>
+                            <li><a href="#">Technical Tests</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Recent Notifications</a>
+                    <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Dashboard">Post Career <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Recently posted career list</a></li>
+                            <li><a href="#">New Career</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Recently Posted Career</a>
-                    </li>
-                    <li>
-                        <a href="#">Technical Tests</a>
-                    </li>
+                    <li><a href="javascript: void(0)">Career Match</a></li>
+                    <li><a href="javascript: void(0)">Activities</a></li>
+                    <li><a id="cmd-logout" href="javascript: void(0)">Logout</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
