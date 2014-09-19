@@ -7,7 +7,7 @@ $userName = $this->userName;
 ?>
 <!-- Modal Add -->
 <div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotification" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header login_modal_header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -20,7 +20,6 @@ $userName = $this->userName;
                             <div class="form-group">
                                 <input value="" type="text" name="textnotification" id="textnotification" placeholder="content" class="form-control">
                             </div>
-                            <button style="width:70px" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
                         </div>
                     </div>
@@ -32,7 +31,7 @@ $userName = $this->userName;
 <!-- Model Edit-->
 
 <div class="modal fade" tabindex="-1" role="dialog" id="EditModalNotification" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -46,8 +45,7 @@ $userName = $this->userName;
                                 <input value="" type="text" name="editNotification" id="editNotification" placeholder="content" class="form-control">
                                 <input value="" type="hidden" name="ModalEditNotiID" id="ModalEditNotiID">
                             </div>
-                            <button style="width:70px" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                            <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Edit</button>
                         </div>
                     </div>
                 </form>
