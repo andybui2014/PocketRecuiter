@@ -1,33 +1,60 @@
-<!-- Bootstrap Core CSS -->
-<link href="<?=URL_THEMES_MOBILE.'css/bootstrap.min.css';?>" rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="<?=URL_THEMES_MOBILE.'css/full.css';?>" rel="stylesheet">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-<!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-<!-- jQuery Version 1.11.0 -->
-<script src="<?=URL_THEMES_MOBILE.'js/jquery-1.11.0.js';?>"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
 <script src="<?=URL_THEMES_MOBILE.'js/mobile.notifications.js';?>"></script>
-
 <?php
 $result = $this->result;
 $clientIDLogin = $this->clientIDLogin;
 $userName = $this->userName;
 
-//foreach($result as $k=>$info){
-    //echo "<pre>";
-//print_r($info);
-    //echo "</pre>";
-//}
 ?>
+<!-- Modal Add -->
+<div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotification" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header login_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Add a notification</h2>
+            </div>
+            <div class="modal-body login-modal">
+                <form id="form-addnotification" name="form-addnotification">
+                    <div>
+                        <div class='modal-body-left'>
+                            <div class="form-group">
+                                <input value="" type="text" name="textnotification" id="textnotification" placeholder="content" class="form-control">
+                            </div>
+                            <button style="width:70px" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Model Edit-->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="EditModalNotification" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Edit notification</h2>
+            </div>
+            <div class="modal-body login-modal">
+                <form id="form-editnotification" name="form-editnotification">
+                    <div>
+                        <div class="modal-body-left">
+                            <div class="form-group">
+                                <input value="" type="text" name="editNotification" id="editNotification" placeholder="content" class="form-control">
+                                <input value="" type="hidden" name="ModalEditNotiID" id="ModalEditNotiID">
+                            </div>
+                            <button style="width:70px" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <header class="subhead" id="overview">
         <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
@@ -57,7 +84,7 @@ $userName = $this->userName;
                             <button  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 Action <span class="caret"></span>
                             </button>
-                            <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                            <ul id="menu-privacy" class="dropdown-menu pull-right" role="menu">
                                 <li ><a data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Add</a></li>
                                 <li><a id="EditNotification"  href="javascript: void(0);">Edit</a></li>
                                 <li><a id="deleteNotification"  href="javascript: void(0);">Delete</a></li>
@@ -101,56 +128,6 @@ $userName = $this->userName;
             </table>
 
         </div>
-        <!-- Modal Add -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotification" data-keyboard="false" data-backdrop="static">
-            <div class="modal-dialog">
-                <div class="modal-content modal-dialog-center">
-                    <div class="modal-header login_modal_header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h2 class="modal-title" id="myModalLabel">Add a notification</h2>
-                    </div>
-                    <div class="modal-body login-modal">
-                        <form id="form-addnotification" name="form-addnotification">
-                            <div>
-                                <div class='modal-body-left'>
-                                    <div class="form-group">
-                                        <input value="" type="text" name="textnotification" id="textnotification" placeholder="content" class="form-control">
-                                    </div>
-                                    <button style="width:70px" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Model Edit-->
-
-        <div class="modal fade" tabindex="-1" role="dialog" id="EditModalNotification" data-keyboard="false" data-backdrop="static">
-                <div class="modal-dialog">
-                    <div class="modal-content modal-dialog-center">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h2 class="modal-title" id="myModalLabel">Edit notification</h2>
-                        </div>
-                        <div class="modal-body login-modal">
-                            <form id="form-editnotification" name="form-editnotification">
-                                <div>
-                                    <div class="modal-body-left">
-                                        <div class="form-group">
-                                            <input value="" type="text" name="editNotification" id="editNotification" placeholder="content" class="form-control">
-                                            <input value="" type="hidden" name="ModalEditNotiID" id="ModalEditNotiID">
-                                        </div>
-                                        <button style="width:70px" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
     </row>
 
@@ -158,7 +135,3 @@ $userName = $this->userName;
 .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
 
 </style>
-<!-- Bootstrap Core JavaScript -->
-<!--
-    <script src="<?=URL_THEMES_MOBILE.'js/mobile.notifications.js';?>"></script>
--->
