@@ -3,19 +3,7 @@
     <head>
         
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="<?= URL_THEMES . "js/jquery/jquery-1.7.2.min.js" ?>"></script>
-        <script type="text/javascript" src="<?= URL_THEMES . "js/jquery/jquery-ui-1.8.21.custom.min.js" ?>"></script>
-        <script type="text/javascript" src="<?= URL_THEMES . "js/fun.js" ?>"></script>
-        <script type="text/javascript" src="<?= URL_THEMES . "js/menu.js" ?>"></script>
-        <script type="text/javascript" src="<?= URL_THEMES . "js/home.js" ?>"></script>
-        <script type="text/javascript" src="<?= URL_THEMES . "js/PrintArea.js" ?>"></script>
-
-       <!-- <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/ui-lightness/jquery-ui-1.8.21.custom.css" ?>"/>
-        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/main.css" ?>"/>
-        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/porlet.css" ?>"/>
-        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/verticalmenu.css" ?>"/>
-        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/transcript.css" ?>"/>-->
-        
+      
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,17 +11,15 @@
         <meta name="author" content="">
 
         <title>PocketRecruiter</title>
-
-        <!-- Bootstrap Core CSS -->
-        
-        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/bootstrap.min.css" ?>"/>
-
+        <link href="<?=URL_THEMES_MOBILE.'css/bootstrap.min.css';?>" rel="stylesheet">
         <!-- Custom CSS -->
-        
-        <link rel="stylesheet" type="text/css" href="<?= URL_THEMES . "css/full.css" ?>"/>
-        
-
-       
+        <link href="<?=URL_THEMES_MOBILE.'css/full.css';?>" rel="stylesheet">
+        <!-- jQuery Version 1.11.0 -->
+        <script src="<?=URL_THEMES_MOBILE.'js/jquery-1.11.0.js';?>"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="<?=URL_THEMES_MOBILE.'js/bootstrap.min.js';?>"></script>
+        <script src="<?=URL_THEMES_MOBILE.'js/mobile.login.js';?>"></script>
+        <script src="<?=URL_THEMES_MOBILE.'js/mobile.profile.js';?>"></script>
     </head>
 
     <body>
@@ -56,20 +42,25 @@
 
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">Start Profile</a>
+
+                    <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Dashboard">Dashboard <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Start Profile</a></li>
+                            <li><a href="#">Recent Notifications</a></li>
+                            <li><a href="#">Technical Tests</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Recent Notifications</a>
+                    <li> <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Dashboard">Post Career <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Recently posted career list</a></li>
+                            <li><a href="#">New Career</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#">Recently Posted Career</a>
-                    </li>
-                    <li>
-                        <a href="#">Technical Tests</a>
-                    </li>
+                    <li><a href="javascript: void(0)">Career Match</a></li>
+                    <li><a href="javascript: void(0)">Activities</a></li>
+                    <li><a id="cmd-logout" href="javascript: void(0)">Logout</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
