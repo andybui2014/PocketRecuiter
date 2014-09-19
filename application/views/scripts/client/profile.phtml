@@ -99,27 +99,17 @@ $client=$this->client;
                 </tr>
                 <tr>
                         <td>
-                            User Name<span class="ref">*</span>
+                            User Name<span class="ref"></span>
                         </td>
                         <td>
-                        <div class="form-group1">
+                        <?=$client['UserName']?>
+                        <!--<div class="form-group1">
                             <input type="text"  class="form-control1"  value="<?=$client['UserName']?>" size="20" name="UserName" />
-                            <span class="message" id="UserName_message"></span>
+                            <span class="message" id="UserName_message"></span>-->
                        </div>
                         </td>
                 </tr>
-                 <tr>
-                        <td>
-                            Password<span class="ref">*</span>
-                        </td>
-                        <td>
-                        <div class="form-group1">
-                            <input type="password"  class="form-control1" value="<?=$client['Password']?>" size="20" name="Password" />
-                            <span class="message" id="Password_message"></span>
-                       </div>
-                        </td>
-                </tr>
-                
+                                 
                
                                <tr>
                         <td>
