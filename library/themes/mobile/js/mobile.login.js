@@ -1,5 +1,5 @@
 function mobileLogin(){ }
-mobileLogin.prototype = {
+mobileLogin.prototype = { 
     init: function(){
         $("#cmd-login").unbind('click').bind('click',this.login);
         $('#show-login').unbind('click').bind('click',this.reset);
