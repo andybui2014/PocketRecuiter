@@ -35,6 +35,15 @@ table.ex1 {
 }
 
 #form-profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
+
+ .redborder{
+        border:#F00 solid 1px;
+        background-color:yellow;
+      }
+      .greenborder  {
+        border:#0F3 solid 1px;
+        background-color:#6F6;
+      }
 </style>
 
 
@@ -78,7 +87,7 @@ $client=$this->client;
                         </td>
                         <td width="">
                        <div class="form-group1">
-                            <input type="text" class="form-control1"    value="<?=$client['CompanyName']?>" size="20" name="CompanyName" />
+                            <input type="text" class="form-control1"    value="<?=$client['CompanyName']?>" size="20" name="CompanyName" id="CompanyName" />
                             <span class="message" id="companyname_message"></span>
                        </div>
                             
@@ -139,7 +148,7 @@ $client=$this->client;
                         </td>
                         <td>
                         <div class="form-group1">
-                            <input type="text"  class="form-control1"  value="<?=$client['Email1']?>" size="20" name="Email1" />
+                            <input type="text"  class="form-control1"  value="<?=$client['Email1']?>" size="20" name="Email1"  id="Email1"/>
                              <span class="message" id="Email1_message"></span>
                              
                              
@@ -261,5 +270,27 @@ $client=$this->client;
 <script src="<?=URL_THEMES_MOBILE.'js/mobile.profile.js';?>"></script>
 
 <script type="text/javascript">
-
+ $(document).ready(function () {
+         $('#Email1').blur(function () {
+         var error = false; 
+         if($('#Email1').val()!=='')
+         {
+            
+            var x = $('#Email1').val();
+            var atpos = x.indexOf("@");
+            var dotpos = x.lastIndexOf(".");
+            
+            if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                error = true;
+                $("#Email1_message").addClass('has-error');
+                $("#Email1_message").html("The primary mail is not a valid email address");
+                }else{
+                $("#Email1_message").removeClass('has-error').addClass('has-success');
+                $("#Email1_message").html('');
+            }  
+         }
+             
+             
+        });
+ });
 </script>
