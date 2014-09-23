@@ -27,5 +27,8 @@ class CandidateController extends Application_Controller_Action {
     public function skillsAction(){
         $this->render('detail/skills');
     }
+    public function successAction(){
+        $this->render('detail/success');
+    }
 }
 ?>

@@ -1,1 +1,1 @@
-MyAppName|a:1:{s:14:"SESSION_CLIENT";N;}
+MyAppName|a:1:{s:14:"SESSION_CLIENT";a:21:{s:8:"ClientID";i:1;s:8:"UserName";s:2:"pr";s:8:"Password";s:8:"Test1234";s:11:"CompanyName";N;s:10:"Company_ID";N;s:11:"ContactName";N;s:13:"ContactPhone1";N;s:13:"ContactPhone2";N;s:6:"Email1";N;s:6:"Email2";N;s:15:"BusinessAddress";N;s:12:"BusinessCity";N;s:13:"BusinessState";N;s:11:"BusinessZip";N;s:18:"CompanyDescription";N;s:7:"RegDate";N;s:14:"AccountEnabled";i:1;s:12:"Company_Logo";N;s:7:"Country";N;s:9:"CreatedBy";N;s:13:"LastLoginDate";N;}}
