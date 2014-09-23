@@ -20,7 +20,7 @@ class Application_Controller_Action extends Zend_Controller_Action {
         define('URL_MEDIA_TEMP', URL_MEDIA. "temp/");
         define('URL_MEDIA_SCHOOLLOGO', URL_MEDIA. "schoollogos/");
         define('URL_MEDIA_PROFILE_NOAVATAR', "DefaultPerson.jpg");
-        define('LAYOUT', "standard_");
+        //define('LAYOUT', "");
         // for DIR
         define('DIR_BASE',  realpath(APPLICATION_PATH . '/../'));
         define('DIR_MEDIA',  DIR_BASE.'/library/media/');
