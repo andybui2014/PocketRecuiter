@@ -1,6 +1,6 @@
 <?php
 session_save_path(realpath(dirname(__FILE__) . '/session'));
-//echo("realpath: ".realpath(dirname(__FILE__) . '/session'));die(); ABC
+//echo("realpath: ".realpath(dirname(__FILE__) . '/session'));die();
 
 // Define path to application directory
 defined('APPLICATION_PATH')
