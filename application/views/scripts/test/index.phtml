@@ -22,13 +22,13 @@
         margin:0;padding:0;list-style: none;
     }
     ul.test-list-item .item-header{}
-    ul.test-list-item .item-list{padding: 5px;margin:0;  border-bottom: 1px solid #ccc;}
-
+    ul.test-list-item .item-list{padding:10px;margin:0;  border-bottom: 1px solid #ccc;}
+    .name-edit{cursor: pointer; padding: 6px;background: #fff; border: 1px solid #ddd;font-size: 15px; border-radius: 50%;}
 
 </style>
 <div class="container" >
     <div class="page-header">
-        <h3><span class="text-left" style="color: #2a6496">Watchlist</span>
+        <h3><span class="text-left" style="color: #2a6496">Watchlist <span class="name-edit" ><i class="glyphicon glyphicon-pencil"></i></span></span>
         <span class="pull-right">
             <button class="btn btn-sm btn-success" type="button"><strong>Create New Test</strong></button>
         </span>
@@ -40,7 +40,7 @@
             <div class="panel-heading" style="background-color: #2a6496;color: #fff">
                 <h4 class="panel-title" >
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                        Questions Sheet - Total 3
+                        <strong>Questions Sheet - Total 3</strong>
                     </a>
                 </h4>
             </div>
@@ -48,17 +48,24 @@
                 <div class="panel-body" style="padding-top:0;padding-bottom: 0">
                     <div class="row">
                         <div class="col-md-3">
-                            <ul class="test-list-item">
-                                <li  class="item-list"><label><input type="checkbox"/> Question 1</label></li>
-                                <li class="item-list"><label><input type="checkbox"/> Question 1</label></li>
-                                <li class="item-list"><label><input type="checkbox"/> Question 1</label></li>
-                                <li class="item-list"><label><input type="checkbox"/> Question 1</label></li>
+                            <ul class="test-list-item" >
+                                <li  class="item-list" style="height: 55px;"><label style="line-height: 30px"><input type="checkbox"/> Question 1</label></li>
+                                <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
+                                <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
+                                <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
+                                <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <ul class="test-list-item">
-                                <div class="panel panel-default  item-container">
+                            <ul class="test-list-item" >
+                                <div class="panel panel-default  item-container" >
+                                    <li  class="item-list"  style="text-align: right;height: 55px;">
+                                            <strong style="line-height: 30px" class="pull-left">Question Form</strong>
+                                            <button  id="" class="btn btn-sm btn-success" type="button"> <i class="glyphicon glyphicon-plus"></i> Add Question</button>
+                                            <button  id="" class="btn btn-sm btn-default" type="button"> <i class="glyphicon glyphicon-floppy-disk"></i> Save Test</button>
+                                    </li>
                                     <div class="panel-body item-container">
+
                                         <form id="" role="form">
                                             <div class="form-group">
                                                 <label><a>Question</a></label>
@@ -68,11 +75,12 @@
                                                 <label for="credential"><a>Answer Option</a></label>
                                                 <textarea class="form-control" placeholder="Answer Option"></textarea>
                                             </div>
-                                            <div class="col-xs-12">
-
-                                            <p class="pull-right"><a class="lbl-log" href="#">Add More Option</a></p>
-                                                </div>
-                                            <button data-loading-text="Loading..." id="btn-login" class="btn btn-success" type="button">Save Question</button>
+                                            <div class="col-xs-12" >
+                                                    <p class="pull-right"><a class="lbl-log" href="#">Add More Option</a></p>
+                                            </div>
+                                            <div class="col-xs-12" style="padding-left: 0;margin-top: 100px;">
+                                            <button data-loading-text="Loading..." id="" class="btn btn-success" type="button">Save Question</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -81,10 +89,72 @@
                         </div>
                         <div class="col-md-3">
                             <ul class="test-list-item">
-                                <li  class="item-list"><label><input type="checkbox"/> Question 1</label></li>
-                                <li class="item-list"><label><input type="checkbox"/> Question 1</label></li>
-                                <li class="item-list"><label><input type="checkbox"/> Question 1</label></li>
-                                <li class="item-list"><label><input type="checkbox"/> Question 1</label></li>
+                                <li  class="item-list" style="height: 55px; line-height: 30px">
+                                    Action<span class="caret"></span>
+
+
+                                </li>
+                                <li  class="item-list">
+                                    <!-- Split button -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-default">1 Min</button>
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">1 Min</a></li>
+                                            <li><a href="#">2 Min</a></li>
+                                            <li><a href="#">3 Min</a></li>
+                                            <li><a href="#">4 Min</a></li>
+                                            <li><a href="#">5 Min</a></li>
+                                            <li><a href="#">6 Min</a></li>
+                                            <li><a href="#">7 Min</a></li>
+                                            <li><a href="#">8 Min</a></li>
+                                            <li><a href="#">9 Min</a></li>
+                                            <li><a href="#">10 Min</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li  class="item-list">
+                                    <!-- Split button -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-default">1 Min</button>
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">1 Min</a></li>
+                                            <li><a href="#">2 Min</a></li>
+                                            <li><a href="#">3 Min</a></li>
+                                            <li><a href="#">4 Min</a></li>
+                                            <li><a href="#">5 Min</a></li>
+                                            <li><a href="#">6 Min</a></li>
+                                            <li><a href="#">7 Min</a></li>
+                                            <li><a href="#">8 Min</a></li>
+                                            <li><a href="#">9 Min</a></li>
+                                            <li><a href="#">10 Min</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li  class="item-list">
+                                    <!-- Split button -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-default">Select Time</button>
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -95,30 +165,88 @@
             <div class="panel-heading" style="background-color: #2a6496;color: #fff">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                        Collapsible Group Item #2
+                        <strong>Save Test</strong>
                     </a>
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    <div class="table-responsive">
+
+                        <table style="margin-bottom:0;"  class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th><span><input type="checkbox" name=""/>Select All</span></th>
+                                <th><strong>Test Name</strong></th>
+                                <th></th>
+                                <th>Question</th>
+                                <th>Action<span class="caret"></span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><span><input type="checkbox" name=""/> <strong>5/16/14</strong></span> <span class="pull-right"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                                <td><a href="#" style="text-decoration: underline; color: #777">Apple Inc</a></td>
+                                <td style="color: #777">Experienced Atlatasian Administrator   </td>
+                                <td><strong>Q.33</strong></td>
+                                <td>
+                                    <span style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                    <span><i style="color: #bbb"  class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span><input type="checkbox" name=""/> <strong>5/16/14</strong></span> <span class="pull-right"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                                <td><a href="#" style="text-decoration: underline; color: #777">Apple Inc</a></td>
+                                <td style="color: #777">Experienced Atlatasian Administrator   </td>
+                                <td><strong>Q.33</strong></td>
+                                <td>
+                                    <span style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                    <span><i style="color: #bbb"  class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span><input type="checkbox" name=""/> <strong>5/16/14</strong></span> <span class="pull-right"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                                <td><a href="#" style="text-decoration: underline; color: #777">Apple Inc</a></td>
+                                <td style="color: #777">Experienced Atlatasian Administrator   </td>
+                                <td><strong>Q.33</strong></td>
+                                <td>
+                                    <span style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                    <span><i style="color: #bbb"  class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span><input type="checkbox" name=""/> <strong>5/16/14</strong></span> <span class="pull-right"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                                <td><a href="#" style="text-decoration: underline; color: #777">Apple Inc</a></td>
+                                <td style="color: #777">Experienced Atlatasian Administrator   </td>
+                                <td><strong>Q.33</strong></td>
+                                <td>
+                                    <span style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                    <span><i style="color: #bbb"  class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span><input type="checkbox" name=""/> <strong>5/16/14</strong></span> <span class="pull-right"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                                <td><a href="#" style="text-decoration: underline; color: #777">Apple Inc</a></td>
+                                <td style="color: #777">Experienced Atlatasian Administrator   </td>
+                                <td><strong>Q.33</strong></td>
+                                <td>
+                                    <span style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                    <span><i style="color: #bbb"  class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                        <div class="" style="height: 40px;background-color: #333">
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" style="background-color: #2a6496;color: #fff">
-                <h4 class="panel-title">
-                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                        Collapsible Group Item #3
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseThree" class="panel-collapse collapse">
-                <div class="panel-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
+
     </div>
 
 </div>
