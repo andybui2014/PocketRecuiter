@@ -8,10 +8,13 @@
     <meta name="author" content="">
     <title>PocketRecruiter</title>
     <link href="<?=URL_THEMES.'css/bootstrap.min.css';?>" rel="stylesheet">
+    <link href="<?=URL_THEMES.'css/datepicker.css';?>" rel="stylesheet">
     <link href="<?=URL_THEMES.'css/main.css';?>" rel="stylesheet">
     <script src="<?=URL_THEMES.'js/jquery-1.11.0.js';?>"></script>
     <script src="<?=URL_THEMES.'js/bootstrap.min.js';?>"></script>
+    <script src="<?=URL_THEMES.'js/bootstrap-datepicker.js';?>"></script>
     <script src="<?=URL_THEMES.'js/pocket.main.js';?>"></script>
+
 </head>
 
 <body>
@@ -23,7 +26,7 @@
                 <h2 class="modal-title" id="myModalLabel"></h2>
             </div>
             <div class="modal-body login-modal">
-               <div id="modal-content"></div>
+                <div id="modal-content"></div>
             </div>
         </div>
     </div>
@@ -68,6 +71,55 @@
 <?php echo $this->layout()->content; ?>
 <!--End Container-->
 
+<div id="footer">
+    <div class="container">
+        <div class="col-md-2">
+            <h5><strong style="color: #2a6496">Product</strong></h5>
+            <ul class="fa-list">
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Plans</a></li>
+                <li><a href="#">Success Stories</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <h5><strong style="color: #2a6496">Resources</strong></h5>
+            <ul class="fa-list">
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Resources</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <h5><strong style="color: #2a6496">Company</strong></h5>
+            <ul class="fa-list">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Press Releases</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Partners</a></li>
+                <li><a href="#">Team</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <h5><strong style="color: #2a6496">Follow</strong></h5>
+            <ul class="fa-list">
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Google+</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <h5><strong style="color: #2a6496">Contact Us</strong></h5>
+            <ul class="fa-list">
+                <li><a href="#">Email Sale</a></li>
+                <li><a href="#">(000) 123-4567</a></li>
+                <li><a href="#">Email Support</a></li>
+                <li><a href="#">(000) 123-4567</a></li>
+                <li><a href="#">6am-6p Pt daily</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 <!--Footer-->
 <!--End Container-->
 </body>
