@@ -3,27 +3,26 @@
 class PR_Api_Register extends Zend_Db_Table_Abstract
 {
     protected $_name = 'user';
-    private $ClientID;
-    private $UserName;
-    private $Password;
-    private $CompanyName;
-    private $Company_ID;
-    private $ContactName;
-    private $ContactPhone1;
-    private $ContactPhone2;
-    private $Email1;
-    private $Email2;
-    private $BusinessAddress;
-    private $BusinessCity;
-    private $BusinessState;
-    private $BusinessZip;
-    private $CompanyDescription;
-    private $RegDate;
-    private $AccountEnabled;
-    private $Company_Logo;
+    private $UserID;
+    private $usertype;
+    private $firstname;
+    private $middlename;
+    private $lastname;
+    private $dob;
+    private $CompanyID;
+    private $CandidateProfileID;
+    private $loginname;
+    private $password;
+    private $emailaddress;
+    private $URL;
+    private $PhoneNumber;
+    private $Address1;
+    private $Address2;
+    private $City;
+    private $State;
+    private $PostalCode;
     private $Country;
-    private $CreatedBy;
-    private $LastLoginDate;
+    private $HeardFrom;
     
     protected $authenticate = false;
     public $errMsg = "";

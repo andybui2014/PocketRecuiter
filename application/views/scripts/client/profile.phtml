@@ -63,206 +63,93 @@ $client=$this->client;
                     
                 </h3>
             </div>
-            <div class="panel-body">
+      <div class="container" >     
+      <div class="col-md-6"  style="padding:0">      
+      <form role="form" method="post" name="Register" id="Register" action="<?= URL_BASE . 'client/update-profle'  ?>">
+             <div class="form-group">
+                <label for="credential">First Name</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="firstname" name="firstname" value="<?=$client['firstname']?>" >
+                <span class="message" id=""></span>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Last Name</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="lastname" name="lastname" value="<?=$client['lastname']?>" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
+            <div class="form-group ">
+                <label for="email">Email address</label>
+              <div class="form-group">
+              
+                <input name="emailaddress" type="email" class="form-control" id="emailaddress" value="<?=$client['emailaddress']?>">
+                <span class="message" id=""></span>
+              </div>
+            </div>
+           
+            <div class="form-group">
+                <label for="email">Phone Number</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="<?=$client['PhoneNumber']?>" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
             
-        <form name="form-profile" id="form-profile" method="post" action="<?= URL_BASE . 'client/update-profle' ?>">
-         
-           <div align="" style="">
-            <table  class="ex1 ">
-            <col width="20%">
-            <col width="60%" style="">
-            <tbody>
-                <tr>
-                        <td width="">
-                            Company ID
-                        </td>
-                        <td width="">
-                            <?=$client["Company_ID"]?>
-                        </td>
-                </tr>
-                 <tr>
-                        <td width="">
-                        
-                            Company Name<span class="ref">*</span>
-                        </td>
-                        <td width="">
-                       <div class="form-group1">
-                            <input type="text" class="form-control1"    value="<?=$client['CompanyName']?>" size="20" name="CompanyName" id="CompanyName" />
-                            <span class="message" id="companyname_message"></span>
-                       </div>
-                            
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                            Contact Name<span class="ref">*</span>
-                        </td>
-                        <td>
-                        <div class="form-group1">
-                            
-                            <input type="text"  class="form-control1"  value="<?=$client['ContactName']?>" size="20" name="ContactName" />
-                        <span class="message" id="ContactName_message"></span>
-                       </div>    
-                        
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                            User Name<span class="ref"></span>
-                        </td>
-                        <td>
-                        <?=$client['UserName']?>
-                        <!--<div class="form-group1">
-                            <input type="text"  class="form-control1"  value="<?=$client['UserName']?>" size="20" name="UserName" />
-                            <span class="message" id="UserName_message"></span>-->
-                       </div>
-                        </td>
-                </tr>
-                                 
-               
-                               <tr>
-                        <td>
-                            Primary Phone<span class="ref">*</span>
-                        </td>
-                        <td>
-                        <div class="form-group1">
-                            <input type="text"  class="form-control1"  value="<?=$client['ContactPhone1']?>" size="20" name="ContactPhone1" />
-                            <span class="message" id="ContactPhone1_message"></span>
-                       </div>
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                            Secondary Phone
-                        </td>
-                        <td>
-                        <div class="form-group1">
-                            <input type="text"  class="form-control1"  value="<?=$client['ContactPhone2']?>" size="20" name="ContactPhone2" />
-                             <span class="message" id="ContactPhone2_message"></span>
-                       </div>
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                            Primary Email<span class="ref">*</span>
-                        </td>
-                        <td>
-                        <div class="form-group1">
-                            <input type="text"  class="form-control1"  value="<?=$client['Email1']?>" size="20" name="Email1"  id="Email1"/>
-                             <span class="message" id="Email1_message"></span>
-                             
-                             
-                       </div>
-                        </td>
-                </tr>
-                 <tr>
-                        <td>
-                            Secondary Email
-                        </td>
-                        <td>
-                        <div class="form-group1">
-                            <input type="text"  class="form-control1" value="<?=$client['Email2']?>" size="20" name="Email2" />
-                             <span class="message" id="Email2_message"></span>
-                             
-                             
-                       </div>
-                        </td>
-                </tr>
-                 <tr>
-                        <td>
-                            Business Address
-                        </td>
-                        <td>
-                            <input type="text"  class="form-control1"  value="<?=$client['BusinessAddress']?>" size="20" name="BusinessAddress" />
-                        </td>
-                </tr>
-                 <tr>
-                        <td>
-                            Business City
-                        </td>
-                        <td>
-                            <input type="text"  class="form-control1"  value="<?=$client['BusinessCity']?>" size="20" name="BusinessCity" />
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                            Business State
-                        </td>
-                        <td>
-                            <input type="text"  class="form-control1"  value="<?=$client['BusinessState']?>" size="20" name="BusinessState" />
-                        </td>
-                </tr>
-                <tr>
-                        <td>
-                            Business Zip
-                        </td>
-                        <td>
-                            <input type="text"  class="form-control1"  value="<?=$client['BusinessZip']?>" size="20" name="BusinessZip" />
-                        </td>
-                </tr>
-                     
-                 <tr>
-                        <td>
-                            Country
-                        </td>
-                        <td>
-                            <?=$client['Country']?>
-                        </td>
-                </tr>
-                 <tr>
-                        <td>
-                            Account Enabled
-                        </td>
-                        <td>
-                        
-                 <input type="checkbox" <?=($client['AccountEnabled']==1)?"checked":""?> name="AccountEnabled" disabled />
-                        </td>
-                </tr>
-               <!-- <tr>
-                        <td>
-                            Company Logo
-                        </td>
-                        <td>
-                            <div style="float:left;width:450px; ">
-                                                                          
-                                        <div id="Company_Logo_file">
-                                            <input type="file" id="Company_Logo" style="size:20;" name="Company_Logo">
-                                         </div>   
-                                         </div>
-                        </td>
-                </tr>
+            <div class="form-group">
+                <label for="credential">URL</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="URL" name="URL" value="<?=$client['URL']?>"  >
+                 <span class="message" id=""></span>
+              </div>
                 
-                 <tr>
-                        <td colspan="2">
-                            Company Description
-                        </td>
-                        
-                </tr>
-                 <tr>
-                        <td colspan="2">
-                            <textarea rows="5" style="width: 47%;" name="CompanyDescription" id="EditRecordCompanyDescription"></textarea>
-                        </td>
-                        
-                </tr>-->
-                <tr><td colspan="2"><br/></td></tr>
-                <tr >
-                    <td style="">
-                    <div class="">
+            </div>
+             <div class="form-group">
+                <label for="credential">Address</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="Address1" name="Address1" value="<?=$client['Address1']?>">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">City</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="City" name="City" value="<?=$client['City']?>">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">Country</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="Country" name="Country" value="<?=$client['Country']?>">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">Zip Code</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="PostalCode" name="PostalCode" value="<?=$client['PostalCode']?>">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+           <div class="">
                     
                         <button type="button" class="btn btn-success" id="cmd-updateprofile">
                             <strong>Update</strong>
                         </button>
                     
                      </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            </div>
-            
-         
+                        
         </form>
+       
+        
         </div>
+      </div>
     </div>
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
