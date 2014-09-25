@@ -13,14 +13,7 @@ class ClientController extends Application_Controller_Action
             $this->_helper->redirector("index","login");
         }  
     }
-    public function doLogoutAction()
-    {
-        $this->_helper->layout->disableLayout();
-
-        PR_Session::clearSessions();
-        
-        $this->_helper->redirector("index","login");
-    }   
+    
     
     public function startProfileAction()
     {
