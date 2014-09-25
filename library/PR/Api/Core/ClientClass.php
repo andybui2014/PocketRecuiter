@@ -1,7 +1,7 @@
 <?php
 class PR_Api_Core_ClientClass
 {
-    private $avaiUpdateFields = array('UserName','Password','CompanyName','Company_ID','ContactName','ContactPhone1','ContactPhone2','Email1','Email2','BusinessAddress','BusinessCity','BusinessState','BusinessZip','CompanyDescription','RegDate','AccountEnabled','Company_Logo','Country','CreatedBy','LastLoginDate');
+    private $avaiUpdateFields = array('usertype','firstname','middlename','lastname','dob','CompanyID','CandidateProfileID','loginname','password','emailaddress','URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country','HeardFrom');
     
     public function  __construct() {
         $errMsg="";
@@ -18,8 +18,11 @@ class PR_Api_Core_ClientClass
                 $updateFields[$key] = $value;
             }            
         }
-        $criteria = "ClientID = '$clientID'";
-        PR_Database::update('clients',$updateFields,$criteria);
+
+        $criteria = "UserID = '$clientID'";
+       $user= PR_Database::update('user',$updateFields,$criteria);
+       //echo ("user:".$user);
+               
     }
 }  
 

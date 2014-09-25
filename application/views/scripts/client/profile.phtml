@@ -69,7 +69,7 @@ $client=$this->client;
     <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;">
           
       <div class="col-md-6"  style="padding:0">      
-      <form role="form" method="post" name="Register" id="Register" action="<?= URL_BASE . 'client/update-profle'  ?>">
+      <form role="form" method="post" name="form-profile" id="form-profile" action="<?= URL_BASE . 'client/update-profle'  ?>">
              <div class="form-group">
                 <label for="credential">First Name</label>
               <div class="form-group">
@@ -89,7 +89,7 @@ $client=$this->client;
               <div class="form-group">
               
                 <input name="emailaddress" type="email" class="form-control" id="emailaddress" value="<?=$client['emailaddress']?>">
-                <span class="message" id=""></span>
+                <span class="message" id="Email1_message"></span>
               </div>
             </div>
            
@@ -159,16 +159,16 @@ $client=$this->client;
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
 
-<script src="<?=URL_THEMES_MOBILE.'js/mobile.profile.js';?>"></script>
+<script src="<?=URL_THEMES.'js/profile.js';?>"></script>
 
 <script type="text/javascript">
  $(document).ready(function () {
-         $('#Email1').blur(function () {
+         $('#emailaddress').blur(function () {
          var error = false; 
-         if($('#Email1').val()!=='')
+         if($('#emailaddress').val()!=='')
          {
             
-            var x = $('#Email1').val();
+            var x = $('#emailaddress').val();
             var atpos = x.indexOf("@");
             var dotpos = x.lastIndexOf(".");
             
