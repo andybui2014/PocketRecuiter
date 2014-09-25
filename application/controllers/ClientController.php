@@ -7,7 +7,7 @@ class ClientController extends Application_Controller_Action
         parent::init();
        // $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);ououi
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
-        echo("client");print_r($client);
+       // echo("client");print_r($client);
         if(empty($client))
         {
             $this->_helper->redirector("index","login");

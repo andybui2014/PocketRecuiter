@@ -57,24 +57,37 @@
                 );
              // echo ("data:<pre>");print_r($data);echo("</pre>");die();
         $api=new PR_Api_Register();
-        if($params["usertype"]==1)
-        {
-            $return['usertype'] = 1;
-        }
-        if($params["usertype"]==2)
-        {
-            $return['usertype'] = 2;
-        }
+      //  if($params["usertype"]==1)
+       // {
+         //   $return['usertype'] = 1;
+       // }
+       // if($params["usertype"]==2)
+       // {
+         //   $return['usertype'] = 2;
+       // }
+       
         if(isset($params["accept"]) )
         {
            // echo("test");die();
             $tets=$api->registerClient($data);
         }
         
+        
        // print_r($tets);
        if($tets["error"]=="")
        {
            $return['success'] = 1;
+           $clientApi = new PR_Api_Client();
+            $authData = array('emailaddress' => $data["emailaddress"], 'password' => $data["password"]);
+        if ($User = $clientApi->loadAndCheckAuthentication($authData))
+        {
+            PR_Session::setSession($User,PR_Session::SESSION_USER);
+            $user = PR_Session::getSession(PR_Session::SESSION_USER);
+           // echo("user:");print_r($user);hgj
+            
+            $return['success'] = 1;
+            $return['usertype'] = $user["usertype"];
+        } 
        }
       else
         {

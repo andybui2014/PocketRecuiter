@@ -172,26 +172,18 @@ register.prototype = {
                      //alert(xhr.success);
                      // alert("erro:"+xhr.error);
                         if(xhr.success){
+                           // alert("usertype:"+xhr.usertype);
                             if(xhr.usertype==1)
-                            {
-                                 $.ajax({
-                                    url:  'login/do-login' ,
-                                    success:function(result){
-                                       // alert("test:"+result.success);
-                                        if(result.success)
                                         {
-                                            alert("test");
-                                           // window.location =  'loin/do-login' ;
+                                            window.location = 'client/start-profile';
+                                            
                                         }
-                                        
-                                    }
-                                 });
-                                //window.location =  'loin/do-login' ;
-                            }
-                            if(xhr.usertype==2)
-                            {
-                                window.location =  'login' ;
-                            }
+                                         if(xhr.usertype==2)
+                                        {
+                                            
+                                            window.location = 'candidate/start-profile';
+                                           
+                                        }
                            
                           //  window.location = 'update-profle';
                           

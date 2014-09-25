@@ -6,9 +6,9 @@ class CandidateController extends Application_Controller_Action
     {
         parent::init();
        // $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);
-        $client = PR_Session::getSession(PR_Session::SESSION_USER);
-        echo("client");print_r($client);
-        if(empty($client))
+        $candidate = PR_Session::getSession(PR_Session::SESSION_USER);
+        //echo("client");print_r($client);
+        if(empty($candidate))
         {
             $this->_helper->redirector("index","login");
         }  
