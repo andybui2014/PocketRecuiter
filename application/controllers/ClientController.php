@@ -21,7 +21,7 @@ class ClientController extends Application_Controller_Action
     }
     public function profileAction()
     {
-         $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);
+         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $username = $client["UserName"];
         $password = $client["Password"];
          $clientApi = new PR_Api_Client();
@@ -40,8 +40,8 @@ class ClientController extends Application_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
         $params = $request->getParams();
-		 echo ("params:<pre>");print_r($params);echo("</pre>");die();
-         $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);
+		// echo ("params:<pre>");print_r($params);echo("</pre>");die();
+         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $username = $request->getParam("UserName", "");
         $password = $request->getParam("Password", "");
         $return = array("success" => 0, "error" => "");
