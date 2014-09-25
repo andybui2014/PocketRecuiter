@@ -6,7 +6,7 @@
 
 body{
     background: #f2f2f2;
-    padding-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 90px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 .nav-ribbon{line-height: 30px;width: 100%;background-color: #333;color: #fff;}
 .nav-ribbon .nav-ribbon-left{margin-right: 10%;}
@@ -19,4 +19,21 @@ body{
     -moz-box-shadow: 0 0 5px #ddd;
     -webkit-box-shadow: 0 0 5px#ddd;
     box-shadow: 0 0 5px #ddd;
+}
+/*Dropdown nav right*/
+.nav-pills{margin-top: 15px;}
+.nav-pills a{color: #333;padding: 0 5px !important; border-right: 1px solid #eee; border-radius: 0 !important;}
+.nav-pills .dropdown-menu{font-size: 12px;}
+.nav-pills .dropdown-toggle{cursor: pointer; padding: 0 5px; border-right: 1px solid #eee;}
+/*Ribbon for nav bottom*/
+.nav-ribbon-bottom{ height: 40px;  width: 100%;background-color: #2a6496;}
+.nav-ribbon-bottom ul{list-style: none; margin:auto;padding:0 ;width: 950px;}
+.nav-ribbon-bottom li{float:left;padding: 10px;}
+.nav-ribbon-bottom li a{color: #fff;border:0; font-weight: bold;}
+.nav-ribbon-bottom li a:hover{  text-decoration: none; }
+
+
+@media(min-width: 768px) {
+
+
 }

@@ -1,3 +1,6 @@
+<?php
+$helper = $this->layout()->_helper;
+?>
 <!DOCTYPE html>
 <html class="full" lang="en">
 <head>
@@ -33,16 +36,22 @@
 </div>
 
 <!-- Navigation -->
+<?php
+$loginClient = $this->layout()->loginclient;
+?>
 <nav class="navbar  navbar-default navbar-fixed-top" role="navigation">
-    <div class="nav-ribbon navbar-header">
-        <div class="nav-ribbon-left pull-right">
-            <?php $loginClient = $this->layout()->loginclient; if(!empty($loginClient)){ ?>
-                <strong><?=$loginClient['emailaddress'];?></strong> / <a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>">Logout</a>
-            <?php }else{ ?>
-                <a href="<?=URL_BASE;?>register">SignIn or Join</a>
-            <?php } ?>
+    <?php if(empty($loginClient)){?>
+        <div class="nav-ribbon navbar-header">
+            <div class="nav-ribbon-left pull-right">
+                <?php $loginClient = $this->layout()->loginclient; if(!empty($loginClient)){ ?>
+                    <strong><?=$loginClient['emailaddress'];?></strong> / <a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>">Logout</a>
+                <?php }else{ ?>
+                    <a href="<?=URL_BASE;?>register">SignIn or Join</a>
+                <?php } ?>
+            </div>
         </div>
-    </div>
+    <?php } ?>
+
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -58,6 +67,7 @@
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <?php if(empty($loginClient)){ ?>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><strong>Match Career</strong></a></li>
                 <li><a href="#"><strong>Features</strong></a></li>
@@ -66,8 +76,38 @@
                 <li><a href="#"><strong>Resources</strong></a></li>
                 <li><a href="#"><strong>Contact Us</strong></a></li>
             </ul>
+            <?php }else{ ?>
+                <ul class="nav nav-pills navbar-right small">
+
+                    <li class="dropdown">
+                        <span class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <strong><?=$loginClient['emailaddress']?></strong><span class="caret"></span>
+                        </span>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
+                            <li class="divider"></li>
+                            <li><a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Helps</a></li>
+                </ul>
+            <?php } ?>
+
         </div>
-        <!-- /.navbar-collapse -->
+
+    </div>
+
+    <div class="nav-ribbon-bottom">
+    <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Post Career</a></li>
+        <li><a href="#">Match Candidate</a></li>
+        <li><a href="#">Activities</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Watch List</a></li>
+    </ul>
     </div>
     <!-- /.container -->
 </nav>
