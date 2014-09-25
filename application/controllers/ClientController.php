@@ -33,7 +33,7 @@ class ClientController extends Application_Controller_Action
         $password = $client["Password"];
          $clientApi = new PR_Api_Client();
         $authData = array('UserName' => $username, 'Password' => $password);
-        $this->view->client = $clientApi->getClientArray($authData);
+        $this->view->client = $clientApi->getUserArray($authData);
         $this->render('profile');
         //$api=new PR_Api_Core_Skill();
         //$skill= $api->getSkillArray('5');

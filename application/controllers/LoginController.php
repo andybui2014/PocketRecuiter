@@ -25,10 +25,10 @@ class LoginController extends Application_Controller_Action {
 
         //echo ("username:".$username);
         // login
-        $clientApi = new PR_Api_Client();
+        $userApi = new PR_Api_User();
 
         $authData = array('emailaddress' => $username, 'password' => $password);
-        if ($client = $clientApi->loadAndCheckAuthentication($authData))
+        if ($client = $userApi->loadAndCheckAuthentication($authData))
         {
             PR_Session::setSession($client,PR_Session::SESSION_USER);
             $user = PR_Session::getSession(PR_Session::SESSION_USER);

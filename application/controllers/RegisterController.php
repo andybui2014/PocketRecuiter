@@ -57,14 +57,7 @@
                 );
              // echo ("data:<pre>");print_r($data);echo("</pre>");die();
         $api=new PR_Api_Register();
-      //  if($params["usertype"]==1)
-       // {
-         //   $return['usertype'] = 1;
-       // }
-       // if($params["usertype"]==2)
-       // {
-         //   $return['usertype'] = 2;
-       // }
+      
        
         if(isset($params["accept"]) )
         {
@@ -77,17 +70,17 @@
        if($tets["error"]=="")
        {
            $return['success'] = 1;
-           $clientApi = new PR_Api_Client();
+           $userApi = new PR_Api_User();
             $authData = array('emailaddress' => $data["emailaddress"], 'password' => $data["password"]);
-        if ($User = $clientApi->loadAndCheckAuthentication($authData))
-        {
-            PR_Session::setSession($User,PR_Session::SESSION_USER);
-            $user = PR_Session::getSession(PR_Session::SESSION_USER);
-           // echo("user:");print_r($user);hgj
-            
-            $return['success'] = 1;
-            $return['usertype'] = $user["usertype"];
-        } 
+            if ($User = $userApi->loadAndCheckAuthentication($authData))
+            {
+                PR_Session::setSession($User,PR_Session::SESSION_USER);
+                $user = PR_Session::getSession(PR_Session::SESSION_USER);
+               // echo("user:");print_r($user);hgj
+                
+                $return['success'] = 1;
+                $return['usertype'] = $user["usertype"];
+            } 
        }
       else
         {
