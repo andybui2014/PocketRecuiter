@@ -129,7 +129,7 @@ class PR_Api_Register extends Zend_Db_Table_Abstract
                      if($data['usertype']==2)
                     {
                         $db->insert(PR_Database::TABLE_USER, array(
-                        "User_ID" => $User_ID,
+                        "UserID" => $User_ID,
                         "firstname" => $data['firstname'],
                         "lastname" => $data['lastname'],
                         "usertype" => $data['usertype'],
