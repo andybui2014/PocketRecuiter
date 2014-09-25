@@ -98,7 +98,7 @@ $loginClient = $this->layout()->loginclient;
         </div>
 
     </div>
-
+    <?php if(!empty($loginClient)){ ?>
     <div class="nav-ribbon-bottom">
     <ul>
         <li><a href="#">Dashboard</a></li>
@@ -109,6 +109,7 @@ $loginClient = $this->layout()->loginclient;
         <li><a href="#">Watch List</a></li>
     </ul>
     </div>
+    <?php } ?>
     <!-- /.container -->
 </nav>
 <!--Container-->
