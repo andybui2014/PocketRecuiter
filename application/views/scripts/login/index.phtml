@@ -1,3 +1,11 @@
+
+<style>
+.has-error .form-control {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+#form-login .message{color: #b81900;}
+</style>
 <div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
     <div class="container">
         <small>This is the resume of the future! With Pocket Recruiter, </small><br/>
@@ -15,15 +23,19 @@
 <div class="col-md-8"  style="padding:0">
     <div class="col-md-6" style="margin:0;padding:0">
         <form id="form-login" role="form">
+        <div id="login-message">
+
+        </div>
+        <div>
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
-                <span class="username_message"></span>
+                <span class="message" id="username_message"></span>
             </div>
             <div class="form-group">
                 <label for="credential">Password</label>
                 <input name="password"  type="password" class="form-control" id="credential" placeholder="Password">
-                <span class="password_message"></span>
+                <span class="message" id="password_message"></span>
                 <p class="help-block" id=""><a href="reset">Forgot Password?</a></p>
             </div>
             <div class="form-group">
@@ -34,6 +46,7 @@
             </div>
             <button data-loading-text="Loading..." id="btn-login" class="btn btn-primary" type="button">Sign In</button>
         </form>
+        </div>
     </div>
     <div class="col-md-6">
     </div>

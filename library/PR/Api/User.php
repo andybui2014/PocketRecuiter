@@ -61,13 +61,13 @@ class PR_Api_User extends Zend_Db_Table_Abstract
         {                    
             foreach ($user[0] as $key => $value) 
             {
-                if (property_exists('PR_Api_Client', $key)) {
+                if (property_exists('PR_Api_User', $key)) {
                     $this->{$key} = $value;
                 }
             }        
             return $user[0];
         } else {
-            $errors->addError(3, 'Login or password is not correct');
+            $errors->addError(3, 'emailaddress or password is not correct');
             $this->ClientID = NULL;
             $this->UserName      = NULL;
             return null;

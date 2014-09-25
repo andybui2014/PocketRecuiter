@@ -10,7 +10,8 @@ pocketMain.prototype = {
      *  Function init main
      */
     init: function(){
-       // $("#cmd-logout").unbind('click').bind('click',this.logOut);
+        $("#btn-login").unbind('click').bind('click',this.logIn);
+        $('#show-login').unbind('click').bind('click',this.reset);
     },
     /**
      *  logOut
@@ -25,12 +26,22 @@ pocketMain.prototype = {
         $this.find('#form-logout').submit();
         return;
     },
+    reset: function(){
+        $('#login-message').html('');
+        $('#form-login').find('.form-group').removeClass('has-error');     
+        $('#form-login :input[name="email"]').val('');        
+        $('#form-login :input[name="password"]').val('');         
+        $('#form-login #email').html('');       
+        $('#form-login #password').html('');
+       
+        $('#btn-login').button('reset');
+    },
     logIn: function(){
         var $this = $(this);
         $this.button('loading');
 
         var fields = {
-            username: { notEmpty: { message: 'The email is required'}} ,
+            email: { notEmpty: { message: 'The email is required'}} ,
             password: { notEmpty: {message: 'The password is required'}}
         }
 
@@ -46,9 +57,10 @@ pocketMain.prototype = {
             //check value email
             var error = false;
             if(uid.val() =='' || uid.val().length <= 1){
+               // alert("testt");
                 error = true;
                 uid.parent().addClass('has-error');
-                uid_message.html(fields.username.notEmpty.message).fadeOut().fadeIn();
+                uid_message.html(fields.email.notEmpty.message).fadeOut().fadeIn();
             }else{
                 uid_message.parent().removeClass('has-error').addClass('has-success');
                 uid_message.html('');
@@ -89,7 +101,9 @@ pocketMain.prototype = {
                                     '</div>'
                             );
                             pwd_message.parent().removeClass('has-success').addClass('has-error');
+                            
                             uid.parent().removeClass('has-success').addClass('has-error');
+                            uid_message.html(fields.email.notEmpty.message).fadeOut().fadeIn();
                         }
                     }
                 });
@@ -100,5 +114,9 @@ pocketMain.prototype = {
     }
 
 }
+$(function() {
+    var pocket= new pocketMain();
+    pocket.init();
+});
 
 
