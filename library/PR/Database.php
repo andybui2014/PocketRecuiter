@@ -1,7 +1,8 @@
 <?php
 class PR_Database {
 	const TABLE_config = "config";
-    
+    const TABLE_USER = "user";
+
 	private static $db = null;
 
 	private static function init() {

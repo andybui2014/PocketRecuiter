@@ -47,11 +47,11 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
         
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from('clients',array('*'));
-        $select->where("UserName = ?", $authData['UserName']);
+        $select->from('user',array('*'));
+        $select->where("emailaddress = ?", $authData['emailaddress']);
 
-        if (isset($authData['Password'])) {
-            $select->where("Password = ?", $authData['Password']);
+        if (isset($authData['password'])) {
+            $select->where("password = ?", $authData['password']);
         }
         
         //print_r($select->__toString());die();
@@ -85,8 +85,8 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
 		$errors = PR_Api_Error::getInstance();
         $this->authenticate = false;
 
-		if (empty($authData['UserName']) || empty($authData['Password'])) {
-			$errors->addError(2, 'Username or password is empty but required');	
+		if (empty($authData['emailaddress']) || empty($authData['password'])) {
+			$errors->addError(2, 'emailaddress or password is empty but required');	
 			return false;
 		}
                 
@@ -188,4 +188,5 @@ class PR_Api_Client extends Zend_Db_Table_Abstract
         if(empty($users)) return NULL;
         else return $users[0];        
     } 
+     
 }

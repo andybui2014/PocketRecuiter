@@ -14,23 +14,25 @@
 </div>
 <div class="col-md-8"  style="padding:0">
     <div class="col-md-6" style="margin:0;padding:0">
-        <form role="form">
+        <form id="form-login" role="form">
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
+                <span class="username_message"></span>
             </div>
             <div class="form-group">
                 <label for="credential">Password</label>
-                <input type="password" class="form-control" id="credential" placeholder="Password">
+                <input name="password"  type="password" class="form-control" id="credential" placeholder="Password">
+                <span class="password_message"></span>
                 <p class="help-block" id=""><a href="reset">Forgot Password?</a></p>
             </div>
             <div class="form-group">
-                <span><input type="checkbox" id="terms"> Remember Me</span>
+                <span><input name="remember" type="checkbox" id="terms"> Remember Me</span>
                 <span class="pull-right">
-                    <a>Forget Password</a>
+                    <a href="#">Forget Password</a>
                 </span>
             </div>
-            <button class="btn btn-primary" type="button">Sign In</button>
+            <button data-loading-text="Loading..." id="btn-login" class="btn btn-primary" type="button">Sign In</button>
         </form>
     </div>
     <div class="col-md-6">
@@ -53,3 +55,11 @@
     </div>
 </div>
 </div>
+<script>
+    //Init main pocket
+    var pkMain = new pocketMain();
+    $(document).ready(function(){
+        //Login pocket
+        $('#btn-login').unbind('click').bind('click',pkMain.logIn);
+    })
+</script>
