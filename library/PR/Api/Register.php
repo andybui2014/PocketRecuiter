@@ -77,7 +77,7 @@ class PR_Api_Register extends Zend_Db_Table_Abstract
             "emailaddress" => "emailaddress",
             "usertype" => "usertype",
             "password" => "password",
-            "About_us" => "About_us",
+            "HeardFrom" => "HeardFrom",
             "loginname" => "loginname"
             
         );
@@ -90,9 +90,9 @@ class PR_Api_Register extends Zend_Db_Table_Abstract
        $primaryEmail=$data["emailaddress"];
        $loginname=$data["loginname"];
        // {
-            $maxIdSql = "SELECT MAX(User_ID) AS User_ID  FROM user";
+            $maxIdSql = "SELECT MAX(UserID) AS UserID  FROM user";
             $result = $db->fetchAll($maxIdSql);
-        $User_ID=$result[0]['User_ID']+1;
+        $User_ID=$result[0]['UserID']+1;
              $select = $db->select()->from(PR_Database::TABLE_USER, 
                                 array('emailaddress'));
                 $select->where("emailaddress = '$primaryEmail'");
@@ -114,15 +114,15 @@ class PR_Api_Register extends Zend_Db_Table_Abstract
                     if($data['usertype']==1)
                     {
                         $db->insert(PR_Database::TABLE_USER, array(
-                        "User_ID" => $User_ID,
+                        "UserID" => $User_ID,
                         "firstname" => $data['firstname'],
                         "lastname" => $data['lastname'],
                         "usertype" => $data['usertype'],
                         "emailaddress" => $data['emailaddress'],
                         "password" => $data['password'],
-                        "About_us" => $data['About_us'],
+                        "HeardFrom" => $data['HeardFrom'],
                         "loginname" => $data['loginname'],
-                        "company_ID"=>"1"
+                        "CompanyID"=>"1"
                         
             ));
                     }
@@ -135,7 +135,7 @@ class PR_Api_Register extends Zend_Db_Table_Abstract
                         "usertype" => $data['usertype'],
                         "emailaddress" => $data['emailaddress'],
                         "password" => $data['password'],
-                        "About_us" => $data['About_us'],
+                        "HeardFrom" => $data['HeardFrom'],
                         "loginname" => $data['loginname']
                         
                         

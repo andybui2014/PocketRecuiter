@@ -52,7 +52,7 @@
                 "usertype" => $Acount_type,
                 "emailaddress" => $email,
                 "password" => $pass,
-                "About_us" => $About_us,
+                "HeardFrom" => $About_us,
                 "loginname" => $loginname
                 );
              // echo ("data:<pre>");print_r($data);echo("</pre>");die();
