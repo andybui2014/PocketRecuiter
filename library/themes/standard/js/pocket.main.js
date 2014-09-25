@@ -12,6 +12,7 @@ pocketMain.prototype = {
     init: function(){
         $("#btn-login").unbind('click').bind('click',this.logIn);
         $('#show-login').unbind('click').bind('click',this.reset);
+		$('#btn-logout').unbind('click').bind('click',this.logOut);
     },
     /**
      *  logOut

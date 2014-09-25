@@ -36,7 +36,11 @@
 <nav class="navbar  navbar-default navbar-fixed-top" role="navigation">
     <div class="nav-ribbon navbar-header">
         <div class="nav-ribbon-left pull-right">
-            <a href="<?=URL_BASE;?>register">SignIn or Join</a>
+            <?php $loginClient = $this->layout()->loginclient; if(!empty($loginClient)){ ?>
+                <strong><?=$loginClient['emailaddress'];?></strong> / <a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>">Logout</a>
+            <?php }else{ ?>
+                <a href="<?=URL_BASE;?>register">SignIn or Join</a>
+            <?php } ?>
         </div>
     </div>
     <div class="container">
