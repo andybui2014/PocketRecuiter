@@ -5,7 +5,7 @@ class ClientController extends Application_Controller_Action
     public function init()
     {
         parent::init();
-       // $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);
+       // $client = PR_Session::getSession(PR_Session::SESSION_CLIENT);ououi
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         echo("client");print_r($client);
         if(empty($client))

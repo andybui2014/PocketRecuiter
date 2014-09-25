@@ -76,7 +76,7 @@ pocketMain.prototype = {
                             }
                              if(xhr.usertype==2)
                             {
-                                //alert("thanh cong");
+                                
                                 window.location = 'candidate/start-profile';
                                 $this.button('reset');
                             }

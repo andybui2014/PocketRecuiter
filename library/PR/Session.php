@@ -17,6 +17,7 @@ class PR_Session {
         }             
     }
    // static function getSession($key = "SESSION_CLIENT") {
+   //
     static function getSession($key = "SESSION_USER") {
         
         $session = new Zend_Session_Namespace('MyAppName');

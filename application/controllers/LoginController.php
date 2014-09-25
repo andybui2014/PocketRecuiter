@@ -32,9 +32,8 @@ class LoginController extends Application_Controller_Action {
         {
             PR_Session::setSession($client,PR_Session::SESSION_USER);
             $user = PR_Session::getSession(PR_Session::SESSION_USER);
-           // echo("user:");print_r($user);
-            //$session = new Zend_Session_Namespace('MyAppName');
-            //$session->user = 'hauangivay-hauoi-chanqua';
+           // echo("user:");print_r($user);hgj
+            
             $return['success'] = 1;
             $return['usertype'] = $user["usertype"];
         } else

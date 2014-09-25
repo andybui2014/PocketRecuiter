@@ -35,7 +35,7 @@ class Application_Controller_Action extends Zend_Controller_Action {
         define('USER_TYPE_TEACHER', 3);
         define('USER_TYPE_STUDENT', 4);
         
-      //  $this->_client = PR_Session::getSession(PR_Session::SESSION_CLIENT);
+      //  $this->_client = PR_Session::getSession(PR_Session::SESSION_CLIENT);pii
         $this->_client = PR_Session::getSession(PR_Session::SESSION_USER);
         $this->view->loginclient = $this->_client;
         
