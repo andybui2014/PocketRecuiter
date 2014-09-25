@@ -86,7 +86,8 @@
                 
             </div>
                             <?php
-                $source = new PR_Api_Register();
+                //$source = new PR_Api_Register();
+                $source= new PR_Api_Core_Register();
 
 $sourceOptions = $source->getAboutUsList_forRegisterPage();
 $SourceHtml = "<select class=\"form-control\" id=\"About_us\" name=\"About_us\"><option value=\"\">Select </option>";

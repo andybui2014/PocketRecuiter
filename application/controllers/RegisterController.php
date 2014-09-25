@@ -56,7 +56,8 @@
                 "loginname" => $loginname
                 );
              // echo ("data:<pre>");print_r($data);echo("</pre>");die();
-        $api=new PR_Api_Register();
+       // $api=new PR_Api_Register();
+       $api= new PR_Api_Core_Register();
       
        
         if(isset($params["accept"]) )
