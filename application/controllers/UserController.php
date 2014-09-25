@@ -17,7 +17,7 @@ class UserController extends Application_Controller_Action
     {
         $this->_helper->layout->disableLayout();
 
-        Zsis_Session::clearSessions();
+        PR_Session::clearSessions();
         
         $this->_helper->redirector("index","login");
     }   
