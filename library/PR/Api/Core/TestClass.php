@@ -1,6 +1,13 @@
 <?php
 class PR_Api_Core_TestClass
 {
+    public function getTestListForCompany($companyID)
+    {
+        $filters = array("CompanyID"=>$companyID);   
+        $list = $this->getTestList($filters); 
+        return $list;
+    }
+    
     public function getTestList($filters=NULL,$orders=NULL,$limit=0, $offset=0)
     {             
         $db = PR_Database::getInstance();
@@ -13,6 +20,9 @@ class PR_Api_Core_TestClass
         
         if(count($filters)>0)
         {
+            if(!empty($filters['CompanyID'])){
+               $select->where("CompanyID = '".$filters['CompanyID']."'"); 
+            }
         }
 
         if ( $limit != 0 || $offset != 0)
