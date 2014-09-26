@@ -1,0 +1,175 @@
+<script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<style>
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: #428bca;
+        background-color: #fff;
+       /*  border: 1px solid #ddd;*/
+        border-bottom-color: transparent;
+    }
+    .nav-tabs>li>a {
+        margin-right: 2px;
+        line-height: 1.428571429;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+        background-color:#f7ecb5;
+    }
+    .table-stripedgray > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+        background-color:#eeeeee;
+    }
+
+    ol.breadcrumb a{color: #777;}
+    ol.breadcrumb .active{color: #fff; background-color: #2a6496;}
+    .needHelp {background-color:#edde34 ; min-height: 100px!important; height: auto; width:300px; border-left: 1px solid #cccccc; border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc; float:right; }
+</style>
+<div class="container">
+    <div style="height:80px; color: #428bca">
+        <div class="panel-body">
+            <div><h3 style="margin-top: 10px">Post Career</h3></div>
+        </div>
+    </div>
+    <div style="background-color: #2a6496">
+        <ul class="nav nav-tabs" id="myTab" style="padding-top:10px" valign="bottom">
+            <li class="active" ><a class="calcareercr" href="javascript: void(0);"><strong>New Career</strong></a></li>
+            <li ><a id="careerlist" href="javascript: void(0);"><strong>Career List</strong></a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <!--create career-->
+            <div class="tab-pane active">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                    <ol class="breadcrumb">
+                        <li><a class="calcareercr active" href="javascript: void(0);"><strong>1 Create Career</strong></a></li>
+                        <li><a href="#"><strong>2 Create Private</strong></a></li>
+                        <li><a class="previewpost" href="javascript: void(0);"><strong>3 Preview</strong></a></li>
+
+                    </ol>
+                        <!--LEFT-->
+                    <form id="form-careerCr" name="form-careerCr">
+                        <div class="col-md-8">
+                        <table  cellspacing="0" width="70%">
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Career Name*</strong</div>
+                                    <div><input type="text" style="width:600px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Company Name*</strong></div>
+                                    <div><input type="text" style="width:600px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Career Description*</strong></div>
+                                    <div><textarea style="width: 600px; height: 80px"></textarea></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Industry*</strong></div>
+                                    <div><input type="text" style="width:600px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="float:left;width:320px"><strong>Career Type</strong></div><div style="float:left"><strong>Duration</strong></div>
+                                    <div style="float:left"><select style="width:280px">
+                                            <option></option>
+                                    </select></div>
+                                    <div style="float:left;padding-left: 40px"><select style="width:280px">
+                                            <option></option>
+                                        </select></div>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="float:left;width:320px"><strong>Career Location</strong></div><div style="float:left"><strong>Zip Code</strong></div>
+                                    <div style="float:left;"><input type="text" style="width:280px"></div>
+                                    <div style="float:left;padding-left: 40px"><input type="text" style="width:280px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Minimun Education*</strong></div>
+                                    <div><input type="text" style="width:600px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Degree Title*</strong></div>
+                                    <div><input type="text" style="width:600px"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Required Skills*</strong></div>
+                                    <div><textarea style="width: 600px; height: 80px"></textarea></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="width:320px"><strong>Required Experience*</strong></div>
+                                    <div style="float:left"><select style="width:280px">
+                                            <option></option>
+                                        </select></div>
+                                    <div style="float:left;padding-left: 40px"><select style="width:280px">
+                                            <option></option>
+                                        </select></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div style="width:320px"><strong>Salary Range*</strong></div>
+                                    <div style="float:left"><select style="width:280px">
+                                            <option></option>
+                                        </select></div>
+                                    <div style="float:left;padding-left: 40px"><select style="width:280px">
+                                            <option></option>
+                                        </select></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div><strong>Required Test</strong></div>
+                                    <div><textarea style="width: 600px; height: 80px"></textarea></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    </form>
+                        <!-- END LEFT-->
+                        <!--RIGHT-->
+                    <div class="col-md-4">
+                        <div class="needHelp"><strong style="color:#f7ecb5;">Need Help</strong></div>
+
+                    </div>
+                    </div>
+                    <!--END RIGHT-->
+                    <div style="margin-left: 30px">
+                        <button id="" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
+                        <button id="" style="width:126px; margin-left: 20px" type="button" class="btn btn-primary" data-loading-text="Loading...">Save & Post Later</button>
+                    </div>
+
+                </div>
+            </div>
+            <!--end create career-->
+
+
+     </div>
+</div>
+
+

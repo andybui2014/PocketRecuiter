@@ -22,11 +22,13 @@ class ClientController extends Application_Controller_Action
     public function profileAction()
     {
          $client = PR_Session::getSession(PR_Session::SESSION_USER);
-        $username = $client["UserName"];
-        $password = $client["Password"];
-         $clientApi = new PR_Api_Client();
-        $authData = array('UserName' => $username, 'Password' => $password);
-        $this->view->client = $clientApi->getUserArray($authData);
+        $emailaddress = $client["emailaddress"];
+        $password = $client["password"];
+         $Api = new PR_Api_User();
+        $authData = array('emailaddress' => $emailaddress, 'password' => $password);
+        
+        $this->view->client = $Api->getUserArray($authData);
+       
         $this->render('profile');
         //$api=new PR_Api_Core_Skill();
         //$skill= $api->getSkillArray('5');
@@ -42,10 +44,10 @@ class ClientController extends Application_Controller_Action
         $params = $request->getParams();
 		// echo ("params:<pre>");print_r($params);echo("</pre>");die();
          $client = PR_Session::getSession(PR_Session::SESSION_USER);
-        $username = $request->getParam("UserName", "");
-        $password = $request->getParam("Password", "");
+      //  $username = $request->getParam("UserName", "");
+      //  $password = $request->getParam("Password", "");
         $return = array("success" => 0, "error" => "");
-        $clientID=$client["ClientID"];
+        $clientID=$client["UserID"];
        
        $clientClass = new PR_Api_Core_ClientClass();
        $updateFields=array();
@@ -54,9 +56,10 @@ class ClientController extends Application_Controller_Action
             
             }
            
-          
+        //echo ("test:<pre>");print_r($updateFields);echo("</pre>");
+       // echo ("clientID:".$clientID);
        $result = $clientClass->updateClientProfile($clientID,$updateFields);
-     
+    // echo ("result:".$result);
        if ($result) {
            $return['success'] = 1;
                 

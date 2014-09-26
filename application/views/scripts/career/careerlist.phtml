@@ -1,0 +1,130 @@
+<script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<style>
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: #428bca;
+        background-color: #fff;
+       /*  border: 1px solid #ddd;*/
+        border-bottom-color: transparent;
+    }
+    .nav-tabs>li>a {
+        margin-right: 2px;
+        line-height: 1.428571429;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+        background-color:#f7ecb5;
+    }
+    .table-stripedgray > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+        background-color:#eeeeee;
+    }
+
+    ol.breadcrumb a{color: #777;}
+    ol.breadcrumb .active{color: #fff; background-color: #2a6496;}
+    .needHelp {background-color:#edde34 ; min-height: 100px!important; height: auto; width:300px; border-left: 1px solid #cccccc; border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc; float:right; }
+</style>
+<div class="container">
+    <div style="height:80px; color: #428bca">
+        <div class="panel-body">
+            <div><h3 style="margin-top: 10px">Post Career</h3></div>
+        </div>
+    </div>
+    <div style="background-color: #2a6496">
+        <ul class="nav nav-tabs" id="myTab" style="padding-top:10px" valign="bottom">
+            <li  ><a class="calcareercr" href="javascript: void(0);"><strong>New Career</strong></a></li>
+            <li class="active"><a id="careerlist" href="javascript: void(0);"><strong>Career List</strong></a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+            <!-- career list-->
+            <div class="tab-pane active" >
+                <table class="table table-striped  table-stripedgray table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+                    <thead>
+                    <tr role="row" style="background-color: #eeeeee">
+                        <th>
+                            <label>
+                            <input type="checkbox"> <strong>Select All</strong>
+                            </label>
+                        </th>
+                        <th>
+                                <label>
+                                     <strong>Careet Title</strong>
+                                </label>
+                        </th>
+                        <th>
+                                <label>
+                                    <strong>Technical Skills</strong>
+                                </label>
+                        </th>
+                        <th>
+                                <label>
+                                     <strong>Career Discription</strong>
+                                </label>
+                        </th>
+                        <th>
+                                <label>
+                                   <strong>Require Test</strong>
+                                </label>
+                        </th>
+                        <th>
+                                <label>
+                                    <strong>Status</strong>
+                                </label>
+                        </th>
+                        <th style="text-left: right; padding-left:10px">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #eeeeee; background-color: #eeeeee">
+                                    <strong>Action </strong><span class="caret"></span>
+                                </button>
+                                <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                                    <li><a  href="javascript: void(0);">Insert</a></li>
+                                    <li><a  href="javascript: void(0);">Update</a></li>
+                                    <li><a  href="javascript: void(0);">Delete</a></li>
+                                </ul>
+                            </div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr role="row" class="odd">
+                        <td>
+                                   <input type="checkbox"> 15/6/14<span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>
+                        </td>
+                        <td><Sinior developer</td>
+                        <td>Project manager</td>
+                        <td>Dones purure spanien nibh</td>
+                        <td>Project manager</td>
+                        <td>Active</td>
+                        <td align="center"><span class="glyphicon glyphicon-credit-card" style="color:#ccc"></span><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><span style=" color:#fff; padding-left:8px" class="glyphicon glyphicon-remove"></span></td>
+                    </tr>
+                    <tr role="row" class="even">
+                        <td>
+                                    <input type="checkbox"> 15/6/14
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <!--career list end-->
+
+     </div>
+</div>
+
+

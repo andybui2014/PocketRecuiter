@@ -1,0 +1,177 @@
+<script src="<?=URL_THEMES.'js/mobile.notifications.js';?>"></script>
+<?php
+$result = $this->result;
+$clientIDLogin = $this->clientIDLogin;
+$userName = $this->userName;
+$uselist = $this->uselist;
+?>
+<style>
+    .panel {
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+.clWidth200{width: 200px;}
+.clWidth300{width: 300px;}
+ .clWidth600{width: 600px;}
+    .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
+</style>
+<!-- Modal Add -->
+<div class="container">
+<div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotification" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header login_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Add a notification</h2>
+            </div>
+            <div class="modal-body login-modal" style="padding-top:0px">
+                        <div class="modal-body" style="padding-top:0px">
+                            <form id="form-addnotification" name="form-addnotification">
+                                <div class="form-group">
+                                    Send to : &nbsp;
+                                    <select id= "receiverid" name="receiverid" class="form-control">
+                                        <option value="">Seclect a Receiver</option>
+                                        <?php
+                                        if(!empty($uselist)){
+                                            foreach ($uselist as $k=>$useinfo){
+                                                $receiverid_user = $useinfo['UserID'];
+                                                $receiver_Name = $useinfo['firstname']." ".$useinfo['lastname'] ;
+                                                if($clientIDLogin != $receiverid_user){
+                                                ?>
+                                                <option value="<?=$receiverid_user?>"><?=$receiver_Name?></option>
+                                        <?php  }
+                                            }
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input value="" type="text" name="textnotification" id="textnotification" placeholder="content" class="form-control">
+                                </div>
+                                <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                        </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Model Edit-->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="EditModalNotification" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Edit notification</h2>
+            </div>
+            <div class="modal-body login-modal">
+                <form id="form-editnotification" name="form-editnotification">
+                             <div class="form-group">
+                                 Sent to : &nbsp <span id="hadSentToUser"></span>
+                             </div>
+                            <div class="form-group">
+                                <input value="" type="text" name="editNotification" id="editNotification" placeholder="content" class="form-control">
+                                <input value="" type="hidden" name="ModalEditNotiID" id="ModalEditNotiID">
+                            </div>
+                            <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height:80px; color: #428bca">
+    <div class="panel-body">
+        <div><h3 style="margin-top: 10px">Notifications</h3></div>
+        <div style="float: right; margin-top: -35px; margin-right:-10px">
+            <button class="btn btn-success" type="button">Post Career</button>
+
+        </div>
+    </div>
+</div>
+<header class="subhead" id="overview">
+        <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <strong>Notifications Box</strong>
+                </h3>
+            </div>
+
+        </div>
+    </header>
+
+        <table id="notificationCk"  style="background-color: #fff" class="table  table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+            <thead>
+            <tr role="row" >
+                <th class="clWidth300">
+                    <label>
+                        <input type="checkbox" id="ckAll"> <strong>Name</strong>
+                    </label>
+                </th>
+                <th class="clWidth600">
+                    <label>
+                        <strong>Notifications</strong>
+                    </label>
+                </th>
+                <th class="clWidth200">
+                    <label>
+                        <strong>Date</strong>
+                    </label>
+                </th>
+                <th  class="clWidth200 text-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #fff; ">
+                            <strong>Action </strong><span class="caret"></span>
+                        </button>
+                        <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                            <li ><a data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Add</a></li>
+                            <li><a id="EditNotification"  href="javascript: void(0);">Edit</a></li>
+                            <li><a id="deleteNotification"  href="javascript: void(0);">Delete</a></li>
+                        </ul>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if(!empty($result)){
+                foreach($result as $key=>$notiInfo){
+            if($clientIDLogin == $notiInfo['sender_iduser']){
+            ?>
+                <tr role="row" class="odd ischecktr">
+                    <td class="clWidth300">
+                        <input class="checkIs" type="checkbox" NotiID ="<?=$notiInfo['NotificationID']?>" receiveriduser="<?=$notiInfo['receiver_iduser']?>" contactname="<?=$notiInfo['cbContactNameR']." ".$notiInfo['cbContactLNameR']?>"><span style="padding-left:10px"><strong>To :&nbsp;<?=$notiInfo['cbContactNameR']." ".$notiInfo['cbContactLNameR']?></strong></span> <span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>
+                    </td>
+                    <td class="clWidth600"><span class="notiText"><?=$notiInfo['subjecttext']?></span></td>
+                    <td class="clWidth200"><?=$notiInfo['cbDateTime']?></td>
+                    <td class="clWidth200"  align="center"><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><a href="javascript: void(0);"><span style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete"></span></a></td>
+                </tr>
+            <?php
+            } else if(($clientIDLogin == $notiInfo['receiver_iduser'])){
+            ?>
+                <tr role="row" class="odd ischecktr" >
+                    <td class="clWidth300">
+                        <input disabled="disabled" class="checkIs" type="checkbox"   NotiID ="<?=$notiInfo['NotificationID']?>"  receiveriduser="<?=$notiInfo['receiver_iduser']?>" contactname="<?=$notiInfo['cbContactNameT']." ".$notiInfo['cbContactLNameT'] ?>" ><span style="padding-left:10px"><strong>From : &nbsp;<?=$notiInfo['cbContactNameT']." ".$notiInfo['cbContactLNameT']?></strong></span> <span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>
+                    </td>
+                    <td class="clWidth600"><span class="notiText"><?=$notiInfo['subjecttext']?></span></td>
+                    <td class="clWidth200"><?=$notiInfo['cbDateTime']?></td>
+                    <td class="clWidth200"  align="center"><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><a href="javascript: void(0);" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes"></a></td>
+                </tr>
+            <?php
+            }
+            }
+            }
+            ?>
+            </tbody>
+        </table>
+        <div class="" style="height: 40px;background-color: #333">
+
+        </div>
+</div>
+

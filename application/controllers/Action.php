@@ -38,7 +38,13 @@ class Application_Controller_Action extends Zend_Controller_Action {
       //  $this->_client = PR_Session::getSession(PR_Session::SESSION_CLIENT);pii
         $this->_client = PR_Session::getSession(PR_Session::SESSION_USER);
         $this->view->loginclient = $this->_client;
-        
+        //$this->layout()-
+
+        $this->_layout = $this->_helper->layout->getLayoutInstance();
+        $this->_layout->loginclient = $this->_client;
+        $this->_layout->logout = $this->_helper->url('do-logout','user');
+        $this->_layout->_helper = $this->_helper;
+
         //for querystring
         $this->_request = $this->getRequest();
         $ajax = $this->_request->getParam('ajax', 0);

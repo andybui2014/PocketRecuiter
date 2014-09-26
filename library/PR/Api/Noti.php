@@ -1,12 +1,12 @@
 <?php
 class PR_Api_Noti extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'notis';
+    protected $_name = 'notification';
     protected $_classname = 'PR_Api_Noti';
-    protected $_pk = 'NotiID';
+    protected $_pk = 'NotificationID';
     
-    public $NotiID;
-    public $NotiType;
+    public $NotificationID;
+    public $NotificationType;
     public $cbUserTypeID;
     public $cbClientID;
     public $NotiDesc;
@@ -18,7 +18,7 @@ class PR_Api_Noti extends Zend_Db_Table_Abstract
 
     public function  __construct($id = null) {
         parent::__construct();
-        $this->NotiID = $id;
+        $this->NotificationID = $id;
         $errMsg="";
     }
     
@@ -74,24 +74,24 @@ class PR_Api_Noti extends Zend_Db_Table_Abstract
         if( empty($data) ) {
             return;
         }
-        if( empty($this->NotiID) ){
+        if( empty($this->NotificationID) ){
             $objDateNow = new Zend_Date();
             $data['cbDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
             $data['lmDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
-            if(empty($data['NotiType'])){
-                $data['NotiType'] = 1; //public noti.
+            if(empty($data['NotificationType'])){
+                $data['NotificationType'] = 2; //private noti.
             }
-            if(empty($data['NotiType'])){
-                $data['cbUserTypeID'] = 1; //client create nodifications
-            }
+            //if(empty($data['NotificationType'])){
+            //    $data['cbUserTypeID'] = 1; //client create nodifications
+           // }
             $res = $this->insert($data);
             if( $res ) return new $this($res);
         } else {
             try {
-                unset($data['NotiID']);
+                unset($data['NotificationID']);
                 $objDateNow = new Zend_Date();
                 $data['lmDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
-                $res = $this->update($data, 'NotiID = '.$this->NotiID);
+                $res = $this->update($data, 'NotificationID = '.$this->NotificationID);
             } catch (Exception $e) {
                     $errors->addError('7', 'Incorrect SQL request');
             }
