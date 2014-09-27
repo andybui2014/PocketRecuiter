@@ -42,8 +42,8 @@ register.prototype = {
             firstname: { notEmpty: { message: 'First Name is required.'}} ,
             LastName: { notEmpty: {message: 'Last Name is required.'}},
             password: { notEmpty: {message: 'Password is required.'}},
-            accept: { notEmpty: {message: 'You need to accept the terms of Service .'}},
-            About_us: { notEmpty: {message: 'source is required.'}},
+            accept: { notEmpty: {message: 'You need to accept the terms of Service.'}},
+            About_us: { notEmpty: {message: 'Source is required.'}},
             RetypePassword: { identical: {message: 'Password and Retype Password are not the same.'}},
             loginname: { notEmpty: {message: 'User Name is required.'}}
             
