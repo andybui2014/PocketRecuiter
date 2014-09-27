@@ -65,18 +65,25 @@ notifications.prototype = {
     addnotification: function(){
         var btn = $(this);
         btn.button('loading');
-        $.ajax({
-            url: 'save-notifications',
-            data: $('#form-addnotification').serializeArray(),
-            type: 'POST',
-            success: function(xhr){
-                if(xhr.success){
-                    window.location = 'list';
-                   // btn.button('reset');
-                }else{
+        var iSreceiverid = $('#form-addnotification #receiverid option:selected').val();
+        if(iSreceiverid !=""){
+            $.ajax({
+                url: 'save-notifications',
+                data: $('#form-addnotification').serializeArray(),
+                type: 'POST',
+                success: function(xhr){
+                    if(xhr.success){
+                        window.location = 'list';
+                        // btn.button('reset');
+                    }else{
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            alert("Seclect a reciever");
+            btn.button('reset');
+        }
+
     },
     editnotification:function(){
         var length = 0;
@@ -144,7 +151,7 @@ notifications.prototype = {
             });
 
         }else{
-            alert("Please select a notifications");
+            alert("Please select a notification");
             return;
         }
     },
