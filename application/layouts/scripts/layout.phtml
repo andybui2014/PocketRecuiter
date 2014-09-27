@@ -38,6 +38,7 @@ $helper = $this->layout()->_helper;
 <!-- Navigation -->
 <?php
 $loginClient = $this->layout()->loginclient;
+//echo ("loginClient:</pre>");print_r($loginClient);echo("</pre>");
 ?>
 <nav class="navbar  navbar-default navbar-fixed-top" role="navigation">
     <?php if(empty($loginClient)){?>
@@ -84,7 +85,19 @@ $loginClient = $this->layout()->loginclient;
                             <strong><?=$loginClient['emailaddress']?></strong><span class="caret"></span>
                         </span>
                         <ul class="dropdown-menu" role="menu">
+                        <?php
+                        if($loginClient["usertype"]==1)
+                        {
+                        ?>
                             <li><a href="<?= URL_BASE . 'client/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
+                            <?php
+                                                        
+                        }else if($loginClient["usertype"]==2){
+                            ?>
+                            <li><a href="<?= URL_BASE . 'candidate/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
+                         <?php
+                        }
+                         ?>   
                             <li class="divider"></li>
                             <li><a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
                         </ul>
