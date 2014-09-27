@@ -1,0 +1,133 @@
+<style>
+
+.has-error .form-control1 {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+#form-profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
+
+ .redborder{
+        border:#F00 solid 1px;
+        background-color:yellow;
+      }
+      .greenborder  {
+        border:#0F3 solid 1px;
+        background-color:#6F6;
+      }
+</style>
+
+
+
+    
+   
+
+<?php
+$company=$this->company;
+
+?>
+<!--<header class="subhead" id="overview">-->
+
+<div class="container" >       
+            
+<div class="page-header" style="margin:0;">
+    <h1>
+        <span class="text-left" style="font-size: 25px;color: #2a6496"><?= $company["Companyname"]?> Profile</span>
+        
+
+    </h1>
+</div>
+    <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;">
+          
+      <div class="col-md-6"  style="padding:0">      
+      <form role="form" method="post" name="form-profile" id="form-profile" action="<?= URL_BASE . 'companyprofile/do-editprofile'  ?>">
+             <div class="form-group">
+                <label for="credential">Company Name</label>
+              <div class="form-group">
+              <input type="hidden" class="form-control" id="CompanyID" name="CompanyID" value="<?=$company["CompanyID"]?>">
+                <input type="text" class="form-control" id="Companyname" name="Companyname" value="<?=$company["Companyname"]?>" >
+                <span class="message" id=""></span>
+              </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Industry</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="Industry" name="Industry" value="<?=$company["Industry"]?>" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
+            <div class="form-group ">
+                <label for="email">Address</label>
+              <div class="form-group">
+              
+                <input name="Address" type="email" class="form-control" id="Address" value="<?=$company["Address"]?>">
+                <span class="message" id="Email1_message"></span>
+              </div>
+            </div>
+           
+            <div class="form-group">
+                <label for="email">Country</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="country" name="country" value="<?=$company["country"]?>" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="credential">Phone</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="<?=$company["PhoneNumber"]?>"  >
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">Email Info</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="emailinfo" name="emailinfo" value="<?=$company["emailinfo"]?>">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="credential">Logo</label>
+                <div class="form-group">
+                
+                <input id="file" type="file" class="file" name="file">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="credential">Decription</label>
+                <div class="form-group">
+                
+                <textarea class="form-control" rows="3" name="Decreption" id="Decreption">
+                    <?=$company["Decreption"]?>
+                </textarea>
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             
+           <div class="">
+                    
+                        <button type="button" class="btn btn-success" id="cmd-updateprofile">
+                            <strong>Update</strong>
+                        </button>
+                    
+                     </div>
+                        
+        </form>
+       
+        
+        </div>
+    </div>
+      </div>
+
+<!--</header>-->
+<!-- jQuery Version 1.11.0 -->
+
+<script src="<?=URL_THEMES.'js/companyprofile.js';?>"></script>
+
+

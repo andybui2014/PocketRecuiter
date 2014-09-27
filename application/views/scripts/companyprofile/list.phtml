@@ -1,0 +1,105 @@
+<script src="<?=URL_THEMES.'js/mobile.notifications.js';?>"></script>
+<?php
+//$result = $this->result;
+///$clientIDLogin = $this->clientIDLogin;
+//$userName = $this->userName;
+$companylists = $this->companylists;
+?>
+<style>
+    .panel {
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+.clWidth200{width: 400px;}
+.clWidth300{width: 300px;}
+ .clWidth600{width: 400px;}
+    .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
+</style>
+<!-- Modal Add -->
+<div class="container">
+
+
+
+
+
+<div style="height:80px; color: #428bca">
+    <div class="panel-body">
+        <div><h3 style="margin-top: 10px">Company Profiles</h3></div>
+        
+    </div>
+</div>
+<header class="subhead" id="overview">
+        <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <strong>Company Profiles Box</strong>
+                </h3>
+            </div>
+
+        </div>
+    </header>
+
+        <table id="notificationCk"  style="background-color: #fff" class="table  table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+            <thead>
+            <tr role="row" >
+                <th class="clWidth300">
+                    <label>
+                        <input type="checkbox" id="ckAll"> <strong>Company Name</strong>
+                    </label>
+                </th>
+                <th class="clWidth600">
+                    <label>
+                        <strong>Address</strong>
+                    </label>
+                </th>
+                <th class="clWidth200">
+                    <label>
+                        <strong>Industry</strong>
+                    </label>
+                </th>
+                <th  class="clWidth200 text-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #fff; ">
+                            <strong>Action </strong><span class="caret"></span>
+                        </button>
+                        <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                            <li ><a data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Add</a></li>
+                            <li><a id="EditNotification"  href="javascript: void(0);">Edit</a></li>
+                            <li><a id="deleteNotification"  href="javascript: void(0);">Delete</a></li>
+                        </ul>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if(!empty($companylists)){
+                foreach($companylists as $key=>$companys){
+            
+            ?>
+                <tr role="row" class="odd ischecktr">
+                    <td class="clWidth300">
+                        <input type="hidden" name="CompanyID" value="<?= $companys["CompanyID"]?>">
+                        <input class="checkIs" type="checkbox" ><span style="padding-left:10px"><strong><a href="<?= URL_BASE ?>companyprofile/profile?companyid=<?= $companys["CompanyID"] ?>&pageajax=profile"><?= $companys["Companyname"]?></a></strong></span> 
+                    </td>
+                    <td class="clWidth600"><span class="notiText"><?=$companys["Address"]?></span></td>
+                    <td class="clWidth200"><?=$companys["Industry"]?></td>
+                    <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $companys["CompanyID"] ?>&pageajax=editprofile">Edit</a></span><span style="padding-left:15px;"><a href="#">Delete</span></a></td>
+                </tr>
+            <?php
+            
+            
+            }
+            }
+            
+            ?>
+            </tbody>
+        </table>
+        <div class="" style="height: 40px;background-color: #333">
+
+        </div>
+</div>
+

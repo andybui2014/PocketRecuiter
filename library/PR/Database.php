@@ -2,6 +2,7 @@
 class PR_Database {
 	const TABLE_config = "config";
     const TABLE_USER = "user";
+    const TABLE_COMPANY = "company";
 
 	private static $db = null;
 
