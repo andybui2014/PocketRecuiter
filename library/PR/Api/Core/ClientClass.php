@@ -61,10 +61,10 @@ class PR_Api_Core_ClientClass
             }            
         }
 
-       // $criteria = "CompanyID = '$companyid'";
+        $criteria = "CompanyID = '$companyid'";
         //echo ("criteria:".$criteria);print_r($updateFields);die();
-       $user= PR_Database::update('company',$updateFields,$companyid);
-       return $user;
+       $result= PR_Database::update('company',$updateFields,$criteria);
+       return $result;
        //echo ("user:".$user);
                
     }
