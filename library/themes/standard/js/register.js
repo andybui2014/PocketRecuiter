@@ -188,7 +188,7 @@ register.prototype = {
                           //  window.location = 'update-profle';
                           
                             $this.button('reset');
-                            alert("success");
+                           // alert("success");
                         }else{
                             $this.button('reset');
                             $('#profile-message').html(
