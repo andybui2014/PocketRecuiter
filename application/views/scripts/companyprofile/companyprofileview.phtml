@@ -18,12 +18,17 @@
     <?php
     }?>
         <br><span class="text-left" style="font-size: 14px;color: #2a6496;"><?= $company["Companyname"]?></span>
+        
     </div>     
    <div class="col-xs-9">         
     <div class="page-header" style="margin:0;">
-        <h3>
+        <h3>       <?php 
+      //  print_r($company);  
+        ?>
+        
             <span class="text-left" style="font-size: 25px;color: #2a6496;font-weight:bold"><?= $company["Companyname"]?></span>         
             <br><spanclass="text-left" style="font-size:14px;font-weight:normal"><?= $company["Industry"]?> company</span>
+            <span style="padding-left:440px;"> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>&pageajax=editprofile"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> 
 </h3>
         
         <span style="font-weight:bold;"><?=$company["country"]?></span><i><span style="padding-left:15px">Address:<?=$company["Address"]?></span><span style="padding-left:0px;"></span><span style="padding-left:15px;">Mail info:<?=$company["emailinfo"]?></span></i>

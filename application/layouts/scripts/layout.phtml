@@ -113,7 +113,8 @@ $loginClient = $this->layout()->loginclient;
                             <strong>Settings</strong><span class="caret"></span>
                         </span>
                         <ul class="dropdown-menu" role="menu">                                               
-                            <li><a href="<?=$helper->url('list','companyprofile');?>"><i class="glyphicon glyphicon-user"></i> Company Profile</a></li>
+                            <!--<li><a href="<?=$helper->url('list','companyprofile');?>"><i class="glyphicon glyphicon-user"></i> Company Profile</a></li>-->
+                            <li><a href="<?= URL_BASE ?>companyprofile/profile?companyid=<?= $loginClient["CompanyID"] ?>&pageajax=profile"><i class="glyphicon glyphicon-user"></i> Company Profile</a></li>
                         </ul>
                     </li>
                     <?php
