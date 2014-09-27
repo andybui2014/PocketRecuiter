@@ -65,7 +65,7 @@ class CompanyprofileController extends Application_Controller_Action
             
             }
            
-       // echo ("companyid:".$companyid);print_r($updateFields);die();
+        echo ("companyid:".$companyid);print_r($updateFields);die();
        $result = $api->updatecompanyProfile($companyid,$updateFields);
        if($result)
        {
