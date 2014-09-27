@@ -39,13 +39,13 @@ register.prototype = {
 
         var fields = {
              emailaddress: { notEmpty: {message: 'The Email address is required.'},emailAddress: {message: 'The Email address is not a valid email address'}},
-            firstname: { notEmpty: { message: 'The First Name is required.'}} ,
-            LastName: { notEmpty: {message: 'The Last Name is required.'}},
-            password: { notEmpty: {message: 'The Password is required.'}},
-            accept: { notEmpty: {message: 'The accept required.'}},
-            About_us: { notEmpty: {message: 'The About us required.'}},
+            firstname: { notEmpty: { message: 'First Name is required.'}} ,
+            LastName: { notEmpty: {message: 'Last Name is required.'}},
+            password: { notEmpty: {message: 'Password is required.'}},
+            accept: { notEmpty: {message: 'You need to accept the terms of Service .'}},
+            About_us: { notEmpty: {message: 'The source is required.'}},
             RetypePassword: { identical: {message: 'The password and Retype Password are not the same.'}},
-            loginname: { notEmpty: {message: 'The user name required.'}}
+            loginname: { notEmpty: {message: 'User Name is required.'}}
             
            
            
