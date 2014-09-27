@@ -6,7 +6,7 @@
 
 body{
     background: #f2f2f2;
-    padding-top: 90px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 .nav-ribbon{line-height: 30px;width: 100%;background-color: #333;color: #fff;}
 .nav-ribbon .nav-ribbon-left{margin-right: 10%;}
@@ -27,9 +27,10 @@ body{
 .nav-pills .dropdown-toggle{cursor: pointer; padding: 0 5px; border-right: 1px solid #eee;}
 /*Ribbon for nav bottom*/
 .nav-ribbon-bottom{ height: 40px;  width: 100%;background-color: #2a6496;}
-.nav-ribbon-bottom ul{list-style: none; margin:auto;padding:0 ;width: 950px;}
+.nav-ribbon-bottom ul{list-style: none; padding:0}
 .nav-ribbon-bottom li{float:left;padding: 10px;}
-.nav-ribbon-bottom li a{color: #fff;border:0; font-weight: bold;}
+.nav-ribbon-bottom .link{color: #fff;border:0; font-weight: bold;}
+.nav-ribbon-bottom .nav-parent{width: 950px; margin: auto;}
 .nav-ribbon-bottom li a:hover{  text-decoration: none; }
 #footer{ width:100%; border-top: 3px solid #bbb;padding: 50px;background: #fff}
 #footer ul{margin:0;padding: 0; list-style: none;}

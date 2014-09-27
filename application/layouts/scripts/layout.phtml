@@ -38,7 +38,6 @@ $helper = $this->layout()->_helper;
 <!-- Navigation -->
 <?php
 $loginClient = $this->layout()->loginclient;
-//echo ("loginClient:</pre>");print_r($loginClient);echo("</pre>");
 ?>
 <nav class="navbar  navbar-default navbar-fixed-top" role="navigation">
     <?php if(empty($loginClient)){?>
@@ -85,19 +84,7 @@ $loginClient = $this->layout()->loginclient;
                             <strong><?=$loginClient['emailaddress']?></strong><span class="caret"></span>
                         </span>
                         <ul class="dropdown-menu" role="menu">
-                        <?php
-                        if($loginClient["usertype"]==1)
-                        {
-                        ?>
                             <li><a href="<?= URL_BASE . 'client/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
-                            <?php
-                                                        
-                        }else if($loginClient["usertype"]==2){
-                            ?>
-                            <li><a href="<?= URL_BASE . 'candidate/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
-                         <?php
-                        }
-                         ?>   
                             <li class="divider"></li>
                             <li><a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
                         </ul>
@@ -115,22 +102,29 @@ $loginClient = $this->layout()->loginclient;
     <?php if(!empty($loginClient)){ ?>
         <?php if($loginClient['usertype']==1){ ?>
             <div class="nav-ribbon-bottom">
-                <ul>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Post Career</a></li>
-                    <li><a href="#">Match Candidate</a></li>
-                    <li><a href="#">Activities</a></li>
-                    <li><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
-                    <li><a href="#">Watch List</a></li>
+                <ul class="nav-parent">
+                    <li class="dropdown">
+                        <a class="link" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Dashboard <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" style="margin-top: -1px">
+                            <li><a href="<?=$helper->url('index','test');?>">Manager Test</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="link" href="#">Post Career</a></li>
+                    <li><a class="link" href="#">Match Candidate</a></li>
+                    <li><a class="link" href="#">Activities</a></li>
+                    <li><a class="link" href="#">Notifications</a></li>
+                    <li><a class="link" href="#">Watch List</a></li>
                 </ul>
             </div>
         <?php }elseif($loginClient['usertype']==2){ ?>
             <div class="nav-ribbon-bottom">
-                <ul>
-                    <li><a href="#">Profile Builder</a></li>
-                    <li><a href="#">My Profile</a></li>
-                    <li><a href="#">Activities</a></li>
-                    <li><a href="#">Match Opportunities</a></li>
+                <ul class="nav-parent">
+                    <li><a class="link" href="#">Profile Builder</a></li>
+                    <li><a class="link" href="#">My Profile</a></li>
+                    <li><a class="link" href="#">Activities</a></li>
+                    <li><a class="link" href="#">Match Opportunities</a></li>
                 </ul>
             </div>
         <?php } ?>
