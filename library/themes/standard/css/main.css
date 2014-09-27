@@ -6,7 +6,7 @@
 
 body{
     background: #f2f2f2;
-    padding-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    padding-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 .nav-ribbon{line-height: 30px;width: 100%;background-color: #333;color: #fff;}
 .nav-ribbon .nav-ribbon-left{margin-right: 10%;}
