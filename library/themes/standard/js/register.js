@@ -38,7 +38,7 @@ register.prototype = {
         //$this.button('loading');
 
         var fields = {
-             emailaddress: { notEmpty: {message: 'The Email address is required.'},emailAddress: {message: 'The Email address is not a valid email address'}},
+             emailaddress: { notEmpty: {message: 'Email address is required.'},emailAddress: {message: 'The Email address is not a valid email address'}},
             firstname: { notEmpty: { message: 'First Name is required.'}} ,
             LastName: { notEmpty: {message: 'Last Name is required.'}},
             password: { notEmpty: {message: 'Password is required.'}},
