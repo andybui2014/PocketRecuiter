@@ -38,13 +38,13 @@ register.prototype = {
         //$this.button('loading');
 
         var fields = {
-             emailaddress: { notEmpty: {message: 'Email address is required.'},emailAddress: {message: 'The Email address is not a valid email address'}},
+             emailaddress: { notEmpty: {message: 'Email address is required.'},emailAddress: {message: 'Email address is not a valid email address'}},
             firstname: { notEmpty: { message: 'First Name is required.'}} ,
             LastName: { notEmpty: {message: 'Last Name is required.'}},
             password: { notEmpty: {message: 'Password is required.'}},
             accept: { notEmpty: {message: 'You need to accept the terms of Service .'}},
-            About_us: { notEmpty: {message: 'The source is required.'}},
-            RetypePassword: { identical: {message: 'The password and Retype Password are not the same.'}},
+            About_us: { notEmpty: {message: 'source is required.'}},
+            RetypePassword: { identical: {message: 'Password and Retype Password are not the same.'}},
             loginname: { notEmpty: {message: 'User Name is required.'}}
             
            
@@ -101,13 +101,13 @@ register.prototype = {
              if(pw.val() =='' || pw.val().length <= 1){
                error = true;
                pw_message.parent().addClass('has-error');
-               pw_message.html(fields.Password.notEmpty.message).fadeOut().fadeIn();
+               pw_message.html(fields.password.notEmpty.message).fadeOut().fadeIn();
            }else{
                pw_message.parent().removeClass('has-error').addClass('has-success');
                pw_message.html('');
            }
           // alert(rpw.val());
-           if( rpw.val() !=pw.val()){
+           if( rpw.val() !=pw.val()&& pw.val()!="" ){
                error = true;
                rpw_message.parent().addClass('has-error');
                rpw_message.html(fields.RetypePassword.identical.message).fadeOut().fadeIn();
