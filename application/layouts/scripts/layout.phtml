@@ -111,17 +111,30 @@ $loginClient = $this->layout()->loginclient;
         </div>
 
     </div>
+
     <?php if(!empty($loginClient)){ ?>
-    <div class="nav-ribbon-bottom">
-    <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Post Career</a></li>
-        <li><a href="#">Match Candidate</a></li>
-        <li><a href="#">Activities</a></li>
-        <li><a href="#">Notifications</a></li>
-        <li><a href="#">Watch List</a></li>
-    </ul>
-    </div>
+        <?php if($loginClient['usertype']==1){ ?>
+            <div class="nav-ribbon-bottom">
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Post Career</a></li>
+                    <li><a href="#">Match Candidate</a></li>
+                    <li><a href="#">Activities</a></li>
+                    <li><a href="#">Notifications</a></li>
+                    <li><a href="#">Watch List</a></li>
+                </ul>
+            </div>
+        <?php }elseif($loginClient['usertype']==2){ ?>
+            <div class="nav-ribbon-bottom">
+                <ul>
+                    <li><a href="#">Profile Builder</a></li>
+                    <li><a href="#">My Profile</a></li>
+                    <li><a href="#">Activities</a></li>
+                    <li><a href="#">Match Opportunities</a></li>
+                </ul>
+            </div>
+        <?php } ?>
+
     <?php } ?>
     <!-- /.container -->
 </nav>
