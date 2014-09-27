@@ -42,8 +42,8 @@ pocketMain.prototype = {
         $this.button('loading');
 
         var fields = {
-            email: { notEmpty: { message: 'The email is required'}} ,
-            password: { notEmpty: {message: 'The password is required'}}
+            email: { notEmpty: { message: 'Email is required.'}} ,
+            password: { notEmpty: {message: 'Password is required.'}}
         }
 
         var uid = $('#form-login :input[name="email"]');
