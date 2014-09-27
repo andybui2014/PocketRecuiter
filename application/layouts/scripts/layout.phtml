@@ -84,13 +84,47 @@ $loginClient = $this->layout()->loginclient;
                             <strong><?=$loginClient['emailaddress']?></strong><span class="caret"></span>
                         </span>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="<?= URL_BASE . 'client/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
+                        <?php
+                            if($loginClient["usertype"]==1)
+                            {
+                             
+                             ?>
+                             <li><a href="<?= URL_BASE . 'client/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
+                          <?php   
+                            }else
+                            {
+                            ?>
+                            <li><a href="<?= URL_BASE . 'candidate/profile' ?>"><i class="glyphicon glyphicon-user"></i> Edit Profile</a></li>
+                            <?php 
+                            }
+                        ?>
+                            
                             <li class="divider"></li>
                             <li><a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
                         </ul>
                     </li>
                     <li><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
-                    <li><a href="<?=$helper->url('list','companyprofile');?>">Settings</a></li>
+                    <?php
+                    if($loginClient["usertype"]==1)
+                    {
+                    ?>
+                    <li class="dropdown">
+                        <span class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <strong>Settings</strong><span class="caret"></span>
+                        </span>
+                        <ul class="dropdown-menu" role="menu">                                               
+                            <li><a href="<?=$helper->url('list','companyprofile');?>"><i class="glyphicon glyphicon-user"></i> Company Profile</a></li>
+                        </ul>
+                    </li>
+                    <?php
+                    }else if($loginClient["usertype"]==2){
+                        
+                    ?>
+                     <li><a href="#">Settings</a></li>
+                    <?php
+                    }
+                    ?>
+                    <!--<li><a href="<?=$helper->url('list','companyprofile');?>">Settings</a></li>-->
                     <li><a href="#">Helps</a></li>
                 </ul>
             <?php } ?>
