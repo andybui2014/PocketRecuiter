@@ -2,7 +2,7 @@ function companyprofile(){ }
 
 companyprofile.prototype = {
     init: function(){
-        $("#cmd-updateprofile").unbind('click').bind('click',this.profile);
+      //  $("#cmd-updateprofile").unbind('click').bind('click',this.profile);
         $('#show-profile').unbind('click').bind('click',this.reset);
     },
     reset: function(){

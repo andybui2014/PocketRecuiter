@@ -24,7 +24,7 @@ $companylists = $this->companylists;
 <div style="height:80px; color: #2a6496">
     <div class="panel-body">
         <div><h3 style="margin-top: 10px; margin-left: -16px"><label>Company Profiles</label> </h3></div>
-        <div style="float: right; margin-top: -40px; margin-right:-10px">
+        <div style="float: right; margin-top: -37px; margin-right:-10px">
             <button class="btn btn-success" type="button">Add Company</button>
 
         </div>
@@ -44,17 +44,17 @@ $companylists = $this->companylists;
         <table id="notificationCk"  style="background-color: #fff" class="table  table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
             <thead>
             <tr role="row" >
-                <th class="clWidth300 text-center">
+                <th class="clWidth300 ">
                     <label>
                         <strong>Company Name</strong>
                     </label>
                 </th>
-                <th class="clWidth600 text-center">
+                <th class="clWidth600 ">
                     <label>
                         <strong>Address</strong>
                     </label>
                 </th>
-                <th class="clWidth600 text-center">
+                <th class="clWidth600 ">
                     <label>
                         <strong>Industry</strong>
                     </label>
@@ -79,12 +79,12 @@ $companylists = $this->companylists;
             
             ?>
                 <tr role="row" class="odd ischecktr">
-                    <td class="clWidth300 text-center">
+                    <td class="clWidth300 ">
                         <input type="hidden" name="CompanyID" value="<?= $companys["CompanyID"]?>">
                         <span style="padding-left:10px"><strong><a href="<?= URL_BASE ?>companyprofile/profile?companyid=<?= $companys["CompanyID"] ?>&pageajax=profile"><?= $companys["Companyname"]?></a></strong></span> 
                     </td>
-                    <td class="clWidth600 text-center"><span class="notiText"><?=$companys["Address"]?></span></td>
-                    <td class="clWidth200 text-center"><?=$companys["Industry"]?></td>
+                    <td class="clWidth600 "><span class="notiText"><?=$companys["Address"]?></span></td>
+                    <td class="clWidth200 "><?=$companys["Industry"]?></td>
                     <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $companys["CompanyID"] ?>&pageajax=editprofile"><img src="<?=URL_THEMES?>images/update.PNG"></a></span><a href="#" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes"></a></td>
                 </tr>
             <?php
