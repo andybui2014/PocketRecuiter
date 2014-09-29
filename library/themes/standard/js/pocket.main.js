@@ -103,8 +103,8 @@ pocketMain.prototype = {
                             );
                             pwd_message.parent().removeClass('has-success').addClass('has-error');
                             
-                            uid.parent().removeClass('has-success').addClass('has-error');
-                            uid_message.html(fields.email.notEmpty.message).fadeOut().fadeIn();
+                           uid.parent().removeClass('has-success').addClass('has-error');
+                           // uid_message.html(fields.email.notEmpty.message).fadeOut().fadeIn();
                         }
                     }
                 });
