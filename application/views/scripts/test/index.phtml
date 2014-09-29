@@ -51,7 +51,7 @@
 <div style="height:80px; color: #2a6496">
     <div class="panel-body">
         <div class="col-md-12">
-            <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -26px"><label>Manage Test</label> </h3></div>
+            <div class="col-md-6"><h3 class="title-test" style="margin-top: 18px; margin-left: -26px"><label>Manage Test</label> </h3></div>
             <div class="col-md-6" style="text-align: right">
                 <button style="margin-top: 14px; margin-right: -29px" class="btn btn-success" type="button">Create New Test</button>
             </div>
@@ -60,7 +60,7 @@
     </div>
 </div>
     <div class="panel-group" id="accordion">
-       <div class="panel panel-default" style="display:none">
+       <div id="tab-edit" class="panel panel-default" style="display:none">
             <div class="panel-heading" style="background-color: #2a6496;color: #fff">
                 <h4 class="panel-title" >
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -68,12 +68,15 @@
                     </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse">
+            <div id="collapseOne" class="panel-collapse collapse in">
                 <div class="panel-body" style="padding-top:0;padding-bottom: 0">
                     <div class="row">
                         <div class="col-md-3">
                             <ul class="test-list-item" >
-                                <li  class="item-list" style="height: 55px;"><label style="line-height: 30px"><input type="checkbox"/> Question 1</label></li>
+                                <li class="item-list" style="height: 55px;"><label style="line-height: 30px"><input id="qstCheckall"  type="checkbox"/> Check All</label></li>
+                            </ul>
+                            <ul id="qst-list" class="test-list-item" >
+
                                 <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
                                 <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
                                 <li class="item-list"><label><input type="checkbox"/> Question 1</label> <span class="pull-right"><i class="glyphicon glyphicon-remove"></i></span></li>
@@ -227,16 +230,14 @@
                                     <td style="color: #777"></td>
                                     <td class="clWidth100"><strong>Q. &nbsp<?=$item['NumQuestions'];?></strong></td>
                                     <td class="clWidth100">
-                                        <span style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                        <span class="btn-edit" data-id="<?=$item['TestID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
                                         <span><i style="color: #bbb"  class="glyphicon glyphicon-remove"></i></span>
                                     </td>
                                 </tr>
                             <?php } } ?>
                             </tbody>
                         </table>
-                        <!--
-                        <div class="" style="height: 40px;background-color: #333">
--->
+                        <!--<div class="" style="height: 40px;background-color: #333">-->
                         </div>
                     </div>
 
@@ -247,6 +248,7 @@
     </div>
 
 </div>
+<script src="<?=URL_THEMES.'js/pocket.test.js';?>"></script>
 <script>
 
 </script>
