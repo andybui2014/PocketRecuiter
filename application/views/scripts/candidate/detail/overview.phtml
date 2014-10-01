@@ -1,0 +1,154 @@
+<style>
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+    .panel-heading .accordion-toggle:after {
+        /* symbol for "opening" panels */
+        font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+        content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+        float: right;        /* adjust as needed */
+        color: #fff;         /* adjust as needed */
+    }
+    .panel-heading .accordion-toggle.collapsed:after {
+        /* symbol for "collapsed" panels */
+        content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well text-center">
+                <div id="update-av" class="img-responsive img-thumbnail" style="height: 108px; width: 108px; background-position: center center; background-image: url(&quot;data:image/jpg;base64,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&quot;); display: inline-block;"></div>
+
+                <p class="text-muted small"></p>
+                <div style="text-align: center; "><span class="label label-default">Click to Add / Edit</span></div>
+
+            </div>
+            <a href="#">andybui@vsnr.com</a><br/>
+            <strong>View my profile</strong> <br/>
+            <span><img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAANABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDhv+EO8T/9C5q//gDL/wDE16jpWjSxaPYxz6O6zLbxq4fTCWDBRnOdPbnP+031PWud/wCEs0v/AKAf/jll/wDIlH/CWaX/ANAP/wAcsv8A5EroxuZPFRUWrWPrcHkOIw0nLe/p/mdd/ZP/AFCf/KZ/97aK5H/hLNL/AOgH/wCOWX/yJRXn8yPQ/s/Efy/iv8z/2Q=="/>
+                United State, San Diego, CA
+            </span>
+            <span><strong>Expected Salary: 60-65k</strong></span><br/>
+            <p style="padding: 10px 0">
+                <i class="lbl-log">Edit</i>
+            </p>
+            <ul id="nav-left">
+                <li><a class="active"><strong>Profile builder</strong></a></li>
+                <li><a href="#">Overview</a></li>
+                <li><a href="#">Contact Info</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Education</a></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p>Last signed: Nov,8,2014</p>
+        </div>
+        <div class="col-md-9">
+            <div class="page-header">
+                <h3><a><strong>Ainsley Abbot</strong></a></h3>
+                <p>Joomla | Wordpress | Magento | Drupal | Php</p>
+                <span><img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAANABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDhv+EO8T/9C5q//gDL/wDE16jpWjSxaPYxz6O6zLbxq4fTCWDBRnOdPbnP+031PWud/wCEs0v/AKAf/jll/wDIlH/CWaX/ANAP/wAcsv8A5EroxuZPFRUWrWPrcHkOIw0nLe/p/mdd/ZP/AFCf/KZ/97aK5H/hLNL/AOgH/wCOWX/yJRXn8yPQ/s/Efy/iv8z/2Q==">
+                United State, San Diego, CA <i class="lbl-log">Edit</i></span>
+            </div>
+            <div class="col-md-8" style="margin:0;padding:0">
+                <h5><strong>Overview</strong></h5>
+                <div class="col-xs-12" style="font-size: 12px;padding: 10px 0;">
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                    Experienced Atlatasian Administrator
+                </div>
+                <div class="col-md-6" style="margin:0;padding:0">
+
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen=""></iframe>
+                    </div>
+
+                    <!-- 4:3 aspect ratio -->
+
+                </div>
+                <div class="col-md-6" style="margin:0;padding:0">
+                    <p style="margin-left: 20px; text-align: center;width: 90px;padding: 10px;background-color: #fff; color: #428bca">
+                        <i style="font-size: 1.2em" class="glyphicon glyphicon-facetime-video"></i><br/>
+                        <span style="font-size: 12px;font-weight: bold">Add Video</span>
+                    </p>
+                </div>
+                <div class="col-xs-12" style="padding: 5px 0 0 0;">
+                    <h5><strong>Skills (8)</strong></h5>
+                    <p style="font-size: 12px;">
+                        <i class="lbl-log-skill">Joomla</i>
+                        <i class="lbl-log-skill">Drupal</i>
+                        <i class="lbl-log-skill">WordPress</i>
+                        <i class="lbl-log-skill">Ecomerce</i>
+                        <i class="lbl-log-skill">Adobe Dreamwaver</i>
+                        <i class="lbl-log-skill">JQuery</i>
+                        <i class="lbl-log-skill">Html5</i>
+                    </p>
+                </div>
+                <div class="col-xs-12"  style="padding: 5px 0 0 0; font-size: 12px;">
+                    <h5><strong>Employment</strong> <a href="#" class="lbl-log">+ Add Employment</a></h5>
+                    <p><strong>Company/Client Name</strong><br/>
+                    Your job Designer<br/>
+                    2011-2014</p>
+                    <p><strong>Company/Client Name</strong><br/>
+                        Your job Designer<br/>
+                        2011-2014</p>
+                    <p><strong>Company/Client Name</strong><br/>
+                        Your job Designer<br/>
+                        2011-2014</p>
+                </div>
+                <div class="col-xs-12"  style="padding: 5px 0 0 0; font-size: 12px">
+                    <h5><strong>Education</strong> <a href="#" class="lbl-log">+ Add Education</a></h5>
+                    <p><strong>Degree Name</strong><br/>
+                        Your job Designer<br/>
+                        2011-2014</p>
+                    <p><strong>Bachelor HUFLIT</strong><br/>
+                        Software System Analysis <br/>
+                        2006-2010</p>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin:0;padding:0">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color: #2a6496;color: #fff">
+                            <h5 style="margin:0;padding:0;">
+                                <a style="color: #fff" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    <strong>Your profile completeness</strong>
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                                        <span class="sr-only">45% Complete</span>
+                                    </div>
+                                </div>
+                                <a><strong>Your profile completeness</strong></a>
+                                <p style="font-size: 12px;color: #777">Your profile completeness, Your profile completeness</p>
+                                <p class="small"><a href="#"><strong>Testing abc</strong></a><br/>
+                                <a href="#"><strong>Drupal abc</strong></a><br/>
+                                <a href="#"><strong>Magento abc</strong></a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
