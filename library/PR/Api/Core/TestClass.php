@@ -78,7 +78,7 @@ class PR_Api_Core_TestClass
         return array("success"=>1,"id"=>$testID,"errMsg"=>''); 
     }
 
-    public function updateTest($testID,$comapnyID,$testName)
+    public function updateTest($testID,$companyID,$testName)
     {
         //--- validate
         $errMsg = "";
@@ -90,7 +90,7 @@ class PR_Api_Core_TestClass
         if (!empty($otherID) && $otherID!=$testID) {
             $errMsg = 'TestName already existed.';
         }
-        
+
         if(!empty($errMsg)){
             $errors = PR_Api_Error::getInstance();
             $errors->addError(6, $errMsg);
@@ -100,7 +100,7 @@ class PR_Api_Core_TestClass
 //TestID,CompanyID,posteddate,createdBy,TestName
         
         $updateFields=array('TestName'=>$testName);
-        $criteria = "TestQuestionID = '$testQuestionID'";    
+        $criteria = "TestID = '$testID'";
         $result = PR_Database::update("test", $updateFields,$criteria);
         
         $result = $this->create($updateFields);     
@@ -216,7 +216,7 @@ class PR_Api_Core_TestClass
 //TestQuestionAnswerID,TestQuestion_TestQuestionID,AnswerText
         if(count($answerOtionArray) > 0){
             $currentAnswerTexts = $this->getAnswerTexts($testQuestionID);            
-            foreach($answerOptionArray as $answerOption)
+            foreach($answerOtionArray as $answerOption)
             {
                 if(!in_array($answerOption,$currentAnswerTexts)){
                     $updateFields=array('TestQuestion_TestQuestionID'=>$testQuestionID,
@@ -226,7 +226,7 @@ class PR_Api_Core_TestClass
             }  
             
             $db = PR_Database::getInstance();
-            $criteria = "TestQuestion_TestQuestionID = '$testQuestionID' AND AnswerText NOT IN ('".implode("','",$answerOptionArray)."')";
+            $criteria = "TestQuestion_TestQuestionID = '$testQuestionID' AND AnswerText NOT IN ('".implode("','",$answerOtionArray)."')";
             $result = $db->delete('test_question_answer', $criteria);
                       
         } else if(is_array($answerOtionArray) && count($answerOtionArray)==0){
