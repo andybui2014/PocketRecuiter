@@ -53,7 +53,7 @@ $loginClient = $this->layout()->loginclient;
                 <?php $loginClient = $this->layout()->loginclient; if(!empty($loginClient)){ ?>
                     <strong><?=$loginClient['emailaddress'];?></strong> / <a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>">Logout</a>
                 <?php }else{ ?>
-                    <a style="font_size:13px;" href="<?=URL_BASE;?>register"><b>Sign In or Join</b></a>
+                    <a style="font_size:13px;" href="<?=URL_BASE;?>login"><b>Sign In or Join</b></a>
                 <?php } ?>
             </div>
         </div>

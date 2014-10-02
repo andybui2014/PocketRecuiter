@@ -37,6 +37,12 @@ border-bottom: 1px solid #ddd;
     
    
 }
+.form-control{
+    width: 50%;
+}
+.popover {
+    border:none;
+}
 #form-login .message{color: #b81900;}
 </style>
 <div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
@@ -57,15 +63,17 @@ border-bottom: 1px solid #ddd;
 <div class="page-header1" style="margin:0;">
 </div>
 <div class="col-md-8"  style="padding:0;padding-top:25px;">
-    <div class="col-md-6" style="margin:0;padding:0">
+
+    <!--<div class="col-md-6" style="margin:0;padding:0">-->
         <form id="form-login" role="form">
+        
         <div id="login-message">
 
         </div>
         <div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
+                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" >
                 <span class="message" id="username_message"></span>
             </div>
             <div class="form-group">
@@ -75,15 +83,15 @@ border-bottom: 1px solid #ddd;
                 <!--<p class="help-block" id=""><a href="reset">Forgot Password?</a></p>-->
             </div>
             <div class="form-group">
-                <span><input name="remember" type="checkbox" id="terms"> Remember Me</span>
-                <span class="pull-right">
-                    <a href="#">Forgot Password?</a>
+                <span style="font-size:12px;"><input name="remember" type="checkbox" id="terms"> Remember me</span>
+                <span class="pull-right" style="padding-right:50%">
+                    <a href="#" style="color:#333;font-size:12px">Forgot Password?</a>
                 </span>
             </div>
             <!--<button data-loading-text="Loading..." id="btn-login" class="btn btn-primary" type="button">Log in </button>-->
-            <img src="<?=URL_THEMES?>images/btn_logIn.png" id="btn-login" style="cursor: pointer;">
+            <img src="<?=URL_THEMES?>images/btn_logIn.png" id="btn-login" style="cursor: pointer;" width="75px;">
         </form>
-        </div>
+       <!-- </div>-->
     </div>
     <div class="col-md-6">
     </div>
@@ -114,5 +122,9 @@ border-bottom: 1px solid #ddd;
     $(document).ready(function(){
         //Login pocket
         $('#btn-login').unbind('click').bind('click',pkMain.logIn);
+        $("#email").popover({placement:'right',content:"<span style='font-size:12px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $("#email").popover("show");
+    $('#email').tooltip({placement:'right',content:"<span style='font-size:12px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $('#email').tooltip('show')
     })
 </script>
