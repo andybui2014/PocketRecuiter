@@ -31,7 +31,7 @@ pocketTest.prototype = {
             }
         })
 
-        var dataTId = arrTests;
+        var dataTIds = arrTests;
         var $qstName = stest;
         var $modal = $('#modal-dialog');
         if(arrTests.length > 0){
@@ -45,8 +45,8 @@ pocketTest.prototype = {
                         '<button type="button" aria-hidden="true" data-dismiss="modal"  class="btn btn-default">Close</button>'+
                         '</div>' +
                         '</p>').find('#qst-cfRemove').bind('click',function(){
-                        if(dataTId > 0){
-                            $.post( '/test/remove-tests',{dataTId: dataTId}).done(function( data ) {
+                        if(dataTIds.length > 0){
+                            $.post( '/test/remove-tests',{dataTIds: dataTIds}).done(function( data ) {
                                 if(data.success){
                                     $modal.modal("hide");
                                     $modal.on('hidden.bs.modal', function () {
@@ -346,7 +346,7 @@ pocketTest.prototype = {
         });
     }
 }
-$(function() {
+$(function  () {
     var prTest= new pocketTest();
     prTest.init();
 });
