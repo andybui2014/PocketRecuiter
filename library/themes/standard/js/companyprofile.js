@@ -2,12 +2,12 @@ function companyprofile(){ }
 
 companyprofile.prototype = {
     init: function(){
-      //  $("#cmd-updateprofile").unbind('click').bind('click',this.profile);
+        $("#submit").unbind('click').bind('click',this.profile);
         $('#show-profile').unbind('click').bind('click',this.reset);
     },
     reset: function(){
         $('#profile-message').html('');
-        $('#form-profile').find('.form-group1').removeClass('has-error');
+        $('#profile').find('.form-group1').removeClass('has-error');
        
       //  $('#form-profile :input[name="emailaddress"]').val('');
        
@@ -59,13 +59,21 @@ companyprofile.prototype = {
             }*/
            
             if(error==false){
+                
                 $.ajax({
                    // url: 'update-profle',
-                    url: 'do-editprofile',
-                    data: $('#form-profile').serializeArray(),
+                   
+                    url: 'do-edit-profile',
+                    data: $('#profile').serializeArray(),
                     type: 'POST',
+                    
                     success: function(xhr){
+                        //alert(xhr.success);
+                        alert("file:"+$('#images').val());
                         if(xhr.success){
+                           // $('#photo1').val()=$('#images').val();
+                          // console.log($('#form-profile').serializeArray());
+                            
                             //window.location = 'start-profile';
                           //  window.location = 'update-profle';
                             $this.button('reset');

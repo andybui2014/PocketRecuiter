@@ -53,20 +53,36 @@ class CompanyprofileController extends Application_Controller_Action
     }
      public function doEditprofileAction()
     {
+        
+       
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
-        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+        //print_r($request->getParams());
+        var_dump($_POST);
+        die();
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $companyid = $request->getParam("CompanyID");
+         $hidSaveOrUpload = $request->getParam("images");
+        // echo ("images:".$hidSaveOrUpload);
         $api = new PR_Api_Core_ClientClass();
          $return = array("success" => 0, "error" => "");
+       
         $params = $request->getParams();
+        //print_r($params);
+       // $id = $request->getParam('file');
+        $Company_Logo_Rm=$request->getParam('Company_Logo_Rm');
        $updateFields=array();
        foreach ($params as $key => $value) {
             $updateFields[$key]=$value;
             
             }
-           
-        echo ("companyid:".$companyid);print_r($updateFields);die();
+         // if($Company_Logo_Rm==1)
+         // {
+              // $updateFields["images"] ="";
+         // }
        $result = $api->updatecompanyProfile($companyid,$updateFields);
+      // $return["success"]=1;  
        if($result)
        {
            $return["success"]=1;

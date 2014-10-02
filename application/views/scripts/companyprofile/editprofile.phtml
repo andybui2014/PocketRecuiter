@@ -5,7 +5,7 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
 
-#form-profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
+#profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
 
  .redborder{
         border:#F00 solid 1px;
@@ -20,7 +20,24 @@
 
 
     
-   
+  <script type="text/javascript">
+    $(document).ready(function()
+    {
+         $("#Company_Logo_Rm").click(function() {
+        if ($("#Company_Logo_Rm").is(":checked"))
+                {
+                     $("#Company_Logo_file").css("display","");
+                    // $('#hidSaveOrUpload').val(1);
+                }else
+                    {
+                       $("#Company_Logo_file").css("display","none");  
+                       //('#hidSaveOrUpload').val(0);
+                    }
+        });
+        
+      // $('#file1').val($('#file').val());
+    });
+  </script>
 
 <?php
 $company=$this->company;
@@ -40,7 +57,9 @@ $company=$this->company;
     <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;">
           
       <div class="col-md-6"  style="padding:0">      
-      <form role="form" method="post" name="form-profile" id="form-profile" action="<?= URL_BASE . 'companyprofile/do-editprofile'  ?>">
+
+      <form enctype="multipart/form-data"   method="post" name="profile" id="profile"  action="<?= URL_BASE . 'companyprofile/do-edit-profile'?>">
+     <!-- <input type="hidden" id="hidSaveOrUpload" name="hidSaveOrUpload" value="0" />-->
              <div class="form-group">
                 <label for="credential">Company Name</label>
               <div class="form-group">
@@ -91,9 +110,33 @@ $company=$this->company;
             </div>
             <div class="form-group">
                 <label for="credential">Logo</label>
-                <div class="form-group">
                 
-                <input id="file" type="file" class="file" name="file">
+                <div class="form-group">
+                <?php
+                    if($company["images"]=="")
+                    {
+                        
+                    
+                ?>
+                <img width="150px" class="" src="<?=URL_THEMES?>images/none.png" id="Image1" /><br/>
+                <input type="hidden" id="hidFileName" name="" value="none.png" />
+            <?php
+                    }else{
+           
+            ?>
+            <img width="110px" height="144px" class="user_photo" src="<?=URL_THEMES?>images/<?=$company["images"]?>" id="Image1" /><br/>
+            <input type="hidden" id="hidFileName" name="" value="<?= $company["images"] ?>" />
+           <?php
+                    }
+           ?>
+              <input type="checkbox" value="1" id="Company_Logo_Rm" name="Company_Logo_Rm"/> Remove &nbsp;
+              <div id="Company_Logo_file" style="display:<?=empty($company["images"])?'':'none'?>; ">
+                                    <!--<input type="file" name="images" id="images" > -->
+              <input type="file" size="30" value="<?php echo $company["images"]; ?>" meta-data="images" name="images" id="images">
+                                    
+                                 </div> 
+                                
+                
                  <span class="message" id=""></span>
               </div>
                 
@@ -112,7 +155,7 @@ $company=$this->company;
              
            <div class="">
                     
-                        <button type="button" class="btn btn-success" id="cmd-updateprofile">
+                        <button type="submit" class="btn btn-success" id="submit" name="submit" >
                             <strong>Update</strong>
                         </button>
                     
