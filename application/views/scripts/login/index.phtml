@@ -1,35 +1,79 @@
 
 <style>
+body {
+    background: none repeat scroll 0 0 #ededed;
+    
+}
+.container{
+     /*font-family:"Open Sans" ;*/
+     font-size: 13px;
+     max-width: 90%;
+}
+.page-header{
+/*width: 859px;
+border-bottom: 1px solid #ddd;*/
+border-bottom: none;
+}
+.page-header1{
+width: 859px;
+border-bottom: 1px solid #ddd;
+
+}
 .has-error .form-control {
     border-color: #a94442;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.image1 {
+    background: url('<?=URL_THEMES?>images/img_PrivacyPolicy.jpg') no-repeat ;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+   
+    max-width: 274px;
+    
+    
+    
+   
+}
+.form-control{
+    width: 50%;
+}
+.popover {
+    border:none;
 }
 #form-login .message{color: #b81900;}
 </style>
 <div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
     <div class="container">
-        <small>This is the resume of the future! With Pocket Recruiter, </small><br/>
-        You'll not only get the hiring manager's attention-you'll keep it
+        <span style="font-size:15px">This is the resume of the future! With Pocket Recruiter,</span><br/>
+     <span style="font-weight:bold;font-size:20px;"> You'll not only get the hiring manager's attention-you'll keep it.</span>
     </div>
 </div>
 <div class="container" >
 <div class="page-header" style="margin:0;">
-    <h1>
-        <span class="text-left" style="color: #2a6496">Log in</span>
-        <span class="text-right pull-right" style="font-size: 14px;position: relative;top: 20px">Already have a Pocket Recruiter account? <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'login' ?>"><span class="lbl-log">Sign in</span></a> <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'register' ?>"><span class="lbl-log">Register</span></a></span>
 
-    </h1>
+    <h3>
+        <span style="color:#005595;font-weight:bold;font-size:25px">Log in</span>
+        <span class="text-right pull-right" style="font-size: 12px;padding-top:8px;padding-right:16px;">Already have a Pocket Recruiter account? <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'login' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_SignIn.png"></span></a><a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'register' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_Register.png"> </span></a></span>
+
+    </h3>
 </div>
-<div class="col-md-8"  style="padding:0">
-    <div class="col-md-6" style="margin:0;padding:0">
+<div class="page-header1" style="margin:0;">
+</div>
+<div class="col-md-8"  style="padding:0;padding-top:25px;">
+
+    <!--<div class="col-md-6" style="margin:0;padding:0">-->
         <form id="form-login" role="form">
+        
         <div id="login-message">
 
         </div>
         <div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
+                <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" >
                 <span class="message" id="username_message"></span>
             </div>
             <div class="form-group">
@@ -39,32 +83,36 @@
                 <!--<p class="help-block" id=""><a href="reset">Forgot Password?</a></p>-->
             </div>
             <div class="form-group">
-                <span><input name="remember" type="checkbox" id="terms"> Remember Me</span>
-                <span class="pull-right">
-                    <a href="#">Forgot Password?</a>
+                <span style="font-size:12px;"><input name="remember" type="checkbox" id="terms"> Remember me</span>
+                <span class="pull-right" style="padding-right:50%">
+                    <a href="#" style="color:#333;font-size:12px">Forgot Password?</a>
                 </span>
             </div>
-            <button data-loading-text="Loading..." id="btn-login" class="btn btn-primary" type="button">Log in </button>
+            <!--<button data-loading-text="Loading..." id="btn-login" class="btn btn-primary" type="button">Log in </button>-->
+            <img src="<?=URL_THEMES?>images/btn_logIn.png" id="btn-login" style="cursor: pointer;" width="75px;">
         </form>
-        </div>
+       <!-- </div>-->
     </div>
     <div class="col-md-6">
     </div>
 
 </div>
-<div class="col-md-4" style="padding:0;border-left: 1px solid #ddd; height: 400px;">
+    <div class="col-md-4" style="padding:0;border-left: 1px solid #ddd; height: 300px;">
     <div style="height: 50px; ">
-        <p style="float:left;width: 20%;color: #fff;background-color: #4cae4c;padding: 15px 0; text-align: center"><i class="glyphicon glyphicon-lock"></i></p>
-        <p style="float:left;width: 80%;color: #fff;background-color: #333;padding: 5px 0; text-align: center">
+        <!--<p style="float:left;width: 20%;color: #fff;background-color: #4cae4c;padding: 15px 0; text-align: center"><i class="glyphicon glyphicon-lock"></i></p>-->
+        <!--<p style="float:left;width: 80%;color: #fff;background-color: #333;padding: 5px 0; text-align: center">
             We value your privacy<br/> <small>Privacy Policy</small>
-        </p>
+        </p>-->
+        <div class="image1"><img src="<?=URL_THEMES?>images/img_PrivacyPolicy.jpg" width="274px"></div>
+        
     </div>
     <div class="col-lg-12">
-       <h3><span class="text-left" style="color: #2a6496;padding-right: 20px;"><i class="glyphicon glyphicon-ok"></i></span><span class="text-center" >Pocket Recruiter</span></h3>
-        <p><smal>
+       <h3><span style=""><!--<i class="glyphicon glyphicon-ok"></i>--><img src="<?=URL_THEMES?>images/img_check.png" width="20px;"></span> <span style="color:#005595;font-weight:bold;font-size:20px">Pocket Recruiter</span></h3>
+       <!-- <p><smal>
             At a bare minimum, the front controller needs one or more paths to directories containing action controllers in order to do its work. A variety of methods may also be invoked to further tailor the front controller environment and that of its helper classes.</smal>
-        </p>
-        <p><a rel="" href="<?= URL_BASE . 'register' ?>" style="text-decoration: none;"><span class="lbl-log">Register</span></a></p>
+        </p>-->
+        <p style="font-size:12px;">Ut etgestas consectetur risus eget comomdo. Send ornare aliquam blandit. Nunc eu tristique ante, at dictum ligula ..................... eleifend. </p>
+        <p><a style="text-decoration: none;" rel="" href="#"><span><img src="<?=URL_THEMES?>images/btn_ReadMore.png"> </span></a></p>
     </div>
 </div>
 </div>
@@ -74,5 +122,9 @@
     $(document).ready(function(){
         //Login pocket
         $('#btn-login').unbind('click').bind('click',pkMain.logIn);
+        $("#email").popover({placement:'right',content:"<span style='font-size:12px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $("#email").popover("show");
+    $('#email').tooltip({placement:'right',content:"<span style='font-size:12px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $('#email').tooltip('show')
     })
 </script>

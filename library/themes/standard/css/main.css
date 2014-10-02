@@ -9,7 +9,7 @@ body{
     padding-top: 80px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 .nav-ribbon{line-height: 30px;width: 100%;background-color: #333;color: #fff;}
-.nav-ribbon .nav-ribbon-left{margin-right: 10%;}
+.nav-ribbon .nav-ribbon-left{margin-right: 8%;}
 .nav-ribbon a{color: #fff;}
 .page-header{border-bottom: 1px solid #ddd;}
 .lbl-log{ padding: 3px 5px;color: #2a6496;border: 1px solid #ddd; background-color: #fff; font-weight: bold;

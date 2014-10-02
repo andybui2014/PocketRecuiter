@@ -44,7 +44,7 @@
         $email= $params["emailaddress"];
         $pass= $params["password"];
         $About_us=$params["About_us"];
-        $loginname=$params["loginname"];
+        //$loginname=$params["loginname"];
                
         $data=array(
                 "firstname" => $firstname,
@@ -52,8 +52,8 @@
                 "usertype" => $Acount_type,
                 "emailaddress" => $email,
                 "password" => $pass,
-                "HeardFrom" => $About_us,
-                "loginname" => $loginname
+                "HeardFrom" => $About_us
+                //"loginname" => $loginname
                 );
              // echo ("data:<pre>");print_r($data);echo("</pre>");die();
        // $api=new PR_Api_Register();

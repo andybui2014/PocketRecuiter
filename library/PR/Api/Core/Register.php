@@ -43,8 +43,8 @@ class PR_Api_Core_Register
             "emailaddress" => "emailaddress",
             "usertype" => "usertype",
             "password" => "password",
-            "HeardFrom" => "HeardFrom",
-            "loginname" => "loginname"
+            "HeardFrom" => "HeardFrom"
+//"loginname" => "loginname"
             
         );
         
@@ -54,7 +54,7 @@ class PR_Api_Core_Register
         }
         
        $primaryEmail=$data["emailaddress"];
-       $loginname=$data["loginname"];
+     //  $loginname=$data["loginname"];
        // {
             $maxIdSql = "SELECT MAX(UserID) AS UserID  FROM user";
             $result = $db->fetchAll($maxIdSql);
@@ -63,18 +63,18 @@ class PR_Api_Core_Register
                                 array('emailaddress'));
                 $select->where("emailaddress = '$primaryEmail'");
                 $res = $db->fetchAll($select);
-                $select1 = $db->select()->from(PR_Database::TABLE_USER, 
-                                array('loginname'));
-                $select1->where("loginname = '$loginname'");
-                $res1 = $db->fetchAll($select1);
+                //$select1 = $db->select()->from(PR_Database::TABLE_USER, 
+                              //  array('loginname'));
+                //$select1->where("loginname = '$loginname'");
+               // $res1 = $db->fetchAll($select1);
                 if(!empty($res) && count($res) > 0 ) {
                     
                     return array("error" => "email exists");
-                   // echo("email exists");
+                    echo("email exists");
                 } 
-                else if(!empty($res1) && count($res1) > 0){
-                    return array("error" => "User exists");
-                } 
+               // else if(!empty($res1) && count($res1) > 0){
+                //    return array("error" => "User exists");
+                //} 
                 else
                 {
                     if($data['usertype']==1)
@@ -87,7 +87,7 @@ class PR_Api_Core_Register
                         "emailaddress" => $data['emailaddress'],
                         "password" => $data['password'],
                         "HeardFrom" => $data['HeardFrom'],
-                        "loginname" => $data['loginname'],
+                       // "loginname" => $data['loginname'],
                         "CompanyID"=>"1"
                         
             ));
@@ -101,8 +101,8 @@ class PR_Api_Core_Register
                         "usertype" => $data['usertype'],
                         "emailaddress" => $data['emailaddress'],
                         "password" => $data['password'],
-                        "HeardFrom" => $data['HeardFrom'],
-                        "loginname" => $data['loginname']
+                        "HeardFrom" => $data['HeardFrom']
+                       // "loginname" => $data['loginname']
                         
                         
             ));
