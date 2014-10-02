@@ -1,5 +1,12 @@
+<style>
+.fw {
+    /*font-weight: 600;*/
+    font-size: 13px;
+}
+</style>
 <?php
 $helper = $this->layout()->_helper;
+
 ?>
 <!DOCTYPE html>
 <html class="full" lang="en">
@@ -46,7 +53,7 @@ $loginClient = $this->layout()->loginclient;
                 <?php $loginClient = $this->layout()->loginclient; if(!empty($loginClient)){ ?>
                     <strong><?=$loginClient['emailaddress'];?></strong> / <a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>">Logout</a>
                 <?php }else{ ?>
-                    <a href="<?=URL_BASE;?>register">SignIn or Join</a>
+                    <a style="font_size:13px;" href="<?=URL_BASE;?>register"><b>Sign In or Join</b></a>
                 <?php } ?>
             </div>
         </div>
@@ -68,13 +75,13 @@ $loginClient = $this->layout()->loginclient;
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <?php if(empty($loginClient)){ ?>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><strong>Match Career</strong></a></li>
-                <li><a href="#"><strong>Features</strong></a></li>
-                <li><a href="#"><strong>Plans</strong></a></li>
-                <li><a href="#"><strong>Success Stones</strong></a></li>
-                <li><a href="#"><strong>Resources</strong></a></li>
-                <li><a href="#"><strong>Contact Us</strong></a></li>
+            <ul class="nav navbar-nav navbar-right" style="margin-right:0.2%;" >
+                <li><a href="#" style="color:#333"><strong class="fw">Match Career</strong></a></li>
+                <li><a href="#" style="color:#333"><strong class="fw">Features</strong></a></li>
+                <li><a href="#" style="color:#333"><strong class="fw">Plans</strong></a></li>
+                <li><a href="#" style="color:#333"><strong class="fw">Success Stones</strong></a></li>
+                <li><a href="#" style="color:#333"><strong class="fw">Resources</strong></a></li>
+                <li><a href="#" style="color:#333"><strong class="fw">Contact Us</strong></a></li>
             </ul>
             <?php }else{ ?>
                 <ul class="nav nav-pills navbar-right small">
@@ -217,6 +224,17 @@ $loginClient = $this->layout()->loginclient;
                 <li><a href="#">(000) 123-4567</a></li>
                 <li><a href="#">6am-6p Pt daily</a></li>
             </ul>
+        </div>
+         <div class="col-md-2">
+            <div style="float:right;">
+                <span><img src="<?=URL_THEMES?>images/img_like.jpg" width="35px"></span>
+                <span style="padding-left:1px;"><img src="<?=URL_THEMES?>images/img_G.jpg" width="28px"></span>
+            </div>
+            <div style="padding-top:5px;float:right">
+                <span><img src="<?=URL_THEMES?>images/img_Truste.jpg" width="101px"></span>
+            </div>
+            
+            
         </div>
     </div>
 

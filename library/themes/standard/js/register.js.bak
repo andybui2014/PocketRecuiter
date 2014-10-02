@@ -16,7 +16,7 @@ register.prototype = {
         $('#Register :input[name="password"]').val('');
          $('#Register :input[name="RetypePassword"]').val('');
         $('#Register :input[name="usertype"]').val('');
-    //   $('#Register :input[name="loginname"]').val('');
+       $('#Register :input[name="loginname"]').val('');
         $('#Register').find('[name="About_us"]').value='';
         $('#Register :input[name="accept"]').val('');
         $('#Register #emailaddress').html('');
@@ -27,7 +27,7 @@ register.prototype = {
         $('#Register #usertype').html('');
         $('#Register #About_us').html('');
         $('#Register #accept').html('');
-       // $('#Register #loginname').html('');
+        $('#Register #loginname').html('');
        
         $('#cmd-register').button('reset');
     },
@@ -60,7 +60,7 @@ register.prototype = {
         var rpw = $('#Register :input[name="RetypePassword"]');
        var act = $('#Register :input[name="accept"]');
         var pmrm = $('#Register :input[name="emailaddress"]');
-      // var lgn = $('#Register :input[name="loginname"]');
+       var lgn = $('#Register :input[name="loginname"]');
         var abu = $('#Register').find('[name="About_us"]');
         var fn_message = $('#Register #FirstName_message');
         var ln_message = $('#Register #LastName_message');
@@ -72,7 +72,7 @@ register.prototype = {
       var lgn_message = $('#Register #loginname_message');
         if(
            // typeof fn !=='undefined' && typeof fn !==undefined &&  fn.length > 0 && 
-           // typeof lgn !=='undefined' && typeof lgn !==undefined &&  lgn.length > 0 &&
+            typeof lgn !=='undefined' && typeof lgn !==undefined &&  lgn.length > 0 &&
            typeof pw !=='undefined' && typeof pw !==undefined &&  pw.length > 0 &&
             typeof act !=='undefined' && typeof act !==undefined &&  act.length > 0 &&
             typeof pmrm !=='undefined' && typeof pmrm !==undefined &&  pmrm.length > 0 &&           
@@ -89,14 +89,14 @@ register.prototype = {
                 fn_message.html('');
             }*/
          
-            /*if(lgn.val() =='' || lgn.val().length <= 1){
+            if(lgn.val() =='' || lgn.val().length <= 1){
                 error = true;
                 lgn_message.parent().addClass('has-error');
                 lgn_message.html(fields.loginname.notEmpty.message).fadeOut().fadeIn();
             }else{
                 lgn_message.parent().removeClass('has-error').addClass('has-success');
                 lgn_message.html('');
-            }*/
+            }
           
              if(pw.val() =='' || pw.val().length <= 1){
                error = true;
@@ -203,11 +203,11 @@ register.prototype = {
                             pmrm_message.parent().removeClass('has-success').addClass('has-error');
                             pmrm_message.html(fields.emailaddress.notEmpty.message).fadeOut().fadeIn();
                            }
-                         //  if(xhr.error=="User exists")
-                          // {
-                           // lgn_message.parent().removeClass('has-success').addClass('has-error');
-                           // lgn_message.html(fields.loginname.notEmpty.message).fadeOut().fadeIn();
-                           //}
+                           if(xhr.error=="User exists")
+                           {
+                            lgn_message.parent().removeClass('has-success').addClass('has-error');
+                            lgn_message.html(fields.loginname.notEmpty.message).fadeOut().fadeIn();
+                           }
                            
                             //uid.parent().removeClass('has-success').addClass('has-error');
                         }

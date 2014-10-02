@@ -8,7 +8,8 @@ class IndexController extends Application_Controller_Action {
         if ($this->view->ajax == 1 && empty($client)) {
             $this->_helper->json(array('logined' => 0));
         } else if (empty($client)) {
-            $this->_helper->redirector("index", "login");
+           // $this->_helper->redirector("index", "login");
+             $this->_helper->redirector("index", "star");
         }
     }
 
