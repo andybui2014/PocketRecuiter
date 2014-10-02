@@ -69,7 +69,12 @@ class TestController extends Application_Controller_Action {
         $this->_helper->viewRenderer->setNoRender();
         $ajaxRes = array('success'=>0,'info'=>null);
         $params = $this->getRequest()->getParams();
-
+        $arrTest = $params['dataTIds'];
+        if(is_array($arrTest) && sizeof($arrTest) > 0){
+            $core  = new PR_Api_Core_TestClass();
+            $core->delete($arrTest);
+            $ajaxRes['success'] = 1;
+        }
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
         $ajaxRes = json_encode($ajaxRes);
