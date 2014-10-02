@@ -13,26 +13,94 @@ $uselist = $this->uselist;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
         margin-bottom: 20px;
     }
+
+ .clWidth600{width: 100px;}
 .clWidth200{width: 200px;}
 .clWidth300{width: 300px;}
  .clWidth600{width: 600px;}
+    .clWidth800{width: 800px;}
     .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
+ .bgcolor-ligh-gray {background-color: #fcfcfc;}
+ .bgcolor-ligh-gray {background-color: #fcfcfc;}
+ .messageActive {font-weight: bold}
+ .messageDeActive {color:#ccc}
 </style>
+
 <!-- Modal Add -->
 <div class="container">
-<div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotification" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-dialog-center">
-            <div class="modal-header login_modal_header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title" id="myModalLabel">Add a notification</h2>
-            </div>
-            <div class="modal-body login-modal" style="padding-top:0px">
-                        <div class="modal-body" style="padding-top:0px">
-                            <form id="form-addnotification" name="form-addnotification">
+    <div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotification" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content modal-dialog-center">
+                <div class="modal-header login_modal_header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="myModalLabel">Add a notification</h2>
+                </div>
+                <div class="modal-body login-modal" style="padding-top:0px">
+                    <div class="modal-body" style="padding-top:0px">
+                        <form id="form-addnotification" name="form-addnotification">
+
+                            <div class="col-md-12">
+                                <div class="col-md-4" style="padding-left: 0px">
+                                    <div class="form-group">
+                                        Select email to send : &nbsp;
+                                        <select id= "receiverid" class="form-control">
+                                            <option value="">Seclect a Receiver</option>
+                                            <?php
+                                            if(!empty($uselist)){
+                                                foreach ($uselist as $k=>$useinfo){
+                                                    $receiverid_user = $useinfo['UserID'];
+                                                    $receiver_Name = $useinfo['firstname']." ".$useinfo['lastname'] ;
+                                                    if($clientIDLogin != $receiverid_user){
+                                                        ?>
+                                                        <option value="<?=$receiverid_user?>"><?=$receiver_Name?></option>
+                                                    <?php  }
+                                                }
+                                            }
+                                            ?>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8" style="padding-top: 21px; padding-left:0px">
+                                    <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" id="addReceiveEmail">Add</button>
+                                </div>
+                            </div>
+                           <div class="col-md-12">
+                               To :
+                               <div class="form-control" id="toTheseEmail">
+                               </div>
+                               <br>
+                           </div>
+
+                            <div class="col-md-12">
                                 <div class="form-group">
-                                    Send to : &nbsp;
-                                    <select id= "receiverid" name="receiverid" class="form-control">
+                                    <input value="" type="text" name="subjectNotification" id="subjectNotification" placeholder="Subject" class="form-control">
+                                    <br>
+                                    <textarea value="" type="text" name="contentNotification" id="contentNotification" placeholder="Content" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Model Edit-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="EditModalNotification" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content modal-dialog-center">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title" id="myModalLabel">Edit notification</h2>
+                </div>
+                <div class="modal-body login-modal">
+                    <form id="form-editnotification" name="form-editnotification">
+                        <!--<div class="col-md-12">
+                            <div class="col-md-4" style="padding-left: 0px">
+                                <div class="form-group">
+                                    Select email to send : &nbsp;
+                                    <select id= "receiveridEdit" class="form-control">
                                         <option value="">Seclect a Receiver</option>
                                         <?php
                                         if(!empty($uselist)){
@@ -40,142 +108,165 @@ $uselist = $this->uselist;
                                                 $receiverid_user = $useinfo['UserID'];
                                                 $receiver_Name = $useinfo['firstname']." ".$useinfo['lastname'] ;
                                                 if($clientIDLogin != $receiverid_user){
-                                                ?>
-                                                <option value="<?=$receiverid_user?>"><?=$receiver_Name?></option>
-                                        <?php  }
+                                                    ?>
+                                                    <option value="<?=$receiverid_user?>"><?=$receiver_Name?></option>
+                                                <?php  }
                                             }
                                         }
                                         ?>
 
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <input value="" type="text" name="textnotification" id="textnotification" placeholder="content" class="form-control">
-                                </div>
-                                <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                            </div>
+                            <div class="col-md-8" style="padding-top: 21px; padding-left:0px">
+                                <button  class="btn btn-sm btn-primary" type="button" id="addReceiveEmailEdit">Add</button>
+                            </div>
+                        </div> -->
+                        <div class="col-md-12">
+                            Sent to  :
+                            <div class="form-control" id="hadSentToUser">
+                            </div>
+                            <br>
                         </div>
-
-
-
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Model Edit-->
-
-<div class="modal fade" tabindex="-1" role="dialog" id="EditModalNotification" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content modal-dialog-center">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title" id="myModalLabel">Edit notification</h2>
-            </div>
-            <div class="modal-body login-modal">
-                <form id="form-editnotification" name="form-editnotification">
-                             <div class="form-group">
-                                 Sent to : &nbsp <span id="hadSentToUser"></span>
-                             </div>
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <input value="" type="text" name="editNotification" id="editNotification" placeholder="content" class="form-control">
+                                <input value="" type="text" name="editNotification" id="editNotification" placeholder="Subject" class="form-control">
+                                <br>
+                                <textarea value="" type="text" name="editcontentNotification" id="editcontentNotification" placeholder="Content" class="form-control"></textarea>
                                 <input value="" type="hidden" name="ModalEditNotiID" id="ModalEditNotiID">
                             </div>
-                            <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Edit</button>
-                </form>
+                        </div>
+                        <button id="saveEditnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Edit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div style="height:80px; color: #2a6496">
-    <div class="panel-body">
-        <div class="col-md-12">
-            <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -44px"><label>Notifications</label> </h3></div>
-            <div class="col-md-6" style="text-align: right">
-                <button style="margin-top: 14px; margin-right: -43px" class="btn btn-success" type="button">Post Career</button>
-            </div>
-        </div>
 
+    <div style="height:80px; color: #2a6496" class="col-md-12">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -60px"><label>Inbox</label> </h3></div>
+                <div class="col-md-6" style="text-align: right">
+                    <button style="margin-top:15px; margin-right: -60px;background-color: #7aac34" class="btn btn-success" type="button"><strong>Post Job</strong></button>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
-<header class="subhead" id="overview">
-        <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
-            <div class="panel-heading" style="background-color: #2a6496">
-                <h3 class="panel-title">
-                    <strong>Notifications Box</strong>
-                </h3>
+
+      <div class="col-md-12 bgcolor-ligh-gray" style="padding-left: 0px; padding-right: 0px; min-height:374px; height: auto;border-right: 1px solid #ccc ;border-bottom: 1px solid #ccc">
+        <div class="col-md-2" style="padding-left:0px;padding-right:0px;border-right:1px solid #ccc;">
+            <div class="col-md-12 btn-success text-center" style="padding-left:0px;padding-top:5px ; height:45px; background-color:#7aac34"><span class="glyphicon glyphicon-pencil"><label style="padding-left: 3px;padding-top:6px">
+                        <a style="color: #fff" data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Compose Massage</a>
+                        </label></span></div>
+            <div class="col-md-12" style="background-color: #f6f6f6">
+                <div class="col-md-12 messageActive" style="margin-top:5px; cursor: pointer;" id="mailMassage">Massage</div>
+                <div class="col-md-12 messageDeActive" style="margin-top:5px" id="mailInvitations">Invitations</div>
+                <div class="col-md-12 messageDeActive" style="margin-top:5px; cursor: pointer;" id="mailSend">Send</div>
+                <div class="col-md-12 messageDeActive" style="margin-top:5px" id="mailArchive">Archive</div>
+                <div class="col-md-12 messageDeActive" style="margin-top:5px" id="mailTrash">Trash</div>
+                <div class="col-md-12 messageDeActive" style="margin-top:5px" id="mailActivity">Activity</div>
+                <div class="col-md-12 messageDeActive" style="min-height: 128px"></div>
             </div>
 
+            <div class="col-md-12" style="height:50px; background-color: #ccc; padding-top:8px; padding-right:0px">
+                <div class="col-md-12 form-control" style="margin-left: -8px">
+                    <div class="col-md-9"><input type="text" style="border:none; margin-left:-15px; width:50px" placeholder="Search"></div>
+                    <div class="col-md-3" ><button class="glyphicon glyphicon-chevron-right" style="color:#fff; border:#fff thick; background-color:#ccc"></button></div>
+                </div>
+            </div>
         </div>
-    </header>
 
-        <table id="notificationCk"  style="background-color: #fff" class="table  table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
-            <thead>
-            <tr role="row" >
-                <th class="clWidth300">
-                    <label>
-                        <input type="checkbox" id="ckAll"> <strong>Name</strong>
-                    </label>
-                </th>
-                <th class="clWidth600">
-                    <label>
-                        <strong>Notifications</strong>
-                    </label>
-                </th>
-                <th class="clWidth200">
-                    <label>
-                        <strong>Date</strong>
-                    </label>
-                </th>
-                <th  class="clWidth200 text-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #fff; ">
-                            <strong>Action </strong><span class="caret"></span>
-                        </button>
-                        <ul id="menu-privacy" class="dropdown-menu" role="menu">
-                            <li ><a data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Add</a></li>
-                            <li><a id="EditNotification"  href="javascript: void(0);">Edit</a></li>
-                            <li><a id="deleteNotification"  href="javascript: void(0);">Delete</a></li>
-                        </ul>
-                    </div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if(!empty($result)){
-                foreach($result as $key=>$notiInfo){
-            if($clientIDLogin == $notiInfo['sender_iduser']){
-            ?>
-                <tr role="row" class="odd ischecktr">
-                    <td class="clWidth300">
-                        <input class="checkIs" type="checkbox" NotiID ="<?=$notiInfo['NotificationID']?>" receiveriduser="<?=$notiInfo['receiver_iduser']?>" contactname="<?=$notiInfo['cbContactNameR']." ".$notiInfo['cbContactLNameR']?>"><span style="padding-left:10px"><strong>To:&nbsp;<?=$notiInfo['cbContactNameR']." ".$notiInfo['cbContactLNameR']?></strong></span> <span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>
+        <div class="col-md-10" style=";padding-left: 0px; padding-right: 0px ">
+            <table id="notificationCk"  style="background-color: #fff" class="table" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+                <thead style="height:46px; border-bottom:1px solid #ccc">
+                <tr role="row" style='background-color: #f6f6f6'>
+                    <td class="clWidth200" style="padding-top: 4px;padding-bottom:0px;">
+                            <input type="checkbox" id="ckAll"> <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #f6f6f6;background-color: #f6f6f6 ">
+                                    <label>All Message</label>&nbsp;<span class="caret"></span>
+                                </button>
+
+                                <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                                    <!--<li ><a data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Add</a></li>-->
+                                    <li><a id="EditNotification"  href="javascript: void(0);">Edit</a></li>
+                                    <li><a id="deleteNotification"  href="javascript: void(0);">Delete</a></li>
+                                </ul>
+                            </div>
                     </td>
-                    <td class="clWidth600"><span class="notiText"><?=$notiInfo['subjecttext']?></span></td>
-                    <td class="clWidth200"><?=$notiInfo['cbDateTime']?></td>
-                    <td class="clWidth200"  align="center"><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><a href="javascript: void(0);"><span style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete"></span></a></td>
-                </tr>
-            <?php
-            } else if(($clientIDLogin == $notiInfo['receiver_iduser'])){
-            ?>
-                <tr role="row" class="odd ischecktr" >
-                    <td class="clWidth300">
-                        <input disabled="disabled" class="checkIs" type="checkbox"   NotiID ="<?=$notiInfo['NotificationID']?>"  receiveriduser="<?=$notiInfo['receiver_iduser']?>" contactname="<?=$notiInfo['cbContactNameT']." ".$notiInfo['cbContactLNameT'] ?>" ><span style="padding-left:10px"><strong>From: &nbsp;<?=$notiInfo['cbContactNameT']." ".$notiInfo['cbContactLNameT']?></strong></span> <span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>
+                    <td class="clWidth200 text-right">
+
                     </td>
-                    <td class="clWidth600"><span class="notiText"><?=$notiInfo['subjecttext']?></span></td>
-                    <td class="clWidth200"><?=$notiInfo['cbDateTime']?></td>
-                    <td class="clWidth200"  align="center"><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><a href="javascript: void(0);" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes"></a></td>
+                    <td class="clWidth600 text-right messageDeActive" style="padding-top: 12px;padding-bottom:12px; padding-right:75px">
+                          Archive
+                    </td>
+                    <td class="clWidth100 text-left messageDeActive" style="padding-top: 13px;padding-bottom:0px;">
+                        Trash
+                    </td>
+                    <td class="clWidth100 text-left" style="padding-top: 0px;padding-bottom:0px;">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle messageDeActive" data-toggle="dropdown" style="border-color: #f6f6f6;background-color: #f6f6f6; padding-top:12px ">
+                                More&nbsp;<span class="caret"></span>
+                            </button>
+                           <!-- <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                                <li ><a data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Add</a></li>
+                                <li><a id="EditNotification"  href="javascript: void(0);">Edit</a></li>
+                                <li><a id="deleteNotification"  href="javascript: void(0);">Delete</a></li>
+                            </ul> -->
+                        </div>
+                    </td>
+                    <td class="clWidth100 text-right" style="padding-top: 13px;padding-bottom:0px;background-color: #ccc">
+                        <span class="glyphicon glyphicon-repeat"></span>
+                    </td>
                 </tr>
-            <?php
-            }
-            }
-            }
-            ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php
+                if(!empty($result)){
+                    foreach($result as $key=>$notiInfo){
+                        if($clientIDLogin == $notiInfo['sender_iduser']){
+                            ?>
+
+                            <tr role="row" class="odd ischecktr senderSendTo" style="display:none">
+                                <td class="clWidth200">
+                                    <input class="checkIs" type="checkbox" NotiID ="<?=$notiInfo['NotificationID']?>" receiveriduser="<?=$notiInfo['receiver_iduser']?>" contactname="<?=$notiInfo['cbContactNameR']." ".$notiInfo['cbContactLNameR']?>"><span style="padding-left:10px"><strong><?=$notiInfo['cbContactNameR']." ".$notiInfo['cbContactLNameR']?></strong></span>
+                                </td>
+                                <td class="clWidth200"><span class="notiText"><lable><?=$notiInfo['subjecttext']?></lable></span></td>
+                                <td class="clWidth600"><span class="notiContent"><?=$notiInfo['content']?></span></td>
+                                <td class="clWidth100"><?=$notiInfo['cbDateTime']?></td>
+
+                                <td class="clWidth100"  align="center"><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><a href="javascript: void(0);"><span style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete"></span></a></td>
+                                <td class="clWidth100"></td>
+                            </tr>
+
+                        <?php
+                        } else if(($clientIDLogin == $notiInfo['receiver_iduser'])){
+                            ?>
+                            <tr role="row" class="odd ischecktr reveiverMailFrom"  >
+                                <td class="clWidth200">
+                                    <input class="checkIs" type="checkbox"   NotiID ="<?=$notiInfo['NotificationID']?>"  receiveriduser="<?=$notiInfo['receiver_iduser']?>" contactname="<?=$notiInfo['cbContactNameT']." ".$notiInfo['cbContactLNameT'] ?>" ><span style="padding-left:10px"><strong><?=$notiInfo['cbContactNameT']." ".$notiInfo['cbContactLNameT']?></strong></span>
+                                </td>
+                                <td class="clWidth200"><span class="notiText"><lable><?=$notiInfo['subjecttext']?></lable></span></td>
+                                <td class="clWidth600"><span class="notiContent"><?=$notiInfo['content']?></span></td>
+                                <td class="clWidth100"><?=$notiInfo['cbDateTime']?></td>
+
+                                <td class="clWidth100"  align="center"><span class="glyphicon glyphicon-star" style="padding-left:8px;color:#c77405"></span><a href="javascript: void(0);" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteNo"></a></td>
+                                <td class="clWidth100"></td>
+                            </tr>
+                        <?php
+                        }
+                    }
+                }
+                ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; min-height:50px; height: auto; background-color: #f2f2f2"></div>
     <div style="height:20px"></div>
     <!--
         <div class="" style="height: 40px;background-color: #333">
     -->
-        </div>
 </div>
-

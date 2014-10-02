@@ -1,5 +1,5 @@
-function notifications(){ }
-notifications.prototype = {
+function career(){ }
+career.prototype = {
     init: function(){
         $(".checkIs").unbind('click').bind('click',this.checkIs);
         $('#ckAll').unbind('click').bind('click',this.checkAllIs);
@@ -10,7 +10,8 @@ notifications.prototype = {
 
         $('.calcareercr').unbind('click').bind('click',this.calcareercr);
         $('#careerlist').unbind('click').bind('click',this.careerlist);
-        $('.previewpost').unbind('click').bind('click',this.previewpost);
+        $('#addSkill').unbind('click').bind('click',this.addSkill);
+        $('#postcareernew').unbind('click').bind('click',this.postcareernew);
 
         var loaddefault =0;
         var lengthAllCheckbox = $('table#notificationCk tr:gt(0) input:checkbox').length;
@@ -145,12 +146,75 @@ notifications.prototype = {
     careerlist:function(){
         window.location = 'careerlist';
     },
-    previewpost:function(){
-        window.location = 'previewpost';
+    addSkill:function(){
+        var skilIDSe = $(this).parent().parent().find("#selectSkill option:selected").val();
+        var skillText = $(this).parent().parent().find("#selectSkill option:selected").text();
+        $("div#requiredSkillClass").append("<div style='padding-left:0px'>" +
+            "<imge class='removeskill glyphicon glyphicon-remove' height='15px' skilID='"+skilIDSe+"' style='cursor:pointer;' >"+skillText+" <input type='hidden'  name='SkillID[]' value='"+skilIDSe+"' ></div>");
+
+        $(".removeskill").unbind("click").bind("click",function(){
+            var skilID = $(this).attr("skilID");
+            $("#selectSkill").find("option[value='" + skilID + "']").css("display", "");
+            $(this).parent().remove();
+        });
+
+        $(this).parent().parent().find("#selectSkill option:selected").css("display", "none");
+        $(this).parent().parent().find("#selectSkill option[value='']").prop("selected", "selected");
+    },
+    previewPost: function(){
+        var pp_career_name = $("#careername").val();
+        $("#previewpost #pp_career_name").text(pp_career_name);
+        var pp_company_name = $("#companyname").val();
+        $("#previewpost #pp_company_name").text(pp_company_name);
+        var pp_career_des = $("#careerdescription").val();
+        $("#previewpost #pp_career_des").text(pp_career_des);
+        var pp_industry = $("#industry").val();
+        $("#previewpost #pp_industry").text(pp_industry);
+        var pp_career_type = $("#careerType option:selected").val();
+        $("#previewpost #pp_career_type").text(pp_career_type);
+
+        var pp_career_location = $("#loacation").val();
+        $("#previewpost #pp_career_location").text(pp_career_location);
+        var pp_minimun_education = $("#minimuneducation").val();
+        $("#previewpost #pp_minimun_education").text(pp_minimun_education);
+        var pp_degree_title = $("#degreetitle").val();
+        $("#previewpost #pp_degree_title").text(pp_degree_title);
+
+        var pp_required_skills = "";
+        $(".removeskill").each(function(){
+            pp_required_skills  =  pp_required_skills + ";" + $(this).text();
+        });
+
+        $("#previewpost #pp_required_skills").text(pp_required_skills);
+
+        var pp_required_experience = $("#requiredExperience option:selected").val();
+        $("#previewpost #pp_required_experience").text(pp_required_experience);
+
+        var PPSRFrom = $("#salaryRangeF option:selected").val();
+        var PPSRTo = $("#salaryRangeT option:selected").val();
+        var pp_salary_range = "$" + PPSRFrom + "-" + PPSRTo;
+        $("#previewpost #pp_salary_range").text(pp_salary_range);
+    },
+    postcareernew:function(){
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: 'save-career-new',
+            data: $('#form-careerCr').serializeArray(),
+            type: 'POST',
+            success: function(xhr){
+                if(xhr.success){
+                    window.location = 'careerlist';
+                    btn.button('reset');
+                }else{
+                    btn.button('reset');
+                }
+            }
+        });
     }
 }
 
 $(function() {
-    var mbNot= new notifications();
+    var mbNot= new career();
     mbNot.init();
 });

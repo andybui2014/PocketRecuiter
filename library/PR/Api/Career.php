@@ -1,24 +1,32 @@
 <?php
-class PR_Api_Noti extends Zend_Db_Table_Abstract
+class PR_Api_Career extends Zend_Db_Table_Abstract
 {
-    protected $_name = 'notification';
-    protected $_classname = 'PR_Api_Noti';
-    protected $_pk = 'NotificationID';
+    protected $_name = 'opportunity';
+    protected $_classname = 'PR_Api_Career';
+    protected $_pk = 'OpportunityID';
     
-    public $NotificationID;
-    public $sender_iduser;
-    public $receiver_iduser;
-    public $subjecttext;
-    public $cbDateTime;
-    public $lmDateTime;
-    public $NotificationType;
-    public $content;
+    public $OpportunityID;
+    public $CompanyID;
+    public $postedby;
+    public $posteddate;
+    public $title;
+    public $careerdescription;
+    public $status;
+    public $industry;
+    public $jobtype;
+    public $duration;
+    public $location;
+    public $zipcode;
+    public $minimuneducation;
+    public $degreetitle;
+    public $StaffFavorite;
+    public $SkillID;
     
     public $errMsg = "";
 
     public function  __construct($id = null) {
         parent::__construct();
-        $this->NotificationID = $id;
+        $this->OpportunityID = $id;
         $errMsg="";
     }
     
@@ -69,34 +77,18 @@ class PR_Api_Noti extends Zend_Db_Table_Abstract
            
     }
     
-    public function save($data = null){
+    public function saveCareer($data = null){
         $errors = PR_Api_Error::getInstance();
         if( empty($data) ) {
             return;
         }
-        if( empty($this->NotificationID) ){  //
+        if( empty($this->OpportunityID) ){
             $objDateNow = new Zend_Date();
-            $data['cbDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
-            $data['lmDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
-            if(empty($data['NotificationType'])){
-                $data['NotificationType'] = 2; //private noti.
-            }
-            //if(empty($data['NotificationType'])){
-            //    $data['cbUserTypeID'] = 1; //client create nodifications
-           // }
-            //echo "<pre>";
-            //print_r($data['receiver_iduser']);
-            //echo "</pre>"; die();
-
-            $dataBk = array();
-            $dataBk = $data['receiver_iduser'];
-            foreach ($dataBk as $k=>$v){
-                $data['receiver_iduser'] = $v;
-                $res = $this->insert($data);
-            }
-
+            $data['posteddate'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
+            $res = $this->insert($data);
             if( $res ) return new $this($res);
         } else {
+            /*
             try {
                 unset($data['NotificationID']);
                 $objDateNow = new Zend_Date();
@@ -109,6 +101,7 @@ class PR_Api_Noti extends Zend_Db_Table_Abstract
                 foreach( $data as $k=>$v ) $this->$k = $v;
                 return $this;
             }
+            */
         }
         return null;
     }   
