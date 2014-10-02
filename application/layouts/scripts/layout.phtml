@@ -1,9 +1,4 @@
-<style>
-.fw {
-    /*font-weight: 600;*/
-    font-size: 13px;
-}
-</style>
+
 <?php
 $helper = $this->layout()->_helper;
 
@@ -76,12 +71,20 @@ $loginClient = $this->layout()->loginclient;
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <?php if(empty($loginClient)){ ?>
             <ul class="nav navbar-nav navbar-right" style="margin-right:0.2%;" >
-                <li><a href="#" style="color:#333"><strong class="fw">Match Career</strong></a></li>
-                <li><a href="#" style="color:#333"><strong class="fw">Features</strong></a></li>
-                <li><a href="#" style="color:#333"><strong class="fw">Plans</strong></a></li>
-                <li><a href="#" style="color:#333"><strong class="fw">Success Stones</strong></a></li>
-                <li><a href="#" style="color:#333"><strong class="fw">Resources</strong></a></li>
-                <li><a href="#" style="color:#333"><strong class="fw">Contact Us</strong></a></li>
+            <?php
+                $page=URL_BASE . 'login';
+                if($_SERVER['REQUEST_URI']!=$page){
+                    
+                
+            ?>
+                <li><a href="#" style="color:#333"><strong style="font-size:13px">Match Career</strong></a></li>
+            <?php } ?>
+                <li><a href="#" style="color:#333"><strong style="font-size:13px">Features</strong></a></li>
+                <li><a href="#" style="color:#333"><strong style="font-size:13px">Plans</strong></a></li>
+                <li><a href="#" style="color:#333"><strong style="font-size:13px">Success Stones</strong></a></li>
+                <li><a href="#" style="color:#333"><strong style="font-size:13px">Resources</strong></a></li>
+                <li><a href="#" style="color:#333"><strong style="font-size:13px">Contact Us</strong></a></li>
+               
             </ul>
             <?php }else{ ?>
                 <ul class="nav nav-pills navbar-right small">

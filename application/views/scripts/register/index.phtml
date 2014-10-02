@@ -24,10 +24,23 @@ border-bottom: 1px solid #ddd;
 
 }
 .form-control{
-    width: 50%;
+    width: 47%;
 }
 .popover {
     border:none;
+    max-width: 310px;
+   /* border-right: 3px solid rgba(0, 0, 0, 0.8);*/
+   border-right: 3px solid #005595;
+    
+}
+.popover.right {
+    margin-left: 10px;
+}.popover.right > .arrow{
+    border-right-color: rgba(0, 0, 0, 0);
+    left: -7px;
+}
+.popover-content {
+    padding: 8px 4px;
 }
 #Register .message{color: #b81900;}
 </style>
@@ -41,14 +54,14 @@ border-bottom: 1px solid #ddd;
 <div class="page-header" style="margin:0;">
     <h3>
         <span style="color:#005595;font-weight:bold;font-size:25px">Create a Pocket Recruiter Account</span>
-        <span class="text-right pull-right" style="font-size: 12px;padding-top:8px;padding-right:16px;">Already have a Pocket Recruiter account? <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'login' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_SignIn.png"></span></a><a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'register' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_Register.png"> </span></a></span>
+        <span class="text-right pull-right" style="font-size: 12px;padding-top:8px;padding-right:16px;">Already have a Pocket Recruiter account? <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'login' ?>" ><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_SignIn.png" width="45px"></span></a><a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'register' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_Register.png" width="58px"> </span></a></span>
 
     </h3>
 </div>
 <div class="page-header1" style="margin:0;">
 </div>
 
-<div class="col-md-8"  style="padding:0;padding-top:25px;padding-left:2px;">
+<div class="col-xs-9"  style="padding:0;padding-top:25px;padding-left:2px;">
     <!--<div class="col-md-7" style="margin:0;padding:0">-->
   
         <form role="form" method="post" name="Register" id="Register" action="<?= URL_BASE . 'register/do-register' ?>">
@@ -100,14 +113,14 @@ border-bottom: 1px solid #ddd;
             </div>
             <div class="form-group">
                 <label for="credential">Account type</label>
-                <br><span style="font-size:12px;"> How dou you want to represent yourse to Employ on Candidate?</span></br>
+                <br><span style="font-size:11px;"> How dou you want to represent yourse to Employ on Candidate?</span></br>
                 
                 <label class="radio-inline">
                 
                                    <input type="radio" name="usertype" id="usertype" value="2" checked=""><span style="font-size:12px;"> Candidate</span>
                 </label>
                 <label class="radio-inline">
-                  <input type="radio" name="usertype" id="usertype" value="1"><span style="font-size:12px;"> Company</span>
+                  <input type="radio" name="usertype" id="usertype" value="1"><span style="font-size:11px;"> Company</span>
                 </label>
                 
                 
@@ -117,7 +130,7 @@ border-bottom: 1px solid #ddd;
                 $source= new PR_Api_Core_Register();
 
 $sourceOptions = $source->getAboutUsList_forRegisterPage();
-$SourceHtml = "<select class=\"form-control\" id=\"About_us\" name=\"About_us\"><option value=\"\">Select </option>";
+$SourceHtml = "<select class=\"form-control\" id=\"About_us\" name=\"About_us\"><option value=\"\">-Select- </option>";
 foreach ($sourceOptions as $code) {
     $selected = '';
     
@@ -132,7 +145,7 @@ $SourceHtml .="</select>";
                  <span class="message" id="About_us_message"></span>
               </div>
                 <div class="form-group">
-                <input type="checkbox" name="accept" id="accept" class="" > <span style="font-size:12px;">I have read and accept the terms of Service</span>
+                <input type="checkbox" name="accept" id="accept" class="" > <span style="font-size:11px;">I have read and accept the terms of Service</span>
 <br><span class="message" id="accept_message"></span>
               </div>
                 
@@ -143,25 +156,24 @@ $SourceHtml .="</select>";
             <img src="<?=URL_THEMES?>images/btn_Register_L.png" id="cmd-register" style="cursor: pointer;" width="85px">
         </form>
     <!--</div>-->
-    <div class="col-md-6">
-    </div>
+
 
 </div>
-<div class="col-md-4" style="padding:0;border-left: 1px solid #ddd; height: 714px;">
+<div class="col-xs-3" style="padding:0;border-left: 1px solid #ddd; height: 714px;">
     <div style="height: 50px; ">
         <!--<p style="float:left;width: 20%;color: #fff;background-color: #4cae4c;padding: 15px 0; text-align: center"><i class="glyphicon glyphicon-lock"></i></p>-->
         <!--<p style="float:left;width: 80%;color: #fff;background-color: #333;padding: 5px 0; text-align: center">
             We value your privacy<br/> <small>Privacy Policy</small>
         </p>-->
-        <div style="width:100%"><img src="<?=URL_THEMES?>images/img_PrivacyPolicy.jpg" width="274px"></div>
+        <div style="width:100%"><img src="<?=URL_THEMES?>images/img_PrivacyPolicy.jpg" width="200px"></div>
     </div>
     <div class="col-lg-12">
-       <h3><span style=""><!--<i class="glyphicon glyphicon-ok"></i>--><img src="<?=URL_THEMES?>images/img_check.png" width="20px;"></span> <span style="color:#005595;font-weight:bold;font-size:20px">Pocket Recruiter</span></h3>
+       <h3><span style=""><!--<i class="glyphicon glyphicon-ok"></i>--><img src="<?=URL_THEMES?>images/img_check.png" width="20px;"></span> <span style="color:#005595;font-weight:bold;font-size:18px">Pocket Recruiter</span></h3>
        <!-- <p><smal>
             At a bare minimum, the front controller needs one or more paths to directories containing action controllers in order to do its work. A variety of methods may also be invoked to further tailor the front controller environment and that of its helper classes.</smal>
         </p>-->
-        <p style="font-size:12px;">Ut etgestas consectetur risus eget comomdo. Send ornare aliquam blandit. Nunc eu tristique ante, at dictum ligula ..................... eleifend. </p>
-        <p><a style="text-decoration: none;" rel="" href="#"><span><img src="<?=URL_THEMES?>images/btn_ReadMore.png"> </span></a></p>
+        <p style="font-size:11px;">Ut etgestas consectetur risus eget comomdo. Send ornare aliquam blandit. Nunc eu tristique ante, at dictum ligula ..................... eleifend. </p>
+        <p><a style="text-decoration: none;" rel="" href="#"><span><img src="<?=URL_THEMES?>images/btn_ReadMore.png" width="65px"> </span></a></p>
 </div>
 </div>
 </div>
@@ -171,9 +183,9 @@ $SourceHtml .="</select>";
     $(document).ready(function(){
         //Login pocket
         
-        $("#emailaddress").popover({placement:'right',content:"<span style='font-size:12px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+        $("#emailaddress").popover({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
     $("#emailaddress").popover("show");
-    $('#emailaddress').tooltip({placement:'right',content:"<span style='font-size:12px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $('#emailaddress').tooltip({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
     $('#emailaddress').tooltip('show')
     })
 </script>
