@@ -8,6 +8,8 @@ career.prototype = {
         $('#saveEditnotification').unbind('click').bind('click',this.saveEditnotification);
         $('#deleteNotification').unbind('click').bind('click',this.deleteNotification);
 
+        $('.edit-career-btn').unbind('click').bind('click',this.editcareerbtn);
+
         $('.calcareercr').unbind('click').bind('click',this.calcareercr);
         $('#careerlist').unbind('click').bind('click',this.careerlist);
         $('#addSkill').unbind('click').bind('click',this.addSkill);
@@ -235,6 +237,9 @@ career.prototype = {
                 }
             }
         });
+    },
+    editcareerbtn:function(){
+        //window.location = 'careeredit';
     }
 }
 
