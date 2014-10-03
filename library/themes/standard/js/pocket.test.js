@@ -96,14 +96,32 @@ pocketTest.prototype = {
         });
     },
     testInfo: function(){
+        //$('html,body').animate({scrollTop: $(this).offset().top}, 800);
         $('#v-testname').show();
 
         var $this  = $(this);
         var id = $this.attr('data-id');
         if(id > 0){
-            $( "#form-qst :input").val('');
+            var html =  '<div class="form-group">'+
+                '<label><a>Question</a></label>'+
+                '<input type="text" placeholder="Question" class="form-control" name="qstName">'+
+                '</div>'+
+                '<div class="form-group">'+
+                '<label for="credential"><a>Answer Option</a></label>'+
+                '<textarea placeholder="Answer Option" class="form-control" name="qstOpt[]"></textarea>'+
+                '</div>'+
+                '<div class="col-xs-12">'+
+                '<p class="pull-right"><a href="javascript: void(0)" class="lbl-log" id="optMore">Add More Option</a></p>'+
+                '</div>' +
+                '<div style="padding-left: 0;margin-top: 50px;" class="col-xs-12">'+
+                '<button type="button" class="btn btn-success" id="btn-saveQst" data-loading-text="Loading..." value="">Save Question</button>'+
+                '</div>';
+            $('#form-qst').html(html);
             $( "#form-qst :input").prop( "disabled", true );
             $.post( '/test/test-info',{tid:id}).done(function( xhr ) {
+
+                $('#tab-edit .panel-title').find('strong').html('Questions Sheet - Total '+ xhr.info.Questions.length);
+
                 var params = {
                     'TestID':xhr.info.TestID,
                     'TestQuestionID':xhr.info.TestQuestionID,
@@ -115,7 +133,7 @@ pocketTest.prototype = {
                 var qstItem = '';
                 if(!$.isEmptyObject(xhr.info.Questions)){
                     $.each(xhr.info.Questions,function(idx,item){
-                        qstItem += '<li class="item-list"><label><input data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'" type="checkbox"/> '+item.Question+'</label> <span class="pull-right"><i class="glyphicon glyphicon-remove qst-remove"  data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'"></i></span></li>';
+                        qstItem += '<li class="item-list"><label><input name="qstItem[]" data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'" type="checkbox"/> '+item.Question+'</label> <span class="pull-right"><i class="glyphicon glyphicon-remove qst-remove"  data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'"></i></span></li>';
                     })
 
                 }
@@ -239,6 +257,8 @@ pocketTest.prototype = {
                                     );
                                 });
                                 $('#form-qst').find('#btn-saveQst').unbind('click').bind('click',function(){
+                                    var $this = $(this);
+                                    $this.button('loading');
                                     var dataPost = $('#form-qst').serializeArray();
                                     dataPost.push({name: "dataTId", value: dataTId});
                                     dataPost.push({name: "dataQid", value: dataQid});
@@ -247,6 +267,7 @@ pocketTest.prototype = {
                                         data: dataPost,
                                         type: 'POST',
                                         success: function(data){
+                                            $this.button('reset');
                                             qstAdd();
                                             //location.reload();
                                         }
@@ -274,15 +295,17 @@ pocketTest.prototype = {
                     }
                 }
                 function qstAdd(){
-                    var $this = $(this).attr('id');
-                    if($this=='btn-addQst'){
+                    var $this = $(this);
+                    $this.button('loading');
+                    if($this.attr('id')=='btn-addQst'){
                         var xhr =  $.post( '/test/add-question',{testId: params.TestID}).done(function( data ) {});
                         xhr.always(function(){
                             $.post( '/test/test-info',{tid:id}).done(function( data ) {
                                 if(data.success){
+                                    $this.button('reset');
                                     var html = '';
                                     $.each(data.info.Questions,function(idx,item){
-                                        html +=  '<li class="item-list"><label><input type="checkbox" data-tid="'+item.Test_TestID+'" data-qid="'+item.TestQuestionID+'"> '+item.Question+'</label>' +
+                                        html +=  '<li class="item-list"><label><input  name="qstItem[]" type="checkbox" data-tid="'+item.Test_TestID+'" data-qid="'+item.TestQuestionID+'"> '+item.Question+'</label>' +
                                             ' <span class="pull-right"><i data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'" class="glyphicon glyphicon-remove qst-remove"></i></span></li>';
                                     })
                                     $('#qst-list').html(html);
@@ -294,9 +317,10 @@ pocketTest.prototype = {
                     }else{
                         $.post( '/test/test-info',{tid:id}).done(function( data ) {
                             if(data.success){
+                                $this.button('reset');
                                 var html = '';
                                 $.each(data.info.Questions,function(idx,item){
-                                    html +=  '<li class="item-list"><label><input type="checkbox" data-tid="'+item.Test_TestID+'" data-qid="'+item.TestQuestionID+'"> '+item.Question+'</label>' +
+                                    html +=  '<li class="item-list"><label><input  name="qstItem[]" type="checkbox" data-tid="'+item.Test_TestID+'" data-qid="'+item.TestQuestionID+'"> '+item.Question+'</label>' +
                                         ' <span class="pull-right"><i data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'" class="glyphicon glyphicon-remove qst-remove"></i></span></li>';
                                 })
                                 $('#qst-list').html(html);
