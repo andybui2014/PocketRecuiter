@@ -194,12 +194,12 @@
                                         <div class="col-md-3" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
                                         <div class="col-md-3" >
                                             <select id="selectRequiredTest" class="form-control">
-                                                <option value="">Select required</option>
+                                                <option value="">Select Required Test</option>
                                                 <?php
-                                                $SkillList = $this->resultSkillList;
-                                                foreach ($SkillList as $k=>$skillInfo) {
+                                                $testList = $this->resultTestList;
+                                                foreach ($testList as $k=>$testListInfo) {
                                                     ?>
-                                                    <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
+                                                    <option value="<?=$testListInfo['TestID']?>" ><?=$testListInfo['TestName']?></option>
                                                 <?php
                                                 }
 

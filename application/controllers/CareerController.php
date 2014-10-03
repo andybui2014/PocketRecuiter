@@ -34,9 +34,14 @@ class CareerController extends Application_Controller_Action
         $resultCareerList = $PR_Api_Core_Career->getListCareer();
         $resultSkillList = $PR_Api_Core_Career->getListSkill();
 
+        $getTestList_PR_Api_Core = new PR_Api_Core_TestClass();
+        $resultTestList = $getTestList_PR_Api_Core->getTestList();
+       // echo "<pre>";
+       // print_r($resultTestList);
+        //echo "</pre>";die();
         $this->view->resultCareerList = $resultCareerList;
         $this->view->resultSkillList = $resultSkillList;
-
+        $this->view->resultTestList = $resultTestList;
     }
 
     public function saveCareerNewAction()
