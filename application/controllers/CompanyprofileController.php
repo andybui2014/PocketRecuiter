@@ -59,8 +59,8 @@ class CompanyprofileController extends Application_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
         //print_r($request->getParams());
-        var_dump($_POST);
-        die();
+       //var_dump($_POST);
+        
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $companyid = $request->getParam("CompanyID");
          $hidSaveOrUpload = $request->getParam("images");

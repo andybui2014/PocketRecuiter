@@ -2,7 +2,7 @@ function companyprofile(){ }
 
 companyprofile.prototype = {
     init: function(){
-        $("#submit").unbind('click').bind('click',this.profile);
+       // $("#submit").unbind('click').bind('click',this.profile);
         $('#show-profile').unbind('click').bind('click',this.reset);
     },
     reset: function(){
@@ -66,13 +66,13 @@ companyprofile.prototype = {
                     url: 'do-edit-profile',
                     data: $('#profile').serializeArray(),
                     type: 'POST',
-                    
+                    attribute: 'enctype',
                     success: function(xhr){
                         //alert(xhr.success);
                         alert("file:"+$('#images').val());
                         if(xhr.success){
                            // $('#photo1').val()=$('#images').val();
-                          // console.log($('#form-profile').serializeArray());
+                           console.log($('#profile').serializeArray());
                             
                             //window.location = 'start-profile';
                           //  window.location = 'update-profle';
