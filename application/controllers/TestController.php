@@ -210,7 +210,7 @@ class TestController extends Application_Controller_Action {
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
-
+ 
     }
     public function editNameAction(){
         $this->_helper->layout->disableLayout();
