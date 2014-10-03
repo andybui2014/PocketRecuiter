@@ -21,9 +21,9 @@ class NotificationsController extends Application_Controller_Action
         $result = $notiClass->getList($clientID);
         $useCS = new PR_Api_Core_NotiClass();
         $uselist = $useCS->geAllUser();
-       // echo "<pre>";
-        //echo "client= ";print_r($sestionClient);
-      // echo "</pre>";die();
+     //  echo "<pre>";
+     // echo "client= ";print_r($idCurrentActive);
+       //echo "</pre>";die();
         $this->view->result = $result;
 
         $this->view->clientIDLogin = $clientID;
@@ -73,18 +73,22 @@ class NotificationsController extends Application_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
-        $content = $request->getParam("textnotification", "");
+        $subjectNotification = $request->getParam("subjectNotification", "");
+        $contentNotification = $request->getParam("contentNotification", "");
         $receideid = $request->getParam("receiverid", "");
+        //echo "<pre>";
+         //   print_r($receideid);
+        //echo "</pre>";die();
+            $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+            $clientID =  $sestionClient['UserID'];
+            $noti = new PR_Api_Noti(null);
+            $updateFields = array('subjecttext'=>$subjectNotification,'sender_iduser'=>$clientID,'sender_iduser'=>$clientID, 'receiver_iduser'=>$receideid, 'content'=>$contentNotification);
+            $result = $noti->save($updateFields);
 
-        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
-        $clientID =  $sestionClient['UserID'];
-        $noti = new PR_Api_Noti(null);
-        $updateFields = array('subjecttext'=>$content,'sender_iduser'=>$clientID,'sender_iduser'=>$clientID, 'receiver_iduser'=>$receideid);
-        $result = $noti->save($updateFields);
         if($result){
             $return = array("success" => 1, "error" => "");
         } else{
-            $return = array("success" => 0, "error" => "");
+            $return = array("success" => 0, "error" => "1");
         }
 
         $response = $this->getResponse();
@@ -100,7 +104,9 @@ class NotificationsController extends Application_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
-        $content = $request->getParam("editNotification", "");
+
+        $subject = $request->getParam("editNotification", "");
+        $content = $request->getParam("editcontentNotification", "");
         $ModalEditNotiID = $request->getParam("ModalEditNotiID", "");
         $ModalEditNotiID =trim($ModalEditNotiID);
        // echo "<pre>";
@@ -110,7 +116,7 @@ class NotificationsController extends Application_Controller_Action
         $clientID =  $sestionClient['UserID'];
         $noti = new PR_Api_Noti($ModalEditNotiID);
         //$updateFields = array('subjecttext'=>$content,'sender_iduser'=>$clientID,'sender_iduser'=>$clientID, 'receiver_iduser'=>$receideid);
-        $updateFields = array('subjecttext'=>$content,'sender_iduser'=>$clientID);
+        $updateFields = array('subjecttext'=>$subject,'sender_iduser'=>$clientID,'content'=>$content);
         $result = $noti->save($updateFields);
         if($result){
             $return = array("success" => 1, "error" => "");
@@ -131,6 +137,7 @@ class NotificationsController extends Application_Controller_Action
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
         $listNotiID = $request->getParam("listNotiID", "");
+        $idCurrentActive = $request->getParam("idCurrentActive", "");
         $core = new PR_Api_Core_NotiClass();
         $return = $core->delete($listNotiID);
         if(empty($return)){

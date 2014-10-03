@@ -26,50 +26,31 @@
     .table-stripedgray > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
         background-color:#eeeeee;
     }
-
-    .breadcrumbUl {
-        background-color: #f5f5f5;
-        border-radius: 4px;
-        list-style: none outside none;
-        margin-bottom: 20px;
-        padding: 8px 15px;
-    }
-    .breadcrumbUl > li {
-        display: inline-block;
-    }
-    .breadcrumbUl > li + li:before {
-        color: #ccc;
-        content: "/ ";
-        padding: 0 5px;
-    }
-    .breadcrumbUl > .active {
-        color: #fff;
-    }
-
-    ul.breadcrumbUl a{color: #777;}
-    ul.breadcrumbUl .active{color: #fff; background-color: #2a6496;}
-    .needHelp {background-color:#edde34 ; min-height: 100px!important; height: auto; width:300px; border-left: 1px solid #cccccc; border-right: 1px solid #cccccc;
-    border-bottom: 1px solid #cccccc; float:right; }
-    .border-radius  {
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-        color: #555;
-        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-        height: 34px;
-    }
     #requiredSkillClass {
-        width: 600px; min-height: 80px!important; height:auto;
+        min-height: 80px!important; height:auto;
         border: 1px solid #cccccc;
     }
+    #requiredTest {
+        min-height: 80px!important; height:auto;
+        border: 1px solid #cccccc;
+    }
+
+    .menuBar {  background-image:url("<?=URL_THEMES?>images/img4.png?>"); background-repeat:repeat-x  ;border-radius: 4px; margin-bottom: 20px;
+         box-shadow: 0 10px 8px -8px #bbb;
+    }
+    .menuBar ul{list-style:none}
+    .menuBar ul li {float: left; width:217px; line-height:32px; margin-left:-20px;}
+    .menuBar li a {color: #777; float: left; text-indent:15px; margin-left: -34px; width:200px; text-decoration: none; background-image:url("<?=URL_THEMES?>images/tab2.png?>")}
+
+    .menuBar li a:active { background-color:#003399 ;color:#fff; text-decoration:none}
+    .menuBar ul li .active { color:#fff!important; text-decoration:none; width:200px; background-image:url("<?=URL_THEMES?>images/createCareer_b.png?>") }
+    .tabendBetween {background-image:url("<?=URL_THEMES?>images/tab4.png?>")!important; z-index: 10000}
+    .tabend {background-image:url("<?=URL_THEMES?>images/tabend.png?>")!important; z-index: 10000}
 </style>
 <div class="container">
-    <div style="height:80px; color: #428bca">
+    <div style="height:80px; color: #2a6496">
         <div class="panel-body">
-            <div><h3 style="margin-top: 10px">Post Career</h3></div>
+            <div><h3 style="margin-top: 10px;margin-left: -16px"><label>Post Career</label> </h3></div>
         </div>
     </div>
 
@@ -81,237 +62,315 @@
     </div>
 
         <!--create career-->
-                <div class="panel panel-default">
-                    <div class="panel-body">
-
-                    <ul class="breadcrumbUl">
-                        <li class="active"><a  href="#calcareercr" data-toggle="tab"><strong>1 Create Career</strong></a></li>
-                        <li><a href="#" data-toggle="tab"><strong>2 Create Private</strong></a></li>
-                        <li><a  href="#previewpost" data-toggle="tab"><strong>3 Preview</strong></a></li>
+    <div class="panel panel-default">
+          <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="menuBar col-md-12">
+                    <ul  id="careerTab">
+                        <li class="active"><a class="active" href="#calcareercr" id="calcareercrtab"><strong>1. Create Career &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                        <li><a href="#" id="createPrivate"><strong>&nbsp;2. Create Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                        <li><a  href="#previewpost" id="previewposttab"><strong>&nbsp;3. Preview &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
                     </ul>
-                    <div class="tabbable">
-                    <div class="tab-content">
+                    </div>
+                </div>
+
+                <div class="tab-content">
                      <!--Career Create new  -->
                       <div id="calcareercr" class="tab-pane active">
                             <!--LEFT-->
-                        <form id="form-careerCr" name="form-careerCr">
+
                             <div class="col-md-8">
-                            <table  cellspacing="0" width="70%">
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Career Name*</strong</div>
-                                        <div><input type="text" style="width:600px" id="careerName" name="careername" class="form-control"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Company Name*</strong></div>
-                                        <div><input type="text" style="width:600px" id="companyName" nam="companyname" class="form-control"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Career Description*</strong></div>
-                                        <div><textarea style="width: 600px; height: 80px" id="careerdescription" nam="careerdescription" class="form-control"></textarea></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Industry*</strong></div>
-                                        <div><input type="text" style="width:600px" class="form-control"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div style="float:left;width:320px"><strong>Career Type</strong></div><div style="float:left"><strong>Duration</strong></div>
-                                        <div style="float:left"><select style="width:280px" id="careerType" name="careerType" class="form-control">
+                                <form id="form-careerCr" name="form-careerCr">
+                                    <div class="col-md-12">
+                                        <label>Career Name* </label>
+                                        <input type="text"  id="careername" name="careername" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Company Name* </label>
+                                        <input type="text"  id="companyname" name="companyname" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Career Description*</label>
+                                        <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Industry*</label>
+                                        <input type="text" id="industry" name="industry" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6" >
+                                            <label>Career Type </label>
+                                            <select id="careerType" name="jobtype" class="form-control">
                                                 <?php
-                                               $careerType =  $this->resultCareerList;
+                                                $careerType =  $this->resultCareerList;
                                                 foreach ($careerType as $k =>$careerInfo){
-                                                ?>
-                                                <option value="<?=$careerInfo['CareertypeID']?>"><?=$careerInfo['CareertypeName']?></option>
+                                                    ?>
+                                                    <option value="<?=$careerInfo['CareertypeID']?>"><?=$careerInfo['CareertypeName']?></option>
                                                 <?php
-                                                    }
+                                                }
                                                 ?>
-                                        </select></div>
-                                        <div style="float:left;padding-left: 40px"><select style="width:280px" name="durationTime" id="durationTime" class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Duration</label>
+                                            <select name="duration" id="durationTime" class="form-control">
                                                 <option value ="1ngay" >1 Day </option>
                                                 <option value ="2ngay" >2 Days </option>
                                                 <option value ="3ngay" >3 Days </option>
                                                 <option value ="1year" >1 Year </option>
                                                 <option value ="5year" >5 Year </option>
-                                            </select></div>
-                                    </td>
-
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div style="float:left;width:320px"><strong>Career Location</strong></div><div style="float:left"><strong>Zip Code</strong></div>
-                                        <div style="float:left;"><input id="loacation" name="location" type="text" style="width:280px" class="form-control"></div>
-                                        <div style="float:left;padding-left: 40px"><input id="zipcode" name="zipcode" type="text" style="width:280px" class="form-control"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Minimun Education*</strong></div>
-                                        <div><input id="minimuneducation" name="minimuneducation" type="text" style="width:600px" class="form-control"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Degree Title*</strong></div>
-                                        <div><input id="degreetitle" name="degreetitle" type="text" style="width:600px" class="border-radius"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="col-md-4" ><strong>Required Skills*</strong> </div>
-                                        <div class="col-md-4" >
-                                                <select id="selectSkill" class="form-control">
-                                                    <option value="">Select Skill</option>
-                                                    <?php
-                                                    $SkillList = $this->resultSkillList;
-                                                    foreach ($SkillList as $k=>$skillInfo) {
-                                                        ?>
-                                                        <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
-                                                    <?php
-                                                    }
-
-                                                    ?>
-                                                </select>
+                                            </select>
                                         </div>
-                                        <div class="col-md-4"><button id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
-                                        <div style="clear:both"></div>
-                                        <!--Add a skill-->
-                                        <div id="requiredSkillClass" class="form-control"></div>
-                                        <!--Add a skill end-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div style="width:320px"><strong>Required Experience*</strong></div>
-                                        <div style="float:left"><select style="width:280px" id="requiredExperience" name="requiredExperience" class="form-control">
-                                                <option value="3 months"> 3 months</option>
-                                                <option value="6 months"> 6 months</option>
-                                                <option value="1 year"> 1 year</option>
-                                            </select></div>
-                                        <!--
-                                        <div style="float:left;padding-left: 40px"><select style="width:280px">
-                                                <option></option>
-                                            </select></div>
-                                        -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div style="width:320px"><strong>Salary Range*</strong></div>
-                                        <div style="float:left"><select style="width:280px" id="salaryRangeF" name="salaryRangeF" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Career Location </label>
+                                            <input id="loacation" name="location" type="text"  class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Zip Code</label>
+                                            <input id="zipcode" name="zipcode" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Minimun Education*</label>
+                                        <input id="minimuneducation" name="minimuneducation" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Degree Title*</label>
+                                        <input id="degreetitle" name="degreetitle" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-3" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
+                                        <div class="col-md-3" >
+                                            <select id="selectSkill" class="form-control">
+                                                <option value="">Select Skill</option>
+                                                <?php
+                                                $SkillList = $this->resultSkillList;
+                                                foreach ($SkillList as $k=>$skillInfo) {
+                                                    ?>
+                                                    <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
+                                                <?php
+                                                }
+
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3" style="padding-top:2px "><button id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
+                                    </div>
+                                    <div class="col-md-12" >
+                                        <div id="requiredSkillClass" class="form-control">
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Required Experience*</label>
+                                        <select  id="requiredExperience" name="requiredExperience" class="form-control">
+                                            <option value="3 months"> 3 months</option>
+                                            <option value="6 months"> 6 months</option>
+                                            <option value="1 year"> 1 year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Salary Range*</label>
+                                            <select  id="salaryRangeF" name="salaryRangeF" class="form-control">
                                                 <option value="10"> 10 USD</option>
                                                 <option value="20"> 20 USD</option>
-                                            </select></div>
-                                        <div style="float:left;padding-left: 40px"><select style="width:280px" id="salaryRangeT" name="salaryRangeT" class="form-control">
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>&nbsp;</label>
+                                            <select id="salaryRangeT" name="salaryRangeT" class="form-control">
                                                 <option value="20"> 20 USD</option>
                                                 <option value="50"> 50 USD</option>
-                                            </select></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div><strong>Required Test</strong></div>
-                                        <div><textarea style="width: 600px; height: 80px" class="form-control"></textarea></div>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        </form>
-                            <!-- END LEFT-->
-                            <!--RIGHT-->
-                            <div class="col-md-4">
-                                <div class="needHelp"><strong style="color:#f7ecb5;">Need Help</strong></div>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-3" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
+                                        <div class="col-md-3" >
+                                            <select id="selectRequiredTest" class="form-control">
+                                                <option value="">Select required</option>
+                                                <?php
+                                                $SkillList = $this->resultSkillList;
+                                                foreach ($SkillList as $k=>$skillInfo) {
+                                                    ?>
+                                                    <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
+                                                <?php
+                                                }
+
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3" style="padding-top:2px"><button id="addrequiredtest" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add required test</button> </div>
+                                    </div>
+                                    <div class="col-md-12" >
+                                        <div id="requiredTest" class="form-control">
+
+
+
+                                        </div>
+                                    </div>
+
+                                </form>
                             </div>
+
+                        <!-- END LEFT-->
+                        <!--RIGHT-->
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                    <label>&nbsp;</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div style="min-height:100px; background-color: #fffbd5;" class="form-control text-left">
+                                    <label style="color:#e1b903;">Need Help</label>
+                                </div>
+                            </div>
+                        </div>
                         <!--END RIGHT-->
-                        <div style="margin-left: 30px;clear: both">
-                            <button id="" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
+                        <div class="col-md-12" style="padding-left:30px; padding-top:10px">
+                            <button id="careercontinue" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
                             <button id="" style="width:126px; margin-left: 20px" type="button" class="btn btn-primary" data-loading-text="Loading...">Save & Post Later</button>
                         </div>
-                      </div>
-                        <!--end career create new-->
+                    </div>
+                    <!--end career create new-->
 
-                        <!--Post preview-->
-                        <div id="previewpost" class="tab-pane">
-                            <table  cellspacing="0" width="100%">
-                                <col width="250px">
-                                <col width="*">
-                                <tr>
-                                    <td class="alignright"><strong>Career Name*</strong></td>
-                                    <td>test</td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Company Name*</strong></td>
-                                    <td>test</td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Career Description*</strong></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Industry*</strong></td>
-                                    <td ></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Career Type</strong> </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Career Location</strong></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Minimun Education*</strong></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Degree Title*</strong> </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Required Skills*</strong></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Required Experience*</strong> </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Salary Range*</strong> </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="alignright"><strong>Required Test</strong> </td>
-                                    <td></td>
-                                </tr>
-                            </table>
 
-                                <button id="" style="width:100px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
+                    <!--Post preview-->
+                    <div id="previewpost" class="tab-pane col-md-12">
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label >Career Name*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_name"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label >Company Name*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_company_name"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Career Description*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_des"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Industry*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_industry"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Career Type</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_type"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Career Location</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_location"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Minimun Education*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_minimun_education"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Degree Title*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_degree_title"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Required Skills*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_required_skills"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Required Experience*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_required_experience"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Salary Range*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_salary_range"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Required Test</label>
+                                </div>
+                                <div class="col-md-10" id="pp_required_test"></div>
+                            </div>
+
+                                <button id="postcareernew" style="width:100px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
                                 <button id="" style="width:115px; margin-left: 20px; color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Edit Post</strong></button>
                                 <button id="" style="width:100px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Career Later</strong></button>
                                 <button id="" style="width:100px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Career</strong></button>
 
                         </div>
-                        <!--end post preview-->
-                    </div>
-                    </div> <!--end tabtable-->
-                    </div>
+                    <!--end post preview-->
                 </div>
-            <!--end create career-->
 
+          </div>
+    </div>
+            <!--end create career-->
+</div>
     <script>
-       // $('#myTab a').click(function (e) {
-       //    e.preventDefault();
+        var careerPrototype = new career();
+       // $('#careerTab a').click(function (e) {
+         //   e.preventDefault();
         //    $(this).tab('show');
-       // })
+        //    if($(this).attr("id")=="previewposttab"){
+        //        careerPrototype.previewPost();
+        //    }
+      // });
+        //$("#careercontinue").click(function (){
+        //    $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');  createPrivate
+       // });
+        $("#careerTab a").unbind('click').bind('click',function(){  createPrivate
+            $(this).tab('show');
+            $('#careerTab').find('li.active').find('a').removeClass('tabend');
+            $('#careerTab').find('li.active').find('a').addClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('tabendBetween');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('tabend');
+            if($(this).attr("id")=="previewposttab"){
+                careerPrototype.previewPost();
+                $('#careerTab').find('li.active').find('a').addClass('active');
+                $('#careerTab').find('li.active').find('a').addClass('tabendBetween');
+                $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+                $(this).parent().prev('li').find('a').addClass('tabend');
+            } else if($(this).attr("id")=="createPrivate"){
+                $('#careerTab').find('li.active').find('a').addClass('active');
+                $('#careerTab').find('li.active').find('a').addClass('tabendBetween');
+                $('#careerTab').find('li.active').find('a').removeClass('tabend');
+                $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+                $(this).parent().prev('li').find('a').addClass('tabend');
+            }
+        });
+        $("#careercontinue").unbind('click').bind('click',function(){
+            $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');
+            $('#careerTab').find('li.active').find('a').addClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+            ///careerPrototype.previewPost();
+        })
+        $('#careerTab').find('li.active').find('a').addClass('active');
+        $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
     </script>
 
-</div>
+
 
 
