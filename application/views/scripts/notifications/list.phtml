@@ -40,9 +40,9 @@ $uselist = $this->uselist;
                         <form id="form-addnotification" name="form-addnotification">
 
                             <div class="col-md-12">
-                                <div class="col-md-4" style="padding-left: 0px">
+                                <div class="col-md-5" style="padding-left: 0px">
                                     <div class="form-group">
-                                        Select email to send : &nbsp;
+                                         &nbsp;
                                         <select id= "receiverid" class="form-control">
                                             <option value="">Seclect a Receiver</option>
                                             <?php
@@ -61,7 +61,7 @@ $uselist = $this->uselist;
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-8" style="padding-top: 21px; padding-left:0px">
+                                <div class="col-md-7" style="padding-top: 21px; padding-left:0px">
                                     <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" id="addReceiveEmail">Add</button>
                                 </div>
                             </div>
@@ -158,10 +158,10 @@ $uselist = $this->uselist;
       <div class="col-md-12 bgcolor-ligh-gray" style="padding-left: 0px; padding-right: 0px; min-height:374px; height: auto;border-right: 1px solid #ccc ;border-bottom: 1px solid #ccc">
         <div class="col-md-2" style="padding-left:0px;padding-right:0px;border-right:1px solid #ccc;">
             <div class="col-md-12 btn-success text-center" style="padding-left:0px;padding-top:5px ; height:45px; background-color:#7aac34"><span class="glyphicon glyphicon-pencil"><label style="padding-left: 3px;padding-top:6px">
-                        <a style="color: #fff" data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Compose Massage</a>
+                        <a style="color: #fff" data-toggle="modal" data-target="#AddModalNotification" href="javascript: void(0);" >Compose Message</a>
                         </label></span></div>
             <div class="col-md-12" style="background-color: #f6f6f6">
-                <div class="col-md-12 messageActive" style="margin-top:5px; cursor: pointer;" id="mailMassage">Massage</div>
+                <div class="col-md-12 messageActive" style="margin-top:5px; cursor: pointer;" id="mailMassage">Messages</div>
                 <div class="col-md-12 messageDeActive" style="margin-top:5px" id="mailInvitations">Invitations</div>
                 <div class="col-md-12 messageDeActive" style="margin-top:5px; cursor: pointer;" id="mailSend">Send</div>
                 <div class="col-md-12 messageDeActive" style="margin-top:5px" id="mailArchive">Archive</div>
@@ -216,8 +216,8 @@ $uselist = $this->uselist;
                             </ul> -->
                         </div>
                     </td>
-                    <td class="clWidth100 text-right" style="padding-top: 13px;padding-bottom:0px;background-color: #ccc">
-                        <span class="glyphicon glyphicon-repeat"></span>
+                    <td class="clWidth100 text-right " style="padding-top: 13px;padding-bottom:0px;background-color: #ccc; cursor:pointer;">
+                       <span class="glyphicon glyphicon-repeat"></span>
                     </td>
                 </tr>
                 </thead>

@@ -16,15 +16,26 @@ class CareerController extends Application_Controller_Action
     {
         $request = $this->getRequest();
         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
-        /*
-          $clientID =  $sestionClient['ClientID'];
-          $notiClass = new PR_Api_Core_NotiClass();
-          $result = $notiClass->getList($clientID);
-          $this->view->result = $result; //UserName
-          $this->view->clientIDLogin = $clientID;
-          $this->view->userName = $sestionClient['UserName']; */
+        $CompanyID = $sestionClient['CompanyID'];
+        $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
+        $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
+          $this->view->getListOpp = $getListOpp;
     }
+    public function careereditAction()
+    {
+        $request = $this->getRequest();
+        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+        $CompanyID = $sestionClient['CompanyID'];
+        $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
+        $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
+        $testOpp = $Oppotunity_PR_Api->getOpportunityInfoByID('7');
 
+       // echo "<pre>";
+       // echo "<pre>";
+      //  print_r($testOpp);
+       // echo "</pre>"; die();
+
+    }
     public function careercreateAction()
     {
         $request = $this->getRequest();
