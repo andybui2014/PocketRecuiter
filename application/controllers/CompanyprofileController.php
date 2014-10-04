@@ -40,54 +40,70 @@ class CompanyprofileController extends Application_Controller_Action
     }
     public function editprofileAction()
     {
+        $response = $this->getResponse();//new
+        $response->clearAllHeaders()->clearBody();//new
         $request = $this->getRequest();
         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
         $companyid = $request->getParam("companyid");
         $api = new PR_Api_Core_ClientClass();
         $company = $api->getCompany($companyid);
         $this->view->company=$company;
+        
        // echo ("companyid:".$companyid);//print_r($companyid);
         $this->render('editprofile');
-       
+      // print_r($_FILES);
       
     }
-     public function doEditprofileAction()
+     public function doEditProfileAction()
     {
         
-       
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
-        //print_r($request->getParams());
-       //var_dump($_POST);
-        
+                
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
-        $companyid = $request->getParam("CompanyID");
-         $hidSaveOrUpload = $request->getParam("images");
-        // echo ("images:".$hidSaveOrUpload);
+        $companyid = $request->getParam("CompanyID");      
         $api = new PR_Api_Core_ClientClass();
          $return = array("success" => 0, "error" => "");
+       $filename = "";
+        if (isset($_FILES["images"])) {
+            if ($_FILES["images"]["error"] > 0) {
+                echo ("upload errors.");
+            } else {
+                $filename = uniqid() ."_". $_FILES["images"]["name"];
+                move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
+                
+            }
+        }
+       //echo("<br/>filename: ".$filename."<br/>");
        
-        $params = $request->getParams();
-        //print_r($params);
-       // $id = $request->getParam('file');
-        $Company_Logo_Rm=$request->getParam('Company_Logo_Rm');
+        $params = $request->getParams(); 
+       // $filename=$request->getParam("images");
+
+        
        $updateFields=array();
        foreach ($params as $key => $value) {
             $updateFields[$key]=$value;
             
             }
-         // if($Company_Logo_Rm==1)
-         // {
-              // $updateFields["images"] ="";
-         // }
+             //echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");
+             if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
+            {
+                $updateFields["images"]=$filename;
+            }
+            
+          
+      // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");die();
        $result = $api->updatecompanyProfile($companyid,$updateFields);
-      // $return["success"]=1;  
-       if($result)
+       header("Location: profile?companyid=$companyid");
+      // header('Location: http://www.example.com/'); 
+      
+      /* $return["success"]=1;  
+     if($result)
        {
            $return["success"]=1;
        }
-       else{
+      else{
            $return["success"]=1;
        }
        $response = $this->getResponse();
@@ -95,9 +111,70 @@ class CompanyprofileController extends Application_Controller_Action
         $return = json_encode($return);
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($return), true)
-                ->setBody($return);
+                ->setBody($return);   */
       
     }
+    //new
+    public function uploadAction(){
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $request = $this->getRequest();
+         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+        $companyid = $request->getParam("companyid");
+        $api = new PR_Api_Core_ClientClass();
+        $company = $api->getCompany($companyid);
+        $this->view->company=$company;
+        
+        $this->render('upload-form');
+}
+      public function uploadFormAction()
+{
+    // $this->_helper->layout->disableLayout();
+      //  $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $companyid = $request->getParam("CompanyID");
+        $params = $request->getParams(); 
+        
+        $updateFields=array();
+        foreach ($params as $key => $value) {
+            $updateFields[$key]=$value;            
+        }
+       
+        //      
+        $filename = "";
+         if (isset($_FILES["images"])) {
+                if ($_FILES["images"]["error"] > 0) {
+                    echo ("upload bi loi");
+                } else {
+                    $filename = 'a____' . uniqid()."____" . $_FILES["images"]["name"];
+
+                    move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
+                    
+                }
+            }
+        echo ("<br/>test:");print_r($filename);
+      
+      $client = PR_Session::getSession(PR_Session::SESSION_USER);
+      
+        
+      $api = new PR_Api_Core_ClientClass();
+      $return = array("success" => 0, "error" => "");
+       
+
+       // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");
+       
+            
+            //$result = $api->updatecompanyProfile($companyid,$updateFields);
+           // $file = $request->getParam("images", "");
+            //if (is_file(DIR_MEDIA_TEMP . $file) && strtolower($file) != URL_MEDIA_PROFILE_NOAVATAR) {
+            //    copy(DIR_MEDIA_TEMP . $file, DIR_MEDIA_PROFILE . $file);
+             //   unlink(DIR_MEDIA_TEMP . $file);
+            //*/
+        
+   
+    
+}
+
     
 
 }

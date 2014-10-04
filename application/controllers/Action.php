@@ -11,21 +11,26 @@ class Application_Controller_Action extends Zend_Controller_Action {
         // for URL
         $uri = new Zend_View_Helper_BaseUrl();
         define('URL_BASE', $uri->getBaseUrl() . "/");
+        define('URL_MEDIA_COMPANY_PROFILE',  URL_BASE.'/library/media/companyprofiles/');
+         
         define('URL_THEMES', URL_BASE. "library/themes/standard/");
         //Mobile
         define('URL_THEMES_MOBILE', URL_BASE. "library/themes/mobile/");
         //End Mobile
+        
         define('URL_MEDIA', URL_BASE. "library/media/");
         define('URL_MEDIA_PROFILE', URL_MEDIA. "profiles/");
         define('URL_MEDIA_TEMP', URL_MEDIA. "temp/");
         define('URL_MEDIA_SCHOOLLOGO', URL_MEDIA. "schoollogos/");
-        define('URL_MEDIA_PROFILE_NOAVATAR', "DefaultPerson.jpg");
+        //define('URL_MEDIA_PROFILE_NOAVATAR', "DefaultPerson.jpg");
+        define('URL_MEDIA_PROFILE_NOAVATAR', "none.png");
         //define('LAYOUT', "");
         // for DIR
         define('DIR_BASE',  realpath(APPLICATION_PATH . '/../'));
+        define('DIR_MEDIA_COMPANY_PROFILE',  DIR_BASE.'/library/media/companyprofiles/');
+        
         define('DIR_MEDIA',  DIR_BASE.'/library/media/');
         define('DIR_MEDIA_TEMP',  DIR_MEDIA.'temp/');
-        define('DIR_MEDIA_PROFILE',  DIR_MEDIA.'profiles/');
         
         define('LIMIT_PAGE_LEFT', 10);
         define('LIMIT_PAGE_NUMBER_LEFT', 3);

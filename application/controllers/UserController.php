@@ -10,7 +10,7 @@ class UserController extends Application_Controller_Action
         //echo("user");print_r($user);
         if(empty($user))
         {
-            $this->_helper->redirector("index","login");
+            $this->_helper->redirector("index","star");
         }  
     }
     public function doLogoutAction()

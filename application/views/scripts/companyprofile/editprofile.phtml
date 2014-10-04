@@ -17,9 +17,9 @@
       }
 </style>
 
+<!--<script src="<?=URL_THEMES.'js/companyprofile.js';?>"></script>   -->
 
-
-    
+  
   <script type="text/javascript">
     $(document).ready(function()
     {
@@ -44,6 +44,8 @@ $company=$this->company;
 
 ?>
 <!--<header class="subhead" id="overview">-->
+ 
+
 
 <div class="container" >       
             
@@ -56,9 +58,10 @@ $company=$this->company;
 </div>
     <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;">
           
-      <div class="col-md-6"  style="padding:0">      
+      <div class="col-md-6"  style="padding:0">     
 
-      <form enctype="multipart/form-data"   method="post" name="profile" id="profile"  action="<?= URL_BASE . 'companyprofile/do-edit-profile'?>">
+      <form enctype="multipart/form-data"   method="POST" name="profile" id="profile"  action="<?= URL_BASE . 'companyprofile/do-edit-profile'?>" role="form">
+      
      <!-- <input type="hidden" id="hidSaveOrUpload" name="hidSaveOrUpload" value="0" />-->
              <div class="form-group">
                 <label for="credential">Company Name</label>
@@ -76,11 +79,11 @@ $company=$this->company;
               </div>
             </div>
             <div class="form-group ">
-                <label for="email">Address</label>
+                <label >Address</label>
               <div class="form-group">
               
-                <input name="Address" type="email" class="form-control" id="Address" value="<?=$company["Address"]?>">
-                <span class="message" id="Email1_message"></span>
+                <input name="Address"  class="form-control" id="Address" value="<?=$company["Address"]?>">
+               
               </div>
             </div>
            
@@ -118,29 +121,36 @@ $company=$this->company;
                         
                     
                 ?>
-                <img width="150px" class="" src="<?=URL_THEMES?>images/none.png" id="Image1" /><br/>
-                <input type="hidden" id="hidFileName" name="" value="none.png" />
+                <img width="150px" class="" src="<?=URL_MEDIA_COMPANY_PROFILE?>none.png" id="Image1" /><br/>
+                <input type="hidden" id="hidFileName" name="photo" value="none.png" />
+                
+               
             <?php
                     }else{
            
             ?>
-            <img width="110px" height="144px" class="user_photo" src="<?=URL_THEMES?>images/<?=$company["images"]?>" id="Image1" /><br/>
-            <input type="hidden" id="hidFileName" name="" value="<?= $company["images"] ?>" />
+            <img width="110px" height="144px" class="user_photo" src="<?=URL_MEDIA_COMPANY_PROFILE.$company["images"]?>" id="Image1" /><br/>
+            <input type="hidden" id="hidFileName" name="photo" value="<?= $company["images"] ?>" />
+            
+           
            <?php
                     }
            ?>
               <input type="checkbox" value="1" id="Company_Logo_Rm" name="Company_Logo_Rm"/> Remove &nbsp;
               <div id="Company_Logo_file" style="display:<?=empty($company["images"])?'':'none'?>; ">
                                     <!--<input type="file" name="images" id="images" > -->
-              <input type="file" size="30" value="<?php echo $company["images"]; ?>" meta-data="images" name="images" id="images">
+              
+             <!-- <input type="file" size="30"   name="file" id="file">-->
+             <input type="file" size="30"   name="images" id="images">  
                                     
-                                 </div> 
-                                
+              </div> 
+                               
                 
                  <span class="message" id=""></span>
               </div>
                 
             </div>
+            <!--<input type="file" size="30"   name="images" id="images">  -->
             <div class="form-group">
                 <label for="credential">Decription</label>
                 <div class="form-group">
@@ -154,12 +164,12 @@ $company=$this->company;
             </div>
              
            <div class="">
+           
                     
-                        <button type="submit" class="btn btn-success" id="submit" name="submit" >
-                            <strong>Update</strong>
-                        </button>
+                        <button class="btn btn-success" type="submit" id="submit" name="submit">Update</button>
+
                     
-                     </div>
+           </div>
                         
         </form>
        
@@ -171,6 +181,6 @@ $company=$this->company;
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
 
-<script src="<?=URL_THEMES.'js/companyprofile.js';?>"></script>
+
 
 
