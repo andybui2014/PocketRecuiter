@@ -8,9 +8,12 @@ career.prototype = {
         $('#saveEditnotification').unbind('click').bind('click',this.saveEditnotification);
         $('#deleteNotification').unbind('click').bind('click',this.deleteNotification);
 
+        $('.edit-career-btn').unbind('click').bind('click',this.editcareerbtn);
+
         $('.calcareercr').unbind('click').bind('click',this.calcareercr);
         $('#careerlist').unbind('click').bind('click',this.careerlist);
         $('#addSkill').unbind('click').bind('click',this.addSkill);
+        $('#addrequiredtest').unbind('click').bind('click',this.addrequiredtest);
         $('#postcareernew').unbind('click').bind('click',this.postcareernew);
 
         var loaddefault =0;
@@ -161,6 +164,22 @@ career.prototype = {
         $(this).parent().parent().find("#selectSkill option:selected").css("display", "none");
         $(this).parent().parent().find("#selectSkill option[value='']").prop("selected", "selected");
     },
+    addrequiredtest:function(){
+        var testID = $(this).parent().parent().find("#selectRequiredTest option:selected").val();
+        var testName = $(this).parent().parent().find("#selectRequiredTest option:selected").text();
+        $("div#requiredTest").append("<div style='padding-left:5px'>" +
+            "<imge class='removeTest' src='images/delete.png' height='15px' testID='"+testID+"' style='cursor:pointer;'>"+testName+"<input type='hidden'  name='testid[]' value='"+testID+"' ></div> ");
+
+        $(".removeTest").unbind("click").bind("click",function(){
+            var testID = $(this).attr("testID");
+            $("#selectRequiredTest").find("option[value='" + testID + "']").css("display", "");
+            $(this).parent().remove();
+        });
+
+
+        $(this).parent().parent().find("#selectRequiredTest option:selected").css("display", "none");
+        $(this).parent().parent().find("#selectRequiredTest option[value='']").prop("selected", "selected");
+    },
     previewPost: function(){
         var pp_career_name = $("#careername").val();
         $("#previewpost #pp_career_name").text(pp_career_name);
@@ -182,7 +201,7 @@ career.prototype = {
 
         var pp_required_skills = "";
         $(".removeskill").each(function(){
-            pp_required_skills  =  pp_required_skills + ";" + $(this).text();
+            pp_required_skills  =  pp_required_skills  + $(this).text()+ ";";
         });
 
         $("#previewpost #pp_required_skills").text(pp_required_skills);
@@ -194,6 +213,13 @@ career.prototype = {
         var PPSRTo = $("#salaryRangeT option:selected").val();
         var pp_salary_range = "$" + PPSRFrom + "-" + PPSRTo;
         $("#previewpost #pp_salary_range").text(pp_salary_range);
+
+        var pp_required_test = "";
+        $(".removeTest").each(function(){
+            pp_required_test  =  pp_required_test  + $(this).text()+ ";";
+        });
+
+        $("#previewpost #pp_required_test").text(pp_required_test);
     },
     postcareernew:function(){
         var btn = $(this);
@@ -211,6 +237,9 @@ career.prototype = {
                 }
             }
         });
+    },
+    editcareerbtn:function(){
+        //window.location = 'careeredit';
     }
 }
 
