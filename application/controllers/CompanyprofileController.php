@@ -34,6 +34,11 @@ class CompanyprofileController extends Application_Controller_Action
         $company = $api->getCompany($companyid);
         $this->view->company=$company;
        
+       
+        $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
+        $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$companyid));
+        $this->view->getListOpp = $getListOpp;
+       
         $this->render('companyprofileview');
        
       

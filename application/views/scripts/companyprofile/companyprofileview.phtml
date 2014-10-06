@@ -1,72 +1,175 @@
+<style>
+    body {
+    background: none repeat scroll 0 0 #ededed;
+    
+}
+.text-left{
+    padding-top: 10px;
+}.line-r{
+    border-right: 1px solid #d6d6d6;
+    padding-right: 10px;
+    height: 10px;
+    
+}
+.page-header {
+    border-bottom: 2px solid #d6d6d6;
+}
+
+</style>
 <?php
     $company=$this->company;
-   // print_r($company);
+   //echo ("<br><br><pre>");print_r($company);echo("</pre>");
 ?>
 
 <div class="container" >  
     <div class="col-xs-2" style="padding-top:20px;">
+        <div>
     <?php
     if($company["images"]!="")
     {
     ?>
-        <img width="150px" src="<?=URL_MEDIA_COMPANY_PROFILE.$company["images"]?>">
+                <img width="135px" height="135px" src="<?=URL_MEDIA_COMPANY_PROFILE.$company["images"]?>">
     <?php
     }else
     {
     ?>
-    <img width="150px" src="<?=URL_THEMES?>images/none.png">
+            <img width="135px" height="135px" src="<?=URL_THEMES?>images/none.png">
     <?php
     }?>
-        <br><span class="text-left" style="font-size: 14px;color: #2a6496;"><?= $company["Companyname"]?></span>
+        </div>
+        <div class="text-left">
+            <span  style="font-size: 12px;color: #005595;"><?= $company["emailinfo"]?></span>
+        </div>
+        <div class="text-left">
+            <span style="margin-top:10px;"><img width="135px;" src="<?=URL_THEMES?>images/img_Abc.jpg"></span>
+        </div>
+        
+        
         
     </div>     
-   <div class="col-xs-9">         
+   <div class="col-xs-10">         
     <div class="page-header" style="margin:0;">
         <h3>       <?php 
       //  print_r($company);  
         ?>
         
-            <span class="text-left" style="font-size: 25px;color: #2a6496;font-weight:bold"><?= $company["Companyname"]?></span>         
-            <br><spanclass="text-left" style="font-size:14px;font-weight:normal"><?= $company["Industry"]?> company</span>
-            <span style="padding-left:440px;"> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> 
+            <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?= $company["Companyname"]?></span>         
+            <br><spanclass="text-left" style="font-size:15px;"><?= $company["Industry"]?> Company</span>
+            <span style="padding-left:503px;"> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> 
 			<!--<span style="padding-left:440px;"> <a href="<?= URL_BASE ?>companyprofile/upload?companyid=<?= $company["CompanyID"] ?>&pageajax=upload"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> -->
 </h3>
         
-        <span style="font-weight:bold;"><?=$company["country"]?></span><i><span style="padding-left:15px">Address:<?=$company["Address"]?></span><span style="padding-left:0px;"></span><span style="padding-left:15px;">Mail info:<?=$company["emailinfo"]?></span></i>
+        <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$company["country"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><?=$company["Address"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone:</b><?=$company["PhoneNumber"]?></span><span style="padding-left:5px;phone-size:13px" ><b>Fax:</b><?=$company["PhoneNumber"]?></span>
     </div>
-     <div class="col-xs-12" >
+     <div class="col-xs-12" style="padding-right:0px;" >
         <h4><span style="font-weight:bold">Overview</span></h4>
         <div class="col-xs-8"  style="padding:0">
-        <span style="padding-right:20px;"><?=nl2br($company["Decreption"])?></span>
+        <span style="padding-right:20px;font-size:12px"><?=nl2br($company["Decreption"])?></span>
         </div>
-        <div class=".col-xs-4">
-            <img width="200px" src="<?=URL_THEMES.'images/video.PNG';?>">
+        <div class=".col-xs-4" style="float:right;">
+            <img width="230px" src="<?=URL_THEMES.'images/video.PNG';?>">
 			
 		</div>
         
      </div>
-     <div class="col-xs-9" >
-            <h4><span style="font-weight:bold">Other Companies In This Industry</span></h4>
-            <div class="col-xs-3">
-                <span>test company</span><br>
-                <span>test company</span><br>
-                <span>test company</span><br>
+     <div class="col-xs-12" style="padding-right:0px;padding-top:20px">  
+
+    <header class="subhead" id="overview">
+    <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
+            <div class="panel-heading" style="background-color: #2a6496">
+                <h3 class="panel-title">
+                    <strong>Open career opportunities</strong>
+                </h3>
             </div>
-            <div class="col-xs-3">
-                <span>test company</span><br>
-                <span>test company</span><br>
-                <span>test company</span><br>
+
+        </div>
+    </header>
+        <div class="tab-content">
+            <!-- career list-->
+            <div class="tab-pane active" >
+                <table class="table table-striped  table-stripedgray table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee;font-size:12px;">
+                    <thead>
+                    <tr role="row" style="background-color: #eeeeee">
+                        <th style="width:30%">
+                            <label>
+                             <strong>Job Title</strong>
+                            </label>
+                        </th>
+                        <th style="width:40%">
+                                <label>
+                                     <strong>Location</strong>
+                                </label>
+                        </th>
+                        <th style="width:17%">
+                                <label>
+                                    <strong>Date</strong>
+                                </label>
+                        </th>
+                        <th style="width:13%">
+                                <label>
+                                     <strong>States</strong>
+                                </label>
+                        </th>
+                       
+                       
+                    </tr>
+                    </thead>
+                    <tbody>
+                  <?php
+                  $getListOpp=$this->getListOpp;
+                 // echo ("getListOpp:<pre>");print_r($getListOpp);echo("</pre>");
+                  foreach($getListOpp as $k=>$values)
+                  {
+                  ?>
+                            <tr role="row" class="odd">
+                                <td>
+                                    <b><?= $values["title"]?></b>
+                                </td>
+                                <td><?=$company["Address"]?></td>
+                                <td><?=$values["posteddate"]?></td>
+                                <td><img src="<?=URL_THEMES.'images/btn_apply.png';?>"></td>
+                                
+                                
+                            </tr>
+
+                  <?php
+                  }
+                  ?>
+
+                    </tbody>
+                </table>
+
+
             </div>
-            <div class="col-xs-3">
-                <span>test company</span><br>
-                <span>test company</span><br>
-                <span>test company</span><br>
+            <!--career list end-->
+         
+     </div>
+     </div>
+     <div class="col-xs-12" >
+            <h5 style="fornt-size:15px"><span style="font-weight:bold;" >Other Companies In This Industry</span></h5><br>
+            <div class="col-xs-4">
+                <a href="#" style="font-size:12px;color:#333;">Career incall 2phone Pvt.Ldt</a><br>
+                <a href="#" style="font-size:12px;color:#333;">Career Monaco Telematics</a><br>
+                <a href="#" style="font-size:12px;color:#333;">Career Bright Future Communication</a><br>
             </div>
+            <div class="col-xs-4">
+                <a href="#" style="font-size:12px;color:#333;">Career incall 2phone Pvt.Ldt</a><br>
+                <a href="#" style="font-size:12px;color:#333;">Career Monaco Telematics</a><br>
+                <a href="#" style="font-size:12px;color:#333;">Career Bright Future Communication</a><br>
+            </div>
+            <div class="col-xs-4">
+               <a href="#" style="font-size:12px;color:#333;">Career incall 2phone Pvt.Ldt</a><br>
+                <a href="#" style="font-size:12px;color:#333;">Career Monaco Telematics</a><br>
+                <a href="#" style="font-size:12px;color:#333;">Career Bright Future Communication</a><br>
+            </div>
+     </div>
+     <div class="col-xs-12" style="padding-top:40px;" >
      </div>
     </div>
      
      
 </div>
+
 
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
