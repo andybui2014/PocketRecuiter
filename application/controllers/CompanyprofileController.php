@@ -70,19 +70,7 @@ class CompanyprofileController extends Application_Controller_Action
         $companyid = $request->getParam("CompanyID");      
         $api = new PR_Api_Core_ClientClass();
          $return = array("success" => 0, "error" => "");
-       $filename = "";
-        if (isset($_FILES["images"])) {
-            if ($_FILES["images"]["error"] > 0) {
-                echo ("upload errors.");
-            } else {
-                $filename = uniqid() ."_". $_FILES["images"]["name"];
-                move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
-                
-            }
-        }
-       //echo("<br/>filename: ".$filename."<br/>");
-       
-        $params = $request->getParams(); 
+           $params = $request->getParams(); 
        // $filename=$request->getParam("images");
 
         
@@ -91,32 +79,25 @@ class CompanyprofileController extends Application_Controller_Action
             $updateFields[$key]=$value;
             
             }
-             //echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");
-             if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
+       if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
             {
-                $updateFields["images"]=$filename;
+                $updateFields["images"]="";
             }
-            
-          
-      // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");die();
+            $filename = "";
+        if (isset($_FILES["images"])) {
+            if ($_FILES["images"]["error"] > 0) {
+                echo ("upload errors.");
+            } else {
+                $filename = uniqid() ."_". $_FILES["images"]["name"];
+                move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
+                $updateFields["images"]=$filename;
+                
+            }
+        }
+
        $result = $api->updatecompanyProfile($companyid,$updateFields);
        header("Location: profile?companyid=$companyid");
-      // header('Location: http://www.example.com/'); 
-      
-      /* $return["success"]=1;  
-     if($result)
-       {
-           $return["success"]=1;
-       }
-      else{
-           $return["success"]=1;
-       }
-       $response = $this->getResponse();
-        $response->clearAllHeaders()->clearBody();
-        $return = json_encode($return);
-        $response->setHeader('Content-type', 'application/json');
-        $response->setHeader('Content-Length', strlen($return), true)
-                ->setBody($return);   */
+     
       
     }
 
