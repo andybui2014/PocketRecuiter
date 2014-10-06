@@ -119,66 +119,13 @@ class CompanyprofileController extends Application_Controller_Action
                 ->setBody($return);   */
       
     }
-    //new
-    public function uploadAction(){
-        $response = $this->getResponse();
-        $response->clearAllHeaders()->clearBody();
-        $request = $this->getRequest();
-         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
-        $companyid = $request->getParam("companyid");
-        $api = new PR_Api_Core_ClientClass();
-        $company = $api->getCompany($companyid);
-        $this->view->company=$company;
-        
-        $this->render('upload-form');
-}
-      public function uploadFormAction()
-{
-    // $this->_helper->layout->disableLayout();
-      //  $this->_helper->viewRenderer->setNoRender();
-        $request = $this->getRequest();
-        $companyid = $request->getParam("CompanyID");
-        $params = $request->getParams(); 
-        
-        $updateFields=array();
-        foreach ($params as $key => $value) {
-            $updateFields[$key]=$value;            
-        }
-       
-        //      
-        $filename = "";
-         if (isset($_FILES["images"])) {
-                if ($_FILES["images"]["error"] > 0) {
-                    echo ("upload bi loi");
-                } else {
-                    $filename = 'a____' . uniqid()."____" . $_FILES["images"]["name"];
 
-                    move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
-                    
-                }
-            }
-        echo ("<br/>test:");print_r($filename);
-      
-      $client = PR_Session::getSession(PR_Session::SESSION_USER);
-      
-        
-      $api = new PR_Api_Core_ClientClass();
-      $return = array("success" => 0, "error" => "");
-       
-
-       // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");
-       
-            
-            //$result = $api->updatecompanyProfile($companyid,$updateFields);
-           // $file = $request->getParam("images", "");
-            //if (is_file(DIR_MEDIA_TEMP . $file) && strtolower($file) != URL_MEDIA_PROFILE_NOAVATAR) {
-            //    copy(DIR_MEDIA_TEMP . $file, DIR_MEDIA_PROFILE . $file);
-             //   unlink(DIR_MEDIA_TEMP . $file);
-            //*/
+    
+   
         
    
     
-}
+
 
     
 
