@@ -193,12 +193,14 @@ class PR_Api_Core_TestClass
             'Question'=>$quesName);
         $result = PR_Database::insert("test_question", $updateFields);
         $testQuestionID = $this->GetQuestionIDByQuestionName($quesName,$testID);
-        foreach($answerOptionArray as $answerOption)
-        {
+        foreach($answerOptionArray as $answerOption){
             $updateFields=array('TestQuestion_TestQuestionID'=>$testQuestionID,
                 'AnswerText'=>$answerOption);
-            $result = PR_Database::insert("test_question_answer", $updateFields);            
+            $result = PR_Database::insert("test_question_answer", $updateFields);
+            if($result)
+                return $testQuestionID;
         }
+        return false;
     }
     
     public function updateQuestion($testQuestionID,$quesName,$answerOtionArray)
