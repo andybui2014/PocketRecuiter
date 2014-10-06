@@ -62,7 +62,7 @@ class PR_Api_Core_ClientClass
     public function updatecompanyProfile($companyid,$Data)
     {
        $avaiUpdateFields1 = array('Companyname','Industry','Address',
-                'Decreption','images','PhoneNumber','country','emailinfo');       
+                'Decreption','images','PhoneNumber','country','emailinfo','Zipcode');       
 
         if(count($companyid)==0){
             return;
