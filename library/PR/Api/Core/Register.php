@@ -53,7 +53,7 @@ class PR_Api_Core_Register
             $data[$mapping[$id]] = $value;
         }
         
-       $primaryEmail=$data["emailaddress"];
+        $primaryEmail=$data["emailaddress"];
      //  $loginname=$data["loginname"];
        // {
             $maxIdSql = "SELECT MAX(UserID) AS UserID  FROM user";

@@ -59,9 +59,9 @@ class CompanyprofileController extends Application_Controller_Action
       // print_r($_FILES);
       
     }
-     public function doEditProfileAction()
-    {
-        
+    
+    public function doEditProfileAction()
+    {        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
@@ -69,54 +69,34 @@ class CompanyprofileController extends Application_Controller_Action
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $companyid = $request->getParam("CompanyID");      
         $api = new PR_Api_Core_ClientClass();
-         $return = array("success" => 0, "error" => "");
-       $filename = "";
+        $return = array("success" => 0, "error" => "");
+        
+        $params = $request->getParams(); 
+        $updateFields=array();
+        foreach ($params as $key => $value) {
+            $updateFields[$key]=$value;            
+        }
+       
+        //--- remove photo
+        if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1) {
+            $updateFields["images"]="";
+        }
+        
+        //---- save photo upload
+        $filename = "";
         if (isset($_FILES["images"])) {
             if ($_FILES["images"]["error"] > 0) {
                 echo ("upload errors.");
             } else {
                 $filename = uniqid() ."_". $_FILES["images"]["name"];
-                move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
-                
+                move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);                
+                $updateFields["images"]=$filename;      
             }
         }
-       //echo("<br/>filename: ".$filename."<br/>");
-       
-        $params = $request->getParams(); 
-       // $filename=$request->getParam("images");
-
         
-       $updateFields=array();
-       foreach ($params as $key => $value) {
-            $updateFields[$key]=$value;
-            
-            }
-             //echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");
-             if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
-            {
-                $updateFields["images"]=$filename;
-            }
-            
-          
-      // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");die();
-       $result = $api->updatecompanyProfile($companyid,$updateFields);
-       header("Location: profile?companyid=$companyid");
-      // header('Location: http://www.example.com/'); 
-      
-      /* $return["success"]=1;  
-     if($result)
-       {
-           $return["success"]=1;
-       }
-      else{
-           $return["success"]=1;
-       }
-       $response = $this->getResponse();
-        $response->clearAllHeaders()->clearBody();
-        $return = json_encode($return);
-        $response->setHeader('Content-type', 'application/json');
-        $response->setHeader('Content-Length', strlen($return), true)
-                ->setBody($return);   */
+        //echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");die();
+        $result = $api->updatecompanyProfile($companyid,$updateFields);
+        header("Location: profile?companyid=$companyid");
       
     }
 
