@@ -52,7 +52,7 @@ class PR_Api_Core_ClientClass
     {             
        $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from("company", array("*"));
+        $select->from("company", array("*"));   
         $select->where("IsDefaultCompany = 1");
         $record = PR_Database::fetchAll($select);
         if(empty($record)) return NULL;
