@@ -19,38 +19,21 @@ class CareerController extends Application_Controller_Action
         $CompanyID = $sestionClient['CompanyID'];
         $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
         $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
-        $this->view->getListOpp = $getListOpp;
+          $this->view->getListOpp = $getListOpp;
     }
     public function careereditAction()
     {
         $request = $this->getRequest();
-        $oppid = $request->getParam("opportunityID", "");
-        //$sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
-        //$CompanyID = $sestionClient['CompanyID'];
+        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+        $CompanyID = $sestionClient['CompanyID'];
         $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
-        $getListOpp = $Oppotunity_PR_Api->getOpportunityInfoByID($oppid);
-        $careerType = trim($getListOpp['jobtype']);
-        $Career = $Oppotunity_PR_Api->getCareerTypeByID($careerType);
+        $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
+        $testOpp = $Oppotunity_PR_Api->getOpportunityInfoByID('7');
 
-        $CareerList = $Oppotunity_PR_Api->getListCareer();
-
-        $CompanyID = trim($getListOpp['CompanyID']);
-        $companyInfo = $Oppotunity_PR_Api->getCompanyByID($CompanyID);
-
-        $resultSkillList = $Oppotunity_PR_Api->getListSkill();
-
-        $getTestList_PR_Api_Core = new PR_Api_Core_TestClass();
-        $resultTestList = $getTestList_PR_Api_Core->getTestList(array('CompanyID'=>$CompanyID));
-
-        $this->view->getListOpp = $getListOpp;
-        $this->view->getListCareerType = $Career;
-        $this->view->CareerList = $CareerList;
-        $this->view->companyInfo = $companyInfo;
-        $this->view->resultSkillList = $resultSkillList;
-        $this->view->resultTestList = $resultTestList;
-       /* echo "<pre>";
-      print_r($Career);
-        echo "</pre>"; die(); */
+       // echo "<pre>";
+       // echo "<pre>";
+      //  print_r($testOpp);
+       // echo "</pre>"; die();
 
     }
     public function careercreateAction()
@@ -86,11 +69,11 @@ class CareerController extends Application_Controller_Action
         $CompanyID = $sestionUSER['CompanyID'];
         $postedby = $sestionUSER['UserID'];
 
-        $posteddate ="";
+        $posteddate =""; //$request->getParam("posteddate", "");
+        $title = ""; //$request->getParam("title", "");
         $careerdescription = $request->getParam("careerdescription", "");
 
-        $title = $request->getParam['careername'];
-        $status = 1;
+        $status = ""; //$request->getParam("status", "");
         $industry = $request->getParam("industry", "");
         $jobtype = $request->getParam("jobtype", "");
         $duration = $request->getParam("duration", "");
@@ -108,7 +91,7 @@ class CareerController extends Application_Controller_Action
         $updateFields = array('CompanyID'=>$CompanyID,'postedby'=>$postedby, 'posteddate'=>$posteddate,
         'title'=>$title,'careerdescription'=>$careerdescription,'status'=>$status,'industry'=>$industry,'industry'=>$industry,'jobtype'=>$jobtype,
             'duration'=>$duration,'location'=>$location,'zipcode'=>$zipcode,'minimuneducation'=>$minimuneducation,'degreetitle'=>$degreetitle,'StaffFavorite'=>$StaffFavorite,
-        );
+        'SkillID'=>$SkillID);
 
         $result = $career_PR_Api->saveCareer($updateFields);
 
@@ -125,22 +108,5 @@ class CareerController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($return), true)
             ->setBody($return);
 
-    }
-
-    public function careermatchAction()
-    {
-        $request = $this->getRequest();
-        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
-        $CompanyID = $sestionClient['CompanyID'];
-        $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
-        $getListOpp_com = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
-
-
-        //echo "<pre>";
-        // echo "<pre>";
-       //   print_r("");
-       //  echo "</pre>"; die();
-
-       // $this->view->getListOpp = $getListOpp;
     }
 }

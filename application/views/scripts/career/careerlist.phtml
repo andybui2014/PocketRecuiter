@@ -33,7 +33,9 @@
     border-bottom: 1px solid #cccccc; float:right; }
 </style>
 <?php
+
 $oppportunityList = $this->getListOpp;
+
 ?>
 <div class="container">
     <div style="height:80px; color: #2a6496">
@@ -129,11 +131,7 @@ $oppportunityList = $this->getListOpp;
                                 <td style="color: <?=$color?>; font-weight: bold"><?=$active?>
 
                                 </td>
-                                <td align="left" style="cursor: pointer"><input class="oppID" type="hidden" value='<?=$info['OpportunityID']?>'">
-                                    <a href="careeredit?opportunityID=<?=$info['OpportunityID']?>">
-                                    <span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#ccc; text-indent: 15px"></span>
-                                    </a>
-                                    <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#c77405"></span><span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span></td>
+                                <td align="left" style="cursor: pointer"><input type="hidden" id='<?=$info['OpportunityID']?>'"><span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#ccc; text-indent: 15px"></span><span class="glyphicon glyphicon-star" style="padding-left:15px;color:#c77405"></span><span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span></td>
                             </tr>
                      <?php   }
                     }
