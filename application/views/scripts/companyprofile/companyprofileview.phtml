@@ -59,12 +59,12 @@
 			<!--<span style="padding-left:440px;"> <a href="<?= URL_BASE ?>companyprofile/upload?companyid=<?= $company["CompanyID"] ?>&pageajax=upload"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> -->
 </h3>
         
-        <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$company["country"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><?=$company["Address"]?>, <?=$company["Zipcode"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone: </b><?=$company["PhoneNumber"]?></span><span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["PhoneNumber"]?></span>
+        <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$company["country"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><?=$company["Address"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone:</b><?=$company["PhoneNumber"]?></span><span style="padding-left:5px;phone-size:13px" ><b>Fax:</b><?=$company["PhoneNumber"]?></span>
     </div>
      <div class="col-xs-12" style="padding-right:0px;" >
         <h4><span style="font-weight:bold">Overview</span></h4>
         <div class="col-xs-8"  style="padding:0">
-        <span style="padding-right:20px;font-size:12px"><?=nl2br($company["Description"])?></span>
+        <span style="padding-right:20px;font-size:12px"><?=nl2br($company["Decreption"])?></span>
         </div>
         <div class=".col-xs-4" style="float:right;">
             <img width="230px" src="<?=URL_THEMES.'images/video.PNG';?>">

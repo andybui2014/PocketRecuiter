@@ -20,7 +20,6 @@ class PR_Api_Career extends Zend_Db_Table_Abstract
     public $minimuneducation;
     public $degreetitle;
     public $StaffFavorite;
-    public $SkillID;
     
     public $errMsg = "";
 
@@ -87,6 +86,7 @@ class PR_Api_Career extends Zend_Db_Table_Abstract
             $data['posteddate'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
             $res = $this->insert($data);
             if( $res ) return new $this($res);
+
         } else {
             /*
             try {
