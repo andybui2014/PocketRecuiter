@@ -1,0 +1,211 @@
+<style>
+body {
+    background: none repeat scroll 0 0 #ededed;
+}
+table.ex1 {
+    border-collapse: separate;
+    border-spacing: 5px;
+    max-width: 100%;
+    width: 100%
+}
+.ref{
+    color: #ff2525;
+    padding-right: 5px;
+}
+.form-control1 {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: block;
+    font-size: 14px;
+    height: 30px;
+    line-height: 1.42857;
+    padding: 6px 5px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    
+    
+}
+.form-control1::-moz-placeholder {
+    color: #777;
+    opacity: 1;
+}
+.has-error .form-control1 {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+#form-profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
+
+ .redborder{
+        border:#F00 solid 1px;
+        background-color:yellow;
+      }
+      .greenborder  {
+        border:#0F3 solid 1px;
+        background-color:#6F6;
+      }
+</style>
+
+
+
+    
+   
+
+<?php
+//$client=$this->client;
+
+?>
+<!--<header class="subhead" id="overview">-->
+
+<div class="container" >       
+            
+<div class="page-header" style="margin:0;">
+    <h3>
+        <span class="text-left" style="font-size: 25px;color: #2a6496;font-weight:bold">Account Profile</span>
+        
+
+    </h3>
+</div>
+    <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;border-radius: 10px;">
+          
+      <div class="col-md-6"  style="padding:0">      
+      <form role="form" method="post" name="form-profile" id="form-profile" action="<?= URL_BASE . 'client/do-add-usere'  ?>">         <input type="hidden"  id="UserID" name="UserID" value="" >
+             <div class="form-group">
+                <label for="credential">First Name</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="firstname" name="firstname" value="" >
+                <span class="message" id=""></span>
+              </div>
+            </div>
+            <div class="form-group">
+                <label >Last Name</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="lastname" name="lastname" value="" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
+            <div class="form-group ">
+                <label >Email address</label>
+              <div class="form-group">
+              
+                <input name="emailaddress" type="text" class="form-control" id="emailaddress" value="">
+                <span class="message" id="Email1_message"></span>
+              </div>
+            </div>
+           
+            <div class="form-group">
+                <label >Phone Number</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="credential">URL</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="URL" name="URL" value=""  >
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">Address</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="Address1" name="Address1" value="">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">City</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="City" name="City" value="">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">Country</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="Country" name="Country" value="">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label for="credential">Zip Code</label>
+                <div class="form-group">
+                <input type="text" class="form-control" id="PostalCode" name="PostalCode" value="">
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+            <div class="form-group">
+                <label for="credential">Role</label>
+                <div class="form-group">
+                    <select class="form-control" name="Role" id="Role">
+                        <option value="">Nomal</option>
+                        <option value="staff">staff</option>
+                        <option value="admin">admin</option>
+                    </select>
+                 <span class="message" id=""></span>
+              </div>
+                
+            </div>
+             <div class="form-group">
+                <label >Deactivate: </label><span style="padding-left:5px;"><input  type="checkbox" id="activate" name="activate"></span>
+                 
+              
+                
+            </div>
+           <div class="">
+                    
+                        <button type="submit" class="btn btn-success" id="cmd-updateprofile">
+                            <strong>Save</strong>
+                        </button>
+                    
+                     </div>
+                        
+        </form>
+       <div style="padding-top:20px;">
+         </div>
+        
+        </div>
+    </div>
+      </div>
+ <div style="padding-top:40px;">
+ </div>
+<!--</header>-->
+<!-- jQuery Version 1.11.0 -->
+
+
+
+<script type="text/javascript">
+ $(document).ready(function () {
+         $('#emailaddress').blur(function () {
+         var error = false; 
+         if($('#emailaddress').val()!=='')
+         {
+            
+            var x = $('#emailaddress').val();
+            var atpos = x.indexOf("@");
+            var dotpos = x.lastIndexOf(".");
+            
+            if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                error = true;
+                $("#Email1_message").addClass('has-error');
+                $("#Email1_message").html("The primary mail is not a valid email address");
+                }else{
+                $("#Email1_message").removeClass('has-error').addClass('has-success');
+                $("#Email1_message").html('');
+            }  
+         }
+             
+             
+        });
+ });
+</script>

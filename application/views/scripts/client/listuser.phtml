@@ -1,0 +1,158 @@
+<script src="<?=URL_THEMES.'js/mobile.notifications.js';?>"></script>
+<?php
+//$result = $this->result;
+///$clientIDLogin = $this->clientIDLogin;
+//$userName = $this->userName;
+$Userlists = $this->Userlists;
+$Companylists=$this->Companylists;
+$companyid=$_REQUEST["CompanyID"];
+//echo("<br><br><br>test:");
+//print_r($companyid);
+?>
+<style>
+body {
+    background: none repeat scroll 0 0 #ededed;
+}
+    .panel {
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+.clWidth200{width: 200px;}
+.clWidth300{width: 300px;}
+ .clWidth600{width: 400px;}
+    .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
+    .form-control1 {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+   /* display: block;*/
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 400px;
+}
+</style>
+<!-- Modal Add -->
+<div class="container">
+<div  style="padding-top:40px;">
+                            
+            Select Company: <select class="form-control1" id="Company" name="Company"  >
+                                <option value="">-Select- </option>
+                                 <?php
+                                    foreach($Companylists as $key=>$lists)
+                                    {
+                                 ?>
+                                    <option value="<?=$lists['CompanyID']?>" <?php if($lists['CompanyID']==$companyid)echo "selected";  ?>><?=$lists['Companyname']?></option>
+                                 <?php
+                                       
+                                    }
+                                ?>
+                                
+                            </select>
+        
+ </div>
+<div style="height:80px; color: #2a6496">
+    <div class="panel-body">
+        <div><h3 style="margin-top: 10px; margin-left: -16px"><label>List Account</label> </h3></div>
+        <div style="float: right; margin-top: -37px; margin-right:-10px">
+            <a href="<?= URL_BASE ?>client/adduser"><button class="btn btn-success" type="button">Add Acount</button></a>
+
+        </div>
+    </div>
+    
+       
+</div>
+ 
+<header class="subhead" id="overview">
+    <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
+            <div class="panel-heading" style="background-color: #2a6496">
+                <h3 class="panel-title">
+                    <strong>Acount Box</strong>
+                </h3>
+            </div>
+
+        </div>
+    </header>
+
+        <table id="notificationCk"  style="background-color: #fff" class="table  table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+            <thead>
+            <tr role="row" >
+                <th class="clWidth600 ">
+                    <label>
+                        <strong>Name</strong>
+                    </label>
+                </th>
+                <th class="clWidth600 ">
+                    <label>
+                        <strong>Email Address</strong>
+                    </label>
+                </th>
+                <th class="clWidth300 ">
+                    <label>
+                        <strong>Zip Code</strong>
+                    </label>
+                </th>
+                <th  class="clWidth200 text-center">
+                    <label>
+                        <strong>Action</strong>
+                    </label>
+                   <!-- <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #fff; ">
+                            <strong>Action </strong><span class="caret"></span>
+                        </button>
+                        
+                    </div>    -->
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if(!empty($Userlists)){
+                foreach($Userlists as $key=>$lists){
+            //echo ("estt:<pre>");print_r($lists);echo ("</pre>");
+            ?>
+                <tr role="row" class="odd ischecktr">
+                    <td class="clWidth300 ">
+                        <input type="hidden" name="UserID" value="<?= $lists["UserID"]?>">
+                        <span style="padding-left:10px"><strong><a href="<?= URL_BASE ?>client/edituser?UserID=<?= $lists["UserID"] ?>&pageajax=edituser"><?= $lists["firstname"]?> <?= $lists["lastname"]?></a></strong></span> 
+                    </td>
+                    <td class="clWidth600 "><span class="notiText"><?=$lists["emailaddress"]?></span></td>
+                    <td class="clWidth200 "><?=$lists["PostalCode"]?></td>
+                    <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>client/edituser?UserID=<?= $lists["UserID"] ?>&pageajax=edituser"><img src="<?=URL_THEMES?>images/update.PNG"></a></span><a href="<?= URL_BASE ?>client/deleteusere?UserID=<?= $lists["UserID"] ?>" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes" onclick="return confirm('Are you sure delete?')"></a></td>
+                </tr>
+            <?php
+            
+            
+            }
+            }
+            
+            ?>
+            </tbody>
+        </table>
+       <!-- <div class="" style="height: 40px;background-color: #333">
+
+        </div>  -->
+</div>
+
+<script type="text/javascript">
+ $(document).ready(function () {
+     
+
+       window.addEventListener('load', function(){
+            var select = document.getElementById('Company');
+
+            select.addEventListener('change', function(){
+                window.location = "<?= URL_BASE ?>client/listuser?CompanyID=" + this.value;
+            }, false);
+        }, false);
+        
+         });
+</script>
