@@ -11,13 +11,54 @@ class PR_Api_Core_CareerClass
         return $records;
     }
 
-    public function getListCareer()
+    public function getListCareer($filters=NULL,$limit=0, $offset=0)
     {
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from(array('cr'=>'careertype'),array('*'));
+            $select->from(array('cr'=>'career_type'),array('*'));
+        if(count($filters)>0)
+        {
+            if(isset($filters['career_type'])){
+                $select->where("cr.CareertypeID = '".$filters['CareertypeID']."' ");
+            }
+        }
         $records = PR_Database::fetchAll($select);
         return $records;
+    }
+    public function getCareerTypeByID($CareertypeID)
+    {
+        $list = $this->getListCareer(array('CareertypeID'=>$CareertypeID));
+        if(count($list)==0){
+            return array();
+        } else {
+            return $list[0];
+        }
+    }
+    public function getCompany($filters=NULL,$limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('c'=>'company'),array('*'));
+        if(count($filters)>0)
+        {
+            if(isset($filters['CompanyID'])){
+                $select->where("c.CompanyID = '".$filters['CompanyID']."' ");
+            }
+        }
+           // $select->where("c.CompanyID = '".$CompanyID."'");
+
+        $records = PR_Database::fetchAll($select);
+        return $records;
+    }
+
+    public function getCompanyByID($CompanyID)
+    {
+        $list = $this->getCompany(array('CompanyID'=>$CompanyID));
+        if(count($list)==0){
+            return array();
+        } else {
+            return $list[0];
+        }
     }
 
     public function getListOpportunity($filters=NULL,$limit=0, $offset=0)
@@ -83,8 +124,6 @@ class PR_Api_Core_CareerClass
 
     public function getTestByOpportunityID($oppID)
     {
-        //test
-//opportunity_test: career_idcareer,TestID
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('t'=>'test'),array('TestID','CompanyID','TestName'));

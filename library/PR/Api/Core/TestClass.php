@@ -20,11 +20,10 @@ class PR_Api_Core_TestClass
         
         if(count($filters)>0)
         {
-            if(!empty($filters['CompanyID'])){
-               $select->where("CompanyID = '".$filters['CompanyID']."'"); 
+            if(isset($filters['CompanyID'])){
+               $select->where("t.CompanyID = '".$filters['CompanyID']."'");
             }
         }
-
         if ( $limit != 0 || $offset != 0)
         {
             $select->limit($limit, $offset);            
@@ -35,7 +34,15 @@ class PR_Api_Core_TestClass
         $records = PR_Database::fetchAll($select);
         return $records;
     }
-
+    public function getTestListByID($CompanyID)
+    {
+        $list = $this->getTestList(array('CompanyID'=>$CompanyID));
+        if(count($list)==0){
+            return array();
+        } else {
+            return $list[0];
+        }
+    }
     public function create($updateFields)
     {
         //--- insert
@@ -193,14 +200,12 @@ class PR_Api_Core_TestClass
             'Question'=>$quesName);
         $result = PR_Database::insert("test_question", $updateFields);
         $testQuestionID = $this->GetQuestionIDByQuestionName($quesName,$testID);
-        foreach($answerOptionArray as $answerOption){
+        foreach($answerOptionArray as $answerOption)
+        {
             $updateFields=array('TestQuestion_TestQuestionID'=>$testQuestionID,
                 'AnswerText'=>$answerOption);
-            $result = PR_Database::insert("test_question_answer", $updateFields);
-            if($result)
-                return $testQuestionID;
+            $result = PR_Database::insert("test_question_answer", $updateFields);            
         }
-        return false;
     }
     
     public function updateQuestion($testQuestionID,$quesName,$answerOtionArray)
