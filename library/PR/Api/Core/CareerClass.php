@@ -7,6 +7,7 @@ class PR_Api_Core_CareerClass
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('sk'=>'skill'),array('*'));
+        $select->where("ParentSkillID = 0");
         $records = PR_Database::fetchAll($select);
         return $records;
     }
