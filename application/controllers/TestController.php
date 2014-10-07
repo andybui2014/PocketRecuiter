@@ -54,8 +54,10 @@ class TestController extends Application_Controller_Action {
 
         if($testId > 0){
             $core = new  PR_Api_Core_TestClass();
-            $core->createQuestion($testId,'Question New',null);
+            $testQstId = $core->createQuestion($testId,'Question New',null);
             $ajaxRes['success'] = 1;
+            $ajaxRes['qstId'] = $testQstId;
+
         }
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();

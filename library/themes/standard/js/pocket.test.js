@@ -298,22 +298,26 @@ pocketTest.prototype = {
                     var $this = $(this);
                     $this.button('loading');
                     if($this.attr('id')=='btn-addQst'){
-                        var xhr =  $.post( '/test/add-question',{testId: params.TestID}).done(function( data ) {});
-                        xhr.always(function(){
+                        var xhr =  $.post( '/test/add-question',{testId: params.TestID}).done(function( xhrQst ) {
+                            var nQid = xhrQst.qstId;
                             $.post( '/test/test-info',{tid:id}).done(function( data ) {
                                 if(data.success){
                                     $this.button('reset');
                                     var html = '';
                                     $.each(data.info.Questions,function(idx,item){
-                                        html +=  '<li class="item-list"><label><input  name="qstItem[]" type="checkbox" data-tid="'+item.Test_TestID+'" data-qid="'+item.TestQuestionID+'"> '+item.Question+'</label>' +
+                                         html +=  '<li class="item-list"><label><input  name="qstItem[]" type="checkbox" data-tid="'+item.Test_TestID+'" data-qid="'+item.TestQuestionID+'"> '+item.Question+'</label>' +
                                             ' <span class="pull-right"><i data-qid="'+item.TestQuestionID+'" data-tid="'+item.Test_TestID+'" class="glyphicon glyphicon-remove qst-remove"></i></span></li>';
                                     })
                                     $('#qst-list').html(html);
                                     $('#qst-list :input[type="checkbox"]').unbind('click').bind('click',optEdit);
                                     $('#qst-list').find('.qst-remove').unbind('click').bind('click',qstRemove);
+                                    $('#qst-list :input[data-qid="'+nQid+'"]').trigger('click');
+
+
                                 }
                             });
                         });
+
                     }else{
                         $.post( '/test/test-info',{tid:id}).done(function( data ) {
                             if(data.success){
