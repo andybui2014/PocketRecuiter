@@ -23,9 +23,9 @@ $companylists = $this->companylists;
 
 <div style="height:80px; color: #2a6496">
     <div class="panel-body">
-        <div><h3 style="margin-top: 10px; margin-left: -16px"><label>Company Profiles</label> </h3></div>
+        <div><h3 style="margin-top: 10px; margin-left: -16px"><label>List Company</label> </h3></div>
         <div style="float: right; margin-top: -37px; margin-right:-10px">
-            <button class="btn btn-success" type="button">Add Company</button>
+            <a href="<?= URL_BASE ?>companyprofile/addcompany"><button class="btn btn-success" type="button">Add Company</button></a>
 
         </div>
     </div>
@@ -34,7 +34,7 @@ $companylists = $this->companylists;
     <div class="panel panel-primary" style="border:0;margin-bottom: 0px">
             <div class="panel-heading" style="background-color: #2a6496">
                 <h3 class="panel-title">
-                    <strong>Company Profiles Box</strong>
+                    <strong>Company Box</strong>
                 </h3>
             </div>
 
@@ -85,7 +85,7 @@ $companylists = $this->companylists;
                     </td>
                     <td class="clWidth600 "><span class="notiText"><?=$companys["Address"]?></span></td>
                     <td class="clWidth200 "><?=$companys["Industry"]?></td>
-                    <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $companys["CompanyID"] ?>&pageajax=editprofile"><img src="<?=URL_THEMES?>images/update.PNG"></a></span><a href="#" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes"></a></td>
+                    <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $companys["CompanyID"] ?>&pageajax=editprofile"><img src="<?=URL_THEMES?>images/update.PNG"></a></span><a href="<?= URL_BASE ?>companyprofile/deletecompany?companyid=<?= $companys["CompanyID"] ?>" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes" onclick="return confirm('Are you sure delete?')"></a></td>
                 </tr>
             <?php
             

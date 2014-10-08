@@ -2,6 +2,7 @@
 class PR_Api_Core_ClientClass
 {
     private $avaiUpdateFields = array('usertype','firstname','middlename','lastname','dob','CompanyID','CandidateProfileID','loginname','password','emailaddress','URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country','HeardFrom','Role','activate');
+    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Description','images','PhoneNumber','country','emailinfo','Zipcode');       
     
     public function  __construct() {
         $errMsg="";
@@ -92,16 +93,13 @@ class PR_Api_Core_ClientClass
     }
     public function updatecompanyProfile($companyid,$Data)
     {
-       $avaiUpdateFields1 = array('Companyname','Industry','Address',
-                'Decreption','images','PhoneNumber','country','emailinfo','Zipcode');       
-
         if(count($companyid)==0){
             return;
         }
         
         $updateFields = array();
         foreach($Data as $key=>$value){
-            if (in_array($key,$avaiUpdateFields1)) {
+            if (in_array($key,$this->avaiUpdateFields1)) {
                 $updateFields[$key] = $value;
             }            
         }
@@ -174,11 +172,71 @@ class PR_Api_Core_ClientClass
                        
                         else
                         {
-                                $updateFields=array('UserID'=>$User_ID,'usertype'=>'1','firstname'=>$Fields['firstname'],'lastname'=>$Fields['lastname'],"emailaddress" => $Fields['emailaddress'],"Address1" => $Fields['Address1'],"password" => $Fields['password'],"CompanyID"=>$defaultCompanyID,"PhoneNumber"=>$Fields['PhoneNumber'],"URL"=>$Fields['URL'],"City"=>$Fields['City'],"Country"=>$Fields['Country'],"PostalCode"=>$Fields['PostalCode'],"Role"=>$Fields['Role'],"activate"=>$Fields['activate']);
+                            $updateFields=array(
+                            'UserID'=>$User_ID,
+                            'usertype'=>'1',
+                            'firstname'=>$Fields['firstname'],
+                            'lastname'=>$Fields['lastname'],
+                            "emailaddress" => $Fields['emailaddress'],
+                            "Address1" => $Fields['Address1'],
+                            "password" => $Fields['password'],
+                            "CompanyID"=>$defaultCompanyID,
+                            "PhoneNumber"=>$Fields['PhoneNumber'],
+                            "URL"=>$Fields['URL'],
+                            "City"=>$Fields['City'],
+                            "Country"=>$Fields['Country'],
+                            "PostalCode"=>$Fields['PostalCode'],
+                            "Role"=>$Fields['Role'],
+                            "activate"=>$Fields['activate']);
+                            
                                  $result = PR_Database::insert("user", $updateFields);
                         
                 }
             }
+             public function AddCompany($data)
+            {
+        
+                    if(empty($data) || !is_array($data)) return NULL;
+
+                    $db = PR_Database::getInstance();
+                    $Fields = array();   
+                   
+                   foreach($data as $key=>$value){
+                    if (in_array($key,$this->avaiUpdateFields1)) {
+                        $Fields[$key] = $value;
+                    }            
+                   }              
+                  
+                    
+                    $maxIdSql = "SELECT MAX(CompanyID) AS CompanyID  FROM company";
+                    $result = $db->fetchAll($maxIdSql);
+                    $CompanyID=$result[0]['CompanyID']+1;
+                   
+                    $updateFields=array(
+                            'CompanyID'=>$CompanyID,
+                            'Companyname'=>$Fields['Companyname'],
+                            'Industry'=>$Fields['Industry'],
+                            'Address'=>$Fields['Address'],
+                            "Zipcode" => $Fields['Zipcode'],
+                            "Description" => $Fields['Description'],
+                            "images" => $Fields['images'],
+                            "PhoneNumber"=>$Fields['PhoneNumber'],
+                            "country"=>$Fields['country'],
+                            "emailinfo"=>$Fields['emailinfo']
+                            );
+                            
+                    $result = PR_Database::insert("company", $updateFields);
+                    
+                     return $CompanyID;   
+                
+            }
+            public function deleteCompany($companyid)
+        {
+             $db = PR_Database::getInstance();
+             $criteria = "CompanyID = '$companyid'";
+             $result = $db->delete('company', $criteria);
+                    
+        }
              
 
         

@@ -99,7 +99,7 @@ $company=$this->company;
                 <label for="credential">Phone</label>
               <div class="form-group">
                 <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="<?=$company["PhoneNumber"]?>"  >
-                 <span class="message" id=""></span>
+                 <span class="message" id="PhoneNumber_message"></span>
               </div>
                 
             </div>
@@ -107,7 +107,7 @@ $company=$this->company;
                 <label for="credential">Email Info</label>
                 <div class="form-group">
                 <input type="text" class="form-control" id="emailinfo" name="emailinfo" value="<?=$company["emailinfo"]?>">
-                 <span class="message" id=""></span>
+                 <span class="message" id="Email1_message"></span>
               </div>
                 
             </div>
@@ -155,8 +155,8 @@ $company=$this->company;
                 <label for="credential">Decription</label>
                 <div class="form-group">
                 
-                <textarea class="form-control" rows="3" name="Decreption" id="Decreption">
-                    <?=$company["Decreption"]?>
+                <textarea class="form-control" rows="3" name="Description" id="Description">
+                    <?=$company["Description"]?>
                 </textarea>
                  <span class="message" id=""></span>
               </div>
@@ -180,6 +180,48 @@ $company=$this->company;
 
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
+<script type="text/javascript">
+ $(document).ready(function () {
+     var error = false; 
+         $('#emailinfo').blur(function () {
+
+         if($('#emailinfo').val()!=='')
+         {
+            
+            var x = $('#emailinfo').val();
+            var atpos = x.indexOf("@");
+            var dotpos = x.lastIndexOf(".");
+            
+            if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                error = true;
+                $("#Email1_message").addClass('has-error');
+                $("#Email1_message").html("The primary mail is not a valid email address");
+                }else{
+                $("#Email1_message").removeClass('has-error').addClass('has-success');
+                $("#Email1_message").html('');
+            }  
+         }
+             
+             
+        });
+        //
+       $('#PhoneNumber').blur(function () {
+            //var error = false; 
+            var phone=$('#PhoneNumber').val();
+            var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
+            if (!phone.match(phoneno) && phone.length >1) {
+                error = true;
+                $('#PhoneNumber_message').addClass('has-error');
+                $("#PhoneNumber_message").html("Phone Number must be a valid 10 digit number with optional extension similar to XXX XXX XXXX ");
+                
+            }else{
+                            
+               $("#PhoneNumber_message").removeClass('has-error').addClass('has-success');
+                $("#PhoneNumber_message").html('');
+            }
+        });
+ });
+</script>
 
 
 

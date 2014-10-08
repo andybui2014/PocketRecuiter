@@ -130,6 +130,15 @@ $loginClient = $this->layout()->loginclient;
                                 if($loginClient["Role"]=='admin')
                                 {
                             ?>      <li class="divider"></li>
+                                    <li><a href="<?= URL_BASE . 'companyprofile/list'?>"><i class="glyphicon glyphicon-list" style="padding-right:4px;"></i>List Company</a></li>
+                            <?php        
+                                }
+                            ?>
+                            
+                            <?php
+                                if($loginClient["Role"]=='admin'|| $loginClient["Role"]=='staff')
+                                {
+                            ?>      <li class="divider"></li>
                                     <li><a href="<?= URL_BASE . 'client/listuser?CompanyID='.$loginClient["CompanyID"] ?>"><i class="glyphicon glyphicon-list-alt" style="padding-right:4px;"></i>List Account</a></li>
                             <?php        
                                 }

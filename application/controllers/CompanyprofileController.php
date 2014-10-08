@@ -22,9 +22,10 @@ class CompanyprofileController extends Application_Controller_Action
         $companylists = $api->getListCompany();
        
         $this->view->companylists = $companylists;
-
+        $this->render("list");
       
     }
+    
     public function profileAction()
     {
         $request = $this->getRequest();
@@ -54,9 +55,9 @@ class CompanyprofileController extends Application_Controller_Action
         $company = $api->getCompany($companyid);
         $this->view->company=$company;
         
-       // echo ("companyid:".$companyid);//print_r($companyid);
+
         $this->render('editprofile');
-      // print_r($_FILES);
+      
       
     }
      public function doEditProfileAction()
@@ -80,10 +81,9 @@ class CompanyprofileController extends Application_Controller_Action
                 
             }
         }
-       //echo("<br/>filename: ".$filename."<br/>");
+       
        
         $params = $request->getParams(); 
-       // $filename=$request->getParam("images");
 
         
        $updateFields=array();
@@ -91,14 +91,14 @@ class CompanyprofileController extends Application_Controller_Action
             $updateFields[$key]=$value;
             
             }
-             //echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");
+            
              if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
             {
                 $updateFields["images"]=$filename;
             }
             
           
-      // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");die();
+      
        $result = $api->updatecompanyProfile($companyid,$updateFields);
        header("Location: profile?companyid=$companyid");
       // header('Location: http://www.example.com/'); 
@@ -122,7 +122,64 @@ class CompanyprofileController extends Application_Controller_Action
 
     
    
+        public function addcompanyAction()
+    {
+        $request = $this->getRequest();
+        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);             
+        //$api = new PR_Api_Core_ClientClass();
+    
+        $this->render("addcompany");
+      
+    }
+    public function doAddCompanyAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER); 
+        $params = $request->getParams();
+        $filename = "";
+        if (isset($_FILES["images"])) {
+            if ($_FILES["images"]["error"] > 0) {
+                $params["images"]="";
+            } else {
+                $filename = uniqid() ."_". $_FILES["images"]["name"];
+                move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
+                $params["images"]=$filename;
+                
+            }
+        }
         
+               
+             $Fields=array();
+            foreach($params as $key=>$values) 
+            {
+                $Fields[$key]=$values;
+            }    
+           
+    
+        $api = new PR_Api_Core_ClientClass();
+        $result = $api->AddCompany($Fields);
+       
+       // header("Location: list");                      
+        header("Location: profile?companyid=$result");
+      
+    }
+     public function deletecompanyAction()
+     {        
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+                
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $companyid = $request->getParam("companyid");   
+       
+        $api = new PR_Api_Core_ClientClass();
+        $result = $api->deleteCompany($companyid);
+        header("Location: list");
+        
+      
+      } 
    
     
 
