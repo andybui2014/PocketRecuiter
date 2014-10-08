@@ -132,7 +132,7 @@ class PR_Api_Core_CareerClass
             'ot.TestID = t.TestID',
             array()
         );
-        $select->where("ot.career_idcareer = '".$oppID."' ");
+        $select->where("ot.CareerID = '".$oppID."' ");
 
         $records = PR_Database::fetchAll($select);
         if(empty($records) && count($records)==0){
