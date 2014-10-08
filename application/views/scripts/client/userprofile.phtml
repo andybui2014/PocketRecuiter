@@ -73,7 +73,7 @@ $Role=$this->Role;
     <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;border-radius: 10px;">
           
       <div class="col-md-6"  style="padding:0">      
-      <form role="form" method="post" name="" id="" action="<?= URL_BASE . 'client/do-edit-usere'  ?>">         <input type="hidden"  id="UserID" name="UserID" value="<?=$client['UserID']?>" >
+      <form role="form" method="post" name="userprofile" id="userprofile" action="<?= URL_BASE . 'client/do-edit-usere'  ?>">         <input type="hidden"  id="UserID" name="UserID" value="<?=$client['UserID']?>" >
      <!-- <input type="hidden"  id="CompanyID" name="CompanyID" value="<?=$companyid?>" >-->
              <div class="form-group">
                 <label for="credential">First Name</label>
@@ -192,6 +192,15 @@ $Role=$this->Role;
  $(document).ready(function () {
      var error = false; 
          $('#emailaddress').blur(function () {
+            if($('#emailaddress').val()=='')
+                 {
+                     $("#Email1_message").addClass('has-error');
+                        $("#Email1_message").html("Email address is not empty");
+                        
+                }else{
+                        $("#Email1_message").removeClass('has-error').addClass('has-success');
+                        $("#Email1_message").html('');
+                 }
          
          if($('#emailaddress').val()!=='')
          {
@@ -203,7 +212,7 @@ $Role=$this->Role;
             if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
                 error = true;
                 $("#Email1_message").addClass('has-error');
-                $("#Email1_message").html("The primary mail is not a valid email address");
+                    $("#Email1_message").html("Email address is not a valid email address");
                 }else{
                 $("#Email1_message").removeClass('has-error').addClass('has-success');
                 $("#Email1_message").html('');
@@ -227,6 +236,50 @@ $Role=$this->Role;
                $("#PhoneNumber_message").removeClass('has-error').addClass('has-success');
                 $("#PhoneNumber_message").html('');
             }
+        });
+        
+         $( "#userprofile" ).submit(function( event ) {
+                 if($('#emailaddress').val()=='')
+                 {
+                        $("#Email1_message").addClass('has-error');
+                        $("#Email1_message").html("Email address is not empty");
+                        event.preventDefault();
+                }else{
+                        $("#Email1_message").removeClass('has-error').addClass('has-success');
+                        $("#Email1_message").html('');
+                 }
+                
+                 if($('#emailaddress').val()!=='')
+                 {
+                    
+                    var x = $('#emailaddress').val();
+                    var atpos = x.indexOf("@");
+                    var dotpos = x.lastIndexOf(".");
+                    
+                    if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                        error = true;
+                        $("#Email1_message").addClass('has-error');
+                        $("#Email1_message").html("Email address is not a valid email address");
+                        event.preventDefault();
+                        }else{
+                        $("#Email1_message").removeClass('has-error').addClass('has-success');
+                        $("#Email1_message").html('');
+                    }  
+                 }
+                   var phone=$('#PhoneNumber').val();
+                    var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
+                    if (!phone.match(phoneno) && phone.length >1) {
+                        error = true;
+                        $('#PhoneNumber_message').addClass('has-error');
+                        $("#PhoneNumber_message").html("Phone Number must be a valid 10 digit number with optional extension similar to XXX XXX XXXX ");
+                        event.preventDefault();
+                        
+                    }else{
+                                    
+                       $("#PhoneNumber_message").removeClass('has-error').addClass('has-success');
+                        $("#PhoneNumber_message").html('');
+                    }
+               
         });
  });
 </script>

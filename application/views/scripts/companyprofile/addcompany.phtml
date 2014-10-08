@@ -2,7 +2,7 @@
 body {
     background: none repeat scroll 0 0 #ededed;
 }
-.has-error .form-control {
+.has-error .form-control1 {
     border-color: #a94442;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
@@ -17,32 +17,21 @@ body {
         border:#0F3 solid 1px;
         background-color:#6F6;
       }
+       .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
 </style>
 
-<!--<script src="<?=URL_THEMES.'js/companyprofile.js';?>"></script>   -->
+
 
   
   <script type="text/javascript">
     $(document).ready(function()
     {
-         $("#Company_Logo_Rm").click(function() {
-        if ($("#Company_Logo_Rm").is(":checked"))
-                {
-                     $("#Company_Logo_file").css("display","");
-                    // $('#hidSaveOrUpload').val(1);
-                }else
-                    {
-                       $("#Company_Logo_file").css("display","none");  
-                       //('#hidSaveOrUpload').val(0);
-                    }
-        });
-        
-      // $('#file1').val($('#file').val());
+         
     });
   </script>
 
 <?php
-$company=$this->company;
+
 
 ?>
 <!--<header class="subhead" id="overview">-->
@@ -52,31 +41,31 @@ $company=$this->company;
 <div class="container" >       
             
 <div class="page-header" style="margin:0;">
-    <h1>
-        <span class="text-left" style="font-size: 25px;color: #2a6496"><?= $company["Companyname"]?> Profile</span>
+    <h3>
+        <span class="text-left" style="font-size: 25px;color: #2a6496;font-weight:bold"> Add Company</span>
         
 
-    </h1>
+    </h3>
 </div>
     <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;border-radius: 10px;">
           
       <div class="col-md-6"  style="padding:0">     
 
-      <form enctype="multipart/form-data"   method="POST" name="profile" id="profile"  action="<?= URL_BASE . 'companyprofile/do-edit-profile'?>" role="form">
+      <form enctype="multipart/form-data"   method="POST" name="profile" id="profile"  action="<?= URL_BASE . 'companyprofile/do-add-company'?>" role="form">
       
-     <!-- <input type="hidden" id="hidSaveOrUpload" name="hidSaveOrUpload" value="0" />-->
+     
              <div class="form-group">
                 <label for="credential">Company Name</label>
               <div class="form-group">
-              <input type="hidden" class="form-control" id="CompanyID" name="CompanyID" value="<?=$company["CompanyID"]?>">
-                <input type="text" class="form-control" id="Companyname" name="Companyname" value="<?=$company["Companyname"]?>" >
+              <input type="hidden" class="form-control" id="CompanyID" name="CompanyID">
+                <input type="text" class="form-control" id="Companyname" name="Companyname"  >
                 <span class="message" id=""></span>
               </div>
             </div>
             <div class="form-group">
                 <label for="email">Industry</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="Industry" name="Industry" value="<?=$company["Industry"]?>" >
+                <input type="text" class="form-control" id="Industry" name="Industry"  >
                  <span class="message" id=""></span>
               </div>
             </div>
@@ -84,15 +73,15 @@ $company=$this->company;
                 <label >Address</label>
               <div class="form-group">
               
-                <input name="Address"  class="form-control" id="Address" value="<?=$company["Address"]?>">
+                <input name="Address"  class="form-control" id="Address" >
                
               </div>
             </div>
            
             <div class="form-group">
-                <label for="email">Country</label>
+                <label >Country</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="country" name="country" value="<?=$company["country"]?>" >
+                <input type="text" class="form-control" id="country" name="country"  >
                  <span class="message" id=""></span>
               </div>
             </div>
@@ -100,7 +89,7 @@ $company=$this->company;
             <div class="form-group">
                 <label for="credential">Phone</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="<?=$company["PhoneNumber"]?>"  >
+                <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber"  >
                  <span class="message" id="PhoneNumber_message"></span>
               </div>
                 
@@ -108,57 +97,30 @@ $company=$this->company;
              <div class="form-group">
                 <label for="credential">Email Info</label>
                 <div class="form-group">
-                <input type="text" class="form-control" id="emailinfo" name="emailinfo" value="<?=$company["emailinfo"]?>">
+                <input type="text" class="form-control" id="emailinfo" name="emailinfo" >
                  <span class="message" id="Email1_message"></span>
               </div>
                 
             </div>
             <div class="form-group">
-                <label for="credential">Logo</label>
-                
+                <label for="credential">Zip Code</label>
                 <div class="form-group">
-                <?php
-                    if($company["images"]=="")
-                    {
-                        
-                    
-                ?>
-                <img width="150px" class="" src="<?=URL_MEDIA_COMPANY_PROFILE?>none.png" id="Image1" /><br/>
-                <input type="hidden" id="hidFileName" name="photo" value="none.png" />
-                
-               
-            <?php
-                    }else{
-           
-            ?>
-            <img width="110px" height="144px" class="user_photo" src="<?=URL_MEDIA_COMPANY_PROFILE.$company["images"]?>" id="Image1" /><br/>
-            <input type="hidden" id="hidFileName" name="photo" value="<?= $company["images"] ?>" />
-            
-           
-           <?php
-                    }
-           ?>
-              <input type="checkbox" value="1" id="Company_Logo_Rm" name="Company_Logo_Rm"/> Remove &nbsp;
-              <div id="Company_Logo_file" style="display:<?=empty($company["images"])?'':'none'?>; ">
-                                    <!--<input type="file" name="images" id="images" > -->
-              
-             <!-- <input type="file" size="30"   name="file" id="file">-->
-             <input type="file" size="30"   name="images" id="images">  
-                                    
-              </div> 
-                               
-                
+                <input type="text" class="form-control" id="Zipcode" name="Zipcode" >
                  <span class="message" id=""></span>
               </div>
                 
             </div>
-            <!--<input type="file" size="30"   name="images" id="images">  -->
+            <div class="form-group">
+                <label for="credential">Logo</label>
+                <br><input type="file"  size="30"   name="images" id="images">                               
+            </div>
+            <!-- -->
             <div class="form-group">
                 <label for="credential">Decription</label>
                 <div class="form-group">
                 
                 <textarea class="form-control" rows="3" name="Description" id="Description">
-                    <?=$company["Description"]?>
+                    
                 </textarea>
                  <span class="message" id=""></span>
               </div>
@@ -168,29 +130,31 @@ $company=$this->company;
            <div class="">
            
                     
-                        <button class="btn btn-success" type="submit" id="submit" name="submit">Update</button>
+                        <button type="submit" class="btn btn-success" id="">
+                            <strong>Save</strong>
+                        </button>
 
                     
            </div>
                         
         </form>
+       
             <div style="padding-top:20px;">
             </div>
-       
-        
         </div>
     </div>
 </div>
 <div style="padding-top:40px;">
-      </div>
+</div>
 
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
+
 <script type="text/javascript">
  $(document).ready(function () {
      var error = false; 
          $('#emailinfo').blur(function () {
-
+         
          if($('#emailinfo').val()!=='')
          {
             
@@ -226,7 +190,7 @@ $company=$this->company;
                 $("#PhoneNumber_message").html('');
             }
         });
-        $( "#profile" ).submit(function( event ) {
+         $( "#profile" ).submit(function( event ) {
                 //alert( "Handler for .submit() called." );
                 //event.preventDefault();
                 if($('#emailinfo').val()!=='')
@@ -262,7 +226,6 @@ $company=$this->company;
 });
  });
 </script>
-
 
 
 
