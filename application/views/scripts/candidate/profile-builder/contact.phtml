@@ -181,43 +181,43 @@ $helper = $this->layout()->_helper;
                     </div>
                     <div class="col-md-8" style="padding-left:0;">
 
-                        <form id="" role="form">
+                        <form id="form-contact" role="form">
                             <div class="form-group">
-                                <label for="email">First Name</label>
-                                <input name="firstname" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="FirstName">First Name</label>
+                                <input value="<?=$this->info['firstname'];?>" name="firstname" type="text" class="form-control" id="" placeholder="Enter first name">
                             </div>
                             <div class="form-group">
-                                <label for="email">Last Name</label>
-                                <input name="lastname" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="LastName">Last Name</label>
+                                <input  value="<?=$this->info['lastname'];?>" name="lastname" type="text" class="form-control" id="" placeholder="Enter last name">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email address</label>
-                                <input name="email" type="email" class="form-control" id="" placeholder="Enter email">
+                                <label for="EmailAddress">Email address</label>
+                                <input  value="<?=$this->info['emailaddress'];?>" name="email" type="email" class="form-control" id="" placeholder="Enter email">
                             </div>
                             <div class="form-group">
-                                <label for="email">Phone Number</label>
-                                <input name="phone" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="PhoneNumber">Phone Number</label>
+                                <input value="<?=$this->info['PhoneNumber'];?>" name="phone" type="text" class="form-control" id="" placeholder="Enter phone number">
                             </div>
                             <div class="form-group">
-                                <label for="email">Url</label>
-                                <input name="phone" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="Url">Url</label>
+                                <input value="<?=$this->info['URL'];?>" name="url" type="text" class="form-control" id="" placeholder="Enter url">
                             </div>
                             <div class="form-group">
-                                <label for="email">City</label>
-                                <input name="phone" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="City">City</label>
+                                <input value="<?=$this->info['City'];?>" name="city" type="text" class="form-control" id="" placeholder="Enter city">
                             </div>
                             <div class="form-group">
-                                <label for="email">Country</label>
-                                <input name="phone" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="Country">Country</label>
+                                <input value="<?=$this->info['Country'];?>"  name="country" type="text" class="form-control" id="" placeholder="Enter country">
                             </div>
                             <div class="form-group">
-                                <label for="email">Zip Code</label>
-                                <input name="phone" type="text" class="form-control" id="" placeholder="First Name">
+                                <label for="ZipCode">Zip Code</label>
+                                <input value="<?=$this->info['PostalCode'];?>"   name="zipcode" type="text" class="form-control" id="" placeholder="Enter zip code">
                             </div>
                             <div>
 
-                                <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                                <button type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
+                                <button id="cmd-back" class="btn btn-default disabled" type="button"  data-back="contact"><strong>Skip</strong></button> &nbsp;
+                                <button data-loading-text="Loading..." type="button" class="btn btn-success" data-next="education" data-id="contact" id="cmd-next" type="button"><strong>Next</strong></button>
                             </div>
                         </form>
                     </div>
@@ -226,6 +226,4 @@ $helper = $this->layout()->_helper;
         </div>
     </div>
 </div>
-<script>
-
-</script>
+<script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>

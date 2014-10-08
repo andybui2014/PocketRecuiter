@@ -30,10 +30,13 @@ class CandidateController extends Application_Controller_Action
     public function profileBuilderAction(){
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
+            $client = PR_Session::getSession(PR_Session::SESSION_USER);
             $this->view->step = $params['utm_source'];
-
             switch($params['utm_source']){
                 case 'contact':
+                    $core = new PR_Api_Core_CandidateClass();
+                    $info = $core->getContactInfo($client['UserID']);
+                    $this->view->info = $info;
                     $this->render('profile-builder/contact');
                     break;
                 case 'education':
@@ -61,8 +64,45 @@ class CandidateController extends Application_Controller_Action
 
 
     }
+    public function stepNextContactAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+
+            $params = $this->getRequest()->getParams();
+            $data = $params['data'];
+
+            if(!empty($data)){
+
+                $arrData = array();
+                foreach($data as $key=>$item){
+                    if($item['name']=='firstname')  $arrData['firstname']= $item['value'];
+                    if($item['name']=='lastname')   $arrData['lastname']= $item['value'];
+                    if($item['name']=='email')      $arrData['emailaddress']= $item['value'];
+                    if($item['name']=='phone')      $arrData['PhoneNumber']= $item['value'];
+                    if($item['name']=='url')        $arrData['URL']= $item['value'];
+                    if($item['name']=='city')       $arrData['City']= $item['value'];
+                    if($item['name']=='country')    $arrData['Country']= $item['value'];
+                    if($item['name']=='zipcode')    $arrData['PostalCode']= $item['value'];
+                }
+                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                $core = new PR_Api_Core_CandidateClass();
+                $core->saveContactInfo($client['UserID'],$arrData);
+                $ajaxRes['success'] = 1;
+
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
     public function profileAction(){
-         $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $emailaddress = $client["emailaddress"];
         $password = $client["password"];
          $Api = new PR_Api_User();
