@@ -185,7 +185,7 @@ $loginClient = $this->layout()->loginclient;
         <?php }elseif($loginClient['usertype']==2){ ?>
             <div class="nav-ribbon-bottom">
                 <ul class="nav-parent">
-                    <li><a class="link" href="./#profile-builder">Profile Builder</a></li>
+                    <li><a class="link" href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>">Profile Builder</a></li>
                     <li><a class="link" href="#">My Profile</a></li>
                     <li><a class="link" href="#">Activities</a></li>
                     <li><a class="link" href="#">Match Opportunities</a></li>
