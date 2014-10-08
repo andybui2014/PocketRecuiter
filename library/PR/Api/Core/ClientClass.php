@@ -174,7 +174,7 @@ class PR_Api_Core_ClientClass
                        
                         else
                         {
-                                $updateFields=array('UserID'=>$User_ID,'usertype'=>'1','firstname'=>$Fields['firstname'],'lastname'=>$Fields['lastname'],"emailaddress" => $Fields['emailaddress'],"Address1" => $Fields['Address1'],"password" => $Fields['password'],"CompanyID"=>$defaultCompanyID,"PhoneNumber"=>$Fields['PhoneNumber'],"URL"=>$Fields['URL'],"City"=>$Fields['City'],"Country"=>$Fields['Country'],"PostalCode"=>$Fields['PostalCode']);
+                                $updateFields=array('UserID'=>$User_ID,'usertype'=>'1','firstname'=>$Fields['firstname'],'lastname'=>$Fields['lastname'],"emailaddress" => $Fields['emailaddress'],"Address1" => $Fields['Address1'],"password" => $Fields['password'],"CompanyID"=>$defaultCompanyID,"PhoneNumber"=>$Fields['PhoneNumber'],"URL"=>$Fields['URL'],"City"=>$Fields['City'],"Country"=>$Fields['Country'],"PostalCode"=>$Fields['PostalCode'],"Role"=>$Fields['Role'],"activate"=>$Fields['activate']);
                                  $result = PR_Database::insert("user", $updateFields);
                         
                 }
