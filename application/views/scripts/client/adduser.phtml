@@ -56,7 +56,7 @@ table.ex1 {
 
 <?php
 //$client=$this->client;
-
+$Role=$this->Role;
 ?>
 <!--<header class="subhead" id="overview">-->
 
@@ -108,7 +108,7 @@ table.ex1 {
                 <label >Phone Number</label>
               <div class="form-group">
                 <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="" >
-                 <span class="message" id=""></span>
+                 <span class="message" id="PhoneNumber_message"></span>
               </div>
             </div>
             
@@ -158,7 +158,7 @@ table.ex1 {
                     <select class="form-control" name="Role" id="Role">
                         <option value="">Nomal</option>
                         <option value="staff">staff</option>
-                        <option value="admin">admin</option>
+                        <option value="admin" <?php if($Role=="staff") echo "style='display: none;'"; ?>>admin</option>
                     </select>
                  <span class="message" id=""></span>
               </div>
@@ -194,8 +194,9 @@ table.ex1 {
 
 <script type="text/javascript">
  $(document).ready(function () {
+        var error = false; 
          $('#emailaddress').blur(function () {
-         var error = false; 
+
          if($('#emailaddress').val()!=='')
          {
             
@@ -214,6 +215,21 @@ table.ex1 {
          }
              
              
+        });
+             $('#PhoneNumber').blur(function () {
+            //var error = false; 
+            var phone=$('#PhoneNumber').val();
+            var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
+            if (!phone.match(phoneno) && phone.length >1) {
+                error = true;
+                $('#PhoneNumber_message').addClass('has-error');
+                $("#PhoneNumber_message").html("Phone Number must be a valid 10 digit number with optional extension                        similar to XXX XXX XXXX ");
+                
+            }else{
+                            
+               $("#PhoneNumber_message").removeClass('has-error').addClass('has-success');
+                $("#PhoneNumber_message").html('');
+            }
         });
  });
 </script>

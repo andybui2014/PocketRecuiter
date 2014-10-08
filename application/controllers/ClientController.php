@@ -84,11 +84,13 @@ class ClientController extends Application_Controller_Action
         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
         $clientID =  $sestionClient['UserID'];
         $companyid=$request->getParam("CompanyID");
+        $role=$sestionClient["Role"];
        // $companyid=$_REQUEST;
        // echo("companyid:");print_r($companyid);
         $api = new PR_Api_Core_ClientClass();
         
         $Companylists=$api->getListCompany();
+        $this->view->Role=$role;
        
         $this->view->Companylists = $Companylists;
         $Userlists = $api->getListUsersCompany($companyid);
@@ -105,7 +107,8 @@ class ClientController extends Application_Controller_Action
         $request = $this->getRequest();
          $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $userid = $request->getParam("UserID");
-        //echo ("userid:");print_r($userid);die();
+      //  echo ("userid:");print_r($client);die();
+        $role=$client["Role"];
         $companyid=$request->getParams();
         //echo("CompanyID");print_r($companyid);
          $Api = new PR_Api_User();
@@ -113,7 +116,7 @@ class ClientController extends Application_Controller_Action
         
         $this->view->client = $Api->getListUserArray($authData);
         $this->view->companyid=$companyid;
-       
+        $this->view->Role=$role;
         $this->render('userprofile');
         
         
@@ -168,9 +171,10 @@ class ClientController extends Application_Controller_Action
         {
             $request = $this->getRequest();
              $client = PR_Session::getSession(PR_Session::SESSION_USER);
-                    
+             $role=$client["Role"];
+             $this->view->Role=$role;     
             $this->render('adduser');
-            
+           // echo ("role:".$role);
             
             
         }
@@ -185,8 +189,15 @@ class ClientController extends Application_Controller_Action
             {
                 $Fields[$key]=$values;
             }  
+             if(isset($Fields["activate"]))
+            {
+                $Fields["activate"]=1;
+            }
+            else{
+                $Fields["activate"]=0;
+            } 
             $api = new PR_Api_Core_ClientClass();
-            // echo ("updateFields:<pre>");print_r($Fields);echo("</pre>");    
+           //echo ("updateFields:<pre>");print_r($Fields);echo("</pre>");  die();  
               $result = $api->AddUser($Fields);
                header("Location: listuser?CompanyID=1");
           

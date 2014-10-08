@@ -32,12 +32,12 @@ table.ex1 {
     color: #777;
     opacity: 1;
 }
-.has-error .form-control1 {
+.has-error .form-control {
     border-color: #a94442;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
 }
 
-#form-profile .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
+ .message{padding-top: 3px; font-style: italic;color: #b81900;font-size:12px;}
 
  .redborder{
         border:#F00 solid 1px;
@@ -57,7 +57,7 @@ table.ex1 {
 <?php
 $client=$this->client;
 $companyid=$this->companyid;
-
+$Role=$this->Role;
 ?>
 <!--<header class="subhead" id="overview">-->
 
@@ -102,7 +102,7 @@ $companyid=$this->companyid;
                 <label >Phone Number</label>
               <div class="form-group">
                 <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="<?=$client['PhoneNumber']?>" >
-                 <span class="message" id=""></span>
+                 <span class="message" id="PhoneNumber_message"></span>
               </div>
             </div>
             
@@ -152,7 +152,8 @@ $companyid=$this->companyid;
                     <select class="form-control" name="Role" id="Role">
                         <option value="">Nomal</option>
                         <option value="staff" <?php if($client['Role']=='staff') echo "selected";?>>staff</option>
-                        <option value="admin" <?php if($client['Role']=='admin') echo "selected";?>>admin</option>
+                        
+                        <option <?php if($Role=="staff") echo "style='display: none;'"; ?> value="admin" <?php if($client['Role']=='admin') echo "selected";?>>admin</option>
                     </select>
                  <span class="message" id=""></span>
               </div>
@@ -189,8 +190,9 @@ $companyid=$this->companyid;
 
 <script type="text/javascript">
  $(document).ready(function () {
+     var error = false; 
          $('#emailaddress').blur(function () {
-         var error = false; 
+         
          if($('#emailaddress').val()!=='')
          {
             
@@ -209,6 +211,22 @@ $companyid=$this->companyid;
          }
              
              
+        });
+        //
+       $('#PhoneNumber').blur(function () {
+            //var error = false; 
+            var phone=$('#PhoneNumber').val();
+            var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/; 
+            if (!phone.match(phoneno) && phone.length >1) {
+                error = true;
+                $('#PhoneNumber_message').addClass('has-error');
+                $("#PhoneNumber_message").html("Phone Number must be a valid 10 digit number with optional extension similar to XXX XXX XXXX ");
+                
+            }else{
+                            
+               $("#PhoneNumber_message").removeClass('has-error').addClass('has-success');
+                $("#PhoneNumber_message").html('');
+            }
         });
  });
 </script>
