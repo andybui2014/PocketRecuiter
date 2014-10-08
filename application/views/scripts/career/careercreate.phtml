@@ -46,6 +46,16 @@
     .menuBar ul li .active { color:#fff!important; text-decoration:none; width:200px; background-image:url("<?=URL_THEMES?>images/createCareer_b.png?>") }
     .tabendBetween {background-image:url("<?=URL_THEMES?>images/tab4.png?>")!important; z-index: 10000}
     .tabend {background-image:url("<?=URL_THEMES?>images/tabend.png?>")!important; z-index: 10000}
+
+    .label-tag{
+        border: 1px solid #ddd; padding: 3px;
+        background-color: #eee;
+        color: #000;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin-right: 10px;margin-bottom: 5px;
+    }
 </style>
 <div class="container">
     <div style="height:80px; color: #2a6496">
@@ -85,16 +95,36 @@
                                         <label>Career Name* </label>
                                         <input type="text"  id="careername" name="careername" class="form-control">
                                     </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-9" style="padding-left: 0px; padding-top: 10px">
+                                            <label>Company Name* </label>
+                                        </div>
+                                        <div class="col-md-3" style="padding-right: 0px">
+                                            <select class="form-control" id="CompanyID" name="CompanyID">
+                                                <option value="">Select Company</option>
+                                                <?php
+                                                $companyInfo = $this->companyInfo;
+                                                $listCompany = $this->listCompany;
+                                                foreach($listCompany as $k=>$v){
+                                                    $CompanyID = $v['CompanyID'];
+                                                    $Companyname = $v['Companyname'];
+                                                    ?>
+                                                    <option value="<?=$CompanyID?>" <?= ($CompanyID == $companyInfo['CompanyID']) ? 'selected="selected"' : '' ?> ><?=$Companyname?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
-                                        <label>Company Name* </label>
-                                        <input type="text"  id="companyname" name="companyname" class="form-control">
+                                        <input type="text"  id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12">
                                         <label>Career Description*</label>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"></textarea>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Industry*</label>
+                                        <label>Career Industry*</label>
                                         <input type="text" id="industry" name="industry" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
@@ -128,7 +158,7 @@
                                             <input id="loacation" name="location" type="text"  class="form-control">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Zip Code</label>
+                                            <label>Career Zip Code</label>
                                             <input id="zipcode" name="zipcode" type="text" class="form-control">
                                         </div>
                                     </div>
@@ -141,8 +171,8 @@
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-3" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
-                                        <div class="col-md-3" >
+                                        <div class="col-md-7" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
+                                        <div class="col-md-3" style="padding-right:0px">
                                             <select id="selectSkill" class="form-control">
                                                 <option value="">Select Skill</option>
                                                 <?php
@@ -156,7 +186,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-3" style="padding-top:2px "><button id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
+                                        <div class="col-md-2" style="padding-top:2px "><button style="float:right; margin-right: -14px" id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
                                     </div>
                                     <div class="col-md-12" >
                                         <div id="requiredSkillClass" class="form-control">
@@ -191,10 +221,10 @@
                                     </div>
 
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-3" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
-                                        <div class="col-md-3" >
+                                        <div class="col-md-7" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
+                                        <div class="col-md-3" style="padding-right: 0px">
                                             <select id="selectRequiredTest" class="form-control">
-                                                <option value="">Select Required Test</option>
+                                                <option value="">Select Test</option>
                                                 <?php
                                                 $testList = $this->resultTestList;
                                                 foreach ($testList as $k=>$testListInfo) {
@@ -206,7 +236,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-3" style="padding-top:2px"><button id="addrequiredtest" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add required test</button> </div>
+                                        <div class="col-md-2" style="padding-top:2px"><button style="float:right; margin-right: -14px" id="addrequiredtest" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Test</button> </div>
                                     </div>
                                     <div class="col-md-12" >
                                         <div id="requiredTest" class="form-control">
