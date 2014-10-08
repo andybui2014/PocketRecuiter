@@ -157,7 +157,8 @@ class PR_Api_Core_CareerClass
                 $currentSkills[]=$rec['SkillID'];
             }            
         }
-        
+
+
         if(empty($skillIDs) || count($skillIDs)==0){
             $criteria = "OpportunityID = '$careerID'";
             $result = $db->delete('opportunity_skill', $criteria);
@@ -184,6 +185,7 @@ class PR_Api_Core_CareerClass
             }
             
         }
+
     }
 
     public function saveCareerTests($careerID, $testIDs)

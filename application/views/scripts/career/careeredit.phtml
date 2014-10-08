@@ -2,7 +2,7 @@
 <style>
     a {
         color: #fff;
-        text-decoration: none;		
+        text-decoration: none;
     }
     .nav-tabs {
         border-bottom: 1px solid #ddd;
@@ -99,13 +99,14 @@ $resultTestList =  $this->resultTestList;
                             <!--LEFT-->
 
                             <div class="col-md-8">
-                                <form id="form-careerCr" name="form-careerCr">
+                                <form id="form-careerEdit" name="form-careerEdit">
+                                    <input type="hidden" value="<?=$_REQUEST['opportunityID']?>" name="OpportunityID">
                                     <div class="col-md-12">
                                         <label>Career Name* </label>
                                         <input type="text"  id="careername" name="careername" value="<?=$getListOpp['title']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-9" style="padding-left: 0px; padding-top: 10px">
+                                        <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
                                             <label>Company Name* </label>
                                         </div>
                                         <div class="col-md-3" style="padding-right: 0px">
@@ -123,9 +124,12 @@ $resultTestList =  $this->resultTestList;
                                                 ?>
                                             </select>
                                         </div>
+                                        <div class="col-md-2>" style="padding-top: 2px">
+                                            <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" id="addCompany" style="float:right; margin-right: 0px">Add Company</button>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
-                                            <input type="text"  id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
+                                            <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12">
                                         <label>Career Description*</label>
@@ -178,7 +182,7 @@ $resultTestList =  $this->resultTestList;
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control" value="<?=$getListOpp['degreetitle']?>" >
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-7" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
+                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
                                         <div class="col-md-3" style="padding-right:0px">
                                             <select id="selectSkill" class="form-control">
                                                 <option value="">Select Skill</option>
@@ -204,7 +208,7 @@ $resultTestList =  $this->resultTestList;
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-2" style="padding-top:2px "><button style="float:right; margin-right: -14px" id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
+
                                     </div>
                                     <div class="col-md-12" >
                                         <div id="requiredSkillClass" class="form-control">
@@ -213,7 +217,7 @@ $resultTestList =  $this->resultTestList;
                                                     $skilID = $v['SkillID'];
                                                     $SkillName = $v['SkillName']; ?>
 
-                                            <span style='' class="label-tag pull-left">
+                                            <span style='' class="label-tag pull-left getSkillText">
                                                <?=$SkillName?> &nbsp; &nbsp;<imge class='removeskill removeSkillOnload glyphicon glyphicon-remove' height='15px' skilID="<?=$skilID?>" style='cursor:pointer;color: #ccc' > <input type='hidden'  name='SkillID[]' value="<?=$skilID?>" ></span>
                                             <?php
                                                 }
@@ -246,7 +250,7 @@ $resultTestList =  $this->resultTestList;
                                     </div>
 
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-7" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
+                                        <div class="col-md-9" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
                                         <div class="col-md-3" style="padding-right: 0px">
                                             <select id="selectRequiredTest" class="form-control">
                                                 <option value="">Select Test</option>
@@ -274,7 +278,7 @@ $resultTestList =  $this->resultTestList;
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-2" style="padding-top:2px"><button style="float:right; margin-right: -14px" id="addrequiredtest" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Test</button> </div>
+
                                     </div>
                                     <div class="col-md-12" >
                                         <div id="requiredTest" class="form-control">
@@ -284,7 +288,7 @@ $resultTestList =  $this->resultTestList;
                                                 $testName = $v['TestName'];
 
                                             ?>
-                                            <span class="label-tag pull-left">
+                                            <span class="label-tag pull-left getTest">
                                               <?=$testName?> &nbsp;&nbsp;  <imge class='removeTest removeRequiredTestOnload glyphicon glyphicon-remove'  height='15px' testID="<?=$testID?>" style='cursor:pointer;color: #ccc'><input type='hidden'  name='testid[]' value="<?=$testID?>" ></span>
                                             <?php
                                             }
@@ -391,7 +395,7 @@ $resultTestList =  $this->resultTestList;
                                 <div class="col-md-10" id="pp_required_test"></div>
                             </div>
 
-                                <button id="postcareernew" style="width:100px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
+                                <button id="postcareeredit" style="width:100px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
                                 <button id="" style="width:115px; margin-left: 20px; color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Edit Post</strong></button>
                                 <button id="" style="width:100px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Career Later</strong></button>
                                 <button id="" style="width:100px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Career</strong></button>
@@ -406,17 +410,7 @@ $resultTestList =  $this->resultTestList;
 </div>
     <script>
         var careerPrototype = new career();
-       // $('#careerTab a').click(function (e) {
-         //   e.preventDefault();
-        //    $(this).tab('show');
-        //    if($(this).attr("id")=="previewposttab"){
-        //        careerPrototype.previewPost();
-        //    }
-      // });
-        //$("#careercontinue").click(function (){
-        //    $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');  createPrivate
-       // });
-        $("#careerTab a").unbind('click').bind('click',function(){  createPrivate
+        $("#careerTab a").unbind('click').bind('click',function(){
             $(this).tab('show');
             $('#careerTab').find('li.active').find('a').removeClass('tabend');
             $('#careerTab').find('li.active').find('a').addClass('active');

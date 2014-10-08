@@ -140,7 +140,7 @@ notifications.prototype = {
                 }else{
                 }
             },error: function(xhr){
-                console.log(xhr);
+                btn.button('reset');
             }
         });
         btn.button('reset');

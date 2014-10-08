@@ -11,11 +11,12 @@ career.prototype = {
 
         $('.calcareercr').unbind('click').bind('click',this.calcareercr);
         $('#careerlist').unbind('click').bind('click',this.careerlist);
-        $('#addSkill').unbind('click').bind('click',this.addSkill);
-        $('#addrequiredtest').unbind('click').bind('click',this.addrequiredtest);
+        $('#selectSkill').unbind('change').bind('change',this.addSkill);
+        $('#selectRequiredTest').unbind('change').bind('change',this.addrequiredtest);
         $('#postcareernew').unbind('click').bind('click',this.postcareernew);
         $('#CompanyID').unbind('change').bind('change',this.setTestComp);
-
+        $('#postcareeredit').unbind('click').bind('click',this.postcareeredit);
+        $('#saveCompanyProfile').unbind('click').bind('click',this.saveCompanyProfile);
 
         //required test will be removed when clicked for first time page on load
         $(".removeRequiredTestOnload").unbind("click").bind("click",function(){
@@ -154,9 +155,11 @@ career.prototype = {
         window.location = 'careerlist';
     },
     addSkill:function(){
-        var skilIDSe = $(this).parent().parent().find("#selectSkill option:selected").val();
-        var skillText = $(this).parent().parent().find("#selectSkill option:selected").text();
-        $("div#requiredSkillClass").append("<span style='' class='label-tag pull-left'>" + skillText +
+        //var skilIDSe = $(this).parent().parent().find("#selectSkill option:selected").val();
+        //var skillText = $(this).parent().parent().find("#selectSkill option:selected").text();
+        var skillText = $("#selectSkill option:selected").text();
+        var skilIDSe = $("#selectSkill option:selected").val();
+        $("div#requiredSkillClass").append("<span style='' class='label-tag pull-left getSkillText'>" + skillText +
              "&nbsp;&nbsp;<imge class='removeskill glyphicon glyphicon-remove' height='15px' skilID='"+skilIDSe+"' style='cursor:pointer; color:#ccc;' > " +
              "<input type='hidden'  name='SkillID[]' value='"+skilIDSe+"' ></span>");
 
@@ -166,13 +169,13 @@ career.prototype = {
             $(this).parent().remove();
         });
 
-        $(this).parent().parent().find("#selectSkill option:selected").css("display", "none");
-        $(this).parent().parent().find("#selectSkill option[value='']").prop("selected", "selected");
+        $("#selectSkill option:selected").css("display", "none");
+        $("#selectSkill option[value='']").prop("selected", "selected");
     },
     addrequiredtest:function(){
-        var testID = $(this).parent().parent().find("#selectRequiredTest option:selected").val();
-        var testName = $(this).parent().parent().find("#selectRequiredTest option:selected").text();
-        $("div#requiredTest").append("<span class='label-tag pull-left'>" +testName +
+        var testID = $("#selectRequiredTest option:selected").val();
+        var testName = $("#selectRequiredTest option:selected").text();
+        $("div#requiredTest").append("<span class='label-tag pull-left getTest'>" +testName +
             "&nbsp;&nbsp;<imge class='removeTest  glyphicon glyphicon-remove'  height='15px' testID='"+testID+"' style='cursor:pointer; color:#ccc'>" +
             "<input type='hidden'  name='testid[]' value='"+testID+"' ></span> ");
 
@@ -182,8 +185,8 @@ career.prototype = {
             $(this).parent().remove();
         });
 
-        $(this).parent().parent().find("#selectRequiredTest option:selected").css("display", "none");
-        $(this).parent().parent().find("#selectRequiredTest option[value='']").prop("selected", "selected");
+        $("#selectRequiredTest option:selected").css("display", "none");
+        $("#selectRequiredTest option[value='']").prop("selected", "selected");
     },
     previewPost: function(){
         var pp_career_name = $("#careername").val();
@@ -205,8 +208,8 @@ career.prototype = {
         $("#previewpost #pp_degree_title").text(pp_degree_title);
 
         var pp_required_skills = "";
-        $(".removeskill").each(function(){
-            pp_required_skills  =  pp_required_skills  + $(this).text()+ ";";
+        $(".getSkillText").each(function(){
+            pp_required_skills  =  pp_required_skills  + $.trim($(this).text()) + ";";
         });
 
         $("#previewpost #pp_required_skills").text(pp_required_skills);
@@ -220,8 +223,8 @@ career.prototype = {
         $("#previewpost #pp_salary_range").text(pp_salary_range);
 
         var pp_required_test = "";
-        $(".removeTest").each(function(){
-            pp_required_test  =  pp_required_test  + $(this).text()+ ";";
+        $(".getTest").each(function(){
+            pp_required_test  =  pp_required_test  + $.trim($(this).text())+ ";";
         });
 
         $("#previewpost #pp_required_test").text(pp_required_test);
@@ -232,6 +235,23 @@ career.prototype = {
         $.ajax({
             url: 'save-career-new',
             data: $('#form-careerCr').serializeArray(),
+            type: 'POST',
+            success: function(xhr){
+                if(xhr.success){
+                    window.location = 'careerlist';
+                    btn.button('reset');
+                }else{
+                    btn.button('reset');
+                }
+            }
+        });
+    },
+    postcareeredit:function(){
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: 'edit-career',
+            data: $('#form-careerEdit').serializeArray(),
             type: 'POST',
             success: function(xhr){
                 if(xhr.success){
@@ -262,7 +282,7 @@ career.prototype = {
                 type: 'POST',
                 success: function(data, status, xhr){
                     if(data){
-                        var str = "<option value=''>Select Skill</option>";
+                        var str = "<option value=''>Select Test</option>";
                         $.each(data,function(k,val){
                             var position = val["TestID"];
                             var retn ="";
@@ -280,6 +300,27 @@ career.prototype = {
                 }
             });
         }
+    },
+    saveCompanyProfile:function(){
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: 'do-company-profile',
+            data: $('#form-companyProfile').serializeArray(),
+            type: 'POST',
+            error : function (xhr,error) {
+                btn.button('reset');
+            },
+            success: function(data, status, xhr){
+                if(data){
+                    btn.button('reset');
+                    $("#openModalCompany").modal('hide');
+                    console.log(data.comID);
+                }else{
+                    btn.button('reset');
+                }
+            }
+        });
     }
 }
 

@@ -1,4 +1,6 @@
 <script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<script src="<?=URL_THEMES.'js/bootstrap.file-input.js';?>"></script>
+
 <style>
     a {
         color: #fff;
@@ -56,7 +58,43 @@
         border-radius: 5px;
         margin-right: 10px;margin-bottom: 5px;
     }
+    .colorBlue {color: #2a6496;}
 </style>
+<!--Modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalCompany" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Company Profile</h2>
+            </div>
+            <div class="modal-body login-modal">
+                <form id="form-companyProfile" name="form-companyProfile">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input value="" type="text" name="Companyname" placeholder="Company Name" class="form-control">
+                            <br>
+                            <input value="" type="text" name="Industry"  placeholder="Industry" class="form-control">
+                            <br>
+                            <input value="" type="text" name="Address"  placeholder="Address" class="form-control">
+                            <br>
+                            <textarea val="" name="Description" placeholder="Description" class="form-control"></textarea>
+                            <br>
+                            <input value="" type="text" name="PhoneNumber"  placeholder="PhoneNumber" class="form-control">
+                            <br>
+                            <input value="" type="text" name="country"  placeholder="country" class="form-control">
+                            <br>
+                            <input value="" type="text" name="emailinfo"  placeholder="emailinfo" class="form-control">
+                            <br>
+                        </div>
+                    </div>
+                    <button id="saveCompanyProfile" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal-->
 <div class="container">
     <div style="height:80px; color: #2a6496">
         <div class="panel-body">
@@ -96,7 +134,7 @@
                                         <input type="text"  id="careername" name="careername" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-9" style="padding-left: 0px; padding-top: 10px">
+                                        <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
                                             <label>Company Name* </label>
                                         </div>
                                         <div class="col-md-3" style="padding-right: 0px">
@@ -115,14 +153,20 @@
                                                 ?>
                                             </select>
                                         </div>
+                                        <div class="col-md-2>" style="padding-top: 2px">
+                                            <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#openModalCompany"  style="float:right; margin-right: 0px">Add Company</button>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text"  id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
+                                        <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12">
                                         <label>Career Description*</label>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"></textarea>
                                     </div>
+                                   <!-- <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <span style=" float:right"><input type="file" title="Add Attachment"  class="colorBlue" ></span>
+                                    </div> -->
                                     <div class="col-md-12">
                                         <label>Career Industry*</label>
                                         <input type="text" id="industry" name="industry" class="form-control">
@@ -171,7 +215,7 @@
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-7" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
+                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
                                         <div class="col-md-3" style="padding-right:0px">
                                             <select id="selectSkill" class="form-control">
                                                 <option value="">Select Skill</option>
@@ -186,7 +230,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-2" style="padding-top:2px "><button style="float:right; margin-right: -14px" id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
+
                                     </div>
                                     <div class="col-md-12" >
                                         <div id="requiredSkillClass" class="form-control">
@@ -221,7 +265,7 @@
                                     </div>
 
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-7" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
+                                        <div class="col-md-9" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
                                         <div class="col-md-3" style="padding-right: 0px">
                                             <select id="selectRequiredTest" class="form-control">
                                                 <option value="">Select Test</option>
@@ -236,7 +280,7 @@
                                                 ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-2" style="padding-top:2px"><button style="float:right; margin-right: -14px" id="addrequiredtest" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Test</button> </div>
+
                                     </div>
                                     <div class="col-md-12" >
                                         <div id="requiredTest" class="form-control">
@@ -360,17 +404,7 @@
 </div>
     <script>
         var careerPrototype = new career();
-       // $('#careerTab a').click(function (e) {
-         //   e.preventDefault();
-        //    $(this).tab('show');
-        //    if($(this).attr("id")=="previewposttab"){
-        //        careerPrototype.previewPost();
-        //    }
-      // });
-        //$("#careercontinue").click(function (){
-        //    $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');  createPrivate
-       // });
-        $("#careerTab a").unbind('click').bind('click',function(){  createPrivate
+        $("#careerTab a").unbind('click').bind('click',function(){
             $(this).tab('show');
             $('#careerTab').find('li.active').find('a').removeClass('tabend');
             $('#careerTab').find('li.active').find('a').addClass('active');
@@ -399,6 +433,10 @@
         })
         $('#careerTab').find('li.active').find('a').addClass('active');
         $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+
+        //attachment file
+        $('input[type=file]').bootstrapFileInput();
+        $('.file-inputs').bootstrapFileInput();
     </script>
 
 

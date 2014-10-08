@@ -91,20 +91,26 @@ class PR_Api_Career extends Zend_Db_Table_Abstract
             if( $res ) return new $this($res);
 
         } else {
-            /*
             try {
-                unset($data['NotificationID']);
+                unset($data['OpportunityID']);
                 $objDateNow = new Zend_Date();
-                $data['lmDateTime'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
-                $res = $this->update($data, 'NotificationID = '.$this->NotificationID);
+                $data['posteddate'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
+
+              /*  echo "<pre>";
+                print_r($data);
+                echo "<pre>"; die(); */
+                $res = $this->update($data, 'OpportunityID = '.$this->OpportunityID);
             } catch (Exception $e) {
                     $errors->addError('7', 'Incorrect SQL request');
             }
+
             if( $res ) {
                 foreach( $data as $k=>$v ) $this->$k = $v;
                 return $this;
+            } else{
+                return 1;
             }
-            */
+
         }
         return null;
     }   
