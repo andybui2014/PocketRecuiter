@@ -140,5 +140,92 @@ class PR_Api_Core_CareerClass
         } else {
             return $records;
         }
+    }   
+    
+    public function saveCareerSkills($careerID, $skillIDs)
+    {
+        //--- select current skills
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('opportunity_skill',array('SkillID','OpportunityID'));
+        $select->where("OpportunityID = '".$careerID."' ");
+        $records = PR_Database::fetchAll($select);
+        
+        $currentSkills = array();
+        if(count($records)>0){
+            foreach($records as $rec){
+                $currentSkills[]=$rec['SkillID'];
+            }            
+        }
+        
+        if(empty($skillIDs) || count($skillIDs)==0){
+            $criteria = "OpportunityID = '$careerID'";
+            $result = $db->delete('opportunity_skill', $criteria);
+        } else if(count($currentSkills)==0){
+            foreach($skillIDs as $id){
+                $updateFields=array('OpportunityID'=>$careerID,
+                            'SkillID'=>$id);
+                $result = PR_Database::insert("opportunity_skill", $updateFields);                
+            }
+        } else {
+            $arrayDiff_1 = array_diff($currentSkills,$skillIDs);
+            if(count($arrayDiff_1) > 0){
+                $criteria = "OpportunityID = '$careerID' AND SkillID IN (".implode(",",$arrayDiff_1).")";
+                $result = $db->delete('opportunity_skill', $criteria);
+            }
+            
+            $arrayDiff_2 = array_diff($skillIDs,$currentSkills);
+            if(count($arrayDiff_2) > 0){
+                foreach($arrayDiff_2 as $id){
+                    $updateFields=array('OpportunityID'=>$careerID,
+                                'SkillID'=>$id);
+                    $result = PR_Database::insert("opportunity_skill", $updateFields);                
+                }                
+            }
+            
+        }
     }
+
+    public function saveCareerTests($careerID, $testIDs)
+    {
+        //opportunity_test: OpportunityTestID,CareerID,TestID
+        //--- select current tests
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('opportunity_test',array('OpportunityTestID','CareerID','TestID' ));
+        $select->where("CareerID = '".$careerID."' ");
+        $records = PR_Database::fetchAll($select);
+        
+        $currentTests = array();
+        if(count($records)>0){
+            foreach($records as $rec){
+                $currentTests[]=$rec['TestID'];
+            }            
+        }
+        
+        if(empty($testIDs) || count($testIDs)==0){
+            $criteria = "CareerID = '$careerID'";
+            $result = $db->delete('opportunity_test', $criteria);
+        } else if(count($currentTests)==0){
+            foreach($testIDs as $id){
+                $updateFields=array('CareerID'=>$careerID,'TestID'=>$id);
+                $result = PR_Database::insert("opportunity_test", $updateFields);                
+            }
+        } else {
+            $arrayDiff_1 = array_diff($currentTests,$testIDs);
+            if(count($arrayDiff_1) > 0){
+                $criteria = "CareerID = '$careerID' AND TestID IN (".implode(",",$arrayDiff_1).")";
+                $result = $db->delete('opportunity_test', $criteria);
+            }
+            
+            $arrayDiff_2 = array_diff($testIDs,$currentTests);
+            if(count($arrayDiff_2) > 0){
+                foreach($arrayDiff_2 as $id){
+                    $updateFields=array('CareerID'=>$careerID,'TestID'=>$id);
+                    $result = PR_Database::insert("opportunity_test", $updateFields);                
+                }                
+            }            
+        }
+    }
+    
 }
