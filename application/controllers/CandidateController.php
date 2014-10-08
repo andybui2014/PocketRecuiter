@@ -13,6 +13,11 @@ class CandidateController extends Application_Controller_Action
             $this->_helper->redirector("index","login");
         }  
     }
+
+    public function indexAction(){
+
+    }
+
     public function doLogoutAction()
     {
         $this->_helper->layout->disableLayout();
@@ -20,14 +25,43 @@ class CandidateController extends Application_Controller_Action
         PR_Session::clearSessions();
         
         $this->_helper->redirector("index","login");
-    }   
-    
-    public function startProfileAction()
-    {
-        
     }
-        public function profileAction()
-    {
+
+    public function profileBuilderAction(){
+        $params = $this->getRequest()->getParams();
+        if(!empty($params) && isset($params['utm_source'])){
+            $this->view->step = $params['utm_source'];
+
+            switch($params['utm_source']){
+                case 'contact':
+                    $this->render('profile-builder/contact');
+                    break;
+                case 'education':
+                    $this->render('profile-builder/education');
+                    break;
+                case 'employment':
+                    $this->render('profile-builder/employment');
+                    break;
+                case 'skills':
+                    $this->render('profile-builder/skills');
+                    break;
+                case 'portfolio':
+                    $this->render('profile-builder/portfolio');
+                    break;
+                default:
+                    $this->render('profile-builder/index');
+                    break;
+            }
+        }else{
+            $this->render('profile-builder/index');
+        }
+    }
+
+    public function startProfileAction(){
+
+
+    }
+    public function profileAction(){
          $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $emailaddress = $client["emailaddress"];
         $password = $client["password"];
