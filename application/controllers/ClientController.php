@@ -30,9 +30,7 @@ class ClientController extends Application_Controller_Action
         $this->view->client = $Api->getUserArray($authData);
        
         $this->render('profile');
-        //$api=new PR_Api_Core_Skill();
-        //$skill= $api->getSkillArray('5');
-        //echo ("Skill:<pre>");print_r($skill);echo("</pre>");
+        
         
         
     }
@@ -79,5 +77,132 @@ class ClientController extends Application_Controller_Action
 
         
     }
+     
+    public function listuserAction()
+    {
+        $request = $this->getRequest();
+        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+        $clientID =  $sestionClient['UserID'];
+        $companyid=$request->getParam("CompanyID");
+        $role=$sestionClient["Role"];
+       // $companyid=$_REQUEST;
+       // echo("companyid:");print_r($companyid);
+        $api = new PR_Api_Core_ClientClass();
+        
+        $Companylists=$api->getListCompany();
+        $this->view->Role=$role;
+       
+        $this->view->Companylists = $Companylists;
+        $Userlists = $api->getListUsersCompany($companyid);
+        
+       // echo ("companylists:<pre>");print_r($Userlists);echo("</pre>");die();
+        
+        $this->view->Userlists = $Userlists;
+        $this->render("listuser");
+
+      
+    }
+    public function edituserAction()
+    {
+        $request = $this->getRequest();
+         $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $userid = $request->getParam("UserID");
+      //  echo ("userid:");print_r($client);die();
+        $role=$client["Role"];
+        $companyid=$request->getParams();
+        //echo("CompanyID");print_r($companyid);
+         $Api = new PR_Api_User();
+        $authData = array('UserID' => $userid);
+        
+        $this->view->client = $Api->getListUserArray($authData);
+        $this->view->companyid=$companyid;
+        $this->view->Role=$role;
+        $this->render('userprofile');
+        
+        
+        
+    }
+     public function doEditUsereAction()
+        {        
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            $request = $this->getRequest();
+                    
+            $client = PR_Session::getSession(PR_Session::SESSION_USER);
+            $userid = $request->getParam("UserID");     
+            $api = new PR_Api_Core_ClientClass();
+            $return = array("success" => 0, "error" => "");
+            $company=$api->getCompanyid($userid);
+            $companyid=$company["CompanyID"];
+            $params = $request->getParams(); 
+           // echo ("params:<pre>");print_r($params);echo("</pre>");die();
+            $updateFields=array();
+            foreach ($params as $key => $value) {
+                $updateFields[$key]=$value;            
+            }
+            if(isset($updateFields["activate"]))
+            {
+                $updateFields["activate"]=1;
+            }
+            else{
+                $updateFields["activate"]=0;
+            }
+           
+           
+          // echo ("updateFields:<pre>");print_r($updateFields);echo("</pre>");die();
+            $result = $api->updateUserProfile($userid,$updateFields);
+            header("Location: listuser?CompanyID=".$companyid);
+          
+        }
+         public function deleteusereAction()
+        {        
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            $request = $this->getRequest();
+                    
+            $client = PR_Session::getSession(PR_Session::SESSION_USER);
+            $userid = $request->getParam("UserID");     
+            $api = new PR_Api_Core_ClientClass();
+            $result = $api->deleteUser($userid);
+            header("Location: listuser?CompanyID=1");
+          
+        }
+        public function adduserAction()
+        {
+            $request = $this->getRequest();
+             $client = PR_Session::getSession(PR_Session::SESSION_USER);
+             $role=$client["Role"];
+             $this->view->Role=$role;     
+            $this->render('adduser');
+           // echo ("role:".$role);
+            
+            
+        }
+        public function doAddUsereAction()
+        {        
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            $request = $this->getRequest();
+            $params = $request->getParams();
+             $Fields=array();
+            foreach($params as $key=>$values) 
+            {
+                $Fields[$key]=$values;
+            }  
+             if(isset($Fields["activate"]))
+            {
+                $Fields["activate"]=1;
+            }
+            else{
+                $Fields["activate"]=0;
+            } 
+            $api = new PR_Api_Core_ClientClass();
+           //echo ("updateFields:<pre>");print_r($Fields);echo("</pre>");  die();  
+              $result = $api->AddUser($Fields);
+               header("Location: listuser?CompanyID=1");
+          
+        }
+        
+       
      
 }

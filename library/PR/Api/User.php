@@ -73,6 +73,32 @@ class PR_Api_User extends Zend_Db_Table_Abstract
             return null;
         }
     }
+     public function getListUserArray($authData) {
+
+        $errors = PR_Api_Error::getInstance();               
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('user',array('*'));
+        $select->where("UserID = ?", $authData['UserID']);      
+        //print_r($select->__toString());die();
+        
+        $user = PR_Database::fetchAll($select);
+        if (!empty($user)) 
+        {                    
+            foreach ($user[0] as $key => $value) 
+            {
+                if (property_exists('PR_Api_User', $key)) {
+                    $this->{$key} = $value;
+                }
+            }        
+            return $user[0];
+        } else {
+            $errors->addError(3, 'UserID is not correct');
+            $this->ClientID = NULL;
+            $this->UserName      = NULL;
+            return null;
+        }
+    }
 
 	/**
 	 * Check up user information
