@@ -1,0 +1,452 @@
+<script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<style>
+    a {
+        color: #fff;
+        text-decoration: none;		
+    }
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: #428bca;
+        background-color: #fff;
+       /*  border: 1px solid #ddd;*/
+        border-bottom-color: transparent;
+    }
+    .nav-tabs>li>a {
+        margin-right: 2px;
+        line-height: 1.428571429;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+        background-color:#f7ecb5;
+    }
+    .table-stripedgray > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+        background-color:#eeeeee;
+    }
+    #requiredSkillClass {
+        min-height: 80px!important; height:auto;
+        border: 1px solid #cccccc;
+    }
+    #requiredTest {
+        min-height: 80px!important; height:auto;
+        border: 1px solid #cccccc;
+    }
+
+    .menuBar {  background-image:url("<?=URL_THEMES?>images/img4.png?>"); background-repeat:repeat-x  ;border-radius: 4px; margin-bottom: 20px;
+         box-shadow: 0 10px 8px -8px #bbb;
+    }
+    .menuBar ul{list-style:none}
+    .menuBar ul li {float: left; width:217px; line-height:32px; margin-left:-20px;}
+    .menuBar li a {color: #777; float: left; text-indent:15px; margin-left: -34px; width:200px; text-decoration: none; background-image:url("<?=URL_THEMES?>images/tab2.png?>")}
+
+    .menuBar li a:active { background-color:#003399 ;color:#fff; text-decoration:none}
+    .menuBar ul li .active { color:#fff!important; text-decoration:none; width:200px; background-image:url("<?=URL_THEMES?>images/createCareer_b.png?>") }
+    .tabendBetween {background-image:url("<?=URL_THEMES?>images/tab4.png?>")!important; z-index: 10000}
+    .tabend {background-image:url("<?=URL_THEMES?>images/tabend.png?>")!important; z-index: 10000}
+
+    .label-tag{
+        border: 1px solid #ddd; padding: 3px;
+        background-color: #eee;
+        color: #000;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin-right: 10px;margin-bottom: 5px;
+    }
+
+</style>
+<?php
+$getListOpp = $this->getListOpp;
+$CareerT = $this->getListCareerType;
+$CareerList = $this->CareerList;
+$companyInfo = $this->companyInfo;
+$resultSkillList =  $this->resultSkillList;
+$resultTestList =  $this->resultTestList;
+?>
+<div class="container">
+    <div style="height:80px; color: #2a6496">
+        <div class="panel-body">
+            <div><h3 style="margin-top: 10px;margin-left: -16px"><label>Post Career</label> </h3></div>
+        </div>
+    </div>
+
+    <div style="background-color: #2a6496">
+        <ul class="nav nav-tabs"  style="padding-top:10px" valign="bottom">
+            <li class="active" ><a class="calcareercr" href="javascript: void(0);"><strong>Edit Career</strong></a></li>
+            <li ><a id="careerlist" href="javascript: void(0);"><strong>Career List</strong></a></li>
+        </ul>
+    </div>
+
+        <!--create career-->
+    <div class="panel panel-default">
+          <div class="panel-body">
+                <div class="col-md-12">
+                    <div class="menuBar col-md-12">
+                    <ul  id="careerTab">
+                        <li class="active"><a class="active" href="#calcareercr" id="calcareercrtab"><strong>1. Edit Career &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                        <li><a href="#" id="createPrivate"><strong>&nbsp;2. Create Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                        <li><a  href="#previewpost" id="previewposttab"><strong>&nbsp;3. Preview &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                    </ul>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                     <!--Career Create new  -->
+                      <div id="calcareercr" class="tab-pane active">
+                            <!--LEFT-->
+
+                            <div class="col-md-8">
+                                <form id="form-careerCr" name="form-careerCr">
+                                    <div class="col-md-12">
+                                        <label>Career Name* </label>
+                                        <input type="text"  id="careername" name="careername" value="<?=$getListOpp['title']?>" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-9" style="padding-left: 0px; padding-top: 10px">
+                                            <label>Company Name* </label>
+                                        </div>
+                                        <div class="col-md-3" style="padding-right: 0px">
+                                            <select class="form-control" id="CompanyID" name="CompanyID">
+                                                <option value="">Select Company</option>
+                                                <?php
+                                                $listCompany = $this->listCompany;
+                                                foreach($listCompany as $k=>$v){
+                                                    $CompanyID = $v['CompanyID'];
+                                                    $Companyname = $v['Companyname'];
+                                                    ?>
+                                                    <option value="<?=$CompanyID?>" <?= ($CompanyID == $companyInfo['CompanyID']) ? 'selected="selected"' : '' ?> ><?=$Companyname?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                            <input type="text"  id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Career Description*</label>
+                                        <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"><?=$getListOpp['careerdescription']?></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Industry*</label>
+                                        <input type="text" id="industry" name="industry" class="form-control" value="<?=$getListOpp['industry']?>" >
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6" >
+                                            <label>Career Type </label>
+                                            <select id="careerType" name="jobtype" class="form-control">
+                                                <?php
+                                                foreach ($CareerList as $k =>$careerInfo){
+                                                    ?>
+                                                    <option value="<?=$careerInfo['CareertypeID']?>" <?= ($careerInfo['CareertypeID'] == $CareerT['CareertypeID']) ? 'selected="selected"' : '' ?> ><?=$careerInfo['CareertypeName']?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Duration</label>
+                                            <select name="duration" id="durationTime" class="form-control">
+                                                <option value ="1" <?=($getListOpp['duration'] == '1') ? 'selected="selected"' : '' ?> >1 Day </option>
+                                                <option value ="2" <?=($getListOpp['duration'] == '2') ? 'selected="selected"' : '' ?>>2 Days </option>
+                                                <option value ="3" <?=($getListOpp['duration'] == '3') ? 'selected="selected"' : '' ?>>3 Days </option>
+                                                <option value ="1" <?=($getListOpp['duration'] == '4') ? 'selected="selected"' : '' ?>>1 Year </option>
+                                                <option value ="5" <?=($getListOpp['duration'] == '5') ? 'selected="selected"' : '' ?>>5 Year </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Career Location </label>
+                                            <input id="loacation" name="location" type="text"  class="form-control" value="<?=$getListOpp['location']?>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Zip Code</label>
+                                            <input id="zipcode" name="zipcode" type="text" class="form-control" value="<?=$getListOpp['zipcode']?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Minimun Education*</label>
+                                        <input id="minimuneducation" name="minimuneducation" type="text" class="form-control" value="<?=$getListOpp['minimuneducation']?>" >
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Degree Title*</label>
+                                        <input id="degreetitle" name="degreetitle" type="text" class="form-control" value="<?=$getListOpp['degreetitle']?>" >
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-7" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
+                                        <div class="col-md-3" style="padding-right:0px">
+                                            <select id="selectSkill" class="form-control">
+                                                <option value="">Select Skill</option>
+                                                <?php
+                                                $SkillList = $this->resultSkillList;
+                                                foreach ($SkillList as $k=>$skillInfo) {
+                                                    $skillFlag = false;
+                                                    foreach($getListOpp['Skills'] as $k=>$v) {
+                                                        $skilID = $v['SkillID'];
+                                                        if($skilID == $skillInfo['SkillID']){
+                                                            $skillFlag = true;
+                                                        }
+                                                    }
+                                                    if(!$skillFlag){
+                                                        ?>
+                                                    <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
+                                                <?php
+                                                    } else{ ?>
+                                                        <option value="<?=$skillInfo['SkillID']?>" style="display: none"><?=$skillInfo['SkillName']?></option>
+                                                  <?php  }
+                                                }
+
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2" style="padding-top:2px "><button style="float:right; margin-right: -14px" id="addSkill" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Skills</button> </div>
+                                    </div>
+                                    <div class="col-md-12" >
+                                        <div id="requiredSkillClass" class="form-control">
+                                            <?php
+                                                foreach($getListOpp['Skills'] as $k=>$v) {
+                                                    $skilID = $v['SkillID'];
+                                                    $SkillName = $v['SkillName']; ?>
+
+                                            <span style='' class="label-tag pull-left">
+                                               <?=$SkillName?> &nbsp; &nbsp;<imge class='removeskill removeSkillOnload glyphicon glyphicon-remove' height='15px' skilID="<?=$skilID?>" style='cursor:pointer;color: #ccc' > <input type='hidden'  name='SkillID[]' value="<?=$skilID?>" ></span>
+                                            <?php
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Required Experience*</label>
+                                        <select  id="requiredExperience" name="requiredExperience" class="form-control">
+                                            <option value="3" <?=($getListOpp['experienced'] == '3') ? 'selected="selected"' : '' ?> > 3 months</option>
+                                            <option value="6" <?=($getListOpp['experienced'] == '6') ? 'selected="selected"' : '' ?> > 6 months</option>
+                                            <option value="12" <?=($getListOpp['experienced'] == '12') ? 'selected="selected"' : '' ?> > 1 year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Salary Range*</label>
+                                            <select  id="salaryRangeF" name="salaryRangeF" class="form-control">
+                                                <option value="10" <?=($getListOpp['salaryrangefrom'] == '10') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                                <option value="20" <?=($getListOpp['salaryrangefrom'] == '20') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>&nbsp;</label>
+                                            <select id="salaryRangeT" name="salaryRangeT" class="form-control">
+                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '20') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '50') ? 'selected="selected"' : '' ?>> 50 USD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-7" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
+                                        <div class="col-md-3" style="padding-right: 0px">
+                                            <select id="selectRequiredTest" class="form-control">
+                                                <option value="">Select Test</option>
+                                                <?php
+                                                $testList = $this->resultTestList;
+                                                foreach ($testList as $k=>$testListInfo) {
+                                                    $testListID = $testListInfo['TestID'];
+                                                    $testFlag =false;
+                                                    foreach($getListOpp['Tests'] as $k=>$v){
+                                                        $testID = $v['TestID'];
+                                                        if($testListID == $testID){
+                                                            $testFlag = true;
+                                                        }
+
+                                                    }
+                                                    if(!$testFlag){
+                                                    ?>
+                                                    <option value="<?=$testListInfo['TestID']?>" ><?=$testListInfo['TestName']?></option>
+                                                <?php
+                                                    } else { ?>
+                                                        <option value="<?=$testListInfo['TestID']?>" style="display: none" ><?=$testListInfo['TestName']?></option>
+                                                  <?php  }
+                                                }
+
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2" style="padding-top:2px"><button style="float:right; margin-right: -14px" id="addrequiredtest" type="button" class="btn btn-sm btn-primary" data-loading-text="Loading...">Add Test</button> </div>
+                                    </div>
+                                    <div class="col-md-12" >
+                                        <div id="requiredTest" class="form-control">
+                                            <?php
+                                            foreach($getListOpp['Tests'] as $k=>$v){
+                                                $testID = $v['TestID'];
+                                                $testName = $v['TestName'];
+
+                                            ?>
+                                            <span class="label-tag pull-left">
+                                              <?=$testName?> &nbsp;&nbsp;  <imge class='removeTest removeRequiredTestOnload glyphicon glyphicon-remove'  height='15px' testID="<?=$testID?>" style='cursor:pointer;color: #ccc'><input type='hidden'  name='testid[]' value="<?=$testID?>" ></span>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        <!-- END LEFT-->
+                        <!--RIGHT-->
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                    <label>&nbsp;</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div style="min-height:100px; background-color: #fffbd5;" class="form-control text-left">
+                                    <label style="color:#e1b903;">Need Help</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--END RIGHT-->
+                        <div class="col-md-12" style="padding-left:30px; padding-top:10px">
+                            <button id="careercontinue" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
+                            <button id="" style="width:126px; margin-left: 20px" type="button" class="btn btn-primary" data-loading-text="Loading...">Save & Post Later</button>
+                        </div>
+                    </div>
+                    <!--end career create new-->
+
+
+                    <!--Post preview-->
+                    <div id="previewpost" class="tab-pane col-md-12">
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label >Career Name*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_name"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label >Company Name*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_company_name"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Career Description*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_des"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Industry*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_industry"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Career Type</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_type"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Career Location</label>
+                                </div>
+                                <div class="col-md-10" id="pp_career_location"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Minimun Education*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_minimun_education"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Degree Title*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_degree_title"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Required Skills*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_required_skills"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Required Experience*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_required_experience"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Salary Range*</label>
+                                </div>
+                                <div class="col-md-10" id="pp_salary_range"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-2" style="text-align:right">
+                                    <label>Required Test</label>
+                                </div>
+                                <div class="col-md-10" id="pp_required_test"></div>
+                            </div>
+
+                                <button id="postcareernew" style="width:100px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
+                                <button id="" style="width:115px; margin-left: 20px; color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Edit Post</strong></button>
+                                <button id="" style="width:100px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Career Later</strong></button>
+                                <button id="" style="width:100px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Career</strong></button>
+
+                        </div>
+                    <!--end post preview-->
+                </div>
+
+          </div>
+    </div>
+            <!--end create career-->
+</div>
+    <script>
+        var careerPrototype = new career();
+       // $('#careerTab a').click(function (e) {
+         //   e.preventDefault();
+        //    $(this).tab('show');
+        //    if($(this).attr("id")=="previewposttab"){
+        //        careerPrototype.previewPost();
+        //    }
+      // });
+        //$("#careercontinue").click(function (){
+        //    $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');  createPrivate
+       // });
+        $("#careerTab a").unbind('click').bind('click',function(){  createPrivate
+            $(this).tab('show');
+            $('#careerTab').find('li.active').find('a').removeClass('tabend');
+            $('#careerTab').find('li.active').find('a').addClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('tabendBetween');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('tabend');
+            if($(this).attr("id")=="previewposttab"){
+                careerPrototype.previewPost();
+                $('#careerTab').find('li.active').find('a').addClass('active');
+                $('#careerTab').find('li.active').find('a').addClass('tabendBetween');
+                $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+                $(this).parent().prev('li').find('a').addClass('tabend');
+            } else if($(this).attr("id")=="createPrivate"){
+                $('#careerTab').find('li.active').find('a').addClass('active');
+                $('#careerTab').find('li.active').find('a').addClass('tabendBetween');
+                $('#careerTab').find('li.active').find('a').removeClass('tabend');
+                $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+                $(this).parent().prev('li').find('a').addClass('tabend');
+            }
+        });
+        $("#careercontinue").unbind('click').bind('click',function(){
+            $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');
+            $('#careerTab').find('li.active').find('a').addClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+            ///careerPrototype.previewPost();
+        })
+        $('#careerTab').find('li.active').find('a').addClass('active');
+        $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+    </script>
+
+
+
+
