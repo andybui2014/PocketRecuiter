@@ -95,13 +95,15 @@ class PR_Database {
 		return $retData;
 	}
 
-	public static function insert($table, $fields) {
+	public static function insert($table, $fields,$returnId = false) {
 		self::init();
 		$result = false;
 		$fieldListType = self::getFieldListType($table);
 		try {
 			$fields = self::prepareData($fields, $fieldListType);
 			$result = self::$db->insert($table, $fields);
+            if ($returnId)
+                $result = self::$db->lastInsertId();
 		} catch (Exception $e) {
 			$errors = PR_Api_Error::getInstance();
 			$errors->addError(7, 'SQL Error: ' . $e);
