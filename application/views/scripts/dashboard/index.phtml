@@ -1,5 +1,7 @@
 <?php
 $oppportunityList = $this->getListOpp;
+$helper = $this->layout()->_helper;
+
 ?>
 <style>
 
@@ -84,7 +86,7 @@ $oppportunityList = $this->getListOpp;
 
                </div>
                 <p >
-                <button class="btn btn-success"><strong>Start Here</strong></button></p>
+                <button class="btn btn-success" onclick="window.location.href='<?=$helper->url('profile','client')?>'"><strong>Start Here</strong></button></p>
            </div>
            </div>
        </div>
