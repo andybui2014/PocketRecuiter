@@ -71,6 +71,16 @@ class CompanyprofileController extends Application_Controller_Action
         $companyid = $request->getParam("CompanyID");      
         $api = new PR_Api_Core_ClientClass();
          $return = array("success" => 0, "error" => "");
+        $params = $request->getParams();      
+        $updateFields=array();
+        foreach ($params as $key => $value) {
+            $updateFields[$key]=$value;
+            
+            }
+             if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
+            {
+                $updateFields["images"]="";
+            }
        $filename = "";
         if (isset($_FILES["images"])) {
             if ($_FILES["images"]["error"] > 0) {
@@ -78,24 +88,12 @@ class CompanyprofileController extends Application_Controller_Action
             } else {
                 $filename = uniqid() ."_". $_FILES["images"]["name"];
                 move_uploaded_file($_FILES["images"]["tmp_name"], DIR_MEDIA_COMPANY_PROFILE . $filename);
-                
+                $updateFields["images"]=$filename;
             }
         }
        
        
-        $params = $request->getParams(); 
-
         
-       $updateFields=array();
-       foreach ($params as $key => $value) {
-            $updateFields[$key]=$value;
-            
-            }
-            
-             if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
-            {
-                $updateFields["images"]=$filename;
-            }
             
           
       
