@@ -1,11 +1,6 @@
 <script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
 <script>
     var objCareer = new career();
-    //objCareer.test('23');
-    function onClickDelete(id)
-    {
-        objCareer.deleteCareer(id);
-    }
 
 </script>
 <style>
@@ -145,8 +140,11 @@ $oppportunityList = $this->getListOpp;
                                     <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#c77405"></span>
                                     <!--
                                     <span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"><input type="hidden" class="careerid_careerid" value="<?=$info['OpportunityID']?>"></span>
-                                   -->
-                                    <img class="delete-career-btn" onclick="javascript:onClickDelete(<?=$info['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:15px; width:15px; margin-top:-5px"> <input type="hidden" class="careerid_careerid" value="<?=$info['OpportunityID']?>">
+                                   <img class="delete-career-btn" onclick="javascript:onClickDelete(<?=$info['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:15px; width:15px; margin-top:-5px"> <input type="hidden" class="careerid_careerid" value="<?=$info['OpportunityID']?>">
+
+                                    <img class="delete-career-btn"  src="<?=URL_THEMES?>images/ico_del.png?>" style="height:15px; width:15px; margin-top:-5px"> <input type="hidden" class="careerid_careerid" value="<?=$info['OpportunityID']?>">
+                                -->
+                                    <img class="delete-career-btn" onclick="javascript:objCareer.deleteCareer(<?=$info['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:15px; width:15px; margin-top:-5px"> <input type="hidden" class="careerid_careerid" value="<?=$info['OpportunityID']?>">
                                 </td>
                             </tr>
                      <?php   }
