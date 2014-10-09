@@ -24,18 +24,18 @@
 <div class="container" >  
     <div class="col-xs-2" style="padding-top:20px;">
         <div>
-    <?php
-    if($company["images"]!="")
-    {
-    ?>
+            <?php
+            if($company["images"]!="")
+            {
+            ?>
                 <img width="135px" height="135px" src="<?=URL_MEDIA_COMPANY_PROFILE.$company["images"]?>">
-    <?php
-    }else
-    {
-    ?>
+            <?php
+            }else
+            {
+            ?>
             <img width="135px" height="135px" src="<?=URL_THEMES?>images/none.png">
-    <?php
-    }?>
+            <?php
+            }?>
         </div>
         <div class="text-left">
             <span  style="font-size: 12px;color: #005595;"><?= $company["emailinfo"]?></span>
@@ -67,7 +67,7 @@
         <span style="padding-right:20px;font-size:12px"><?=nl2br($company["Description"])?></span>
         </div>
         <div class=".col-xs-4" style="float:right;">
-            <img width="230px" src="<?=URL_THEMES.'images/video.PNG';?>">
+            <img width="230px" src="<?=URL_THEMES.'images/video.png';?>">
 			
 		</div>
         

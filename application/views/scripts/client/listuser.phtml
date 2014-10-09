@@ -7,6 +7,7 @@ $Userlists = $this->Userlists;
 $Companylists=$this->Companylists;
 $companyid=$_REQUEST["CompanyID"];
 $Role=$this->Role;
+//echo("<br><br><br>test:".$Role);
 //print_r($companyid);
 ?>
 <style>
@@ -89,7 +90,7 @@ body {
 
         <table id="notificationCk"  style="background-color: #fff" class="table  table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
             <thead>
-            <tr role="row" >
+            <tr role="row"  >
                 <th class="clWidth600 ">
                     <label >
                         <strong>Name</strong>
@@ -131,7 +132,7 @@ body {
                     </td>
                     <td class="clWidth600 "><span class="notiText"><?=$lists["emailaddress"]?></span></td>
                     <td class="clWidth200 "><?=$lists["PostalCode"]?></td>
-                    <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>client/edituser?UserID=<?= $lists["UserID"] ?>&pageajax=edituser"><img src="<?=URL_THEMES?>images/update.PNG"></a></span><a href="<?= URL_BASE ?>client/deleteusere?UserID=<?= $lists["UserID"] ?>" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes" onclick="return confirm('Are you sure delete?')"></a></td>
+                    <td class="clWidth200"  align="center"><span><a href="<?= URL_BASE ?>client/edituser?UserID=<?= $lists["UserID"] ?>&pageajax=edituser"><img src="<?=URL_THEMES?>images/update.png"></a></span><a href="<?= URL_BASE ?>client/deleteusere?UserID=<?= $lists["UserID"] ?>" style=" color:#ccc; padding-left:8px" class="glyphicon glyphicon-remove glyphiconDelete deleteYes" onclick="return confirm('Are you sure delete?')"></a></td>
                 </tr>
             <?php
             

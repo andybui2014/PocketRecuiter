@@ -11,7 +11,7 @@ class Application_Controller_Action extends Zend_Controller_Action {
         // for URL
         $uri = new Zend_View_Helper_BaseUrl();
         define('URL_BASE', $uri->getBaseUrl() . "/");
-        define('URL_MEDIA_COMPANY_PROFILE',  URL_BASE.'/library/media/companyprofiles/');
+        define('URL_MEDIA_COMPANY_PROFILE',  URL_BASE.'library/media/companyprofiles/');
          
         define('URL_THEMES', URL_BASE. "library/themes/standard/");
         //Mobile
