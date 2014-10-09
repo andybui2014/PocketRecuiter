@@ -197,17 +197,19 @@ class CareerController extends Application_Controller_Action
         $testid = $request->getParam("testid", array());
 
         $career_PR_Api = new PR_Api_Career($OpportunityID);
-        /*echo "<pre>";
-           print_r($OpportunityID);
-          echo "</pre>"; die(); */
         $updateFields = array('CompanyID'=>$OppCompanyID,'postedby'=>$postedby, 'posteddate'=>$posteddate,
             'title'=>$title,'careerdescription'=>$careerdescription,'status'=>$status,'industry'=>$industry,'industry'=>$industry,'jobtype'=>$jobtype,
             'duration'=>$duration,'location'=>$location,'zipcode'=>$zipcode,'minimuneducation'=>$minimuneducation,'degreetitle'=>$degreetitle,'StaffFavorite'=>$StaffFavorite,
             'salaryrangefrom'=>$salaryRangeF, 'salaryrangeto'=>$salaryRangeT,'experienced'=>$requiredExperience
         );
-
+        /*
+        echo "<pre>";
+           print_r($updateFields);
+           
+          echo "</pre>"; die(); 
+        */
         $result = $career_PR_Api->saveCareer($updateFields);
-
+        //echo();die();
         if($result){
             $edit_PR_Api = new PR_Api_Core_CareerClass();
             $edit_PR_Api->saveCareerSkills($OpportunityID, $SkillID);

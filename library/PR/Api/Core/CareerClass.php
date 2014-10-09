@@ -230,4 +230,51 @@ class PR_Api_Core_CareerClass
         }
     }
     
+    public function deleteCareer($careerID)
+    {
+        //opportunity:OpportunityID
+        //--- is in using?
+        if($this->isUsing($careerID)){
+            return false;
+        }
+        
+        $criteria = "OpportunityID = '$careerID'";
+        $result = $db->delete('opportunity', $criteria);
+        
+        return true;
+    }
+    
+    public function isUsing($careerID)
+    {
+        //opportunity_skill,opportunity_candidate_match,opportunity_test
+        $isUsing = false;  
+        $db = PR_Database::getInstance();
+        //--- opportunity_test
+        $select = $db->select();
+        $select->from('opportunity_test',array('CareerID'));
+        $select->where("CareerID = '".$careerID."' ");
+        $records = PR_Database::fetchAll($select);        
+        if(count($records)>0){
+           $isUsing = true; 
+        }
+        //--- opportunity_skill: OpportunityID
+        $select = $db->select();
+        $select->from('opportunity_skill',array('OpportunityID'));
+        $select->where("OpportunityID = '".$careerID."' ");
+        $records = PR_Database::fetchAll($select);        
+        if(count($records)>0){
+           $isUsing = true; 
+        }
+        //--- opportunity_candidate_match: OpportunityID
+        $select = $db->select();
+        $select->from('opportunity_candidate_match',array('OpportunityID'));
+        $select->where("OpportunityID = '".$careerID."' ");
+        $records = PR_Database::fetchAll($select);        
+        if(count($records)>0){
+           $isUsing = true; 
+        }
+        
+        return $isUsing;                 
+    }
+    
 }
