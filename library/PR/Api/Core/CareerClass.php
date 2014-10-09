@@ -233,11 +233,16 @@ class PR_Api_Core_CareerClass
     public function deleteCareer($careerID)
     {
         //opportunity:OpportunityID
+        //echo("isUsing: ".$this->isUsing($careerID).'<br/>');
+        if(empty($careerID)){
+            return true;
+        }
         //--- is in using?
         if($this->isUsing($careerID)){
             return false;
         }
         
+        $db = PR_Database::getInstance();
         $criteria = "OpportunityID = '$careerID'";
         $result = $db->delete('opportunity', $criteria);
         
@@ -258,22 +263,22 @@ class PR_Api_Core_CareerClass
            $isUsing = true; 
         }
         //--- opportunity_skill: OpportunityID
-        $select = $db->select();
-        $select->from('opportunity_skill',array('OpportunityID'));
-        $select->where("OpportunityID = '".$careerID."' ");
-        $records = PR_Database::fetchAll($select);        
-        if(count($records)>0){
+        $select_1 = $db->select();
+        $select_1->from('opportunity_skill',array('OpportunityID'));
+        $select_1->where("OpportunityID = '".$careerID."' ");
+        $records_1 = PR_Database::fetchAll($select_1);        
+        if(count($records_1)>0){
            $isUsing = true; 
         }
         //--- opportunity_candidate_match: OpportunityID
-        $select = $db->select();
-        $select->from('opportunity_candidate_match',array('OpportunityID'));
-        $select->where("OpportunityID = '".$careerID."' ");
-        $records = PR_Database::fetchAll($select);        
-        if(count($records)>0){
+        $select_2 = $db->select();
+        $select_2->from('opportunity_candidate_match',array('OpportunityID'));
+        $select_2->where("OpportunityID = '".$careerID."' ");
+        $records_2 = PR_Database::fetchAll($select_2);        
+        if(count($records_2)>0){
            $isUsing = true; 
         }
-        
+        //echo("<br/>fun-isUsing: $careerID- $isUsing");
         return $isUsing;                 
     }
     
