@@ -84,7 +84,8 @@ pocketMain.prototype = {
                         if(xhr.success){
                             if(xhr.usertype==1)
                             {
-                                window.location = 'client/start-profile';
+                               // window.location = 'client/start-profile';
+							   window.location = 'dashboard/index';
                                 $this.button('reset');
                             }
                              if(xhr.usertype==2)
