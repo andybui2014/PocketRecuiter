@@ -1,4 +1,7 @@
 <style>
+body {
+    background: none repeat scroll 0 0 #ededed;
+}
 table.ex1 {
     border-collapse: separate;
     border-spacing: 5px;
@@ -66,7 +69,7 @@ $client=$this->client;
 
     </h1>
 </div>
-    <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;">
+    <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;border-radius:10px;">
           
       <div class="col-md-6"  style="padding:0">      
       <form role="form" method="post" name="form-profile" id="form-profile" action="<?= URL_BASE . 'client/update-profle'  ?>">
@@ -150,12 +153,14 @@ $client=$this->client;
                      </div>
                         
         </form>
-       
+       <div style="padding-top:20px;">
+       </div>
         
-        </div>
     </div>
       </div>
-
+      </div>
+<div style="padding-top:40px">
+</div>
 <!--</header>-->
 <!-- jQuery Version 1.11.0 -->
 
