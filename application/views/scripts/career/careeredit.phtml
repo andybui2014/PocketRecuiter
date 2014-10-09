@@ -136,12 +136,12 @@ $resultTestList =  $this->resultTestList;
                                 <form id="form-careerEdit" name="form-careerEdit">
                                     <input type="hidden" value="<?=$_REQUEST['opportunityID']?>" name="OpportunityID">
                                     <div class="col-md-12">
-                                        <label>Career Name* </label>
+                                        <label id="careernameLable">Career Name* </label>
                                         <input type="text"  id="careername" name="careername" value="<?=$getListOpp['title']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
                                         <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
-                                            <label>Company Name* </label>
+                                            <label id="companynameLable">Company Name* </label>
                                         </div>
                                         <div class="col-md-3" style="padding-right: 0px">
                                             <select class="form-control" id="CompanyID" name="CompanyID">
@@ -166,11 +166,11 @@ $resultTestList =  $this->resultTestList;
                                             <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Career Description*</label>
+                                        <label id="careerdescriptionLable">Career Description*</label>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"><?=$getListOpp['careerdescription']?></textarea>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Industry*</label>
+                                        <label id="industryLable">Industry*</label>
                                         <input type="text" id="industry" name="industry" class="form-control" value="<?=$getListOpp['industry']?>" >
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
@@ -208,15 +208,15 @@ $resultTestList =  $this->resultTestList;
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Minimun Education*</label>
+                                        <label id="minimuneducationLable">Minimun Education*</label>
                                         <input id="minimuneducation" name="minimuneducation" type="text" class="form-control" value="<?=$getListOpp['minimuneducation']?>" >
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Degree Title*</label>
+                                        <label id="degreetitleLable">Degree Title*</label>
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control" value="<?=$getListOpp['degreetitle']?>" >
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong>Required Skills*</strong> </div>
+                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong id="requiredSkillLable">Required Skills*</strong> </div>
                                         <div class="col-md-3" style="padding-right:0px">
                                             <select id="selectSkill" class="form-control">
                                                 <option value="">Select Skill</option>
@@ -259,7 +259,7 @@ $resultTestList =  $this->resultTestList;
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label>Required Experience*</label>
+                                        <label id="requiredExperienceLable">Required Experience*</label>
                                         <select  id="requiredExperience" name="requiredExperience" class="form-control">
                                             <option value="3" <?=($getListOpp['experienced'] == '3') ? 'selected="selected"' : '' ?> > 3 months</option>
                                             <option value="6" <?=($getListOpp['experienced'] == '6') ? 'selected="selected"' : '' ?> > 6 months</option>
@@ -268,7 +268,7 @@ $resultTestList =  $this->resultTestList;
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6">
-                                            <label>Salary Range*</label>
+                                            <label id="salaryRangeLable">Salary Range*</label>
                                             <select  id="salaryRangeF" name="salaryRangeF" class="form-control">
                                                 <option value="10" <?=($getListOpp['salaryrangefrom'] == '10') ? 'selected="selected"' : '' ?>> 10 USD</option>
                                                 <option value="20" <?=($getListOpp['salaryrangefrom'] == '20') ? 'selected="selected"' : '' ?>> 20 USD</option>
