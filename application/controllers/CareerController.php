@@ -19,9 +19,9 @@ class CareerController extends Application_Controller_Action
         $CompanyID = $sestionClient['CompanyID'];
         $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
         $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
-       // echo "<pre>";
-        //    print_r($getListOpp);
-       // echo "</pre>"; die();
+       /*echo "<pre>";
+            print_r($getListOpp);
+       echo "</pre>"; die(); */
         $this->view->getListOpp = $getListOpp;
     }
     public function careereditAction()

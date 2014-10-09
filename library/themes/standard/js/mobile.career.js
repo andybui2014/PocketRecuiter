@@ -315,7 +315,22 @@ career.prototype = {
                 if(data){
                     btn.button('reset');
                     $("#openModalCompany").modal('hide');
-                    console.log(data.comID);
+                    var str = "<option value=''>Select Company</option>";
+                    var comID = data.comID;
+                    delete data.comID;
+                    $.each(data,function(k,val){
+                        var CompanyID = val["CompanyID"];
+                        var Companyname = val["Companyname"];
+
+                       if(comID == CompanyID){
+                            str +="<option value='"+CompanyID+"' selected='selected'>"+Companyname+"</option>";
+                       } else {
+                         str +="<option  value='"+CompanyID+"'>"+Companyname+"</option>";
+                        }
+
+                    });
+                    $('#CompanyID').find('option').remove().end().append(str) ;
+                    career.prototype.setTestComp();
                 }else{
                     btn.button('reset');
                 }
