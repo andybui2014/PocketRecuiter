@@ -84,7 +84,7 @@ $companylists = $this->companylists;
                 <tr role="row" class="odd ischecktr">
                     <td class="clWidth300 ">
                         <input type="hidden" name="CompanyID" value="<?= $companys["CompanyID"]?>">
-                        <span style="padding-left:10px"><strong><a href="<?= URL_BASE ?>companyprofile/profile?companyid=<?= $companys["CompanyID"] ?>&pageajax=profile"><?= $companys["Companyname"]?></a></strong></span> 
+                        <span style="padding-left:10px"><strong><a style="text-decoration: none;" href="<?= URL_BASE ?>companyprofile/profile?companyid=<?= $companys["CompanyID"] ?>&pageajax=profile"><?= $companys["Companyname"]?></a></strong></span> 
                     </td>
                     <td class="clWidth600 "><span class="notiText"><?=$companys["Address"]?></span></td>
                     <td class="clWidth200 "><?=$companys["Industry"]?></td>
