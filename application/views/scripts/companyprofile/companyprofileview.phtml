@@ -55,11 +55,11 @@
         
             <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?= $company["Companyname"]?></span>         
             <br><spanclass="text-left" style="font-size:15px;"><?= $company["Industry"]?> Company</span>
-            <span style="padding-left:503px;"> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> 
+           <!-- <span style="padding-left:503px;"> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>"><button class="btn btn-success" type="button" >Edit Profile</button></a></span>--> 
 			<!--<span style="padding-left:440px;"> <a href="<?= URL_BASE ?>companyprofile/upload?companyid=<?= $company["CompanyID"] ?>&pageajax=upload"><button class="btn btn-success" type="button" >Edit Profile</button></a></span> -->
 </h3>
         
-        <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$company["country"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><?=$company["Address"]?>, <?=$company["Zipcode"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone: </b><?=$company["PhoneNumber"]?></span><span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["PhoneNumber"]?></span>
+        <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$company["country"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><?=$company["Address"]?>, <?=$company["Zipcode"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone: </b><?=$company["PhoneNumber"]?></span><span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["PhoneNumber"]?><span> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>" style="text-decoration: none;"><i class="lbl-log">Edit</i></a></span> </span>
     </div>
      <div class="col-xs-12" style="padding-right:0px;" >
         <h4><span style="font-weight:bold">Overview</span></h4>
@@ -148,7 +148,7 @@
      </div>
      </div>
      <div class="col-xs-12" >
-            <h5 style="fornt-size:15px"><span style="font-weight:bold;" >Other Companies In This Industry</span></h5><br>
+            <h4 style="fornt-size:16px"><span style="font-weight:bold;" >Other Companies In This Industry</span></h4><br>
             <div class="col-xs-4">
                 <a href="#" style="font-size:12px;color:#333;">Career incall 2phone Pvt.Ldt</a><br>
                 <a href="#" style="font-size:12px;color:#333;">Career Monaco Telematics</a><br>

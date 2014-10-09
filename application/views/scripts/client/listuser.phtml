@@ -127,7 +127,7 @@ body {
                 <tr role="row" class="odd ischecktr">
                     <td class="clWidth300 ">
                         <input type="hidden" name="UserID" value="<?= $lists["UserID"]?>">
-                        <span style="padding-left:10px"><strong><a href="<?= URL_BASE ?>client/edituser?UserID=<?= $lists["UserID"] ?>&pageajax=edituser"><?= $lists["firstname"]?> <?= $lists["lastname"]?></a></strong></span> 
+                        <span style="padding-left:10px"><strong><a style="text-decoration: none;" href="<?= URL_BASE ?>client/edituser?UserID=<?= $lists["UserID"] ?>&pageajax=edituser"><?= $lists["firstname"]?> <?= $lists["lastname"]?></a></strong></span> 
                     </td>
                     <td class="clWidth600 "><span class="notiText"><?=$lists["emailaddress"]?></span></td>
                     <td class="clWidth200 "><?=$lists["PostalCode"]?></td>
