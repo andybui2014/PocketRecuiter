@@ -175,7 +175,8 @@ register.prototype = {
                            // alert("usertype:"+xhr.usertype);
                             if(xhr.usertype==1)
                                         {
-                                            window.location = 'client/start-profile';
+                                           // window.location = 'client/start-profile';
+                                           window.location = 'dashboard/index'; 
                                             
                                         }
                                          if(xhr.usertype==2)

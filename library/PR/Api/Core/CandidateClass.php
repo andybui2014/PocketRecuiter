@@ -36,11 +36,12 @@ class PR_Api_Core_CandidateClass
             $result = PR_Database::update("user", $updateFields, $criteria);
             return $result;            
         }
-        
+    }
+    
+    public function getEducationList($userID)
+    {
         
     }
     
-    
-    
-    
+       
 }
