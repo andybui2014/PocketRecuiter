@@ -6,8 +6,8 @@ career.prototype = {
         $('#ckAll').unbind('click').bind('click',this.checkAllIs);
         $('#addnotification').unbind('click').bind('click',this.addnotification);
         $('#EditNotification').unbind('click').bind('click',this.editnotification);
-        $('#saveEditnotification').unbind('click').bind('click',this.saveEditnotification);
-        $('#deleteNotification').unbind('click').bind('click',this.deleteNotification); */
+        $('#saveEditnotification').unbind('click').bind('click',this.saveEditnotification); */
+
 
         $('.calcareercr').unbind('click').bind('click',this.calcareercr);
         $('#careerlist').unbind('click').bind('click',this.careerlist);
@@ -17,6 +17,7 @@ career.prototype = {
         $('#CompanyID').unbind('change').bind('change',this.setTestComp);
         $('#postcareeredit').unbind('click').bind('click',this.postcareeredit);
         $('#saveCompanyProfile').unbind('click').bind('click',this.saveCompanyProfile);
+        $('.delete-career-btn').unbind('click').bind('click',this.deleteCareer);
 
         //required test will be removed when clicked for first time page on load
         $(".removeRequiredTestOnload").unbind("click").bind("click",function(){
@@ -68,6 +69,23 @@ career.prototype = {
                 $('#ckAll').prop('checked',false);
             }
         }
+    },
+
+    deleteCareer:function(){
+        var career_ID = $(this).find('.careerid_careerid').val();
+        $.ajax({
+            url: 'delete-career',
+            data: {career_ID:career_ID},
+            type: 'POST',
+            success: function(data, status, xhr){
+                if(data){
+                    //console.log(data);
+                    window.location = 'careerlist';
+                }else{
+                    alert("This career is using");
+                }
+            }
+        });
     },
 
     calcareercr:function(){
