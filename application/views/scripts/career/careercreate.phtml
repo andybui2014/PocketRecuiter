@@ -130,12 +130,12 @@
                             <div class="col-md-8">
                                 <form id="form-careerCr" name="form-careerCr">
                                     <div class="col-md-12">
-                                        <label id="careernameLable">Career Name* </label>
+                                        <label >Career Name* </label> <span id="careernameLable" style="color: red"> </span>
                                         <input type="text"  id="careername" name="careername" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
                                         <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
-                                            <label id="companynameLable">Company Name* </label>
+                                            <label >Company Name* </label><span id="companynameLable" style="color: red"></span>
                                         </div>
                                         <div class="col-md-3" style="padding-right: 0px">
                                             <select class="form-control" id="CompanyID" name="CompanyID">
@@ -161,14 +161,14 @@
                                         <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="careerdescriptionLable">Career Description*</label>
+                                        <label >Career Description*</label><span id="careerdescriptionLable" style="color: red"></span>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"></textarea>
                                     </div>
                                    <!-- <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
                                         <span style=" float:right"><input type="file" title="Add Attachment"  class="colorBlue" ></span>
                                     </div> -->
                                     <div class="col-md-12">
-                                        <label id="industryLable">Career Industry*</label>
+                                        <label>Career Industry*</label> <span id="industryLable" style="color: red"></span>
                                         <input type="text" id="industry" name="industry" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
@@ -207,15 +207,16 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="minimuneducationLable">Minimun Education*</label>
+                                        <label >Minimun Education*</label> <span id="minimuneducationLable" style="color: red"></span>
                                         <input id="minimuneducation" name="minimuneducation" type="text" class="form-control">
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="degreetitleLable">Degree Title*</label>
+                                        <label >Degree Title*</label> <span id="degreetitleLable" style="color: red"></span>
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong id="requiredSkillLable">Required Skills*</strong> </div>
+                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong >Required Skills*</strong> <span id="requiredSkillLable" style="color: red"></span>
+                                        </div>
                                         <div class="col-md-3" style="padding-right:0px">
                                             <select id="selectSkill" class="form-control">
                                                 <option value="">Select Skill</option>
@@ -240,7 +241,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="requiredExperienceLable">Required Experience*</label>
+                                        <label >Required Experience*</label><span id="requiredExperienceLable" style="color: red"></span>
                                         <select  id="requiredExperience" name="requiredExperience" class="form-control">
                                             <option value="3 months"> 3 months</option>
                                             <option value="6 months"> 6 months</option>
@@ -249,17 +250,33 @@
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6">
-                                            <label id="salaryRangeLable">Salary Range*</label>
+                                            <label >Salary Range*</label> <span id="salaryRangeLable" style="color: red"></span>
                                             <select  id="salaryRangeF" name="salaryRangeF" class="form-control">
-                                                <option value="10"> 10 USD</option>
-                                                <option value="20"> 20 USD</option>
+                                                <option value="10"> 10 K</option>
+                                                <option value="20"> 20 K</option>
+                                                <option value="10"> 30 K</option>
+                                                <option value="20"> 40 K</option>
+                                                <option value="10"> 50 K</option>
+                                                <option value="20"> 60 K</option>
+                                                <option value="10"> 70 K</option>
+                                                <option value="20"> 80 K</option>
+                                                <option value="10"> 90 K</option>
+                                                <option value="20"> 100 K</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label>&nbsp;</label>
                                             <select id="salaryRangeT" name="salaryRangeT" class="form-control">
-                                                <option value="20"> 20 USD</option>
-                                                <option value="50"> 50 USD</option>
+                                                <option value="10"> 10 K</option>
+                                                <option value="20"> 20 K</option>
+                                                <option value="10"> 30 K</option>
+                                                <option value="20"> 40 K</option>
+                                                <option value="10"> 50 K</option>
+                                                <option value="20"> 60 K</option>
+                                                <option value="10"> 70 K</option>
+                                                <option value="20"> 80 K</option>
+                                                <option value="10"> 90 K</option>
+                                                <option value="20"> 100 K</option>
                                             </select>
                                         </div>
                                     </div>

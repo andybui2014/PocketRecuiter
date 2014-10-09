@@ -136,12 +136,12 @@ $resultTestList =  $this->resultTestList;
                                 <form id="form-careerEdit" name="form-careerEdit">
                                     <input type="hidden" value="<?=$_REQUEST['opportunityID']?>" name="OpportunityID">
                                     <div class="col-md-12">
-                                        <label id="careernameLable">Career Name* </label>
+                                        <label >Career Name* </label> <span id="careernameLable" style="color: red"></span>
                                         <input type="text"  id="careername" name="careername" value="<?=$getListOpp['title']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
                                         <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
-                                            <label id="companynameLable">Company Name* </label>
+                                            <label >Company Name* </label> <span id="companynameLable" style="color: red"></span>
                                         </div>
                                         <div class="col-md-3" style="padding-right: 0px">
                                             <select class="form-control" id="CompanyID" name="CompanyID">
@@ -166,11 +166,11 @@ $resultTestList =  $this->resultTestList;
                                             <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="careerdescriptionLable">Career Description*</label>
+                                        <label >Career Description*</label> <span id="careerdescriptionLable" style="color: red"></span>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"><?=$getListOpp['careerdescription']?></textarea>
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="industryLable">Industry*</label>
+                                        <label >Industry*</label>  <span id="industryLable" style="color: red"></span>
                                         <input type="text" id="industry" name="industry" class="form-control" value="<?=$getListOpp['industry']?>" >
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
@@ -208,15 +208,16 @@ $resultTestList =  $this->resultTestList;
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="minimuneducationLable">Minimun Education*</label>
+                                        <label >Minimun Education*</label> <span id="minimuneducationLable" style="color: red"></span>
                                         <input id="minimuneducation" name="minimuneducation" type="text" class="form-control" value="<?=$getListOpp['minimuneducation']?>" >
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="degreetitleLable">Degree Title*</label>
+                                        <label >Degree Title*</label> <span id="degreetitleLable" style="color: red"></span>
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control" value="<?=$getListOpp['degreetitle']?>" >
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
-                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong id="requiredSkillLable">Required Skills*</strong> </div>
+                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong >Required Skills*</strong>  <span id="requiredSkillLable" style="color: red"></span>
+                                        </div>
                                         <div class="col-md-3" style="padding-right:0px">
                                             <select id="selectSkill" class="form-control">
                                                 <option value="">Select Skill</option>
@@ -259,7 +260,7 @@ $resultTestList =  $this->resultTestList;
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <label id="requiredExperienceLable">Required Experience*</label>
+                                        <label >Required Experience*</label> <span id="requiredExperienceLable" style="color: red"></span>
                                         <select  id="requiredExperience" name="requiredExperience" class="form-control">
                                             <option value="3" <?=($getListOpp['experienced'] == '3') ? 'selected="selected"' : '' ?> > 3 months</option>
                                             <option value="6" <?=($getListOpp['experienced'] == '6') ? 'selected="selected"' : '' ?> > 6 months</option>
@@ -268,17 +269,33 @@ $resultTestList =  $this->resultTestList;
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6">
-                                            <label id="salaryRangeLable">Salary Range*</label>
+                                            <label >Salary Range*</label> <span id="salaryRangeLable" style="color: red"></span>
                                             <select  id="salaryRangeF" name="salaryRangeF" class="form-control">
                                                 <option value="10" <?=($getListOpp['salaryrangefrom'] == '10') ? 'selected="selected"' : '' ?>> 10 USD</option>
                                                 <option value="20" <?=($getListOpp['salaryrangefrom'] == '20') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                                <option value="30" <?=($getListOpp['salaryrangefrom'] == '30') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                                <option value="40" <?=($getListOpp['salaryrangefrom'] == '40') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangefrom'] == '50') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                                <option value="60" <?=($getListOpp['salaryrangefrom'] == '60') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                                <option value="70" <?=($getListOpp['salaryrangefrom'] == '70') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                                <option value="80" <?=($getListOpp['salaryrangefrom'] == '80') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                                <option value="90" <?=($getListOpp['salaryrangefrom'] == '90') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                                <option value="100" <?=($getListOpp['salaryrangefrom'] == '100') ? 'selected="selected"' : '' ?>> 20 USD</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label>&nbsp;</label>
                                             <select id="salaryRangeT" name="salaryRangeT" class="form-control">
-                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '20') ? 'selected="selected"' : '' ?>> 20 USD</option>
-                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '50') ? 'selected="selected"' : '' ?>> 50 USD</option>
+                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '10') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '20') ? 'selected="selected"' : '' ?>> 20 USD</option>
+                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '30') ? 'selected="selected"' : '' ?>> 30 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '40') ? 'selected="selected"' : '' ?>> 40 USD</option>
+                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '50') ? 'selected="selected"' : '' ?>> 50 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '60') ? 'selected="selected"' : '' ?>> 60 USD</option>
+                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '70') ? 'selected="selected"' : '' ?>> 70 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '80') ? 'selected="selected"' : '' ?>> 80 USD</option>
+                                                <option value="20" <?=($getListOpp['salaryrangeto'] == '90') ? 'selected="selected"' : '' ?>> 90 USD</option>
+                                                <option value="50" <?=($getListOpp['salaryrangeto'] == '100') ? 'selected="selected"' : '' ?>> 100 USD</option>
                                             </select>
                                         </div>
                                     </div>

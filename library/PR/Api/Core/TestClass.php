@@ -206,6 +206,9 @@ class PR_Api_Core_TestClass
                 'AnswerText'=>$answerOption);
             $result = PR_Database::insert("test_question_answer", $updateFields);            
         }
+        if($result){
+            return $testQuestionID;
+        }
     }
     
     public function updateQuestion($testQuestionID,$quesName,$answerOtionArray)

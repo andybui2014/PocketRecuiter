@@ -233,10 +233,6 @@ class CareerController extends Application_Controller_Action
         $PR_Api_CareerClass = new PR_Api_Core_CareerClass();
         $result = $PR_Api_CareerClass->deleteCareer($career_ID);
 
-        echo "<pre>";
-        print_r($result);
-        echo "</pre>"; die();
-
         if($result){
             $res = 1;
         } else {

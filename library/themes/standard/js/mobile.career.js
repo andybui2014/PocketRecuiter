@@ -17,7 +17,6 @@ career.prototype = {
         $('#CompanyID').unbind('change').bind('change',this.setTestComp);
         $('#postcareeredit').unbind('click').bind('click',this.postcareeredit);
         $('#saveCompanyProfile').unbind('click').bind('click',this.saveCompanyProfile);
-        $('.delete-career-btn').unbind('click').bind('click',this.deleteCareer);
 
         //required test will be removed when clicked for first time page on load
         $(".removeRequiredTestOnload").unbind("click").bind("click",function(){
@@ -34,6 +33,11 @@ career.prototype = {
         });
 
     },
+
+    test:function(id){
+        alert(id);
+    },
+
     checkAllIs: function(){
         if($("#ckAll").is(":checked")){
             $(".checkIs").prop('checked','checked');
@@ -71,11 +75,10 @@ career.prototype = {
         }
     },
 
-    deleteCareer:function(){
-        var career_ID = $(this).find('.careerid_careerid').val();
+    deleteCareer:function(id){
         $.ajax({
             url: 'delete-career',
-            data: {career_ID:career_ID},
+            data: {career_ID:id},
             type: 'POST',
             success: function(data, status, xhr){
                 if(data){
@@ -185,76 +188,58 @@ career.prototype = {
         $(".getSkillText").each(function(){
             Veridate_requiredSkillClass  =  Veridate_requiredSkillClass  + $.trim($(this).text());
         });
-        $("#careernameLable").text("Career Name *");
-        $("#careernameLable").css("color","black");
-            $("#companynameLable").text("Company Name *");
-            $("#companynameLable").css("color","black");
-        $("#careerdescriptionLable").text("Career Description *");
-        $("#careerdescriptionLable").css("color","black");
-            $("#industryLable").text("Career Industry *");
-            $("#industryLable").css("color","black");
-        $("#minimuneducationLable").text("Minimun Education *");
-        $("#minimuneducationLable").css("color","black");
-            $("#degreetitleLable").text("Degree Title *");
-            $("#degreetitleLable").css("color","black");
-        $("#requiredSkillLable").text("Required Skills *");
-        $("#requiredSkillLable").css("color","black");
-            $("#requiredExperienceLable").text("Required Experience *");
-            $("#requiredExperienceLable").css("color","black");
-        $("#salaryRangeLable").text("Salary Range *");
-        $("#salaryRangeLable").css("color","black");
+        $("#careernameLable").text("");
+        $("#companynameLable").text("");
+        $("#careerdescriptionLable").text("");
+        $("#industryLable").text("");
+        $("#minimuneducationLable").text("");
+        $("#degreetitleLable").text("");
+        $("#requiredSkillLable").text("");
+        $("#requiredExperienceLable").text("");
+        $("#salaryRangeLable").text("");
 
         if(Veridate_careername ==""){
-            $("#careernameLable").text("Career Name must require");
-            $("#careernameLable").css("color","red");
+            $("#careernameLable").text("(Career Name must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_companyname ==""){
-            $("#companynameLable").text("Company must require");
-            $("#companynameLable").css("color","red");
+            $("#companynameLable").text("(Company must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_careerdescription ==""){
-            $("#careerdescriptionLable").text("Career Description must require");
-            $("#careerdescriptionLable").css("color","red");
+            $("#careerdescriptionLable").text("(Career Description must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_industry ==""){
             $("#industryLable").text("Career Industry must require");
-            $("#industryLable").css("color","red");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_minimuneducation ==""){
-            $("#minimuneducationLable").text("Minimun Education must require");
-            $("#minimuneducationLable").css("color","red");
+            $("#minimuneducationLable").text("(Minimun Education must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_degreetitle ==""){
-            $("#degreetitleLable").text("Degree Title must require");
-            $("#degreetitleLable").css("color","red");
+            $("#degreetitleLable").text("(Degree Title must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_requiredSkillClass ==""){
-            $("#requiredSkillLable").text("Required Skills must require");
-            $("#requiredSkillLable").css("color","red");
+            $("#requiredSkillLable").text("(Required Skills must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(requiredExperience ==""){
-            $("#requiredExperienceLable").text("Required Experience must require");
-            $("#requiredExperienceLable").css("color","red");
+            $("#requiredExperienceLable").text("(Required Experience must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         }else if(Veridate_salaryRangeF =="" || Veridate_salaryRangeT ==""){
-            $("#salaryRangeLable").text("Salary Range must require");
-            $("#salaryRangeLable").css("color","red");
+            $("#salaryRangeLable").text("(Salary Range must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
@@ -292,80 +277,64 @@ career.prototype = {
         $(".getSkillText").each(function(){
             Veridate_requiredSkillClass  =  Veridate_requiredSkillClass  + $.trim($(this).text());
         });
-        $("#careernameLable").text("Career Name *");
-        $("#careernameLable").css("color","black");
-        $("#companynameLable").text("Company Name *");
-        $("#companynameLable").css("color","black");
-        $("#careerdescriptionLable").text("Career Description *");
-        $("#careerdescriptionLable").css("color","black");
-        $("#industryLable").text("Career Industry *");
-        $("#industryLable").css("color","black");
-        $("#minimuneducationLable").text("Minimun Education *");
-        $("#minimuneducationLable").css("color","black");
-        $("#degreetitleLable").text("Degree Title *");
-        $("#degreetitleLable").css("color","black");
-        $("#requiredSkillLable").text("Required Skills *");
-        $("#requiredSkillLable").css("color","black");
-        $("#requiredExperienceLable").text("Required Experience *");
-        $("#requiredExperienceLable").css("color","black");
-        $("#salaryRangeLable").text("Salary Range *");
-        $("#salaryRangeLable").css("color","black");
+
+        $("#careernameLable").text("");
+        $("#companynameLable").text("");
+        $("#careerdescriptionLable").text("");
+        $("#industryLable").text("");
+        $("#minimuneducationLable").text("");
+        $("#degreetitleLable").text("");
+        $("#requiredSkillLable").text("");
+        $("#requiredExperienceLable").text("");
+        $("#salaryRangeLable").text("");
 
         if(Veridate_careername ==""){
-            $("#careernameLable").text("Career Name must require");
-            $("#careernameLable").css("color","red");
+            $("#careernameLable").text("(Career Name must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_companyname ==""){
-            $("#companynameLable").text("Company must require");
-            $("#companynameLable").css("color","red");
+            $("#companynameLable").text("(Company must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_careerdescription ==""){
-            $("#careerdescriptionLable").text("Career Description must require");
-            $("#careerdescriptionLable").css("color","red");
+            $("#careerdescriptionLable").text("(Career Description must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_industry ==""){
             $("#industryLable").text("Career Industry must require");
-            $("#industryLable").css("color","red");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_minimuneducation ==""){
-            $("#minimuneducationLable").text("Minimun Education must require");
-            $("#minimuneducationLable").css("color","red");
+            $("#minimuneducationLable").text("(Minimun Education must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_degreetitle ==""){
-            $("#degreetitleLable").text("Degree Title must require");
-            $("#degreetitleLable").css("color","red");
+            $("#degreetitleLable").text("(Degree Title must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(Veridate_requiredSkillClass ==""){
-            $("#requiredSkillLable").text("Required Skills must require");
-            $("#requiredSkillLable").css("color","red");
+            $("#requiredSkillLable").text("(Required Skills must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         } else if(requiredExperience ==""){
-            $("#requiredExperienceLable").text("Required Experience must require");
-            $("#requiredExperienceLable").css("color","red");
+            $("#requiredExperienceLable").text("(Required Experience must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         }else if(Veridate_salaryRangeF =="" || Veridate_salaryRangeT ==""){
-            $("#salaryRangeLable").text("Salary Range must require");
-            $("#salaryRangeLable").css("color","red");
+            $("#salaryRangeLable").text("(Salary Range must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
         }
+
 
         $.ajax({
             url: 'edit-career',
