@@ -9,7 +9,7 @@ class CareerController extends Application_Controller_Action
         if(empty($client))
         {
             $this->_helper->redirector("index","login");
-        }  
+        }
     }
     
     public function careerlistAction()
@@ -19,9 +19,7 @@ class CareerController extends Application_Controller_Action
         $CompanyID = $sestionClient['CompanyID'];
         $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
         $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
-       /*echo "<pre>";
-            print_r($getListOpp);
-       echo "</pre>"; die(); */
+
         $this->view->getListOpp = $getListOpp;
     }
     public function careereditAction()
@@ -197,19 +195,17 @@ class CareerController extends Application_Controller_Action
         $testid = $request->getParam("testid", array());
 
         $career_PR_Api = new PR_Api_Career($OpportunityID);
+        /*echo "<pre>";
+           print_r($OpportunityID);
+          echo "</pre>"; die(); */
         $updateFields = array('CompanyID'=>$OppCompanyID,'postedby'=>$postedby, 'posteddate'=>$posteddate,
             'title'=>$title,'careerdescription'=>$careerdescription,'status'=>$status,'industry'=>$industry,'industry'=>$industry,'jobtype'=>$jobtype,
             'duration'=>$duration,'location'=>$location,'zipcode'=>$zipcode,'minimuneducation'=>$minimuneducation,'degreetitle'=>$degreetitle,'StaffFavorite'=>$StaffFavorite,
             'salaryrangefrom'=>$salaryRangeF, 'salaryrangeto'=>$salaryRangeT,'experienced'=>$requiredExperience
         );
-        /*
-        echo "<pre>";
-           print_r($updateFields);
-           
-          echo "</pre>"; die(); 
-        */
+
         $result = $career_PR_Api->saveCareer($updateFields);
-        //echo();die();
+
         if($result){
             $edit_PR_Api = new PR_Api_Core_CareerClass();
             $edit_PR_Api->saveCareerSkills($OpportunityID, $SkillID);
@@ -227,6 +223,34 @@ class CareerController extends Application_Controller_Action
             ->setBody($return);
 
     }
+
+    public function deleteCareerAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $career_ID = $request->getParam("career_ID","");
+
+        $PR_Api_CareerClass = new PR_Api_Core_CareerClass();
+        $result = $PR_Api_CareerClass->deleteCareer($career_ID);
+
+        echo "<pre>";
+        print_r($result);
+        echo "</pre>"; die();
+
+        if($result){
+            $res = 1;
+        } else {
+            $res = 0;
+        }
+
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $res = json_encode($res);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($res), true)
+            ->setBody($res);
+    }
+
     public function doCompanyProfileAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
