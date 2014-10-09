@@ -174,10 +174,10 @@ $helper = $this->layout()->_helper;
                     <div class="breadcrumb flat">
                         <a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" <?=$this->step =='contact'? 'class="active"':'';?>>Contact Info</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=education','candidate');?>" <?=$this->step =='education'? 'class="active"':'';?>>Education</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employee</a>
+                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employment</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=skills','candidate');?>"  <?=$this->step =='skills'? 'class="active"':'';?>>Skills</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
-                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto">1/21 Steps</span>
+                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
                     <div class="col-md-8" style="padding-left:0;">
 
@@ -225,9 +225,9 @@ $helper = $this->layout()->_helper;
                                 <button type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
                             </div>
                             <div style="margin-top: 50px">
-                                <button class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
+                                <button id="cmd-back" data-back="education" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
                                 <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                                <button type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
+                                <button id="cmd-next" data-next="skills" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
                             </div>
 
                         </form>
@@ -238,6 +238,7 @@ $helper = $this->layout()->_helper;
         </div>
     </div>
 </div>
+<script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
 <script type="text/javascript">
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true });
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true });

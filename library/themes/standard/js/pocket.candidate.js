@@ -24,11 +24,13 @@ pocketCandidate.prototype = {
         $this.button('loading');
         var dataId = $this.attr('data-id');
         if(dataId=='contact'){
-            $.post( '/candidate/step-next-contact',{data: $('#form-contact').serializeArray()}).done(function( xhr ) {
+            $.post( './step-next-contact',{data: $('#form-contact').serializeArray()}).done(function( xhr ) {
                 if(xhr.success){
                     location.href = './profile-builder?utm_source=' + $this.attr('data-next');
                 }
             });
+        }else{
+            location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     }
 }

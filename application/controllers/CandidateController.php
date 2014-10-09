@@ -36,20 +36,29 @@ class CandidateController extends Application_Controller_Action
                 case 'contact':
                     $core = new PR_Api_Core_CandidateClass();
                     $info = $core->getContactInfo($client['UserID']);
+                    $this->view->stepCount = '1/5 Steps';
                     $this->view->info = $info;
                     $this->render('profile-builder/contact');
                     break;
                 case 'education':
+                    $this->view->stepCount = '2/5 Steps';
                     $this->render('profile-builder/education');
                     break;
                 case 'employment':
+                    $this->view->stepCount = '3/5 Steps';
                     $this->render('profile-builder/employment');
                     break;
                 case 'skills':
+                    $this->view->stepCount = '4/5 Steps';
                     $this->render('profile-builder/skills');
                     break;
                 case 'portfolio':
+                    $this->view->stepCount = '5/5 Steps';
                     $this->render('profile-builder/portfolio');
+                    break;
+                case 'success':
+                    $this->view->stepCount = 'Completed';
+                    $this->render('profile-builder/success');
                     break;
                 default:
                     $this->render('profile-builder/index');

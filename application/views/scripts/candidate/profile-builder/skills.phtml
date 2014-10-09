@@ -174,10 +174,10 @@ $helper = $this->layout()->_helper;
                     <div class="breadcrumb flat">
                         <a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" <?=$this->step =='contact'? 'class="active"':'';?>>Contact Info</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=education','candidate');?>" <?=$this->step =='education'? 'class="active"':'';?>>Education</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employee</a>
+                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employment</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=skills','candidate');?>"  <?=$this->step =='skills'? 'class="active"':'';?>>Skills</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
-                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto">1/21 Steps</span>
+                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
 
 
@@ -353,8 +353,8 @@ $helper = $this->layout()->_helper;
 
                             <div class="col-xs-12">
 
-                                <button class="btn btn-default disabled" type="button"><strong>Back</strong></button> &nbsp;
-                                <button type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
+                                <button id="cmd-back" data-back="employment" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
+                                <button id="cmd-next" data-next="portfolio" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
                             </div>
                         </form>
 
@@ -416,7 +416,7 @@ $helper = $this->layout()->_helper;
     }
 </style>
 
-
+<script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
 
 <script type='text/javascript'>//<![CDATA[
     $(window).load(function(){

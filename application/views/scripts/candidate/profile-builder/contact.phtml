@@ -174,10 +174,12 @@ $helper = $this->layout()->_helper;
                     <div class="breadcrumb flat">
                         <a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" <?=$this->step =='contact'? 'class="active"':'';?>>Contact Info</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=education','candidate');?>" <?=$this->step =='education'? 'class="active"':'';?>>Education</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employee</a>
+                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employment</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=skills','candidate');?>"  <?=$this->step =='skills'? 'class="active"':'';?>>Skills</a>
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
-                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto">1/21 Steps</span>
+                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto">
+                            <?=$this->stepCount;?>
+                        </span>
                     </div>
                     <div class="col-md-8" style="padding-left:0;">
 
