@@ -6,7 +6,7 @@
 $Userlists = $this->Userlists;
 $Companylists=$this->Companylists;
 $companyid=$_REQUEST["CompanyID"];
-//echo("<br><br><br>test:");
+$Role=$this->Role;
 //print_r($companyid);
 ?>
 <style>
@@ -42,6 +42,10 @@ body {
 </style>
 <!-- Modal Add -->
 <div class="container">
+<?php
+    if($Role=="admin")
+    {
+?>
 <div  style="padding-top:40px;">
                             
             Select Company: <select class="form-control1" id="Company" name="Company"  >
@@ -86,7 +90,7 @@ body {
             <thead>
             <tr role="row" >
                 <th class="clWidth600 ">
-                    <label>
+                    <label >
                         <strong>Name</strong>
                     </label>
                 </th>
