@@ -1,5 +1,5 @@
 <?php
-class PR_Api_Core_CandidateClass   
+class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
 {
    public function getContactInfo($userID)
    {
