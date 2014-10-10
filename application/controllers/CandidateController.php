@@ -41,6 +41,9 @@ class CandidateController extends Application_Controller_Action
                     $this->render('profile-builder/contact');
                     break;
                 case 'education':
+                    $core = new PR_Api_Core_CandidateClass();
+                    $list = $core->getCandidateEducationList($client['UserID']);
+                    $this->view->list = $list;
                     $this->view->stepCount = '2/5 Steps';
                     $this->render('profile-builder/education');
                     break;
@@ -68,10 +71,50 @@ class CandidateController extends Application_Controller_Action
             $this->render('profile-builder/index');
         }
     }
+    /*
+    public function listEducationAction(){
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $core = new PR_Api_Core_CandidateClass();
+        $list = $core->getCandidateEducationList($client['UserID']);
+        $this->view->list = $list;
+        $this->render('profile-builder/education-list');
+    }*/
+    public function doAddEducationAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            if(!empty($params['data']) && sizeof($params['data'])){
+                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+
+                $instName = null;
+                $degreeName = null;
+                $startYear = null;
+                $endYear = null;
+
+                foreach($params['data'] as $item){
+                    if($item['name']=='inst-name')      $instName = $item['value'];
+                    if($item['name']=='degree-name')    $degreeName = $item['value'];
+                    if($item['name']=='start-year')     $startYear = $item['value'];
+                    if($item['name']=='end-year')       $endYear = $item['value'];
+                }
+                $core = new PR_Api_Core_CandidateClass();
+                $isSuccess = $core->addCandidateEducation($client['UserID'],$instName,$degreeName,$startYear,$endYear);
+
+                if($isSuccess) $ajaxRes['success'] = 1;
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
 
     public function startProfileAction(){
-
-
+        $this->render('profile');
     }
     public function stepNextContactAction(){
         $this->_helper->layout->disableLayout();
