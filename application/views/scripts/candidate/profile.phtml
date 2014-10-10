@@ -124,11 +124,47 @@
     .flat a:hover:after, .flat a.active:after{
         background: #2a6496; color: #fff;
     }
-
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+    .line-r{
+         border-right: 1px solid #d6d6d6;
+         padding-right: 10px;
+         height: 10px;
+    
+    }
+    .line-l{
+         border-left: 1px solid #d6d6d6;
+         padding-left: 5px;
+         height: 10px;
+    
+    }
+    .well{
+        margin-bottom: 0;
+    }
+    .label-tag {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: #fff;
+        color: #000;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
         /****/
 
 </style>
-<div class="container">
+<?php
+    $getUserArray=$this->client;
+    $getCandidates=$this->getCandidates;
+    $SkillName=$this->SkillName;
+    $CandidateEmployment=$this->CandidateEmployment;
+    $Education=$this->Education;
+  // ("test:<pre>");print_r($CandidateEmployment);echo("</pre>");
+?>
+<div class="container" style="padding-top:40px;">
 
     <div class="row">
         <div class="col-md-3">
@@ -139,18 +175,19 @@
                 <div style="text-align: center; "><span class="label label-default">Click to Add / Edit</span></div>
 
             </div>
-            <a href="#">andybui@vsnr.com</a><br/>
-            <strong>View my profile</strong> <br/>
-            <span><img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAANABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDhv+EO8T/9C5q//gDL/wDE16jpWjSxaPYxz6O6zLbxq4fTCWDBRnOdPbnP+031PWud/wCEs0v/AKAf/jll/wDIlH/CWaX/ANAP/wAcsv8A5EroxuZPFRUWrWPrcHkOIw0nLe/p/mdd/ZP/AFCf/KZ/97aK5H/hLNL/AOgH/wCOWX/yJRXn8yPQ/s/Efy/iv8z/2Q=="/>
-                United State, San Diego, CA
+            <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?>, <?=$getUserArray["State"]?></span>
             </span>
-            <span><strong>Expected Salary: 60-65k</strong></span><br/>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?>-<?=$getCandidates["maximumsalary"]?>k</strong></span><br/>
             <p style="padding: 10px 0">
-                <i class="lbl-log">Edit</i>
+                <!--<i class="lbl-log">Edit</i>>-->
+                <img src="<?=URL_THEMES?>images/btn_edit.png">
             </p>
             <ul id="nav-left">
-                <li><a class="active"><strong>Profile builder</strong></a></li>
-                <li><a href="#">Overview</a></li>
+                <li><a >Profile builder</a></li>
+                <li><strong><a class="active" href="<?= URL_BASE ?>candidate/profile">Overview</a></strong></li>
                 <li><a href="#">Contact Info</a></li>
                 <li><a href="#">Portfolio</a></li>
                 <li><a href="#">Education</a></li>
@@ -161,13 +198,109 @@
             </ul>
             <p>Last signed: Nov,8,2014</p>
         </div>
-        <div class="col-md-9">
-            <div class="page-header">
-                <h3><span class="glyphicon glyphicon-briefcase"></span> Profile </h3>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-body">
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?=$getUserArray["firstname"]." ".$getUserArray["lastname"]?></span>
+                <div style="padding-bottom:5px">
+                <?php
+                    $count=0;
+                    foreach($SkillName as $Skills)
+                    {
+                        $count=$count+1;
+                    
+                ?>
+                <span <?php if ($count==1) echo "class=''"; else echo "class='line-l'";?>  style="font-weight:bold;font-size:14px"><a href="#" style="text-decoration:none;color: #777;"><?=$Skills["SkillName"]?></a></span>
+                <?php
+                }
+                ?>
+                </div>
+                <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$getUserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?>, <?=$getUserArray["State"]?>, <?=$getUserArray["PostalCode"]?></span><span> <a href="#" style="text-decoration: none;"><img src="<?=URL_THEMES?>images/btn_edit.png"></a></span> </span>
+             </div>
+            <div class="">
+                <div class="panel-body" style="padding:0">
+                    <h4><span style="font-weight:bold">Overview</span></h4>
+                        <div class="col-xs-8"  style="padding:0">
+                            <span style="padding-right:20px;font-size:12px"><?=nl2br($getCandidates["Overview"])?></span>
+                            </div>
+                        <div class=".col-xs-4" style="float:right;">
+                            <img width="230px" src="<?=URL_THEMES.'images/img_YourProfile.jpg';?>">
+                            
+                        </div>
+                        <div class="col-xs-10" style="padding:0;padding-bottom:10px;padding-top:5px;">
+                            <div class="col-xs-5" style="padding:0;">
+                                <img width="230px" src="<?=URL_THEMES.'images/img_Youtube.jpg';?>">
+                            </div>
+                            <div class="col-xs-4" style="padding:0;">
+                                <img width="" src="<?=URL_THEMES.'images/img_AddVideo.jpg';?>">
+                            </div>
+                        </div>
 
+                </div>
+                <div class="panel-body" style="padding:0">
+                    <h4><span style="font-weight:bold">Skills</span></h4>
+                    <div class="col-xs-8"  style="padding:0">
+                    <?php                   
+                    foreach($SkillName as $Skills)
+                    {                                           
+                    ?>
+                        <span style="" class="label-tag pull-left getSkillText"><?= $Skills["SkillName"]?>
+                            
+                        </span>
+                    <?php
+                    }?>
+
+                    </div>
+                </div>
+                <div class="panel-body" style="padding:0">
+                    <h4><span style="font-weight:bold">Employment</span><span style="padding-left:10px;"><img src="<?=URL_THEMES.'images/btn_AddEmployment.png';?>"></span></h4>
+                    <div class="col-xs-8"  style="padding:0">
+                        <?php
+                            foreach($CandidateEmployment as $Employments)
+                            {
+                        ?>
+                        <div style="padding-bottom:10px;">
+                            <span style="font-weight:bold"><?=$Employments["CompanyName"]?></span><br>
+                            <span style="font-size:13px;"><?=$Employments["PostionHeld"]?></span><br>
+                            <span style="font-size:13px;">
+                            <?php
+                                $StartDate=date('Y',strtotime($Employments["StartDate"]));
+                                $EndDate=date('Y',strtotime($Employments["EndDate"]));
+                                echo ($StartDate."-".$EndDate)
+                               // echo ($EndDate[year]);
+                            ?>
+                            </span>     
+                          </div>               
+                              <?php
+                            }
+                        ?>
+                    
+                    </div>
+                </div>
+                <div class="panel-body" style="padding:0">
+                    <h4><span style="font-weight:bold">Education</span><span style="padding-left:10px;"><img src="<?=URL_THEMES.'images/btn_AddEducattion.png';?>"></span></h4>
+                    <div class="col-xs-8"  style="padding:0">
+                        <?php
+                            foreach($Education as $values)
+                            {
+                        ?>
+                        <div style="padding-bottom:10px;">
+                            <span style="font-weight:bold"><?=$values["title"]?></span><br>
+                            <span style="font-size:13px;"><?=$values["institution_name"]?></span><br>
+                            <span style="font-size:13px;">
+                            <?php
+                                $StartDate=date('Y',strtotime($values["startdate"]));
+                                $EndDate=date('Y',strtotime($values["enddate"]));
+                                echo ($StartDate."-".$EndDate)
+                               // echo ($EndDate[year]);
+                            ?>
+                            </span>     
+                          </div>               
+                              <?php
+                            }
+                        ?>
+                    
+                    </div>
                 </div>
             </div>
         </div>
