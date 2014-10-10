@@ -233,7 +233,6 @@ $core = new PR_Api_Core_CandidateClass();
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th>#</th>
                                             <th>Institution Name</th>
                                             <th>Name and Type of Degree Name</th>
                                             <th>Start Year</th>
@@ -253,12 +252,11 @@ $core = new PR_Api_Core_CandidateClass();
                                                 $detailEducation = $core->getCandidateEducation($item['CredentialExperienceID']);
                                         ?>
                                             <tr>
-                                            <td><?=$idx;?></td>
                                             <td><?=$item['institution_name'];?></td>
                                             <td><?=$detailEducation['title'];?></td>
                                             <td><?=$startYear;?></td>
                                             <td><?=$endYear;?></td>
-                                        </tr>
+                                            </tr>
                                         <?php $idx = $idx + 1;} ?>
                                         </tbody>
                                     </table>
