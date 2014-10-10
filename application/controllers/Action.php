@@ -35,10 +35,8 @@ class Application_Controller_Action extends Zend_Controller_Action {
         define('LIMIT_PAGE_LEFT', 10);
         define('LIMIT_PAGE_NUMBER_LEFT', 3);
         
-        define('USER_TYPE_ADMIN', 1);
-        define('USER_TYPE_SCHOOLADMIN', 2);
-        define('USER_TYPE_TEACHER', 3);
-        define('USER_TYPE_STUDENT', 4);
+        define('USER_TYPE_COMPANY', 1);
+        define('USER_TYPE_CANDIDATE', 2);
         
       //  $this->_client = PR_Session::getSession(PR_Session::SESSION_CLIENT);pii
         $this->_client = PR_Session::getSession(PR_Session::SESSION_USER);

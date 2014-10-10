@@ -88,7 +88,8 @@ class PR_Api_Core_Register
                         
             ));
                     }
-                     if($data['usertype']==2)
+                    
+                    if($data['usertype']==2)
                     {
                         $db->insert(PR_Database::TABLE_USER, array(
                         "UserID" => $User_ID,
@@ -99,9 +100,7 @@ class PR_Api_Core_Register
                         "password" => $data['password'],
                         "HeardFrom" => $data['HeardFrom']
                        // "loginname" => $data['loginname']
-                        
-                        
-            ));
+                       ));
                     }
                     
                 }
