@@ -333,24 +333,23 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         //--- userInfo
         $userInfo = $this->getCandidateInfo($userID);
         if(empty($userInfo) || count($userInfo)==0) {
-           return; 
+           return 0; 
         }
         if($userInfo['usertype'] != self::USER_TYPE_CANDIDATE){
-            return;
+            return 0;
         }
         
+        $candidateProfileID = 0;
         if(!empty($userInfo['CandidateProfileID'])) {
-            return;
-        }
-        //print_r($userInfo);
-        
+            $candidateProfileID = $userInfo['CandidateProfileID'];
+        } else {
         $candidateProfileID = PR_Database::insert('candidate_profile',array('usercol1'=>''),true);
         PR_Database::update('user',array('CandidateProfileID'=>$candidateProfileID),
                 "UserID = '$userID'"
         );
-        
-        return;
+        }
+        //print_r($userInfo);
+        return $candidateProfileID;
     }
-    
        
 }
