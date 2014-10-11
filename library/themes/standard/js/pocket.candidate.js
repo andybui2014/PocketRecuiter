@@ -9,6 +9,21 @@ pocketCandidate.prototype = {
     init: function(){
         $('#cmd-next').unbind('click').bind('click',this.next);
         $('#cmd-back').unbind('click').bind('click',this.back);
+        $('#add-another').unbind('click').bind('click',this.addAnother);
+    },
+    addAnother: function(){
+        var $this = $(this);
+        $this.button('loading');
+        //Step Education
+        if($this.attr('data-step')=='education'){
+            $.post('./do-add-education',{data: $('#education-form').serializeArray()},function(xhr){
+                if(xhr.success){
+                    location.reload();
+                }
+            })
+            //console.log(data);
+        }
+        //$this.button('reset');
     },
     back: function(){
         var $this = $(this);

@@ -1,5 +1,7 @@
 <?php
 $helper = $this->layout()->_helper;
+$educationList = $this->list;
+$core = new PR_Api_Core_CandidateClass();
 
 ?>
 <style>
@@ -179,24 +181,21 @@ $helper = $this->layout()->_helper;
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
                         <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
-                    <div class="col-md-8" style="padding-left:0;">
-                        <form id="" role="form">
+                    <div class="col-md-9" style="padding-left:0;">
+                        <form id="education-form" role="form">
                             <div class="form-group">
                                 <label>Institution Name (no abbreviations,please)</label>
-                                <input name="" type="text" class="form-control" id="" placeholder="">
+                                <input name="inst-name" type="text" class="form-control"  placeholder="">
                             </div>
                             <div class="form-group">
                                 <label>Name and Type of Degree Name (no abbreviations,please)</label>
-                                <input name=""  type="text" class="form-control" id="" placeholder="">
+                                <input name="degree-name"  type="text" class="form-control" placeholder="">
                             </div>
-
-
-
                             <div class="col-md-6" style="margin:0;padding:0 50px 0 0">
                                 <div class="form-group">
                                     <label> <strong>Start Year</strong></label>
                                     <div class="input-group date" id="datetimepicker8">
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="start-year" class="form-control">
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                     </div>
@@ -206,31 +205,71 @@ $helper = $this->layout()->_helper;
                                 <div class="form-group">
                                     <label> <strong>End Year</strong></label>
                                     <div class="input-group date" id="datetimepicker9">
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="end-year" class="form-control">
                                     <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                     </span>
                                     </div>
                                 </div>
                             </div>
-
-
-
                             <div class="form-group">
-                                <button type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
+                                <button data-step="education" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
                             </div>
-                            <div style="margin-top: 50px">
-                                <button id="cmd-back" data-back="contact" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
-                                <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                                <button id="cmd-next" type="button" data-next="employment" class="btn btn-success" type="button"><strong>Next</strong></button>
-                            </div>
-
                         </form>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="pull-right">
                             <button class="btn btn-sm btn-default disabled" type="button"><strong><i class="glyphicon glyphicon-chevron-left"></i></strong></button>
                             <button class="btn btn-sm btn-success" type="button"><strong><i class="glyphicon glyphicon-chevron-right"></i></strong></button>
                         </div>
+                    </div>
+                    <div class="col-md-12" style="padding-left:0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>Education List</strong>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Institution Name</th>
+                                            <th>Name and Type of Degree Name</th>
+                                            <th>Start Year</th>
+                                            <th>End Year</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                            foreach($educationList as $item){
+                                                $idx = 0;
+                                                $startYear = null;
+                                                $endYear = null;
+                                                if (($timestamp = strtotime($item['startdate'])) !== false)
+                                                    $startYear = date("Y", $timestamp);
+                                                if (($timestamp = strtotime($item['enddate'])) !== false)
+                                                    $endYear = date("Y", $timestamp);
+                                                $detailEducation = $core->getCandidateEducation($item['CredentialExperienceID']);
+                                        ?>
+                                            <tr>
+                                            <td><?=$item['institution_name'];?></td>
+                                            <td><?=$detailEducation['title'];?></td>
+                                            <td><?=$startYear;?></td>
+                                            <td><?=$endYear;?></td>
+                                            </tr>
+                                        <?php $idx = $idx + 1;} ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 30px">
+                            <button id="cmd-back" data-back="contact" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
+                            <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
+                            <button id="cmd-next" type="button" data-next="employment" class="btn btn-success" type="button"><strong>Next</strong></button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -239,6 +278,6 @@ $helper = $this->layout()->_helper;
 </div>
 <script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
  <script type="text/javascript">
-    $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true });
-    $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true });
+    $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
+    $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
 </script>

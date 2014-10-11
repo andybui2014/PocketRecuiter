@@ -23,6 +23,7 @@ class PR_Api_User extends Zend_Db_Table_Abstract
     private $PostalCode;
     private $Country;
     private $HeardFrom;
+    private $Lastsigned;
     
     
     protected $authenticate = false;
@@ -175,7 +176,15 @@ class PR_Api_User extends Zend_Db_Table_Abstract
 	{
 	    return $this->UserName;
     }
-	
+	public function UpdateLastsigned($userID)
+    {
+        $Lastsigned=date('Y-m-d H:i:s');
+        PR_Database::update('user',array('Lastsigned'=>$Lastsigned),
+                "UserID = '$userID'"
+        );
+
+        return;
+    }
     
     
 

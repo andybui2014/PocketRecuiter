@@ -41,6 +41,9 @@ class CandidateController extends Application_Controller_Action
                     $this->render('profile-builder/contact');
                     break;
                 case 'education':
+                    $core = new PR_Api_Core_CandidateClass();
+                    $list = $core->getCandidateEducationList($client['UserID']);
+                    $this->view->list = $list;
                     $this->view->stepCount = '2/5 Steps';
                     $this->render('profile-builder/education');
                     break;
@@ -76,31 +79,27 @@ class CandidateController extends Application_Controller_Action
     public function stepNextContactAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
-
         $ajaxRes = array('success'=>0,'info'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
-
             $params = $this->getRequest()->getParams();
-            $data = $params['data'];
-
-            if(!empty($data)){
-
-                $arrData = array();
-                foreach($data as $key=>$item){
-                    if($item['name']=='firstname')  $arrData['firstname']= $item['value'];
-                    if($item['name']=='lastname')   $arrData['lastname']= $item['value'];
-                    if($item['name']=='email')      $arrData['emailaddress']= $item['value'];
-                    if($item['name']=='phone')      $arrData['PhoneNumber']= $item['value'];
-                    if($item['name']=='url')        $arrData['URL']= $item['value'];
-                    if($item['name']=='city')       $arrData['City']= $item['value'];
-                    if($item['name']=='country')    $arrData['Country']= $item['value'];
-                    if($item['name']=='zipcode')    $arrData['PostalCode']= $item['value'];
-                }
+            if(!empty($params['data']) && sizeof($params['data'])){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
-                $core = new PR_Api_Core_CandidateClass();
-                $core->saveContactInfo($client['UserID'],$arrData);
-                $ajaxRes['success'] = 1;
 
+                $instName = null;
+                $degreeName = null;
+                $startYear = null;
+                $endYear = null;
+
+                foreach($params['data'] as $item){
+                    if($item['name']=='inst-name')      $instName = $item['value'];
+                    if($item['name']=='degree-name')    $degreeName = $item['value'];
+                    if($item['name']=='start-year')     $startYear = $item['value'];
+                    if($item['name']=='end-year')       $endYear = $item['value'];
+                }
+                $core = new PR_Api_Core_CandidateClass();
+                $isSuccess = $core->addCandidateEducation($client['UserID'],$instName,$degreeName,$startYear,$endYear);
+
+                if($isSuccess) $ajaxRes['success'] = 1;
             }
         }
         $response = $this->getResponse();
@@ -110,21 +109,43 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
     }
+
+   
+    
     public function profileAction(){
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
         $emailaddress = $client["emailaddress"];
         $password = $client["password"];
-         $Api = new PR_Api_User();
+        $Api = new PR_Api_User();
         $authData = array('emailaddress' => $emailaddress, 'password' => $password);
-        
-        $this->view->client = $Api->getUserArray($authData);
-       
+        $getUserArray=$Api->getUserArray($authData);
+        $this->view->client = $getUserArray;
+        $api_candidate= new PR_Api_Core_CandidateClass();
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"];
+        $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
+        $SkillName=array();
+        foreach($getCandidates["SkillName"] as $key=>$values )
+        {
+           $SkillName[$key]=$values;   
+        }
+        $this->view->SkillName=$SkillName;
+        $CandidateEmployment=array();
+        foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
+        {
+           $CandidateEmployment[$key]=$values;   
+        }
+        $this->view->CandidateEmployment=$CandidateEmployment;
+        $Education = $api_candidate->getCandidateEducationList(2); 
+        $this->view->Education=$Education;
+         
+       // echo ("getUserArray:<pre>");print_r($Education);echo("</pre>");
         $this->render('profile');
-        //$api=new PR_Api_Core_Skill();
-        //$skill= $api->getSkillArray('5');
-        //echo ("Skill:<pre>");print_r($skill);echo("</pre>");
         
         
-    }
+        
      
+}
+
 }
