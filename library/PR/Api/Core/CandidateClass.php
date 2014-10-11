@@ -203,6 +203,109 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $records;
     }
     
+    public function deleteCandidateEducation($CredentialExperienceID)
+    {
+        $db = PR_Database::getInstance();
+        $criteria = "CredentialExperienceID = '$CredentialExperienceID'";
+        $result = $db->delete('credentialexperience', $criteria);      
+        return $result;  
+    }
+    /************************************************************************************/
+    /********************************* Candidate Employment *****************************/    
+    public function getCandidateEmployments($userID)
+    {
+        //candidate_employments:CandidateEmploymentID,CandidateProfileID,CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
+        
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('caem'=>'candidate_employments'), 
+            array('CandidateEmploymentID','CandidateProfileID','CompanyName','PostionHeld','StartDate','EndDate','Description','LastUpdated','LastUpdatedByUserID')
+        );
+        $select->join(array('u'=>'user'),
+            'u.CandidateProfileID = caem.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("u.UserID = '$userID'");
+        $select->where("u.usertype = 2");
+        $records = PR_Database::fetchAll($select);
+        return $records;        
+    }
+    
+    public function getCandidateEmployment($CandidateEmploymentID)
+    {
+        //candidate_employments:CandidateEmploymentID,CandidateProfileID,CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('caem'=>'candidate_employments'), 
+            array('CandidateEmploymentID','CandidateProfileID','CompanyName','PostionHeld','StartDate','EndDate','Description','LastUpdated','LastUpdatedByUserID')
+        );
+        $select->join(array('u'=>'user'),
+            'u.CandidateProfileID = caem.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("caem.CandidateEmploymentID = '$CandidateEmploymentID'");
+        $records = PR_Database::fetchAll($select);
+        if(count($records)>0){
+            return $records[0];
+        } else {
+            return null;
+        }
+    }
+    
+    public function addCandidateEmployment($userID,$companyName,$position,
+        $startDate,$endDate,$description)
+    {
+        //candidate_employments:CandidateEmploymentID,CandidateProfileID,
+        //CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
+        $candidateInfo = $this->getCandidateInfo($userID);
+        if(count($candidateInfo)==0){
+            return 0;
+        }
+        
+        $candidateProfileID = $candidateInfo['CandidateProfileID'];
+        if(empty($candidateProfileID)){
+            $candidateProfileID = $this->createCandidateProfileID($userID);
+        }
+        
+        $updateFields = array('CandidateProfileID'=>$candidateProfileID,
+            'CompanyName'=>$companyName,'PostionHeld'=>$position,'Description'=>$description,
+            'LastUpdated'=>date("Y-m-d H:i:s"),'LastUpdatedByUserID'=>$userID
+        );
+        
+        if(!empty($startDate)){
+            $updateFields['StartDate'] = date("Y-m-d",strtotime($startDate));
+        }
+        
+        if(!empty($endDate)){
+            $updateFields['EndDate'] = date("Y-m-d",strtotime($endDate));
+        }
+        $CandidateEmploymentID = PR_Database::insert('candidate_employments',$updateFields,true);
+    }
+    
+    public function updateCandidateEmployment($CandidateEmploymentID,$companyName,$position,
+        $startDate,$endDate,$description)
+    {
+        $candidateEmploymentInfo = $this->getCandidateEmployment($CandidateEmploymentID);  
+        
+        //candidate_employments:CandidateEmploymentID,CandidateProfileID,
+        //CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID        
+        $updateFields = array('CompanyName'=>$companyName, 'PostionHeld'=>$position,'Description'=>$description);
+        if(!empty($startDate)){
+            $updateFields['StartDate'] = date("Y-m-d",strtotime($startDate));
+        }
+        
+        if(!empty($endDate)){
+            $updateFields['EndDate'] = date("Y-m-d",strtotime($endDate));
+        }
+        
+        $criteria = "CandidateEmploymentID = '$CandidateEmploymentID'";        
+        $result = PR_Database::update('candidate_employments',$updateFields,$criteria);        
+        return $result;
+    }
+    
+    
+    /************************************************************************************/
+    /*************************************** Candidate Info *****************************/    
     public function getCandidateInfo($userID)
     {
         //user: UserID,usertype,CandidateProfileID
@@ -224,23 +327,23 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         //--- userInfo
         $userInfo = $this->getCandidateInfo($userID);
         if(empty($userInfo) || count($userInfo)==0) {
-           return; 
+           return 0; 
         }
         if($userInfo['usertype'] != self::USER_TYPE_CANDIDATE){
-            return;
+            return 0;
         }
         
+        $candidateProfileID = 0;
         if(!empty($userInfo['CandidateProfileID'])) {
-            return;
+            $candidateProfileID = $userInfo['CandidateProfileID'];
+        } else {
+            $candidateProfileID = PR_Database::insert('candidate_profile',array('usercol1'=>''),true);
+            PR_Database::update('user',array('CandidateProfileID'=>$candidateProfileID),
+                    "UserID = '$userID'"
+            );            
         }
         //print_r($userInfo);
-        
-        $candidateProfileID = PR_Database::insert('candidate_profile',array('usercol1'=>''),true);
-        PR_Database::update('user',array('CandidateProfileID'=>$candidateProfileID),
-                "UserID = '$userID'"
-        );
-        
-        return;
+        return $candidateProfileID;
     }
     
        
