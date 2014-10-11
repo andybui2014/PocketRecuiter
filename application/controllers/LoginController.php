@@ -34,7 +34,9 @@ class LoginController extends Application_Controller_Action {
             $user = PR_Session::getSession(PR_Session::SESSION_USER);
             //echo("user:");print_r($user);die();
             $userID = $user['UserID'];
-            
+            //update Lastsigned
+           // echo ("userID:".$userID);
+            $userApi->UpdateLastsigned($userID);
             $return['success'] = 1;
             $return['usertype'] = $user["usertype"];
             
