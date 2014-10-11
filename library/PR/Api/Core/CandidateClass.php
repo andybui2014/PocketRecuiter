@@ -310,6 +310,78 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $result = $db->delete('candidate_employments', $criteria);      
         return $result;  
     }
+    
+   public function getCandidatePortfolio($CandidatePortfolioID)
+    {
+        //candidate_employments:CandidateEmploymentID,CandidateProfileID,CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('capfl'=>'candidate_portfolio'), 
+            array('CandidatePortfolioID','CandidateProfileID','Title','URL','Description','IconURL')
+        );
+        $select->join(array('u'=>'user'),
+            'u.CandidateProfileID = capfl.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("capfl.CandidatePortfolioID = '$CandidatePortfolioID'");
+        $records = PR_Database::fetchAll($select);
+        if(count($records)>0){
+            return $records[0];
+        } else {
+            return null;
+        }
+    }
+    public function addCandidatePortfolio($userID,$title,$url,
+        $description,$iconURL)
+    {
+        
+        $candidateInfo = $this->getCandidateInfo($userID);
+        if(count($candidateInfo)==0){
+            return 0;
+        }
+        
+        $candidateProfileID = $candidateInfo['CandidateProfileID'];
+        if(empty($candidateProfileID)){
+            $candidateProfileID = $this->createCandidateProfileID($userID);
+        }
+        
+        $updateFields = array('CandidateProfileID'=>$candidateProfileID,
+            'Title'=>$title,'URL'=>$url,'Description'=>$description,
+            'IconURL'=>$iconURL);
+        
+        
+        $CandidatePortfolioID = PR_Database::insert('candidate_portfolio',$updateFields,true);
+        return $CandidatePortfolioID;
+    }
+   public function updateCandidatePortfolio($CandidatePortfolioID,$title,$url,
+        $description,$iconURL)
+    {
+        $candidatePortfolioInfo = $this->getCandidatePortfolio($CandidatePortfolioID);  
+        
+        $updateFields = array('Title'=>$title, 'URL'=>$url,'Description'=>$description,"IconURL"=>$iconURL);
+       
+        
+        $criteria = "CandidatePortfolioID = '$CandidatePortfolioID'";        
+        $result = PR_Database::update('candidate_portfolio',$updateFields,$criteria);        
+        return $result;
+    }
+    public function updateCandidatePortfolioUrl($CandidatePortfolioID,$iconURL)
+    {
+        
+        PR_Database::update('candidate_portfolio',array('IconURL'=>$iconURL),
+                "CandidatePortfolioID = '$CandidatePortfolioID'"
+        );
+
+        return;
+    }
+   public function deleteCandidatePortfolio($CandidatePortfolioID)
+    {
+        $db = PR_Database::getInstance();
+        $criteria = "CandidatePortfolioID = '$CandidatePortfolioID'";
+        $result = $db->delete('candidate_portfolio', $criteria);      
+        return $result;  
+    }
+    
     /************************************************************************************/
     /*************************************** Candidate Info *****************************/    
     public function getCandidateInfo($userID)
@@ -351,5 +423,6 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         //print_r($userInfo);
         return $candidateProfileID;
     }
+       
        
 }
