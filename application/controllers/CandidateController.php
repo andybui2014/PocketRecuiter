@@ -112,7 +112,7 @@ class CandidateController extends Application_Controller_Action
 
    
     
-    public function profileAction(){
+    public function profileAction()
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $UserID=$client["UserID"];
         $emailaddress = $client["emailaddress"];
@@ -125,12 +125,13 @@ class CandidateController extends Application_Controller_Action
         $Candidateprofile_ID=$getUserArray["CandidateProfileID"];
         $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
         $this->view->getCandidates=$getCandidates;
-        $SkillName=array();
-        foreach($getCandidates["SkillName"] as $key=>$values )
+        $SkillName=$api_candidate->getList_CandidateSkills($UserID);
+        $Skills=array();
+        foreach($SkillName as $key=>$values )
         {
-           $SkillName[$key]=$values;   
+           $Skills[$key]=$values;   
         }
-        $this->view->SkillName=$SkillName;
+        $this->view->SkillName=$Skills;
         $CandidateEmployment=array();
         foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
         {
