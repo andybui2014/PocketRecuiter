@@ -140,7 +140,7 @@ class CandidateController extends Application_Controller_Action
         $Education = $api_candidate->getCandidateEducationList(2); 
         $this->view->Education=$Education;
          
-       // echo ("getUserArray:<pre>");print_r($Education);echo("</pre>");
+      //  echo ("getUserArray:<pre>");print_r($getCandidates);echo("</pre>");
         $this->render('profile');
         
         

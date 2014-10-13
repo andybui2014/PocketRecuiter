@@ -26,13 +26,14 @@ class PR_Api_Core_CandidateExtClass
         $records = PR_Database::fetchAll($select);
         return $records;
     }
-    public function getCandidateEmployments($CandidateProfileID)
+    public function getCandidate_Employments($CandidateProfileID)
     {
 
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from(array('candidate_employments'),array('*'));        
+        $select->from(array('candidate_employments'),array('CandidateEmploymentID','CandidateProfileID','CompanyName','PostionHeld','StartDate','EndDate','Description','LastUpdated','LastUpdatedByUserID'));        
         $select->where("CandidateProfileID = '$CandidateProfileID'");
+		//print_r($select->__tostring());die();
         $records = PR_Database::fetchAll($select);
         return $records;
     }
@@ -55,7 +56,7 @@ class PR_Api_Core_CandidateExtClass
                 $retArray[$key] = $val;
             }    
             $retArray['SkillName'] = $this->getcandidateskill($Candidateprofile_ID);  
-            $retArray['CandidateEmploymentID'] = $this->getCandidateEmployments($Candidateprofile_ID);  
+            $retArray['CandidateEmploymentID'] = $this->getCandidate_Employments($Candidateprofile_ID);  
            // $retArray['CredentialExperienceID'] = $this->getcandidateEducation($Candidateprofile_ID);       
             return $retArray;
         }
