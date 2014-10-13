@@ -422,7 +422,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
    public function saveCandidateSkills($userID,$CandidateSkillID, $skillIDs)
    {
        $candidatesInfo = $this->getCandidateInfo($userID);
-      // echo("testt:<pre>")  ;print_r($candidateskillInfo);echo("</pre>");
+     
        $CandidateProfileID=$candidatesInfo["CandidateProfileID"];
       
       //--- select current skills
