@@ -282,4 +282,69 @@ class PR_Api_Core_CareerClass
         return $isUsing;                 
     }
     
+    public function getCandidateProfiles_byProfileIDs($profileIDs)
+    {
+      if(is_array($profileIDs) && count($profileIDs)==0){
+            return null;
+      }
+
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('p'=>'candidate_profile'),
+             array('CandidateProfileID','minimumsalary','maximumsalary','tralveldistanceinmiles','overview','image')
+        );
+       $select->join(array('u'=>'user'),
+           'u.CandidateProfileID = p.CandidateProfileID',
+           array('firstname','lastname','Address1'));
+       if(!empty($profileIDs) && count($profileIDs)>0){
+       $select->where("p.CandidateProfileID IN (".implode(',',$profileIDs).")");
+      }
+
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            return $records;
+        }
+
+    }
+    public function getCandidateProfileIDsForCareerMatch($keyword,$skillIDs)
+    {
+        //candidate_profile: CandidateProfileID,keywords
+        //candidate_skill: CandidateProfileID,SkillID
+
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('p'=>'candidate_profile'),array('CandidateProfileID'));
+        $select->join(array('sk'=>'candidate_skill'),
+            'sk.CandidateProfileID = p.CandidateProfileID',
+            array()
+        );
+
+        if(count($skillIDs)>0){
+            $select->where("sk.SkillID IN (".implode(',',$skillIDs).")");
+        }
+
+        if(!empty($keyword)){
+            $keyword = "'".trim($keyword)."'";
+            $select->where("p.keywords LIKE \"%$keyword%\"");
+           //$select->where("p.keywords LIKE ?", "%".$keyword."%");
+
+        }
+
+        $select->distinct();
+        $records = PR_Database::fetchAll($select);
+
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $rec){
+                $list[] = $rec['CandidateProfileID'];
+            }
+            return $list;
+        }
+    }
+
+
 }

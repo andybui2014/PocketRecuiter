@@ -1,0 +1,261 @@
+<div class="content">
+<script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<script>
+    var careerMatch = new career();
+    function loadKeyword(){
+       if($("#searchSkill option:selected").val() =="999999999"){
+           $('#TextboxSkillHoS').show();
+           $('#selectSkillHoS').hide();
+       }
+    }
+</script>
+<style>
+ .clWidth100{width: 100px;}
+ .clWidth200{width: 200px;}
+ .clWidth300{width: 300px;}
+ .clWidth600{width: 600px;}
+ .clWidth800{width: 800px;}
+ .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
+ .bgcolor-ligh-gray {background-color: #fcfcfc;}
+ .bgcolor-ligh-gray {background-color: #fcfcfc;}
+ .messageActive {font-weight: bold}
+ .messageDeActive {color:#ccc}
+
+ .borderbottom_Gray {
+     border-bottom: 1px solid #ccc;
+ }
+
+ .label-tag{
+     border: 1px solid #ddd; padding: 3px;
+     background-color: #eee;
+     color: #000;
+     -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+     border-radius: 5px;
+     margin-right: 10px;margin-bottom: 5px;
+ }
+
+
+ .border_radius_careermatch {
+     background-color: #fff;
+     background-image: none;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+     color: #555;
+     display: block;
+     font-size: 14px;
+     line-height: 1.42857;
+     //padding: 6px 12px;
+     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+     width: 90px;
+    }
+</style>
+
+    <!--Modal-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="openModalSkill" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Select Skill</h2>
+            </div>
+            <div class="modal-body login-modal">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <select id="selectSkillToSearch" class="form-control">
+                                <option value="">Select Skill</option>
+                                <?php
+                                $SkillList = $this->skillList;
+                                foreach ($SkillList as $k=>$skillInfo) {
+                                    ?>
+                                    <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
+                                <?php
+                                }
+
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <button style="background-color:#fff; border:#fff">&nbsp;</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--END-->
+    <div class="container">
+
+    <div style="height:80px; color: #2a6496" class="col-md-12">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -60px"><label>Career Match</label> </h3></div>
+                <div class="col-md-6" style="text-align: right">
+                    <button style="margin-top:15px; margin-right: -55px;background-color: #7aac34" class="btn btn-success" type="button"><strong>Post Job</strong></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px">
+        <div class="col-md-7" style="background-color: #fffbe0; border: 1px solid #e1b903; min-height: 176px">
+        <form id="form-careermatch" name="form-careermatch">
+            <div class="col-md-12" style="margin-top:16px; margin-left:-25px">
+                 <div class="col-md-12" style="padding-left:0px">
+                    <div class="col-md-8" style="padding-right:0px">
+                        <input type="text"  class="form-control" name="keyword" value="" placeholder="-Keyword-">
+                    </div>
+                    <div class="col-md-4">
+                        <button style="background-color: #7aac34; border: 1px solid #7aac34" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#openModalSkill" data-loading-text="Loading...">Add Skills</button>
+                    </div>
+                </div>
+
+                <div class="col-md-12" id="addSkillandKeyword" style="min-height: 74px; padding-top: 10px">
+
+                </div>
+                <div class="col-md-12" style="margin-bottom: -10px">
+                    <button  type="button" class="btn btn-sm btn-primary"  data-loading-text="Loading..." onclick="javascript:careerMatch.careerMatchSearch()">Search</button>
+                </div>
+            </div>
+         </form>
+            <div style="float:right; margin-right: -16px"><img src="<?=URL_THEMES?>images/bg_yellow_text.png"></div>
+        </div>
+        <div class="col-md-5">
+            <img src="<?=URL_THEMES?>images/PremiumAccount.jpg ?>">
+        </div>
+
+    </div>
+
+    <div class="col-md-12" style="background-color: #fff; min-height:374px; height: auto;border: 1px solid #ccc; margin-top: 20px">
+        <div style="height: 20px!important;"></div>
+        <!-- table-->
+        <table border="0" style="width: 100%">
+            <tr>
+                <td style="width:220px; border-right:1px solid #ccc ">
+                    <div class="col-md-12" style="margin-top:-2px;">
+                        <div><label>All Catogories</label></div>
+                        <div><label style="color: #1a5187">IT & Programming</label></div>
+                        <div>Design & Multimedia</div>
+                        <div>Writing & Translation</div>
+                        <div>Sale & Marketing</div>
+                        <div>Admin Support</div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>All Career Types</label></div>
+                        <div>Fixed Price</div>
+                        <div>Hourly</div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Any Budget</label></div>
+                        <div>Specific Budget</div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>All Locations</label></div>
+                        <div>Region</div>
+                        <div>Country</div>
+                        <div>Specific Location</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Any Time Left</label></div>
+                        <div>Less than 24 hours left</div>
+                        <div>Less than 3 days left</div>
+                        <div>Less than 7 days left</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Any Posted Date</label></div>
+                        <div>Posted within 24 hours</div>
+                        <div>Posted within 3 days</div>
+                        <div>Posted within 7 days</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>All Career Options</label></div>
+                        <div class="col-md-12" style="padding-left: 0px;padding-right: 0px">
+                            <div class="col-md-5" style="margin-left: -15px"><input type="checkbox"> Only</div>
+                            <div class="col-md-6 border_radius_careermatch"><strong style="color: #1a5187">Featured</strong></div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Status Open</label></div>
+                        <div style="color: #1a5187; font-weight: bold">Any Status</div>
+                        <div>Hiring Open</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Group</label></div>
+                        <div style="color: #1a5187; font-weight: bold">No Group</div>
+                        <div>Selected Group</div>
+                    </div>
+                </td>
+                <td style="vertical-align: top" class="containerData">
+                    <div class="col-md-12">
+                        <?php
+                        $result = $this->result;
+                        if($result!="") {
+                            foreach($result as $k=>$candidateInfo) {
+                            if($candidateInfo['image']==""){
+                               $image= 'avatar_nonex44.jpg';
+                            } else{
+                                $image = $candidateInfo['image'];
+                            }
+                            ?>
+                            <div class="col-md-12 borderbottom_Gray" >
+                                <div class="col-md-12" >
+                                    <div class="col-md-1" style="margin-left: -45px"> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
+                                    <div class="col-md-11" style="margin-left: -25px">
+                                        <div class="col-md-12" style="color: #1a5187"><strong><?=$candidateInfo['firstname']?> &nbsp; <?=$candidateInfo['lastname']?></strong></div>
+                                        <div class="col-md-12"><strong>Expected Salary : &nbsp; <?=$candidateInfo['minimumsalary']?> &nbsp; <?=$candidateInfo['maximumsalary']?></strong></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" style="margin-left:-30px">
+                                    <div style="height:10px!important;"></div>
+                                    <?=$candidateInfo['overview']?>
+                                </div>
+                                <div class="col-md-12" style="margin-left:-30px">
+                                  <span style="color: #1a5187" class="glyphicon glyphicon-play"></span><span style="color: #1a5187">Read more</span>
+                                </div>
+                                <div class="col-md-12" style="margin-left:-30px">
+                                    <div style="height:10px!important;"></div>
+                                    <span><strong>Skills:</strong></span>
+                                </div>
+                                <div class="col-md-12" style="margin-left:-30px">
+                                    <div style="height:10px!important;"></div>
+                                    <span><img src="<?=URL_THEMES?>images/USA_flag.jpg ?>"> <strong>Unied States</strong></span>
+                                    <span>|&nbsp;<?=$candidateInfo['Address1']?>|&nbsp;<strong>Distance:</strong> <?=$candidateInfo['tralveldistanceinmiles']?></span>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <button style="margin-top:15px; margin-right: -31px;" class="btn btn-primary" type="button"><strong>Contact</strong></button>
+                                </div>
+                                <div class="col-md-12" style="margin-left:-30px">
+                                    <div style="height:10px!important;"></div>
+                                </div>
+                            </div>
+                            <?php
+                            }
+                        }
+                        ?>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <!-- table -->
+    </div>
+    <div style="clear: both"</div>
+    <div style="height: 40px;background-color: #333"> </div>
+</div>
+<script>
+    $(document).ready(function(){
+       $("#selectSkillToSearch").unbind("change").bind("change",careerMatch.selectSkillToSearch)
+      // $("#Add_selectSkill").unbind("click").bind("click",careerMatch.addSelectSkill)
+     //  $("#Add_keyword").unbind("click").bind("click",careerMatch.addKeyWord)   //
+    })
+</script>
+</div>
+
+
