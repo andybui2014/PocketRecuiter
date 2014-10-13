@@ -280,6 +280,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             $updateFields['EndDate'] = date("Y-m-d",strtotime($endDate));
         }
         $CandidateEmploymentID = PR_Database::insert('candidate_employments',$updateFields,true);
+		return $CandidateEmploymentID;
     }
     
     public function updateCandidateEmployment($CandidateEmploymentID,$companyName,$position,
