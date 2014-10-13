@@ -113,6 +113,7 @@ class CandidateController extends Application_Controller_Action
    
     
     public function profileAction()
+	{
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $UserID=$client["UserID"];
         $emailaddress = $client["emailaddress"];
@@ -140,9 +141,11 @@ class CandidateController extends Application_Controller_Action
         $this->view->CandidateEmployment=$CandidateEmployment;
         $Education = $api_candidate->getCandidateEducationList(2); 
         $this->view->Education=$Education;
-         
+       // $a=$api_candidate->getList_CandidateSkills($UserID) ; 
+       //  echo("test:<pre>");print_r($a);echo("</pre>"); 
       //  echo ("getUserArray:<pre>");print_r($getCandidates);echo("</pre>");
         $this->render('profile');
+		 
         
         
         
