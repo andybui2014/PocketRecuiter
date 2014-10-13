@@ -483,6 +483,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         );
         $select->where("us.UserID = '$userID'");
         $select->where("us.usertype = 2"); 
+        $select->where("sk.Level = 0"); 
         $records = PR_Database::fetchAll($select);
         if(count($records)>0){
             return $records;
