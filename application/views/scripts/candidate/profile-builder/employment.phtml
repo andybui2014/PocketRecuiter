@@ -3,6 +3,10 @@ $helper = $this->layout()->_helper;
 
 ?>
 <style>
+    .btn-edit:hover{cursor: pointer;text-decoration: underline}
+    .qst-remove{color: #bbb}
+    .qst-remove:hover{color: #333; cursor: pointer}
+
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
     ul#nav-left a{color: #777}
@@ -179,16 +183,17 @@ $helper = $this->layout()->_helper;
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
                         <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
-                    <div class="col-md-8" style="padding-left:0;">
+                    <div class="col-md-9" style="padding-left:0;">
 
-                        <form id="" role="form">
+                        <form id="employment-form" role="form">
+                            <input type="hidden" name="empId" id="empId"/>
                             <div class="form-group">
                                 <label>Company Name (no abbreviations,please)</label>
-                                <input name="" type="text" class="form-control" id="" placeholder="">
+                                <input name="companyName" type="text" class="form-control" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label>Position Held</label>
-                                <input name=""  type="text" class="form-control" id="" placeholder="">
+                                <input name="posotionHeld"  type="text" class="form-control" placeholder="">
                             </div>
 
 
@@ -197,7 +202,7 @@ $helper = $this->layout()->_helper;
                                 <div class="form-group">
                                     <label> <strong>Start Date</strong></label>
                                     <div class="input-group date" id="datetimepicker8">
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="startDate" class="form-control">
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                     </div>
@@ -207,7 +212,7 @@ $helper = $this->layout()->_helper;
                                 <div class="form-group">
                                     <label> <strong>End Date</strong></label>
                                     <div class="input-group date" id="datetimepicker9">
-                                        <input type="text" class="form-control">
+                                        <input type="text" name="endDate" class="form-control">
                                     <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                     </span>
                                     </div>
@@ -217,26 +222,91 @@ $helper = $this->layout()->_helper;
                             <div class="form-group">
                                 <label><strong>Description (optional)</strong></label>
 
-                                <textarea class="form-control"></textarea>
+                                <textarea id="empDesc" name="description" class="form-control"></textarea>
                             </div>
 
 
                             <div class="form-group">
-                                <button type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
+                                <button data-status="add" data-step="employment" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
                             </div>
-                            <div style="margin-top: 50px">
-                                <button id="cmd-back" data-back="education" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
-                                <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                                <button id="cmd-next" data-next="skills" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
-                            </div>
+
+
 
                         </form>
 
                     </div>
-                    <div class="col-md-4">
+
+                    <div class="col-md-3">
                         <div class="pull-right">
                             <button class="btn btn-sm btn-default disabled" type="button"><strong><i class="glyphicon glyphicon-chevron-left"></i></strong></button>
                             <button class="btn btn-sm btn-success" type="button"><strong><i class="glyphicon glyphicon-chevron-right"></i></strong></button>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="padding-left:0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>Employment List</strong>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+
+                                    <table id="employmentList" class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Company Name</th>
+                                            <th>Position Held</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Description</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach($this->list as $key=>$item){ ?>
+                                            <tr>
+                                                <td><span><?=$item['CompanyName'];?></span></td>
+                                                <td><span>
+                                                        <?=$item['PostionHeld'];?>
+                                                    </span></td>
+                                                <td>
+                                                    <?php
+                                                        if (($timestamp = strtotime($item['StartDate'])) !== false)
+                                                            $startDate = date("m/d/Y", $timestamp);
+                                                        echo '<span>'.$startDate.'</span>';
+                                                    ?>
+                                                </td>
+
+                                                <td>
+                                                    <?php
+                                                    if (($timestamp = strtotime($item['EndDate'])) !== false)
+                                                        $startDate = date("m/d/Y", $timestamp);
+                                                    echo '<span>'.$startDate.'</span>';
+                                                    ?>
+                                                </td>
+                                                <td>
+
+                                                    <?php
+                                                        $string = $item['Description'];
+                                                        $string = (strlen($string) > 13) ? substr($item['Description'],0,10).'...' : $string;
+                                                        echo '<span>'.$string.'</span>';
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <span class="btn-edit" data-id="<?=$item['CandidateEmploymentID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                                    <span><i data-text="<?=$item['CompanyName'];?>" data-id="<?=$item['CandidateEmploymentID'];?>" class="glyphicon glyphicon-remove qst-remove"></i></span>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 30px">
+                            <button id="cmd-back" data-back="education" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
+                            <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
+                            <button id="cmd-next" data-next="skills" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
                         </div>
                     </div>
                 </div>
@@ -248,4 +318,9 @@ $helper = $this->layout()->_helper;
 <script type="text/javascript">
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true });
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true });
+   //======
+    var prCandidate= new pocketCandidate();
+    $('#employmentList .btn-edit').unbind('click').bind('click',prCandidate.editEmployment);
+    $('#employmentList .qst-remove').unbind('click').bind('click',prCandidate.deleteEmployment);
+
 </script>
