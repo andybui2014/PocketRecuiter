@@ -118,7 +118,7 @@ class CareerController extends Application_Controller_Action
         $title = $request->getParam("careername","");
         $OppCompanyID = $request->getParam("CompanyID","");
         $careerdescription = $request->getParam("careerdescription", "");
-        $status = 1;
+        $status = $request->getParam("status", "");
         $industry = $request->getParam("industry", "");
         $jobtype = $request->getParam("jobtype", "");
         $duration = $request->getParam("duration", "");
@@ -179,7 +179,7 @@ class CareerController extends Application_Controller_Action
         $title = $request->getParam("careername","");
         $OppCompanyID = $request->getParam("CompanyID","");
         $careerdescription = $request->getParam("careerdescription", "");
-        $status = 1;
+        $status = $request->getParam("status", "");
         $industry = $request->getParam("industry", "");
         $jobtype = $request->getParam("jobtype", "");
         $duration = $request->getParam("duration", "");
@@ -288,15 +288,58 @@ class CareerController extends Application_Controller_Action
         $request = $this->getRequest();
         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
         $CompanyID = $sestionClient['CompanyID'];
-        $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
-        $getListOpp_com = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
 
+        $request = $this->getRequest();
+        $skilIDSear = $request->getParam("skilIDSear","");
+        $keyword = $request->getParam("keyword","");
 
-        //echo "<pre>";
-        // echo "<pre>";
-       //   print_r("");
-       //  echo "</pre>"; die();
+        if(empty($skilIDSear)){
+            $skilIDSear =array();
+        }
 
-       // $this->view->getListOpp = $getListOpp;
+        if(empty($keyword)) {
+            $keyword = "";
+        }
+
+        $list_PR_Api = new PR_Api_Core_CareerClass();
+        $skillList = $list_PR_Api->getListSkill();
+
+        $list_PR_Api = new PR_Api_Core_CareerClass();
+        $candidateList = array();
+        $candidateList = $list_PR_Api->getCandidateProfileIDsForCareerMatch($keyword,$skilIDSear);
+        $result = $list_PR_Api->getCandidateProfiles_byProfileIDs($candidateList);
+       // echo "<pre>";
+        //  print_r($result);
+       // echo "</pre>"; die();
+        $this->view->skillList = $skillList;
+        $this->view->result = $result;
+
+        ////
     }
+/*
+    public function doSearchCareerAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $skilIDSear = $request->getParam("skilIDSear","");
+        $keyword = $request->getParam("keyword","");
+
+        if(empty($skilIDSear)){
+            $skilIDSear =array();
+        }
+
+        if(empty($keyword)) {
+            $keyword = "";
+        }
+
+        $list_PR_Api = new PR_Api_Core_CareerClass();
+        $candidateList = array();
+        $candidateList = $list_PR_Api->getCandidateProfileIDsForCareerMatch($keyword,$skilIDSear);
+        $result = $list_PR_Api->getCandidateProfiles_byProfileIDs($candidateList);
+
+        $this->view->result = $result;
+    }
+*/
+
+
 }
