@@ -311,7 +311,23 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $result = $db->delete('candidate_employments', $criteria);      
         return $result;  
     }
-    
+    public function getListCandidatePortfolio($userID)
+    {        
+        
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('capfl'=>'candidate_portfolio'), 
+            array('CandidatePortfolioID','CandidateProfileID','Title','URL','Description','IconURL')
+        );
+        $select->join(array('u'=>'user'),
+            'u.CandidateProfileID = capfl.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("u.UserID = '$userID'");
+        $select->where("u.usertype = 2");
+        $records = PR_Database::fetchAll($select);
+        return $records;        
+    } 
    public function getCandidatePortfolio($CandidatePortfolioID)
     {
         //candidate_employments:CandidateEmploymentID,CandidateProfileID,CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
