@@ -3,6 +3,10 @@ $helper = $this->layout()->_helper;
 
 ?>
 <style>
+    .btn-edit:hover{cursor: pointer;text-decoration: underline}
+    .qst-remove{color: #bbb}
+    .qst-remove:hover{color: #333; cursor: pointer}
+
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
     ul#nav-left a{color: #777}
@@ -179,44 +183,87 @@ $helper = $this->layout()->_helper;
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
                         <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
-                    <div class="col-md-8" style="padding-left:0;">
+                    <div class="col-md-9" style="padding-left:0;">
 
-                        <form id="" role="form">
+                        <form id="portfolio-form" role="form">
+                            <input type="hidden" name="portId" id="empId"/>
                             <div class="form-group">
                                 <label>Title</label>
-                                <input name="" type="text" class="form-control" id="" placeholder="">
+                                <input name="title" type="text" class="form-control" placeholder="">
                             </div>
                             <div class="form-group">
                                 <label>URL (if any)</label>
-                                <input name=""  type="text" class="form-control" id="" placeholder="">
+                                <input name="url"  type="text" class="form-control" placeholder="">
+                                <img style="width: 20px;height: 20px; display: none" id="imgTest"/>
                             </div>
-
-
-
-
-
                             <div class="form-group">
                                 <label><strong>Description (optional)</strong></label>
 
-                                <textarea class="form-control"></textarea>
+                                <textarea id="portDesc" name="description" class="form-control"></textarea>
                             </div>
 
 
                             <div class="form-group">
-                                <button type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
-                            </div>
-                            <div style="margin-top: 50px">
-                                <button id="cmd-back" data-back="skills" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
-                                <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                                <button id="cmd-next" data-next="success" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
+                                <button data-status="add" data-step="portfolio" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
                             </div>
 
                         </form>
+
                     </div>
-                    <div class="col-md-4">
+
+                    <div class="col-md-3">
                         <div class="pull-right">
                             <button class="btn btn-sm btn-default disabled" type="button"><strong><i class="glyphicon glyphicon-chevron-left"></i></strong></button>
                             <button class="btn btn-sm btn-success" type="button"><strong><i class="glyphicon glyphicon-chevron-right"></i></strong></button>
+                        </div>
+                    </div>
+                    <div class="col-md-9" style="padding-left:0">
+                        <div class="panel panel-default">
+
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+
+                                    <table id="portfolioList" class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="port-check-all"/></th>
+                                            <th colspan="2">
+                                                <i class="lbl-log" id="port-deletes">Delete</i> &nbsp;
+                                                <i class="pull-right">(<?=count($this->list);?> Uploaded)</i>
+                                                <span class="dropdown lbl-log">
+                                                    <span href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                                        <strong>More Action</strong><span class="caret"></span>
+                                                    </span>
+                                                    <ul role="menu" class="dropdown-menu">
+                                                        <li><a id="port-edit" href="javascript: void(0)">Edit</a></li>
+                                                        <li><a id="port-delete" href="javascript: void(0);">Delete</a></li>
+                                                    </ul>
+                                                </span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach($this->list as $key=>$item){ ?>
+                                            <tr>
+                                                <td><input data-text="<?=$item['Title'];?>" type="checkbox" name="" data-id="<?=$item['CandidatePortfolioID'];?>"/></td>
+                                                <td><img width="100px" height="80px" src="<?=$item['URL'];?>" alt="" title=""/></td>
+                                                <td>
+                                                    <h5 style="margin:0;padding:0;"><label><?=$item['Title'];?></label></h5>
+                                                    <p style="color: #777;margin:0;padding:0;"><?=$item['Description'];?></p>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 30px">
+                            <button id="cmd-back" data-back="skills" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
+                            <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
+                            <button id="cmd-next" data-next="success" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
                         </div>
                     </div>
                 </div>
@@ -226,5 +273,10 @@ $helper = $this->layout()->_helper;
 </div>
 <script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
 <script>
+    var prCandidate= new pocketCandidate();
+    $('#portfolioList #port-delete').unbind('click').bind('click',prCandidate.deletePortfolio);
+    $('#portfolioList #port-deletes').unbind('click').bind('click',prCandidate.deletePortfolio);
+    $('#portfolioList #port-edit').unbind('click').bind('click',prCandidate.editPortfolio);
+    $('#portfolioList #port-check-all').unbind('change').bind('change',prCandidate.portfolioCheckAll);
 
 </script>
