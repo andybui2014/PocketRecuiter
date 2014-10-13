@@ -311,23 +311,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $result = $db->delete('candidate_employments', $criteria);      
         return $result;  
     }
-    public function getListCandidatePortfolio($userID)
-    {        
-        
-        $db = PR_Database::getInstance();
-        $select = $db->select();
-        $select->from(array('capfl'=>'candidate_portfolio'), 
-            array('CandidatePortfolioID','CandidateProfileID','Title','URL','Description','IconURL')
-        );
-        $select->join(array('u'=>'user'),
-            'u.CandidateProfileID = capfl.CandidateProfileID',
-            array('UserID')
-        );
-        $select->where("u.UserID = '$userID'");
-        $select->where("u.usertype = 2");
-        $records = PR_Database::fetchAll($select);
-        return $records;        
-    } 
+    
    public function getCandidatePortfolio($CandidatePortfolioID)
     {
         //candidate_employments:CandidateEmploymentID,CandidateProfileID,CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
@@ -341,6 +325,26 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             array('UserID')
         );
         $select->where("capfl.CandidatePortfolioID = '$CandidatePortfolioID'");
+        $records = PR_Database::fetchAll($select);
+        if(count($records)>0){
+            return $records[0];
+        } else {
+            return null;
+        }
+    }
+   public function getCandidateSkill($CandidateSkillID)
+    {
+       
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cask'=>'candidate_skill'), 
+            array('CandidateSkillID','CandidateProfileID','SkillID','YearsExperience','LevelOfExperience')
+        );
+        $select->join(array('u'=>'user'),
+            'u.CandidateProfileID = cask.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("cask.CandidateSkillID = '$CandidateSkillID'");
         $records = PR_Database::fetchAll($select);
         if(count($records)>0){
             return $records[0];
@@ -398,6 +402,96 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $result = $db->delete('candidate_portfolio', $criteria);      
         return $result;  
     }
+   public function getListCandidatePortfolio($userID)
+    {        
+        
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('capfl'=>'candidate_portfolio'), 
+            array('CandidatePortfolioID','CandidateProfileID','Title','URL','Description','IconURL')
+        );
+        $select->join(array('u'=>'user'),
+            'u.CandidateProfileID = capfl.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("u.UserID = '$userID'");
+        $select->where("u.usertype = 2");
+        $records = PR_Database::fetchAll($select);
+        return $records;        
+    } 
+   public function saveCandidateSkills($CandidateSkillID, $skillIDs)
+   {
+       $candidateskillInfo = $this->getCandidateSkill($CandidateSkillID);  
+       $CandidateProfileID=$candidateskillInfo["CandidateProfileID"];
+      
+      //--- select current skills
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('candidate_skill',array('CandidateSkillID','CandidateProfileID','SkillID','YearsExperience','LevelOfExperience'));
+        $select->where("CandidateSkillID = '".$CandidateSkillID."' ");
+        $records = PR_Database::fetchAll($select);
+        
+        $currentSkills = array();
+        if(count($records)>0){
+            foreach($records as $rec){
+                $currentSkills[]=$rec['SkillID'];
+            }            
+        }
+
+
+        if(empty($skillIDs) || count($skillIDs)==0){
+            $criteria = "CandidateSkillID = '$CandidateSkillID'";
+            $result = $db->delete('candidate_skill', $criteria);
+        } else if(count($currentSkills)==0){
+            foreach($skillIDs as $id){
+                //echo ("tets");
+                $updateFields=array('CandidateSkillID'=>$CandidateSkillID,
+                            'SkillID'=>$id,'CandidateProfileID'=>$CandidateProfileID,'YearsExperience'=>'','LevelOfExperience'=>'');
+                $result = PR_Database::insert("candidate_skill", $updateFields);                
+            }
+        } else {
+            $arrayDiff_1 = array_diff($currentSkills,$skillIDs);
+            if(count($arrayDiff_1) > 0){
+                $criteria = "CandidateSkillID = '$CandidateSkillID' AND SkillID IN (".implode(",",$arrayDiff_1).")";
+                $result = $db->delete('candidate_skill', $criteria);
+            }
+            
+            $arrayDiff_2 = array_diff($skillIDs,$currentSkills);
+            if(count($arrayDiff_2) > 0){
+                foreach($arrayDiff_2 as $id){
+                    $updateFields=array('CandidateSkillID'=>$CandidateSkillID,
+                                'SkillID'=>$id,"CandidateProfileID"=>$CandidateProfileID,"YearsExperience"=>"","LevelOfExperience"=>"");
+                    $result = PR_Database::insert("candidate_skill", $updateFields);                
+                }                
+            }
+            
+        } 
+   }
+   public function getList_CandidateSkills($userID)  
+   {
+       $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('sk'=>'skill'), 
+            array('SkillID','SkillName','ParentSkillID','Level'));
+        $select->join(array('cask'=>'candidate_skill'),
+            'sk.SkillID = cask.SkillID',
+            array('SkillID','CandidateProfileID')
+        );
+        $select->join(array('us'=>'user'),
+            'cask.CandidateProfileID = us.CandidateProfileID',
+            array('UserID')
+        );
+        $select->where("us.UserID = '$userID'");
+        $select->where("us.usertype = 2"); 
+        $records = PR_Database::fetchAll($select);
+        if(count($records)>0){
+            return $records;
+        } else {
+            return null;
+        }
+        
+       
+   }    
     
     /************************************************************************************/
     /*************************************** Candidate Info *****************************/    

@@ -1,7 +1,7 @@
 <?php
 class PR_Api_Core_CandidateExtClass
 {
-    public function getcandidateskill($CandidateProfileID)
+    public function getcandidate_skill($CandidateProfileID)
     {
 
         $db = PR_Database::getInstance();
@@ -55,7 +55,7 @@ class PR_Api_Core_CandidateExtClass
             foreach($records[0] as $key=>$val){
                 $retArray[$key] = $val;
             }    
-            $retArray['SkillName'] = $this->getcandidateskill($Candidateprofile_ID);  
+            $retArray['SkillName'] = $this->getcandidate_skill($Candidateprofile_ID);  
             $retArray['CandidateEmploymentID'] = $this->getCandidate_Employments($Candidateprofile_ID);  
            // $retArray['CredentialExperienceID'] = $this->getcandidateEducation($Candidateprofile_ID);       
             return $retArray;
