@@ -1,13 +1,7 @@
 <div class="content">
 <script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
 <script>
-    var careerMatch = new career();
-    function loadKeyword(){
-       if($("#searchSkill option:selected").val() =="999999999"){
-           $('#TextboxSkillHoS').show();
-           $('#selectSkillHoS').hide();
-       }
-    }
+       var careerMatch = new career();
 </script>
 <style>
  .clWidth100{width: 100px;}
@@ -51,6 +45,9 @@
      width: 90px;
     }
 </style>
+<script>
+    var urlImage = '<?=URL_THEMES;?>';
+</script>
 
     <!--Modal-->
     <div class="modal fade" tabindex="-1" role="dialog" id="openModalSkill" data-keyboard="false" data-backdrop="static">
@@ -114,7 +111,9 @@
 
                 </div>
                 <div class="col-md-12" style="margin-bottom: -10px">
+
                     <button  type="button" class="btn btn-sm btn-primary"  data-loading-text="Loading..." onclick="javascript:careerMatch.careerMatchSearch()">Search</button>
+
                 </div>
             </div>
          </form>
@@ -201,6 +200,7 @@
                                 $image = $candidateInfo['image'];
                             }
                             ?>
+
                             <div class="col-md-12 borderbottom_Gray" >
                                 <div class="col-md-12" >
                                     <div class="col-md-1" style="margin-left: -45px"> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
@@ -246,14 +246,12 @@
 
         <!-- table -->
     </div>
-    <div style="clear: both"</div>
+    <div style="clear: both"></div>
     <div style="height: 40px;background-color: #333"> </div>
 </div>
 <script>
     $(document).ready(function(){
-       $("#selectSkillToSearch").unbind("change").bind("change",careerMatch.selectSkillToSearch)
-      // $("#Add_selectSkill").unbind("click").bind("click",careerMatch.addSelectSkill)
-     //  $("#Add_keyword").unbind("click").bind("click",careerMatch.addKeyWord)   //
+        $("#selectSkillToSearch").unbind("change").bind("change",careerMatch.selectSkillToSearch)
     })
 </script>
 </div>
