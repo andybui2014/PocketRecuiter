@@ -189,7 +189,8 @@ $helper = $this->layout()->_helper;
                     <div class="tree">
                                             <ul>
                                                 <li>
-                                <span><i class="glyphicon glyphicon-ok"></i></span>
+                                <span><img src="<?=URL_THEMES;?>images/trees/ico_colapse.png"></span>
+
                                 <a href=""><strong><?=$tree['SkillName'];?></strong> </a>
                                 <!--
                                 <ul>
@@ -239,12 +240,12 @@ $helper = $this->layout()->_helper;
         width:25px
     }
     .tree li span {
-        border-radius: 50%;
+       /*border-radius: 50%;
         border:1px dotted #999;
         display:inline-block;
         padding: 5px;
         text-decoration:none;
-        color: #2a6496;
+        color: #2a6496;*/
     }
     .tree li.parent_li>span {
         cursor:pointer
