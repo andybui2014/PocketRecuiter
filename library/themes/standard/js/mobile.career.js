@@ -34,10 +34,6 @@ career.prototype = {
 
     },
 
-    test:function(id){
-        alert(id);
-    },
-
     checkAllIs: function(){
         if($("#ckAll").is(":checked")){
             $(".checkIs").prop('checked','checked');
@@ -423,8 +419,124 @@ career.prototype = {
                 }
             }
         });
+    },
+
+    selectSkillToSearch:function(){
+        var skillText = $("#selectSkillToSearch option:selected").text();
+        var skilIDSelected = $("#selectSkillToSearch option:selected").val();
+        $("div#addSkillandKeyword").append("<span style='' class='label-tag pull-left getSkillText'>" + skillText +
+            "&nbsp;&nbsp;<imge class='removeskill glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
+            "<input type='hidden'  name='skilIDSear[]' value='"+skilIDSelected+"' ></span>");
+
+        $(".removeskill").unbind("click").bind("click",function(){
+            var skilID = $(this).attr("skilIDSelected");
+            $("#selectSkill").find("option[value='" + skilID + "']").css("display", "");
+            $(this).parent().remove();
+        });
+
+        $("#selectSkillToSearch option:selected").css("display", "none");
+        $("#selectSkillToSearch option[value='']").prop("selected", "selected");
+    },
+
+    /*
+    careerMatchSearch:function(){
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: 'careermatch',
+            data: $('#form-careermatch').serializeArray(),
+            type: 'POST',
+            error : function (xhr,error) {
+                btn.button('reset');
+            },
+            success: function(data, status, xhr){
+                if(data){
+                    $(".content").html(data)
+                    btn.button('reset');
+                } else {
+                    btn.button('reset');
+                }
+
+            }
+        });
+    } */
+
+    careerMatchSearch:function(){
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: 'do-search-career',
+            data: $('#form-careermatch').serializeArray(),
+            type: 'POST',
+            error : function (xhr,error) {
+                btn.button('reset');
+            },
+            success: function(data, status, xhr){
+                var httml = "";
+                if(data){
+                    btn.button('reset');
+                    //console.log(data);
+                    /*$.each(data,function(idx,item){
+                        if(!$.isEmptyObject(item.image)){
+                            console.log(item.image);
+                        }
+
+                    })
+                    return; */
+                    var flagUS =  urlImage+'images/USA_flag.jpg';
+                   // alert(flagUS);
+                    $.each(data,function(k,candidateInfo){
+                        btn.button('reset');
+                            if($.isEmptyObject(candidateInfo.image)){
+                               var images = urlImage+'images/avatar_nonex44.jpg';
+                           } else {
+                                var images = urlImage+'images/'+candidateInfo.image;
+                            }
+
+                            httml +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
+                                "<div class='col-md-12'>" +
+                                "<div class='col-md-1' style='margin-left: -45px'> " +
+                                "<img src='"+images+"'>" +
+                                "</div>" +
+                                    "<div class='col-md-11' style='margin-left: -25px'>" +
+                                            "<div class='col-md-12' style='color: #1a5187'><strong>" + candidateInfo.firstname +" &nbsp;"+ candidateInfo.lastname +" </strong></div>" +
+                                            "<div class='col-md-12'><strong>Expected Salary :"+ candidateInfo.minimumsalary +" &nbsp; "+ candidateInfo.maximumsalary +" &nbsp; </strong></div>" +
+                                    "</div>" +
+                                "</div>  " +
+                                "<div class='col-md-12' style='margin-left:-30px'> " +
+                                    "<div style='height:10px!important;'></div>  " +  candidateInfo.overview +
+                                "</div>" +
+                                "<div class='col-md-12' style='margin-left:-30px'> " +
+                                    "<span style='color: #1a5187' class='glyphicon glyphicon-play'></span>" +
+                                    "<span style='color: #1a5187'>Read more</span>" +
+                                "</div>" +
+                               "<div class='col-md-12' style='margin-left:-30px'>" +
+                                "<div style='height:10px!important;'></div>" +
+                                        "<span><strong>Skills:</strong></span> </div>" +
+                              "<div class='col-md-12' style='margin-left:-30px'>" +
+                                " <div style='height:10px!important;'></div>" +
+                                "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span>" +
+                                "<span>"+candidateInfo.Address1 +"|&nbsp;|&nbsp;<strong>Distance: "+candidateInfo.tralveldistanceinmiles+"</strong> </span>" +
+                                "</div> " +
+                                "<div class='col-md-12 text-right'> " +
+                                "<button style='margin-top:15px; margin-right:0px;' class='btn btn-primary' type='button'><strong>Contact</strong></button>" +
+                            "</div>" +
+                            "<div class='col-md-12' style='margin-left:-30px'>" +
+                            "<div style='height:10px!important;'></div>" +
+                            "</div>" +
+                        "</div>"
+
+                        $(".containerData").html(httml);
+                    });
+                } else {
+                    btn.button('reset');
+                }
+
+            }
+        });
     }
 }
+
 
 $(function() {
     var mbNot= new career();
