@@ -445,7 +445,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             $result = $db->delete('candidate_skill', $criteria);
         } else if(count($currentSkills)==0){
             foreach($skillIDs as $id){
-                //echo ("tets");
+              //  echo ("tets");
                 $updateFields=array('CandidateSkillID'=>$CandidateSkillID,
                             'SkillID'=>$id,'CandidateProfileID'=>$CandidateProfileID,'YearsExperience'=>'','LevelOfExperience'=>'');
                 $result = PR_Database::insert("candidate_skill", $updateFields);                
@@ -468,20 +468,17 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             
         } 
    }
-   public function getList_CandidateSkills($userID)  
+   public function getListAll_CandidateSkills($userID)  
    {
        $db = PR_Database::getInstance();
         //$select = $db->select();
         $sql= $db->select(); 
-        $sql="SELECT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.SkillID,cask.CandidateProfileID,us.UserID
+        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.SkillID,cask.CandidateProfileID,us.UserID
         FROM skill as sk
-        INNER JOIN candidate_skill as cask
-        ON sk.SkillID=cask.SkillID
-        INNER JOIN user as us
-        ON cask.CandidateProfileID=us.CandidateProfileID
-        where us.UserID=2 and sk.Level=0
-        GROUP BY sk.SkillID
-        HAVING count(sk.SkillID) >= 1";
+        LEFT JOIN candidate_skill as cask ON sk.SkillID=cask.SkillID
+        LEFT JOIN user as us  ON cask.CandidateProfileID=us.CandidateProfileID
+        WHERE (us.UserID IS NULL OR us.UserID='$userID') and sk.Level=0
+        Order By sk.SkillName";
         $select = $db->query($sql);
        
         $records = $select->fetchAll();
