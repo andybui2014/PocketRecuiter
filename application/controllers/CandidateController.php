@@ -92,6 +92,8 @@ class CandidateController extends Application_Controller_Action
                     $this->render('profile-builder/employment');
                     break;
                 case 'skills':
+                    $core = new PR_Api_Core_CandidateClass();
+                    $this->view->list = $core->getListAll_CandidateSkills($client['UserID']);
                     $this->view->stepCount = '4/5 Steps';
                     $this->render('profile-builder/skills');
                     break;

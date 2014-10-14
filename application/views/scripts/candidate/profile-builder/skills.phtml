@@ -180,184 +180,29 @@ $helper = $this->layout()->_helper;
                         <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
 
-
-                        <form id="" role="form">
-                            <div class="col-md-4">
-                                <div class="tree">
-                                    <ul>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href=""><strong>Goes somewhere</strong></a>
+                    <?php
+                        $list = $this->list;
+                        //$idx = 0;
+                        foreach($list as $key=>$tree){
+                    ?>
+                    <div class="col-md-4" style="margin:0;padding:0">
+                    <div class="tree">
                                             <ul>
                                                 <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
+                                <span><i class="glyphicon glyphicon-ok"></i></span>
+                                <a href=""><strong><?=$tree['SkillName'];?></strong> </a>
+                                <!--
+                                <ul>
+                                    <li>
+                                        <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
                                                 </li>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="tree">
-                                    <ul>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href=""><strong>Goes somewhere</strong></a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="tree">
-                                    <ul>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href=""><strong>Goes somewhere</strong></a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="tree">
-                                    <ul>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href=""><strong>Goes somewhere</strong></a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                    <ul>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-
-                                                        </li>
-                                                        <li>
-                                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                            <ul>
-                                                <li>
-                                                    <span><i class="glyphicon glyphicon-ok"></i></span> <a href="">Goes somewhere</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12">
-
-                                <button id="cmd-back" data-back="employment" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
-                                <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                                <button id="cmd-next" data-next="portfolio" type="button" class="btn btn-success" type="button"><strong>Next</strong></button>
-                            </div>
-                        </form>
+                                </ul>-->
+                            </li>
+                        </ul>
+                    </div></div>
+                    <?php
+                        }
+                    ?>
 
                 </div>
             </div>
@@ -414,6 +259,23 @@ $helper = $this->layout()->_helper;
         background:#eee;
         border:1px dotted #94a0b4;
 
+    }
+    .tree .ico-expand{
+        font-size: 11px !important;
+        border-radius: 50%;
+        border:1px dotted #999;
+        display:inline-block;
+        padding: 2px;
+        text-decoration:none;
+        color: #2a6496;
+    }
+    .tree .ico-colapse{
+        border-radius: 50%;
+        border:1px dotted #999;
+        display:inline-block;
+        padding: 5px;
+        text-decoration:none;
+        color: #2a6496;
     }
 </style>
 

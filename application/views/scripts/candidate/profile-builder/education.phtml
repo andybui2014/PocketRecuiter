@@ -5,6 +5,9 @@ $core = new PR_Api_Core_CandidateClass();
 
 ?>
 <style>
+    .btn-edit:hover{cursor: pointer;text-decoration: underline}
+    .qst-remove{color: #bbb}
+    .qst-remove:hover{color: #333; cursor: pointer}
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
     ul#nav-left a{color: #777}
@@ -256,6 +259,10 @@ $core = new PR_Api_Core_CandidateClass();
                                             <td><?=$detailEducation['title'];?></td>
                                             <td><?=$startYear;?></td>
                                             <td><?=$endYear;?></td>
+                                            <td>
+                                                <span class="btn-edit" data-id="" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                                <span><i data-text="" data-id="" class="glyphicon glyphicon-remove qst-remove"></i></span>
+                                            </td>
                                             </tr>
                                         <?php $idx = $idx + 1;} ?>
                                         </tbody>
