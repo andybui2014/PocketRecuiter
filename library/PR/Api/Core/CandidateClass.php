@@ -471,22 +471,22 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
    public function getList_CandidateSkills($userID)  
    {
        $db = PR_Database::getInstance();
-        $select = $db->select();
-        $select->from(array('sk'=>'skill'), 
-            array('SkillID','SkillName','ParentSkillID','Level'));
-        $select->join(array('cask'=>'candidate_skill'),
-            'sk.SkillID = cask.SkillID',
-            array('SkillID','CandidateProfileID')
-        );
-        $select->join(array('us'=>'user'),
-            'cask.CandidateProfileID = us.CandidateProfileID',
-            array('UserID')
-        );
-        $select->where("us.UserID = '$userID'");
-        $select->where("us.usertype = 2"); 
-        $select->where("sk.Level = 0"); 
-        $records = PR_Database::fetchAll($select);
+        //$select = $db->select();
+        $sql= $db->select(); 
+        $sql="SELECT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.SkillID,cask.CandidateProfileID,us.UserID
+        FROM skill as sk
+        INNER JOIN candidate_skill as cask
+        ON sk.SkillID=cask.SkillID
+        INNER JOIN user as us
+        ON cask.CandidateProfileID=us.CandidateProfileID
+        where us.UserID=2 and sk.Level=0
+        GROUP BY sk.SkillID
+        HAVING count(sk.SkillID) >= 1";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
         if(count($records)>0){
+           
             return $records;
         } else {
             return null;
