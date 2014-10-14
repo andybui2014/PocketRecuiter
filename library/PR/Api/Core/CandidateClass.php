@@ -492,6 +492,29 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
        
    }    
     
+   public function getList_CandidateSkillsOnly($userID)  
+   {
+       $db = PR_Database::getInstance();
+        //$select = $db->select();
+        $sql= $db->select(); 
+        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.SkillID,cask.CandidateProfileID,us.UserID
+        FROM skill as sk
+        INNER JOIN candidate_skill as cask ON sk.SkillID=cask.SkillID
+        INNER JOIN user as us  ON cask.CandidateProfileID=us.CandidateProfileID
+        WHERE (us.UserID='$userID') and sk.Level=0
+        Order By sk.SkillName";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        if(count($records)>0){
+           
+            return $records;
+        } else {
+            return null;
+        }
+        
+       
+   }     
     /************************************************************************************/
     /*************************************** Candidate Info *****************************/    
     public function getCandidateInfo($userID)
