@@ -186,6 +186,7 @@ $core = new PR_Api_Core_CandidateClass();
                     </div>
                     <div class="col-md-9" style="padding-left:0;">
                         <form id="education-form" role="form">
+                            <input type="hidden" name="eduId" id="eduId"/>
                             <div class="form-group">
                                 <label>Institution Name (no abbreviations,please)</label>
                                 <input name="inst-name" type="text" class="form-control"  placeholder="">
@@ -215,7 +216,7 @@ $core = new PR_Api_Core_CandidateClass();
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button data-step="education" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
+                                <button data-status="add" data-step="education" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
                             </div>
                         </form>
                     </div>
@@ -233,7 +234,7 @@ $core = new PR_Api_Core_CandidateClass();
                             <!-- /.panel-heading -->
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table id="education-list" class="table">
                                         <thead>
                                         <tr>
                                             <th>Institution Name</th>
@@ -244,7 +245,10 @@ $core = new PR_Api_Core_CandidateClass();
                                         </thead>
                                         <tbody>
                                         <?php
+
                                             foreach($educationList as $item){
+
+
                                                 $idx = 0;
                                                 $startYear = null;
                                                 $endYear = null;
@@ -260,8 +264,8 @@ $core = new PR_Api_Core_CandidateClass();
                                             <td><?=$startYear;?></td>
                                             <td><?=$endYear;?></td>
                                             <td>
-                                                <span class="btn-edit" data-id="" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
-                                                <span><i data-text="" data-id="" class="glyphicon glyphicon-remove qst-remove"></i></span>
+                                                <span class="btn-edit" data-id="<?=$item['CredentialExperienceID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                                <span><i data-text="<?=$item['institution_name'];?>" data-id="<?=$item['CredentialExperienceID'];?>" class="glyphicon glyphicon-remove qst-remove"></i></span>
                                             </td>
                                             </tr>
                                         <?php $idx = $idx + 1;} ?>
@@ -287,4 +291,9 @@ $core = new PR_Api_Core_CandidateClass();
  <script type="text/javascript">
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
+    var prCandidate= new pocketCandidate();
+    $('#education-list .btn-edit').unbind('click').bind('click',prCandidate.editEducation);
+    $('#education-list .qst-remove').unbind('click').bind('click',prCandidate.deleteEducation);
+
+
 </script>

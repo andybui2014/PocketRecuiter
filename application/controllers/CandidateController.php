@@ -120,6 +120,80 @@ class CandidateController extends Application_Controller_Action
     public function startProfileAction(){
 
     }
+    public function doUpdateEducationAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+
+            if(!empty($params['data']) && sizeof($params['data'])){
+                //$client = PR_Session::getSession(PR_Session::SESSION_USER);
+
+                $instName = null;
+                $degreeName = null;
+                $startYear = null;
+                $endYear = null;
+                $eduId = null;
+                foreach($params['data'] as $item){
+
+                    if($item['name']=='eduId')          $eduId = $item['value'];
+                    if($item['name']=='inst-name')      $instName = $item['value'];
+                    if($item['name']=='degree-name')    $degreeName = $item['value'];
+                    if($item['name']=='start-year')     $startYear = $item['value'];
+                    if($item['name']=='end-year')       $endYear = $item['value'];
+                }
+                if(empty($eduId)) $errors['eduId'] = 1;
+                if(empty($instName)) $errors['inst-name'] = 1;
+                if(empty($degreeName)) $errors['degree-name'] = 1;
+                if(empty($startYear)) $errors['start-year'] = 1;
+                if(empty($endYear)) $errors['end-year'] = 1;
+
+                if(empty($errors)){
+                    $core = new PR_Api_Core_CandidateClass();
+                    $core->updateCandidateEducation($eduId,$instName,$degreeName,$startYear,$endYear);
+                    $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+                }
+            }
+            $response = $this->getResponse();
+            $response->clearAllHeaders()->clearBody();
+            $ajaxRes = json_encode($ajaxRes);
+            $response->setHeader('Content-type', 'application/json');
+            $response->setHeader('Content-Length', strlen($ajaxRes), true)
+                ->setBody($ajaxRes);
+        }
+    }
+    public function detailEducationAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $id = !empty($params['id']) ? $params['id'] : 0;
+            if($id > 0){
+                //$client = PR_Session::getSession(PR_Session::SESSION_USER);
+                $core = new PR_Api_Core_CandidateClass();
+                $res = $core->getCandidateEducation($id);
+                $startdate = $res['startdate'];
+                $enddate = $res['enddate'];
+                if (($timestamp = strtotime($startdate)) !== false)
+                    $res['startdate'] = date("Y", $timestamp);
+                if (($timestamp = strtotime($enddate)) !== false)
+                    $res['enddate'] = date("Y", $timestamp);
+
+               $ajaxRes['info'] = $res;
+               $ajaxRes['success']  = 1;
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
     public function stepNextContactAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -128,22 +202,53 @@ class CandidateController extends Application_Controller_Action
             $params = $this->getRequest()->getParams();
             if(!empty($params['data']) && sizeof($params['data'])){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
-
-                $instName = null;
-                $degreeName = null;
-                $startYear = null;
-                $endYear = null;
-
+                $data = array();
+                $errors = array();
                 foreach($params['data'] as $item){
-                    if($item['name']=='inst-name')      $instName = $item['value'];
-                    if($item['name']=='degree-name')    $degreeName = $item['value'];
-                    if($item['name']=='start-year')     $startYear = $item['value'];
-                    if($item['name']=='end-year')       $endYear = $item['value'];
-                }
-                $core = new PR_Api_Core_CandidateClass();
-                $isSuccess = $core->addCandidateEducation($client['UserID'],$instName,$degreeName,$startYear,$endYear);
+                    if($item['name']=='firstname'){
+                        if(empty($item['value'])){
+                            $errors['firstname'] = 1;
+                        }else{
+                            $data['firstname'] = $item['value'];
+                        }
+                    }
+                    if($item['name']=='lastname'){
+                        if(empty($item['value'])){
+                            $errors['lastname'] = 1;
+                        }else{
+                            $data['lastname'] = $item['value'];
+                        }
+                    }
+                    if($item['name']=='email'){
+                        if(empty($item['value'])){
+                            $errors['email'] = 1;
 
-                if($isSuccess) $ajaxRes['success'] = 1;
+                        }else{
+                            if (!filter_var($item['value'], FILTER_VALIDATE_EMAIL)) {
+                                $errors['email'] = 1;
+                            }else{
+                                $data['emailaddress'] = $item['value'];
+                            }
+                        }
+                    }
+
+                    if($item['name']=='phone')          $data['PhoneNumber']  = $item['value'];
+                    if($item['name']=='url')            $data['URL']  = $item['value'];
+                    if($item['name']=='city')           $data['City']  = $item['value'];
+                    if($item['name']=='country')        $data['Country']  = $item['value'];
+                    if($item['name']=='zipcode')        $data['PostalCode']  = $item['value'];
+
+                }
+
+                if(empty($errors)){
+                    $core = new PR_Api_Core_CandidateClass();
+                    $core->saveContactInfo($client['UserID'],$data);
+                    $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = $errors;
+                }
+
             }
         }
         $response = $this->getResponse();
@@ -194,12 +299,18 @@ class CandidateController extends Application_Controller_Action
                 if($item['name']=='url')           $url = trim($item['value']);
                 if($item['name']=='description')   $description = $item['value'];
             }
+            if(empty($title))       $errors['title'] = 1;
+            if(empty($url))         $errors['url'] = 1;
+            //if(empty($description)) $errors['description'] = 1;
 
-            $core = new PR_Api_Core_CandidateClass();
-            if(!empty($title)){
+            if(empty($errors)){
+                $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->addCandidatePortfolio($client['UserID'],$title,$url,$description,null);
                 if($isSuccess) $ajaxRes['success'] = 1;
+            }else{
+                $ajaxRes['info'] = $errors;
             }
+
 
         }
         $response = $this->getResponse();
@@ -217,7 +328,7 @@ class CandidateController extends Application_Controller_Action
             $params = $this->getRequest()->getParams();
             if(!empty($params['data']) && sizeof($params['data'])){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
-
+                $errors = array();
                 $instName = null;
                 $degreeName = null;
                 $startYear = null;
@@ -229,11 +340,38 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='start-year')     $startYear = $item['value'];
                     if($item['name']=='end-year')       $endYear = $item['value'];
                 }
+
+                if(empty($instName)) $errors['inst-name'] = 1;
+                if(empty($degreeName)) $errors['degree-name'] = 1;
+                if(empty($startYear)) $errors['start-year'] = 1;
+                if(empty($endYear)) $errors['end-year'] = 1;
+
+                if(empty($errors)){
                 $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->addCandidateEducation($client['UserID'],$instName,$degreeName,$startYear,$endYear);
-
-                if($isSuccess) $ajaxRes['success'] = 1;
+                    if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+        }
             }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+    public function doRemoveEducationAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $id = $params['id'];
+            $core = new PR_Api_Core_CandidateClass();
+            $core->deleteCandidateEducation($id);
+            $ajaxRes['success'] = 1;
         }
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
@@ -273,6 +411,7 @@ class CandidateController extends Application_Controller_Action
             $startDate = null;
             $endDate = null;
             $description = null;
+            $errors = array();
 
             if(!empty($params['data']) && sizeof($params['data'])){
 
@@ -284,10 +423,21 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='endDate')        $endDate = $item['value'];
                     if($item['name']=='description')    $description = $item['value'];
                 }
-                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                if(empty($empId)) $errors['empId'] = 1;
+                if(empty($companyName)) $errors['companyName'] = 1;
+                if(empty($positionHeld)) $errors['posotionHeld'] = 1;
+                if(empty($startDate)) $errors['startDate'] = 1;
+                if(empty($endDate)) $errors['endDate'] = 1;
+                //if(empty($description)) $errors['description'] = 1;
+
+                if(empty($errors)){
+                    //$client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->updateCandidateEmployment($empId,$companyName,$positionHeld,$startDate,$endDate,$description);
                 if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+                }
             }
         }
         $response = $this->getResponse();
@@ -309,7 +459,7 @@ class CandidateController extends Application_Controller_Action
             $startDate = null;
             $endDate = null;
             $description = null;
-
+            $errors = array();
             if(!empty($params['data']) && sizeof($params['data'])){
 
                 foreach($params['data'] as $key=>$item){
@@ -319,10 +469,23 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='endDate')        $endDate = $item['value'];
                     if($item['name']=='description')    $description = $item['value'];
                 }
+
+                if(empty($companyName)) $errors['companyName'] = 1;
+                if(empty($posotionHeld)) $errors['posotionHeld'] = 1;
+                if(empty($startDate)) $errors['startDate'] = 1;
+                if(empty($endDate)) $errors['endDate'] = 1;
+                //if(empty($description)) $errors['description'] = 1;
+
+                if(empty($errors)){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->addCandidateEmployment($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description);
                 if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+                }
+
+
             }
         }
         $response = $this->getResponse();

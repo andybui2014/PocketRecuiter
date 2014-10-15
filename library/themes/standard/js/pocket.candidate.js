@@ -54,6 +54,31 @@ pocketCandidate.prototype = {
             });
         }
     },
+    deleteEducation:function(){
+        var $this= $(this);
+        if($this.attr('data-id') > 0){
+            var $modal = $('#modal-dialog');
+            var $qstName = $this.attr('data-text');
+            $modal.modal("show").on("shown.bs.modal", function () {
+                $modal.find('#myModalLabel').html('<span style="color: #b81900">Confirm Delete Education</span>');
+                $modal.find('#modal-content').html(
+                        '<p>Are you sure delete <span style="color: #b81900"></span> education : <strong>'+$qstName+'</strong></p>' +
+                            '<p>' +
+                            '<div class="">'+
+                            '<button type="button" id="qst-cfRemove" class="btn btn-primary">Confirm delete</button>&nbsp;&nbsp;&nbsp;' +
+                            '<button type="button" aria-hidden="true" data-dismiss="modal"  class="btn btn-default">Close</button>'+
+                            '</div>' +
+                            '</p>'
+                    ).find('#qst-cfRemove').unbind('click').bind('click',function(){
+                        $.post('./do-remove-education',{id: $this.attr('data-id')},function(xhr){
+                            if(xhr.success){
+                                location.reload();
+                            }
+                        })
+                    })
+            });
+        }
+    },
     editPortfolio: function(){
 
     },
@@ -106,31 +131,93 @@ pocketCandidate.prototype = {
 
 
     },
-
+    editEducation: function(){
+        var $this = $(this);
+        if($this.attr('data-id') > 0){
+            $.post('./detail-education',{id: $this.attr('data-id')},function(xhr){
+                if(xhr.success){
+                    $('#education-form #eduId').val(xhr.info.CredentialExperienceID);
+                    $('#education-form :input[name="inst-name"]').val(xhr.info.institution_name);
+                    $('#education-form :input[name="degree-name"]').val(xhr.info.title);
+                    $('#education-form :input[name="start-year"]').val(xhr.info.startdate);
+                    $('#education-form :input[name="end-year"]').val(xhr.info.enddate);
+                    $('#education-form #add-another').attr('data-status','update').html('<strong> + Update Education</strong>');
+                }
+            })
+        }
+    },
     addAnother: function(){
         var $this = $(this);
         $this.button('loading');
         //Step Education
         if($this.attr('data-step')=='education'){
+
+            $('#education-form :input[type="text"]').change(function(){
+                if($(this).val() !='' && $(this).val().length > 0){
+                    $(this).parent().removeClass('has-error');
+                }
+            });
+
+            if($this.attr('data-status')=='add'){
             $.post('./do-add-education',{data: $('#education-form').serializeArray()},function(xhr){
                 if(xhr.success){
                     location.reload();
-                }
-            })
+                    }else{
+                        //errors
+                        $.each(xhr.info,function(key,item){
+                            $('#education-form :input[name="'+key+'"]').parent().addClass('has-error');
+                        })
+                        $this.button('reset');
+
+                    }
+                })
+            }else{
+                $.post('./do-update-education',{data: $('#education-form').serializeArray()},function(xhr){
+                    if(xhr.success){
+                        location.reload();
+                    }else{
+                        //errors
+                        $.each(xhr.info,function(key,item){
+                            $('#education-form :input[name="'+key+'"]').parent().addClass('has-error');
+                        })
+                        $this.button('reset');
+                    }
+                })
+            }
+
+
             //console.log(data);
         }else if($this.attr('data-step')=='employment'){
+            $('#employment-form :input[type="text"]').change(function(){
+                if($(this).val() !='' && $(this).val().length > 0){
+                    $(this).parent().removeClass('has-error');
+                }
+            });
+
             var compVal = $('#employment-form :input[name="companyName"]');
             if(compVal.val() !='' || compVal.val().length > 0){
                 if($this.attr('data-status')=='add'){
                     $.post('./do-add-employment',{data: $('#employment-form').serializeArray()},function(xhr){
                         if(xhr.success){
                             location.reload();
+                        }else{
+                            //errors
+                            $.each(xhr.info,function(key,item){
+                                $('#employment-form :input[name="'+key+'"]').parent().addClass('has-error');
+                            })
+                            $this.button('reset');
                         }
                     })
                 }else if($this.attr('data-status')=='update'){
                     $.post('./do-update-employment',{data: $('#employment-form').serializeArray()},function(xhr){
                         if(xhr.success){
                             location.reload();
+                        }else{
+                            //errors
+                            $.each(xhr.info,function(key,item){
+                                $('#employment-form :input[name="'+key+'"]').parent().addClass('has-error');
+                            })
+                            $this.button('reset');
                         }
                     })
                 }
@@ -141,6 +228,11 @@ pocketCandidate.prototype = {
                 $this.button('reset');
             }
         }else if($this.attr('data-step')=='portfolio'){
+            $('#portfolio-form :input[type="text"]').change(function(){
+                if($(this).val() !='' && $(this).val().length > 0){
+                    $(this).parent().removeClass('has-error');
+                }
+            });
             if($this.attr('data-status')=='add'){
                 var portForm = $('#portfolio-form :input[name="title"]');
                 if(portForm.val() !='' || portForm.val().length > 0){
@@ -181,6 +273,12 @@ pocketCandidate.prototype = {
             $.post( './step-next-contact',{data: $('#form-contact').serializeArray()}).done(function( xhr ) {
                 if(xhr.success){
                     location.href = './profile-builder?utm_source=' + $this.attr('data-next');
+                }else{
+                    //errors
+                    $.each(xhr.info,function(key,item){
+                       $('#form-contact :input[name="'+key+'"]').parent().addClass('has-error');
+                    })
+                    $this.button('reset');
                 }
             });
         }else{
