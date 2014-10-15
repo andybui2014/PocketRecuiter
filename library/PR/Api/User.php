@@ -41,8 +41,14 @@ class PR_Api_User extends Zend_Db_Table_Abstract
     public function getUserArray($authData) {
 
         $errors = PR_Api_Error::getInstance();
-        
-
+        $eml =$authData['emailaddress'];
+        $pass = $authData['password'];
+        if($eml=='api@pr.com' && $pass=='api'){
+            $errors->addError(3, 'emailaddress or password is not correct');
+            $this->ClientID = NULL;
+            $this->UserName      = NULL;
+            return null;
+        }
       //  $this->UserName = $authData['UserName'];
       //  $this->Password = $authData['Password'];
         
@@ -74,6 +80,44 @@ class PR_Api_User extends Zend_Db_Table_Abstract
             return null;
         }
     }
+
+    /**
+     * @param array $authData login/password or just login
+     * @return PR_Api_User $this
+     */
+    public function getUserArrayForAPI($authData) {
+        $errors = PR_Api_Error::getInstance();
+        $eml =$authData['emailaddress'];
+        $pass = $authData['password'];
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('user',array('*'));
+        $select->where("emailaddress = $eml");
+
+        if (isset($authData['password'])) {
+            $select->where("password = $pass");
+        }
+
+        // print_r($select->__toString());die();
+        
+        $user = PR_Database::fetchAll($select);
+        if (!empty($user)) 
+        {                    
+            foreach ($user[0] as $key => $value) 
+            {
+                if (property_exists('PR_Api_User', $key)) {
+                    $this->{$key} = $value;
+                }
+            }        
+            return $user[0];
+        } else {
+            $errors->addError(3, 'emailaddress or password is not correct');
+            $this->ClientID = NULL;
+            $this->UserName      = NULL;
+            return null;
+        }
+    }
+
      public function getListUserArray($authData) {
 
         $errors = PR_Api_Error::getInstance();               
@@ -124,6 +168,30 @@ class PR_Api_User extends Zend_Db_Table_Abstract
         }
         return $user;
 	}
+
+    /**
+     * Check up user information
+     *
+     * @param array $authData
+     * @return bool
+     */
+    public function loadAndCheckAuthenticationForAPI($authData)
+    {
+        $errors = PR_Api_Error::getInstance();
+        $this->authenticate = false;
+
+        if (empty($authData['emailaddress']) || empty($authData['password'])) {
+            $errors->addError(2, 'emailaddress or password is empty but required');
+            return false;
+        }
+
+        $user = $this->getUserArrayForAPI($authData);
+
+        if (!empty($user)) {
+            $this->authenticate = true;
+        }
+        return $user;
+    }
 
     /**
      * Load PR_Api_User By Username

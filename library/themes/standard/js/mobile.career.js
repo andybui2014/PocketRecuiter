@@ -475,14 +475,6 @@ career.prototype = {
                 var httml = "";
                 if(data){
                     btn.button('reset');
-                    //console.log(data);
-                    /*$.each(data,function(idx,item){
-                        if(!$.isEmptyObject(item.image)){
-                            console.log(item.image);
-                        }
-
-                    })
-                    return; */
                     var flagUS =  urlImage+'images/USA_flag.jpg';
                    // alert(flagUS);
                     $.each(data,function(k,candidateInfo){
@@ -491,7 +483,18 @@ career.prototype = {
                                var images = urlImage+'images/avatar_nonex44.jpg';
                            } else {
                                 var images = urlImage+'images/'+candidateInfo.image;
-                            }
+                           }
+
+                            var skillname ="";
+                            var i =1;
+                            $.each(candidateInfo.skillName,function(kk,skname){
+                                if(i==1){
+                                    skillname = skname;
+                                } else{
+                                    skillname = skillname+ ', ' + skname;
+                                }
+                                i = i+1;
+                                });
 
                             httml +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
                                 "<div class='col-md-12'>" +
@@ -512,7 +515,7 @@ career.prototype = {
                                 "</div>" +
                                "<div class='col-md-12' style='margin-left:-30px'>" +
                                 "<div style='height:10px!important;'></div>" +
-                                        "<span><strong>Skills:</strong></span> </div>" +
+                                        "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
                               "<div class='col-md-12' style='margin-left:-30px'>" +
                                 " <div style='height:10px!important;'></div>" +
                                 "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span>" +

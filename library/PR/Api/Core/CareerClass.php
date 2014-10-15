@@ -295,7 +295,7 @@ class PR_Api_Core_CareerClass
         );
        $select->join(array('u'=>'user'),
            'u.CandidateProfileID = p.CandidateProfileID',
-           array('firstname','lastname','Address1'));
+           array('UserID','firstname','lastname','Address1'));
        if(!empty($profileIDs) && count($profileIDs)>0){
        $select->where("p.CandidateProfileID IN (".implode(',',$profileIDs).")");
       }

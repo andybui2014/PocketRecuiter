@@ -308,11 +308,28 @@ class CareerController extends Application_Controller_Action
         $candidateList = array();
         $candidateList = $list_PR_Api->getCandidateProfileIDsForCareerMatch($keyword,$skilIDSear);
         $result = $list_PR_Api->getCandidateProfiles_byProfileIDs($candidateList);
-       // echo "<pre>";
-        //  print_r($result);
-       // echo "</pre>"; die();
+        $candidateInfo = array();
+       if($result){
+        $PR_Api_CandidateClass = new PR_Api_Core_CandidateClass();
+            foreach ($result as $k=>$info){
+               $skID =  $PR_Api_CandidateClass->getList_CandidateSkillsOnly($info['UserID']);
+               $sk = array();
+               if($skID){
+                   foreach ($skID as $key=>$skInfo){
+                       $sk[] = $skInfo['SkillName'];
+                   }
+               } else{
+                   $sk[] = "";
+               }
+                $info['skillName'] = $sk;
+                $candidateInfo[] = $info;
+            }
+        }
+        /*echo "<pre>";
+        print_r($skillList);
+        echo "</pre>"; die(); */
         $this->view->skillList = $skillList;
-        $this->view->result = $result;
+        $this->view->result = $candidateInfo;
 
         ////
     }
@@ -337,12 +354,29 @@ class CareerController extends Application_Controller_Action
         $candidateList = $list_PR_Api->getCandidateProfileIDsForCareerMatch($keyword,$skilIDSear);
         $result = $list_PR_Api->getCandidateProfiles_byProfileIDs($candidateList);
 
+        $candidateInfo = array();
+        if($result){
+            $PR_Api_CandidateClass = new PR_Api_Core_CandidateClass();
+            foreach ($result as $k=>$info){
+                $listSkills =  $PR_Api_CandidateClass->getList_CandidateSkillsOnly($info['UserID']);
+                $sk = array();
+                if($listSkills){
+                    foreach ($listSkills as $key=>$skInfo){
+                        $sk[] = $skInfo['SkillName'];
+                    }
+                } else{
+                    $sk[] = "";
+                }
+                $info['skillName'] = $sk;
+                $candidateInfo[] = $info;
+            }
+        }
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
-        $result = json_encode($result);
+        $candidateInfo = json_encode($candidateInfo);
         $response->setHeader('Content-type', 'application/json');
-        $response->setHeader('Content-Length', strlen($result), true)
-            ->setBody($result);
+        $response->setHeader('Content-Length', strlen($candidateInfo), true)
+            ->setBody($candidateInfo);
         $this->_helper->viewRenderer('careermatch');
     }
 
