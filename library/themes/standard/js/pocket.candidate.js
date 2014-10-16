@@ -284,8 +284,49 @@ pocketCandidate.prototype = {
         }else{
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
+    },
+
+    candidateCheckedAll:function(){
+        if($("#ckAll").is(":checked")){
+            $(".isck").prop('checked','checked');
+
+        } else {
+            $(".isck").removeAttr('checked');
+        }
+    },
+
+    candidateChecked:function(){
+        var lengthAllCheckbox = $('.isck').length;
+        if($('.isck').is(":checked")) {
+            if ($(".trIsck input:checked").length === lengthAllCheckbox) {
+                $('#ckAll').prop('checked', true);
+            } else {
+                $('#ckAll').prop('checked',false);
+            }
+        } else{
+            if ($(".trIsck input:checked").length === lengthAllCheckbox) {
+                $('#ckAll').prop('checked', true);
+            } else {
+                $('#ckAll').prop('checked',false);
+            }
+        }
+    },
+
+    deleteWatchList:function(id){
+        $.ajax({
+            url: 'delete-watch-list',
+            data: {OpportunityID:id},
+            type: 'POST',
+            success: function(data, status, xhr){
+                if(data){
+                    window.location = 'watch-list';
+                }
+            }
+        });
     }
 }
+
+
 $(function  () {
     var prCandidate= new pocketCandidate();
     prCandidate.init();

@@ -1,3 +1,4 @@
+var skillSearch =1;
 function career(){ }
 career.prototype = {
     init: function(){
@@ -424,42 +425,45 @@ career.prototype = {
     selectSkillToSearch:function(){
         var skillText = $("#selectSkillToSearch option:selected").text();
         var skilIDSelected = $("#selectSkillToSearch option:selected").val();
-        $("div#addSkillandKeyword").append("<span style='' class='label-tag pull-left getSkillText'>" + skillText +
-            "&nbsp;&nbsp;<imge class='removeskill glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
+        if(skillSearch >1){
+            $("div#addSkillandKeyword").append("<span class='previous' style='float:left;margin-top: 5px; margin-right: 10px; font-weight: bold'>OR</span><span style='' class='label-tag pull-left'>" + skillText +
+                "&nbsp;&nbsp;<imge class='resetSkill removeskillPr glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
             "<input type='hidden'  name='skilIDSear[]' value='"+skilIDSelected+"' ></span>");
+        } else{
+            $("div#addSkillandKeyword").append("<span style='' class='label-tag pull-left'>" + skillText +
+                "&nbsp;&nbsp;<imge class='resetSkill removeskillNext glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
+                "<input type='hidden'  name='skilIDSear[]' value='"+skilIDSelected+"' ></span>");
+        }
 
-        $(".removeskill").unbind("click").bind("click",function(){
+        $(".removeskillNext").unbind("click").bind("click",function(){
             var skilID = $(this).attr("skilIDSelected");
-            $("#selectSkill").find("option[value='" + skilID + "']").css("display", "");
+            $("#selectSkillToSearch").find("option[value='" + skilID + "']").css("display", "");
+            $(this).parent().next('span').remove();
             $(this).parent().remove();
+
+            skillSearch =skillSearch -1;
+        });
+
+        $(".removeskillPr").unbind("click").bind("click",function(){
+            var skilID = $(this).attr("skilIDSelected");
+            $("#selectSkillToSearch").find("option[value='" + skilID + "']").css("display", "");
+            var existspan = $(this).parent().prev('span').hasClass('previous');
+            if(existspan){
+                $(this).parent().prev('span').remove();
+            } else {
+                $(this).parent().next('span').remove();
+            }
+
+            $(this).parent().remove();
+
+            skillSearch =skillSearch -1;
         });
 
         $("#selectSkillToSearch option:selected").css("display", "none");
         $("#selectSkillToSearch option[value='']").prop("selected", "selected");
+
+        skillSearch =skillSearch+1;
     },
-
-    /*
-    careerMatchSearch:function(){
-        var btn = $(this);
-        btn.button('loading');
-        $.ajax({
-            url: 'careermatch',
-            data: $('#form-careermatch').serializeArray(),
-            type: 'POST',
-            error : function (xhr,error) {
-                btn.button('reset');
-            },
-            success: function(data, status, xhr){
-                if(data){
-                    $(".content").html(data)
-                    btn.button('reset');
-                } else {
-                    btn.button('reset');
-                }
-
-            }
-        });
-    } */
 
     careerMatchSearch:function(){
         var btn = $(this);
@@ -528,9 +532,16 @@ career.prototype = {
                             "<div style='height:10px!important;'></div>" +
                             "</div>" +
                         "</div>"
+                    });
 
                         $(".containerData").html(httml);
+
+                    $(".resetSkill").each(function(){
+                        var skilID = $(this).attr("skilIDSelected");
+                        $("#selectSkillToSearch").find("option[value='" + skilID + "']").css("display", "");
                     });
+                    $("#addSkillandKeyword").html("");
+                    skillSearch =1;
                 } else {
                     btn.button('reset');
                 }

@@ -1,34 +1,12 @@
-<div class="content">
 <script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
 <script>
        var careerMatch = new career();
 </script>
 <style>
- .clWidth100{width: 100px;}
- .clWidth200{width: 200px;}
- .clWidth300{width: 300px;}
- .clWidth600{width: 600px;}
- .clWidth800{width: 800px;}
- .rowHeight { margin-bottom: 3px!important; margin-top: 3px!important}
- .bgcolor-ligh-gray {background-color: #fcfcfc;}
- .bgcolor-ligh-gray {background-color: #fcfcfc;}
- .messageActive {font-weight: bold}
- .messageDeActive {color:#ccc}
 
  .borderbottom_Gray {
      border-bottom: 1px solid #ccc;
  }
-
- .label-tag{
-     border: 1px solid #ddd; padding: 3px;
-     background-color: #eee;
-     color: #000;
-     -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-     border-radius: 5px;
-     margin-right: 10px;margin-bottom: 5px;
- }
-
 
  .border_radius_careermatch {
      background-color: #fff;
@@ -44,6 +22,16 @@
      transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
      width: 90px;
     }
+ .label-tag{
+     border: 1px solid #ddd; padding: 3px;
+     background-color: #eee;
+     color: #000;
+     -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+     border-radius: 5px;
+     margin-right: 10px;margin-bottom: 5px;
+ }
+
 </style>
 <script>
     var urlImage = '<?=URL_THEMES;?>';
@@ -87,7 +75,7 @@
             <div class="col-md-12">
                 <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -60px"><label>Career Match</label> </h3></div>
                 <div class="col-md-6" style="text-align: right">
-                    <button style="margin-top:15px; margin-right: -55px;background-color: #7aac34" class="btn btn-success" type="button"><strong>Post Job</strong></button>
+                   <a href="careercreate" style="margin-top:15px; margin-right: -55px;background-color: #7aac34" class="btn btn-success" ><strong style="color: #fff!important;">Post Job</strong></a>
                 </div>
             </div>
 
@@ -267,6 +255,6 @@
         $("#selectSkillToSearch").unbind("change").bind("change",careerMatch.selectSkillToSearch)
     })
 </script>
-</div>
+
 
 

@@ -557,5 +557,44 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $candidateProfileID;
     }
        
+    public function getWatchList($filters=NULL,$limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('o'=>'opportunity'),array('OpportunityID','postedby','posteddate','title','careerdescription','CompanyID'));
+        $select->join(array('w'=>'watchlist'),
+            'w.OpportunityID = o.OpportunityID',
+            array()
+        );
+        $select->joinLeft(array('c'=>'company'),
+            'c.CompanyID = o.CompanyID',
+            array('Companyname')
+        );
+
+        if(count($filters)>0)
+        {
+            if(isset($filters)){
+                $select->where("w.CandidateID = '".$filters['CandidateID']."'");
+            }
+        }
+        if ( $limit != 0 || $offset != 0)
+            $select->limit($limit, $offset);
+
+        $records = PR_Database::fetchAll($select);
+        return $records;
+    }
+
+    public function deleteWatchList($OpportunityID)
+    {
+        if(empty($OpportunityID)){
+            return true;
+        }
+        $db = PR_Database::getInstance();
+        $db->delete('watchlist', array(
+            'OpportunityID = ?' => $OpportunityID
+        ));
+        return true;
+
+    }
        
 }
