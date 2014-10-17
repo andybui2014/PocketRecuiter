@@ -11,8 +11,8 @@ class ApiController extends Application_Controller_Action
     public function addOpportunityAction()
     {
         $this->_helper->layout->disableLayout();
-        $BYTES =8;
-        $token  = openssl_random_pseudo_bytes($BYTES);
+        //$BYTES =8;
+        //$token  = openssl_random_pseudo_bytes($BYTES);
         $request = $this->getRequest();
         $username = $request->getParam("Email","");
         $password = $request->getParam("Password","");
