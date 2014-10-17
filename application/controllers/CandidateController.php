@@ -536,22 +536,29 @@ class CandidateController extends Application_Controller_Action
         $this->view->getCandidates=$getCandidates;
         $SkillName=$api_candidate->getList_CandidateSkillsOnly($UserID);
         $Skills=array();
-        foreach($SkillName as $key=>$values )
-        {
-           $Skills[$key]=$values;   
+        if(!empty($SkillName)||$SkillName!=""){             
+        
+            foreach($SkillName as $key=>$values )
+            {
+               $Skills[$key]=$values;   
+            }
         }
         $this->view->SkillName=$Skills;
         $CandidateEmployment=array();
-        foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
+        if(!empty($getCandidates["CandidateEmploymentID"])||$getCandidates["CandidateEmploymentID"]!="")
         {
-           $CandidateEmployment[$key]=$values;   
+              foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
+                {
+                   $CandidateEmployment[$key]=$values;   
+                }
         }
+        
         $this->view->CandidateEmployment=$CandidateEmployment;
         $Education = $api_candidate->getCandidateEducationList(2); 
         $this->view->Education=$Education;
          
      //  echo ("getUserArray:<pre>");print_r($a);echo("</pre>");
-        $this->render('profile');          
+        $this->render('profile');                  
                      
     }
      public function addSkillsAction(){
@@ -565,13 +572,16 @@ class CandidateController extends Application_Controller_Action
         $skillname=array();
         $skillid=array(); 
         $listskill=array();
-        foreach ($skills as $skill)
+        if($skills!="" || !empty($skills))
         {
-            $skillID=$core->get_skill($skill);
-            
-             array_push($skillname,$skillID[0]["SkillName"]);  
+            foreach ($skills as $skill)
+            {
+                $skillID=$core->get_skill($skill);
+                
+                 array_push($skillname,$skillID[0]["SkillName"]);  
 
-           
+               
+            }
         }
         $result["SkillName"]=$skillname;         
         $response = $this->getResponse();
