@@ -225,7 +225,7 @@ Overview.prototype = {
         var ovw_message = $('#profile #Overview_message');
         var maxslr_message = $('#profile #maximumsalary_message');
         var minslr_message = $('#profile #minimumsalary_message');
-        // alert(fn.val()+ln.val()); fdfdg
+        // alert(fn.val()+ln.val()); fdfdghghgf
       
             var error = false;
             
