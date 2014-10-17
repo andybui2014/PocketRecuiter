@@ -1,9 +1,9 @@
 function Education(){ }
 Education.prototype = {
     init: function(){
-        $('#ckAll').unbind('click').bind('click',this.checkAllIs);
-        $('#saveSkills').unbind('click').bind('click',this.saveSkills);
-         $('#SaveEducation').unbind('click').bind('click',this.SaveEducation);  
+        //$('#ckAll').unbind('click').bind('click',this.checkAllIs);
+       // $('#saveSkills').unbind('click').bind('click',this.saveSkills);
+        // $('#SaveEducation').unbind('click').bind('click',this.SaveEducation);  
 
 
     },
