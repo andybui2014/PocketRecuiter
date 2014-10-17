@@ -1,0 +1,249 @@
+<?php
+$helper = $this->layout()->_helper;
+?>
+<style>
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .nav-tabs {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+        color: #428bca;
+        background-color: #fff;
+       /*  border: 1px solid #ddd;*/
+        border-bottom-color: transparent;
+    }
+    .nav-tabs>li>a {
+        margin-right: 2px;
+        line-height: 1.428571429;
+        border: 1px solid transparent;
+        border-radius: 4px 4px 0 0;
+    }
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+        background-color:#f7ecb5;
+    }
+    .table-stripedgray > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+        background-color:#eeeeee;
+    }
+    #requiredSkillClass {
+        min-height: 80px!important; height:auto;
+        border: 1px solid #cccccc;
+    }
+    #requiredTest {
+        min-height: 80px!important; height:auto;
+        border: 1px solid #cccccc;
+    }
+
+    .menuBar {  background-image:url("<?=URL_THEMES?>images/img4.png"); background-repeat:repeat-x  ;border-radius: 4px; margin-bottom: 20px;
+         box-shadow: 0 10px 8px -8px #bbb;
+    }
+    .menuBar ul{list-style:none}
+    .menuBar ul li {float: left; width:217px; line-height:32px; margin-left:-20px;}
+    .menuBar li a {color: #777; float: left; text-indent:15px; margin-left: -34px; width:200px; text-decoration: none; background-image:url("<?=URL_THEMES?>images/tab2.png")}
+
+    .menuBar li a:active { background-color:#003399 ;color:#fff; text-decoration:none}
+    .menuBar ul li .active { color:#fff!important; text-decoration:none; width:200px; background-image:url("<?=URL_THEMES?>images/createCareer_b.png") }
+    .tabendBetween {background-image:url("<?=URL_THEMES?>images/tab4.png")!important; z-index: 10000}
+    .tabend {background-image:url("<?=URL_THEMES?>images/tabend.png")!important; z-index: 10000}
+
+    .label-tag{
+        border: 1px solid #ddd; padding: 3px;
+        background-color: #eee;
+        color: #000;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin-right: 10px;margin-bottom: 5px;
+    }
+    .colorBlue {color: #2a6496;}
+</style>
+
+<div class="container">
+    <div style="height:80px; color: #2a6496">
+        <div class="panel-body">
+            <div><h3 style="margin-top: 10px;margin-left: -16px"><label>Test api Post OPP</label> </h3></div>
+        </div>
+    </div>
+
+        <!--create career-->
+    <div class="panel panel-default">
+          <div class="panel-body">
+
+                <div class="tab-content">
+                     <!--Career Create new  -->
+                      <div id="calcareercr" class="tab-pane active">
+                            <!--LEFT-->
+
+                            <div class="col-md-8">
+                                <form id="form-newOpportunity" name="form-Opportunity" action="<?=$helper->url('add-opportunity','api');?>" method="post">
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
+                                            <label >User Name* </label><span id="" style="color: red"></span>
+                                            <input type="text"  id="Email" name="Email" class="form-control">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
+                                            <label >Pass Word* </label><span id="" style="color: red"></span>
+                                            <input type="text"  id="Password" name="Password" class="form-control">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label >Career Name* </label> <span id="careernameLable" style="color: red"> </span>
+                                        <input type="text"  id="CareerName" name="CareerName" class="form-control">
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
+                                            <label >Company ID* </label><span id="companynameLable" style="color: red"></span>
+                                            <input type="text"  id="CompanyID" name="CompanyID" class="form-control">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
+                                            <label >UserID* </label><span id="" style="color: red"></span>
+                                            <input type="text"  id="UserID" name="UserID" class="form-control">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label >Career Description*</label><span id="careerdescriptionLable" style="color: red"></span>
+                                        <textarea style=" height: 80px" id="CareerDescription" name="CareerDescription" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Career Industry*</label> <span id="industryLable" style="color: red"></span>
+                                        <input type="text" id="Industry" name="Industry" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6" >
+                                            <label>Career Type </label>
+                                            <select id="JobType" name="JobType" class="form-control">
+                                               <option value="1">Full Time</option>
+                                                <option value="0">Haft Time</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Duration</label>
+                                            <select name="Duration" id="Duration" class="form-control">
+                                                <option value ="1ngay" >1 Day </option>
+                                                <option value ="2ngay" >2 Days </option>
+                                                <option value ="3ngay" >3 Days </option>
+                                                <option value ="1year" >1 Year </option>
+                                                <option value ="5year" >5 Year </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Career Location </label>
+                                            <input id="Location" name="Location" type="text"  class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Career Zip Code</label>
+                                            <input id="ZipCode" name="ZipCode" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label >Minimun Education*</label> <span id="minimuneducationLable" style="color: red"></span>
+                                        <input id="MinimunEducation" name="MinimunEducation" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label >Degree Title*</label> <span id="degreetitleLable" style="color: red"></span>
+                                        <input id="DegreeTitle" name="DegreeTitle" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-9" style="margin:0;padding:0;padding-top:5px"><strong >Required Skills*</strong> <span id="requiredSkillLable" style="color: red"></span>
+                                        </div>
+                                        <div class="col-md-3" style="padding-right:0px">
+                                            <select id="SkillID" name="SkillID" class="form-control">
+                                                <option value="0">Select Skill</option>
+                                                <option value="2">Joomla!</option>
+                                                <option value="2">WordPrress</option>
+                                                <option value="3">Ecommer</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label >Required Experience*</label><span id="requiredExperienceLable" style="color: red"></span>
+                                        <select  id="RequiredExperience" name="RequiredExperience" class="form-control">
+                                            <option value="3 months"> 3 months</option>
+                                            <option value="6 months"> 6 months</option>
+                                            <option value="1 year"> 1 year</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label >Salary Range*</label> <span id="salaryRangeLable" style="color: red"></span>
+                                            <select  id="SalaryRangeF" name="SalaryRangeF" class="form-control">
+                                                <option value="10"> 10 K</option>
+                                                <option value="20"> 20 K</option>
+                                                <option value="10"> 30 K</option>
+                                                <option value="20"> 40 K</option>
+                                                <option value="10"> 50 K</option>
+                                                <option value="20"> 60 K</option>
+                                                <option value="10"> 70 K</option>
+                                                <option value="20"> 80 K</option>
+                                                <option value="10"> 90 K</option>
+                                                <option value="20"> 100 K</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>&nbsp;</label>
+                                            <select id="SalaryRangeT" name="SalaryRangeT" class="form-control">
+                                                <option value="10"> 10 K</option>
+                                                <option value="20"> 20 K</option>
+                                                <option value="10"> 30 K</option>
+                                                <option value="20"> 40 K</option>
+                                                <option value="10"> 50 K</option>
+                                                <option value="20"> 60 K</option>
+                                                <option value="10"> 70 K</option>
+                                                <option value="20"> 80 K</option>
+                                                <option value="10"> 90 K</option>
+                                                <option value="20"> 100 K</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
+                                        <div class="col-md-9" style="margin:0;padding:0; padding-top:5px"><label>Required Test</label></div>
+                                        <div class="col-md-3" style="padding-right: 0px">
+                                            <select id="TestID" name="TestID" class="form-control">
+                                                <option value="">Select Test</option>
+                                                <option value="7">Andy\'s Test</option>
+                                                <option value="3">ABCD</option>
+                                                <option value="4">ABCDe</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <input type="hidden" id="career_status" name="status" value="">
+                                    <div class="col-md-12" style="padding-left:30px; padding-top:10px">
+                                        <button id="careercontinue" style="width:70px" type="submit" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        <!-- END LEFT-->
+
+                    </div>
+                    <!--end career create new-->
+                </div>
+
+          </div>
+    </div>
+            <!--end create career-->
+</div>
+
+
+
+
