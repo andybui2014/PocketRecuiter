@@ -93,14 +93,14 @@ Overview.prototype = {
         $('#profile :input[name="firstname"]').val('');
         $('#profile :input[name="lastname"]').val('');
         $('#profile').find('[name="tagline"]').value='';
-        $('#profile').find('[name="Overview"]').value=''; 
+        $('#profile').find('[name="overview"]').value=''; 
         $('#profile').find('[name="maximumsalary"]').value=''; 
         $('#profile').find('[name="minimumsalary"]').value=''; 
            
         $('#profile #firstname').html('');
         $('#profile #lastname').html('');
         $('#profile #tagline').html('');
-        $('#profile #Overview').html('');
+        $('#profile #overview').html('');
         $('#profile #maximumsalary').html('');
         $('#profile #minimumsalary').html('');
                
@@ -206,7 +206,7 @@ Overview.prototype = {
         firstname: { notEmpty: {message: 'First name is required.'}},
         lastname: { notEmpty: { message: 'Last name is required.'}} ,
         tagline: { notEmpty: {message: 'Tagline is required.'}},
-        Overview: { notEmpty: {message: 'Overview is required.'}},
+        overview: { notEmpty: {message: 'overview is required.'}},
         maximumsalary: { notEmpty: {message: 'Maximumsalary is required.'}},
         minimumsalary: { notEmpty: {message: 'Minimumsalary is required.'}}
         
@@ -215,7 +215,7 @@ Overview.prototype = {
         var fn = $('#profile :input[name="firstname"]'); 
         var ln = $('#profile :input[name="lastname"]');       
         var taln = $('#profile').find('[name="tagline"]');
-        var ovw = $('#profile').find('[name="Overview"]'); 
+        var ovw = $('#profile').find('[name="overview"]'); 
         var maxslr = $('#profile').find('[name="maximumsalary"]'); 
         var minslr = $('#profile').find('[name="minimumsalary"]'); 
       
@@ -259,7 +259,7 @@ Overview.prototype = {
             if(ovw.val() =='' || ovw.val().length <= 1){
                 error = true;
                 ovw.parent().addClass('has-error');
-                ovw_message.html(fields.Overview.notEmpty.message).fadeOut().fadeIn();
+                ovw_message.html(fields.overview.notEmpty.message).fadeOut().fadeIn();
             }else{
                 ovw_message.parent().removeClass('has-error').addClass('has-success');
                 ovw_message.html('');
