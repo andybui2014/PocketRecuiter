@@ -495,37 +495,7 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
     }
-    public function profileAction(){
-        $client = PR_Session::getSession(PR_Session::SESSION_USER);
-        $UserID=$client["UserID"];
-        $emailaddress = $client["emailaddress"];
-        $password = $client["password"];
-        $Api = new PR_Api_User();
-        $authData = array('emailaddress' => $emailaddress, 'password' => $password);
-        $getUserArray=$Api->getUserArray($authData);
-        $this->view->client = $getUserArray;
-        $api_candidate= new PR_Api_Core_CandidateClass();
-        $Candidateprofile_ID=$getUserArray["CandidateProfileID"];
-        $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
-        $this->view->getCandidates=$getCandidates;
-        $SkillName=array();
-        foreach($getCandidates["SkillName"] as $key=>$values )
-        {
-            $SkillName[$key]=$values;
-        }
-        $this->view->SkillName=$SkillName;
-        $CandidateEmployment=array();
-        foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
-        {
-           $CandidateEmployment[$key]=$values;   
-        }
-        $this->view->CandidateEmployment=$CandidateEmployment;
-        $Education = $api_candidate->getCandidateEducationList(2); 
-        $this->view->Education=$Education;
-
-        // echo ("getUserArray:<pre>");print_r($Education);echo("</pre>");
-        $this->render('profile');
-    }
+   
     public function watchListAction(){
         $user = PR_Session::getSession(PR_Session::SESSION_USER);
         
@@ -551,5 +521,158 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($res), true)
             ->setBody($res);
+    }
+	 public function profileAction()
+    {           
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
+                
+        $api_candidate= new PR_Api_Core_CandidateClass();
+        
+        $getUserArray=$api_candidate->getCandidateInfo($UserID);
+        $this->view->client = $getUserArray;  
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+        $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
+        $SkillName=$api_candidate->getList_CandidateSkillsOnly($UserID);
+        $Skills=array();
+        foreach($SkillName as $key=>$values )
+        {
+           $Skills[$key]=$values;   
+        }
+        $this->view->SkillName=$Skills;
+        $CandidateEmployment=array();
+        foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
+        {
+           $CandidateEmployment[$key]=$values;   
+        }
+        $this->view->CandidateEmployment=$CandidateEmployment;
+        $Education = $api_candidate->getCandidateEducationList(2); 
+        $this->view->Education=$Education;
+         
+     //  echo ("getUserArray:<pre>");print_r($a);echo("</pre>");
+        $this->render('profile');          
+                     
+    }
+     public function addSkillsAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $params= $request->getParams();
+        $skills=$params["skills"]; 
+       // echo("testt:<pre>");print_r($skills);echo("</pre>");  die();
+        $core=new PR_Api_Core_CandidateClass();
+        $skillname=array();
+        $skillid=array(); 
+        $listskill=array();
+        foreach ($skills as $skill)
+        {
+            $skillID=$core->get_skill($skill);
+            
+             array_push($skillname,$skillID[0]["SkillName"]);  
+
+           
+        }
+        $result["SkillName"]=$skillname;         
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $result = json_encode($result);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($result), true)
+            ->setBody($result);
+    }
+    public function editoverviewAction()
+    {           
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];       
+        $core=new PR_Api_Core_CandidateClass();
+        $getUserArray=$core->getCandidateInfo($UserID);   
+        $this->view->UserArray=$getUserArray;
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);
+        $this->view->getCandidates=$getCandidates;
+        $SkillName=$core->getList_CandidateSkillsOnly($UserID);
+        $Skills=array();
+        if($SkillName!="")
+        {
+            foreach($SkillName as $key=>$values )
+            {
+               $Skills[$key]=$values;   
+            }
+        }
+        $this->view->SkillName=$Skills;
+        $allskills=$core->getListAll_CandidateSkills($UserID);
+        $this->view->allskills=$allskills;        
+             
+        $this->render('edit-overview');          
+                     
+    }
+   public function doEditoverviewAction()
+    {           
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];       
+        $request = $this->getRequest();
+        $params= $request->getParams();
+        $return = array("success" => 0, "error" => "");
+        $updateFields=array();
+        foreach ($params as $key => $value) {
+            $updateFields[$key]=$value;
+            
+            }
+       
+        $core=new PR_Api_Core_CandidateClass();
+       // $skillID=array();
+       if(isset($updateFields["SkillName"]))
+        {
+            foreach($updateFields["SkillName"] as $key=> $skills)
+            {
+                $skillID[$key]=$core->getskillID($skills);
+               
+            }
+        }
+        $updateFields["SkillID"]=$skillID;
+        $core-> updateCandidateProfile($UserID,$updateFields);
+        $return["success"]=1;
+                     
+    }
+    
+    public function vieweducationAction()
+    {           
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];       
+        $core=new PR_Api_Core_CandidateClass();
+        $getUserArray=$core->getCandidateInfo($UserID);   
+        $this->view->UserArray=$getUserArray;
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);
+        $this->view->getCandidates=$getCandidates;   
+        $listEducation=$core->getCandidateEducationList($UserID);
+        $this->view->listEducation=$listEducation;
+       // echo("testt:<pre>");print_r($listEducation);echo("</pre>");
+        $this->render('view-education');          
+                     
+    }
+    public function editvieweducationAction()
+    {   
+              
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];  
+        $request = $this->getRequest();
+        $params= $request->getParams();
+        $CredentialExperienceID=$request->getParam("CredentialExperienceID");     
+        $core=new PR_Api_Core_CandidateClass();
+        $getUserArray=$core->getCandidateInfo($UserID);   
+        $this->view->UserArray=$getUserArray;
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);
+
+        $Educationlist=$core->getCandidateEducation($CredentialExperienceID);
+        $this->view->getCandidates=$getCandidates;   
+        $this->view->Educationlist=$Educationlist; 
+      //echo("testt:<pre>");print_r($Educationlist);echo("</pre>");
+        $this->render('edit-view-education');          
+                     
     }
 }

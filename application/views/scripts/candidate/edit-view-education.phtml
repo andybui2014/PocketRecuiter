@@ -1,0 +1,293 @@
+
+<style>
+    body {
+        background: none repeat scroll 0 0 #ededed;
+    }
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+
+    /****/
+
+    .breadcrumb {
+        width: 100%;
+        /*centering*/
+        padding:3px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        /*box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+        /*overflow: hidden;*/
+        /*border-radius: 5px;*/
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+    .breadcrumb a {
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        color: white;
+        /*need more margin on the left of links to accomodate the numbers*/
+        padding: 0 30px;
+        background: #666;
+        background: linear-gradient(#666, #333);
+        position: relative;
+    }
+        /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+    .breadcrumb a:first-child {
+        padding-left: 46px;
+        border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+    }
+    .breadcrumb a:first-child:before {
+        left: 14px;
+    }
+    .breadcrumb a:last-child {
+        border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+        padding-right: 20px;
+    }
+
+        /*hover/active styles*/
+    .breadcrumb a.active, .breadcrumb a:hover{
+        background: #333;
+        background: linear-gradient(#333, #000);
+    }
+    .breadcrumb a.active:after, .breadcrumb a:hover:after {
+        background: #333;
+        background: linear-gradient(135deg, #333, #000);
+    }
+
+        /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+    .breadcrumb a:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -18px; /*half of square's length*/
+        /*same dimension as the line-height of .breadcrumb a */
+        width: 36px;
+        height: 36px;
+        transform: scale(0.707) rotate(45deg);
+        /*we need to prevent the arrows from getting buried under the next link*/
+        z-index: 1;
+        /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+        background: #666;
+        background: linear-gradient(135deg, #666, #333);
+        /*stylish arrow design using box shadow*/
+        box-shadow:
+            /*2px -2px 0 2px rgba(0, 0, 0, 0.4),3px -3px 0 2px rgba(255, 255, 255, 0.1);*/
+            2px -2px 0 2px #bbb,
+            3px -3px 0 2px #eee;
+        border-radius: 0 5px 0 50px;
+    }
+        /*we dont need an arrow after the last link*/
+    .breadcrumb a:last-child:after {
+        content: none;
+    }
+        /*we will use the :before element to show numbers*/
+    .breadcrumb a:before {
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        margin: 8px 0;
+        position: absolute;
+        top: 0;
+        left: 30px;
+        background: #444;
+        background: linear-gradient(#444, #222);
+        font-weight: bold;
+    }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after{
+        background: #2a6496; color: #fff;
+    }
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+    .line-r{
+         border-right: 1px solid #d6d6d6;
+         padding-right: 10px;
+         height: 10px;
+    
+    }
+    .line-l{
+         border-left: 1px solid #d6d6d6;
+         padding-left: 5px;
+         height: 10px;
+    
+    }
+    .well{
+        margin-bottom: 0;
+        padding: 0;
+    }
+    .label-tag {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: #fff;
+        color: #000;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+    #requiredTest {
+        min-height: 200px; 
+        height:auto;
+        border: 1px solid #cccccc;
+    }
+    .modal-dialog {
+        width: 300px;
+        
+    }
+    .form-control{
+        font-size: 12px;
+    }
+    .message{
+        color:#b81900;
+        font-size: 12px;
+    }
+    .logo{
+        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+        width: 211px;
+        height: 165px;
+    }
+        /****/
+
+</style>
+<script src="<?=URL_THEMES.'js/ediOverview.js';?>"></script>
+<?php
+    $UserArray=$this->UserArray;
+    $getCandidates=$this->getCandidates;
+    $listEducation=$this->Educationlist;
+   
+  // echo("test:<pre>");print_r($listEducation);echo("</pre>");
+?>
+
+<div class="container" style="padding-top:40px;">
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well text-center">
+              
+               <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?= $UserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$UserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$UserArray["Address1"]?>, <?=$UserArray["State"]?></span>
+            </span>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?>-<?=$getCandidates["maximumsalary"]?>k</strong></span><br/>
+            <p style="padding: 10px 0">
+                <!--<i class="lbl-log">Edit</i>>-->
+                <img src="<?=URL_THEMES?>images/btn_edit.png">
+            </p>
+            <ul id="nav-left">
+                <li><a >Profile builder</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/profile">Overview</a></li>
+                <li><a href="#">Contact Info</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><strong><a href="<?= URL_BASE ?>candidate/viewducation" class="active">Education</a></strong></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($UserArray["Lastsigned"])) ?></p>
+        </div>
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">Education</span>
+                <div style="padding-bottom:5px">
+                    Specify  your educational background.
+                </div>
+                
+             </div>
+            <div class="">
+                <div class="panel-body" style="padding:0">
+                    <div class="col-md-8"  style="padding:0;margin-top:15px;margin-botton:50px;border-radius: 10px;">
+                        
+                         <form id="education-form" role="form" style="font-size:12px">
+                            <div class="form-group">
+                                <input name="CredentialExperienceID" id="CredentialExperienceID" type="hidden" class="form-control"  value="<?=$listEducation["CredentialExperienceID"]?>">
+                                <input name="inst-name" type="checkbox" class="" checked="checked"><span style="padding-left:5px;font-size:12px">Display this education.</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Institution Name (no abbreviations,please)</label>
+                                <input name="institution_name" id="institution_name" type="text" class="form-control"  value="<?=$listEducation["institution_name"]?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Name and Type of Degree Name (no abbreviations,please)</label>
+                                <input name="title" id="title"  type="text" class="form-control" value="<?= $listEducation["title"]?>">
+                            </div>
+                            
+                              <div class="form-group" style="height:60px">
+                                
+                                    <label> <strong>Start Date (optional)</strong></label><br>
+                                <div class="col-md-6" style="margin:0;padding:0 50px 0 0">
+                                    <div class="input-group date" id="datetimepicker8">
+                                        <input type="text" name="start-year" class="form-control" data-date-format="M/YYYY">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="height:60px">
+                                
+                                    <label> <strong>End Date (optional)</strong></label><br>
+                                    <div class="col-md-6" style="margin:0;padding: 0 50px 0 0">
+                                    <div class="input-group date" id="datetimepicker9">
+                                        <input type="text" name="end-year" class="form-control">
+                                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                
+                                    <label> <strong>Institution</strong></label><br>
+                                    <textarea rows="6" class="form-control" name="comments" id="comments"><?=$listEducation["comments"]?></textarea>
+                                    
+                                    
+                                
+                            </div>
+                            <div class="form-group">
+                                <img src="<?=URL_THEMES.'images/btn_Save.png';?>"style="padding-right:5px">
+                                <img src="<?=URL_THEMES.'images/btn_SaveandAddAnother.png';?>" style="padding-right:5px">
+                                <img src="<?=URL_THEMES.'images/btn_Cacel.png';?>">
+                            </div>
+                        </form>
+                        <div style="padding-top:20px;">
+                         
+                         </div>
+                                            
+                   </div>
+                </div>
+            </div>
+            <div style="padding-top:40px;">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

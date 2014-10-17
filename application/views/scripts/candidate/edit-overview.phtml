@@ -1,0 +1,402 @@
+
+<style>
+    body {
+        background: none repeat scroll 0 0 #ededed;
+    }
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+
+    /****/
+
+    .breadcrumb {
+        width: 100%;
+        /*centering*/
+        padding:3px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        /*box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+        /*overflow: hidden;*/
+        /*border-radius: 5px;*/
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+    .breadcrumb a {
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        color: white;
+        /*need more margin on the left of links to accomodate the numbers*/
+        padding: 0 30px;
+        background: #666;
+        background: linear-gradient(#666, #333);
+        position: relative;
+    }
+        /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+    .breadcrumb a:first-child {
+        padding-left: 46px;
+        border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+    }
+    .breadcrumb a:first-child:before {
+        left: 14px;
+    }
+    .breadcrumb a:last-child {
+        border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+        padding-right: 20px;
+    }
+
+        /*hover/active styles*/
+    .breadcrumb a.active, .breadcrumb a:hover{
+        background: #333;
+        background: linear-gradient(#333, #000);
+    }
+    .breadcrumb a.active:after, .breadcrumb a:hover:after {
+        background: #333;
+        background: linear-gradient(135deg, #333, #000);
+    }
+
+        /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+    .breadcrumb a:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -18px; /*half of square's length*/
+        /*same dimension as the line-height of .breadcrumb a */
+        width: 36px;
+        height: 36px;
+        transform: scale(0.707) rotate(45deg);
+        /*we need to prevent the arrows from getting buried under the next link*/
+        z-index: 1;
+        /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+        background: #666;
+        background: linear-gradient(135deg, #666, #333);
+        /*stylish arrow design using box shadow*/
+        box-shadow:
+            /*2px -2px 0 2px rgba(0, 0, 0, 0.4),3px -3px 0 2px rgba(255, 255, 255, 0.1);*/
+            2px -2px 0 2px #bbb,
+            3px -3px 0 2px #eee;
+        border-radius: 0 5px 0 50px;
+    }
+        /*we dont need an arrow after the last link*/
+    .breadcrumb a:last-child:after {
+        content: none;
+    }
+        /*we will use the :before element to show numbers*/
+    .breadcrumb a:before {
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        margin: 8px 0;
+        position: absolute;
+        top: 0;
+        left: 30px;
+        background: #444;
+        background: linear-gradient(#444, #222);
+        font-weight: bold;
+    }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after{
+        background: #2a6496; color: #fff;
+    }
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+    .line-r{
+         border-right: 1px solid #d6d6d6;
+         padding-right: 10px;
+         height: 10px;
+    
+    }
+    .line-l{
+         border-left: 1px solid #d6d6d6;
+         padding-left: 5px;
+         height: 10px;
+    
+    }
+    .well{
+        margin-bottom: 0;
+        padding: 0;
+    }
+    .label-tag {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: #fff;
+        color: #000;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+    #requiredTest {
+        min-height: 200px; 
+        height:auto;
+        border: 1px solid #cccccc;
+    }
+    .modal-dialog {
+        width: 300px;
+        
+    }
+    .form-control{
+        font-size: 12px;
+    }
+    .message{
+        color:#b81900;
+        font-size: 12px;
+    }
+    .logo{
+        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+        width: 211px;
+        height: 165px;
+    }
+        /****/
+
+</style>
+<script src="<?=URL_THEMES.'js/ediOverview.js';?>"></script>
+<?php
+    $UserArray=$this->UserArray;
+    $getCandidates=$this->getCandidates;
+    $SkillName=$this->SkillName;
+    $allskills=$this->allskills;
+   // $CandidateEmployment=$this->CandidateEmployment;
+   // $Education=$this->Education;
+  // echo("test:<pre>");print_r($allskills);echo("</pre>");
+?>
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalSkill" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Skills</h2>
+            </div>
+            <div class="modal-body login-modal">
+                <form id="form-skills" name="form-skills" method="post">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <input type="checkbox" class="ckAll" id="ckAll" checked="checked"><span style="padding-left:10px;"> Check All</span>  <br>
+                        <div class="ischecktr">
+                        <?php
+                            $core=new PR_Api_Core_CandidateClass();
+                            $listskill=$core->get_Listskill();
+                            $SkillName=$core->getList_CandidateSkillsOnly($UserArray["UserID"]);
+                            $arraySkill=array();
+                            foreach ($SkillName as $values)
+                            {
+                               $arraySkill[]=$values["SkillID"] ;
+                            }
+                           // echo("test:<pre>");print_r($arraySkill);echo("</pre>");
+                            foreach ($listskill as $key=>$Skills)
+                            {
+                               if (!in_array($Skills["SkillID"], $arraySkill))   {   
+                        ?>
+                            <input class="checkIs" id="checkIs"  value="<?=$Skills["SkillID"]?>"  type="checkbox" id="skills[]" name="skills[]"><span style="padding-left:10px;"><?=$Skills["SkillName"]?></span>
+                            
+                           <!-- <input type="hidden" name="SkillName[]" id="SkillName[]" <?php  ?> value="<?=$Skills["SkillName"]?>">-->
+                            <br>
+                         <?php
+                         
+                                }
+                            }
+                         ?>
+                         </div>   
+                        </div>
+                    </div>
+                    <button id="saveSkills" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="padding-top:40px;">
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well text-center">
+               <!-- <div id="update-av" class="img-responsive img-thumbnail" style="height: 108px; width: 108px; background-position: center center; background-image: url(&quot;data:image/jpg;base64,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&quot;); display: inline-block;"></div>-->
+               <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?= $UserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$UserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$UserArray["Address1"]?>, <?=$UserArray["State"]?></span>
+            </span>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?>-<?=$getCandidates["maximumsalary"]?>k</strong></span><br/>
+            <p style="padding: 10px 0">
+                <!--<i class="lbl-log">Edit</i>>-->
+                <img src="<?=URL_THEMES?>images/btn_edit.png">
+            </p>
+            <ul id="nav-left">
+                <li><a >Profile builder</a></li>
+                <li><strong><a class="active" href="<?= URL_BASE ?>candidate/profile">Overview</a></strong></li>
+                <li><a href="#">Contact Info</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Education</a></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($UserArray["Lastsigned"])) ?></p>
+        </div>
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">Edit Profile</span>
+                <div style="padding-bottom:5px">
+                    Basic information (*Required)
+                </div>
+                
+             </div>
+            <div class="">
+                <div class="panel-body" style="padding:0">
+                    <div class="col-md-8"  style="padding:0;margin-top:15px;margin-botton:50px;border-radius: 10px;">
+          
+                         
+
+                      <form enctype="multipart/form-data"   method="POST" name="profile" id="profile"  action="" role="form"> 
+                   
+                       <div class="form-group">
+                       <label for="credential">First Name* </label>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="firstname" name="firstname" value="<?=$UserArray["firstname"]?>" >
+                        <span class="message" id="FirstName_message"></span>
+                        </div>
+                        </div>
+                         <div class="form-group">
+                       <label for="credential">Last Name* </label>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="lastname" name="lastname" value="<?=$UserArray["lastname"]?>" >
+                        <span class="message" id="LastName_message"></span>
+                        </div>
+                        </div>
+                      <div class="form-group">
+                       <label for="credential">Display Name </label>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="name" name="name" value="<?=$UserArray["firstname"]." ".$UserArray["lastname"]?>" >
+                        <span class="message" id=""></span>
+                        </div>
+                        </div>
+                      <div class="form-group">
+                       <label for="credential">Tagline* </label>
+                      <div class="form-group">
+                        <textarea class="form-control" id="tagline" name="tagline" rows="3"><?=$getCandidates["tagline"]?></textarea>
+                        <span class="message" id="tagline_message"></span>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                         <label for="credential">Overview* </label>
+                         <div class="form-group">
+                         <textarea class="form-control" rows="10" name="Overview" id="Overview"><?=$getCandidates["Overview"]?></textarea>
+                         <span class="message" id="Overview_message"></span>
+                         </div>
+                        </div>
+                        <div class="form-group" style="height:60px;">
+                           <label for="credential">Expected Salary* </label><br>
+                          
+                            <div class="col-md-3" style="padding:0">
+                            <div class="form-group"> 
+                                <select  class="form-control" style="width:100px;" id="minimumsalary" name="minimumsalary" >
+                                    <option value="">Select</option>
+                                    <option value="10" <?=($getCandidates['minimumsalary'] == '10') ? 'selected="selected"' : '' ?>> 10</option>
+                                    <option value="20" <?=($getCandidates['minimumsalary'] == '20') ? 'selected="selected"' : '' ?>> 20</option>
+                                    <option value="30" <?=($getCandidates['minimumsalary'] == '30') ? 'selected="selected"' : '' ?>> 30</option>
+                                    <option value="40" <?=($getCandidates['minimumsalary'] == '40') ? 'selected="selected"' : '' ?>> 40</option>
+                                    <option value="50" <?=($getCandidates['minimumsalary'] == '50') ? 'selected="selected"' : '' ?>> 50</option>
+                                    <option value="60" <?=($getCandidates['minimumsalary'] == '60') ? 'selected="selected"' : '' ?>> 60</option>
+                                    <option value="70" <?=($getCandidates['minimumsalary'] == '70') ? 'selected="selected"' : '' ?>> 70</option>
+                                    <option value="80" <?=($getCandidates['minimumsalary'] == '80') ? 'selected="selected"' : '' ?>> 80</option>
+                                    <option value="90" <?=($getCandidates['minimumsalary'] == '90') ? 'selected="selected"' : '' ?>> 90</option>
+                                    <option value="100" <?=($getCandidates['minimumsalary'] == '100') ? 'selected="selected"' : '' ?>> 100</option>
+                                </select>
+                            <span class="message" id="minimumsalary_message"></span>
+                         </div>
+                            </div>
+                           
+                             <div class="col-md-1" style="padding-top:5px;"><span >To</span></div>
+                            
+                                <div class="col-md-3">
+                                    <div class="form-group"> 
+                                    <select class="form-control" style="width:100px;" id="maximumsalary" name="maximumsalary">
+                                        <option value="">Select</option>
+                                        <option value="10" <?=($getCandidates['maximumsalary'] == '10') ? 'selected="selected"' : '' ?>> 10 USD</option>
+                                        <option value="20" <?=($getCandidates['maximumsalary'] == '20') ? 'selected="selected"' : '' ?>> 20 K</option>
+                                        <option value="30" <?=($getCandidates['maximumsalary'] == '30') ? 'selected="selected"' : '' ?>> 30 K</option>
+                                        <option value="40" <?=($getCandidates['maximumsalary'] == '40') ? 'selected="selected"' : '' ?>> 40 K</option>
+                                        <option value="50" <?=($getCandidates['maximumsalary'] == '50') ? 'selected="selected"' : '' ?>> 50 K</option>
+                                        <option value="60" <?=($getCandidates['maximumsalary'] == '60') ? 'selected="selected"' : '' ?>> 60 K</option>
+                                        <option value="70" <?=($getCandidates['maximumsalary'] == '70') ? 'selected="selected"' : '' ?>> 70 K</option>
+                                        <option value="80" <?=($getCandidates['maximumsalary'] == '80') ? 'selected="selected"' : '' ?>> 80 K</option>
+                                        <option value="90" <?=($getCandidates['maximumsalary'] == '90') ? 'selected="selected"' : '' ?>> 90 K</option>
+                                        <option value="100" <?=($getCandidates['maximumsalary'] == '100') ? 'selected="selected"' : '' ?>> 100 K</option>
+                                    </select>
+                                    <span class="message" id="maximumsalary_message"></span>
+                            </div>
+                                </div>
+                            
+                        </div>
+                         <div class="form-group">
+                            <label for="credential">Skills </label>
+                              <div id="requiredTest" class="form-control">
+                                                <?php
+                                                foreach($SkillName as $k=>$v){
+                                                    $skilID = $v['SkillID'];
+                                                    $SkillName = $v['SkillName']; ?>
+
+                                            <span style='background:#ededed;' class="label-tag pull-left getSkillText">
+                                               <?=$SkillName?> &nbsp; &nbsp;<imge class='removeskill removeSkillOnload glyphicon glyphicon-remove' height='15px'  style='cursor:pointer;color: #ccc' > <input type='hidden'  name='SkillName[]' value="<?=$SkillName?>" ></span>
+                                                <?php
+                                                }
+                                                ?>
+                                                
+                              
+                              </div>
+                              <img src="<?=URL_THEMES?>images/btn_BrowseAllSkills.png" style="float:right;padding-top:10px;cursor: pointer;" data-toggle="modal" data-target="#openModalSkill">  
+                          
+                        </div>
+                        <div class="form-group" style="padding-top:10px;">
+                         <label for="credential">Service Description </label>
+                         <textarea class="form-control" rows="10" id="servicedescription" name="servicedescription"><?=$getCandidates["servicedescription"]?></textarea>
+                        </div>
+                        <div class="form-group">
+                         <label for="credential">Keywords </label>
+                         <textarea class="form-control" id="keywords" name="keywords" ><?=$getCandidates["keywords"]?></textarea>
+                         <i><span style="font-size:12px;" class="message">Ex: ('Drupal', 'HTML5', 'iQuery','Java developer', ....)</span></i>
+                        </div>
+                        <div>
+                            <img src="<?=URL_THEMES?>images/btn_SaveChange.png" id="Saveprofile" style="cursor:pointer">
+                        </div>
+                        
+                      </form>
+                      
+                   </div>
+                </div>
+            </div>
+            <div style="padding-top:40px;">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
