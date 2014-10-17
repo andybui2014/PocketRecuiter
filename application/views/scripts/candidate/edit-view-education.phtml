@@ -244,7 +244,7 @@
                                     <label> <strong>Start Date (optional)</strong></label><br>
                                 <div class="col-md-6" style="margin:0;padding:0 50px 0 0">
                                     <div class="input-group date" id="datetimepicker8">
-                                        <input type="text" name="start-year" class="form-control" data-date-format="M/YYYY">
+                                        <input type="text" name="start-year" class="form-control" data-date-format="M/YYYY" value="<?=date('M, Y',strtotime($listEducation["startdate"]))?>">
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                     </div>
@@ -256,7 +256,7 @@
                                     <label> <strong>End Date (optional)</strong></label><br>
                                     <div class="col-md-6" style="margin:0;padding: 0 50px 0 0">
                                     <div class="input-group date" id="datetimepicker9">
-                                        <input type="text" name="end-year" class="form-control">
+                                        <input type="text" name="end-year" class="form-control" value="<?=date('M, Y',strtotime($listEducation["enddate"]))?>">
                                     <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                     </span>
                                     </div>
@@ -288,6 +288,12 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">  
+    $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true,format: " MM, yyyy",viewMode: "months",minViewMode: "months"});
+    $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true,format: " MM, yyyy",viewMode: "months",minViewMode: "months"});
+   // var prCandidate= new pocketCandidate();
+   // $('#education-list .btn-edit').unbind('click').bind('click',prCandidate.editEducation);
+   // $('#education-list .qst-remove').unbind('click').bind('click',prCandidate.deleteEducation);
+
 
 </script>
