@@ -427,7 +427,7 @@ class CandidateController extends Application_Controller_Action
                 if(empty($companyName)) $errors['companyName'] = 1;
                 if(empty($positionHeld)) $errors['posotionHeld'] = 1;
                 if(empty($startDate)) $errors['startDate'] = 1;
-                if(empty($endDate)) $errors['endDate'] = 1;
+                //if(empty($endDate)) $errors['endDate'] = 1;
                 //if(empty($description)) $errors['description'] = 1;
 
                 if(empty($errors)){
@@ -473,7 +473,7 @@ class CandidateController extends Application_Controller_Action
                 if(empty($companyName)) $errors['companyName'] = 1;
                 if(empty($posotionHeld)) $errors['posotionHeld'] = 1;
                 if(empty($startDate)) $errors['startDate'] = 1;
-                if(empty($endDate)) $errors['endDate'] = 1;
+                //if(empty($endDate)) $errors['endDate'] = 1;
                 //if(empty($description)) $errors['description'] = 1;
 
                 if(empty($errors)){
