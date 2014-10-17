@@ -160,15 +160,33 @@ $loginClient = $this->layout()->loginclient;
             <?php } ?>
 
         </div>
+        <!--
+        <header class="sb-page-header-search">
+            <div class="container">
+                <div class="col-md-9"></div>
+                <div class="col-md-3">
 
+                    <span class="lbl-log" style="position: absolute;right:20px">Match</span>
+                    <div class="inner-addon left-addon" style="right: 70px">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <input placeholder="Type any keyword's" type="text" class="input-sm form-control" />
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </header>-->
     </div>
-
     <?php if(!empty($loginClient)){ ?>
         <?php if($loginClient['usertype']==1){ ?>
-            <div class="nav-ribbon-bottom">
-                <ul class="nav-parent">
+        <header class="sb-page-header">
+            <div class="container">
+                <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a class="link" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Dashboard <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu" style="margin-top: -1px">
@@ -176,27 +194,33 @@ $loginClient = $this->layout()->loginclient;
                             <li><a href="<?=$helper->url('index','test');?>">Manage Test</a></li>
                         </ul>
                     </li>
-                    <li><a class="link" href="<?=$helper->url('careerlist','career');?>">Post Career</a></li>
-                    <li><a class="link" href="#">Match Candidate</a></li>
-                    <li><a class="link" href="#">Activities</a></li>
-                    <li><a class="link" href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
-                    <li><a class="link" href="<?=$helper->url('watch-list','candidate');?>">Watch List</a></li>
+                    <li><a  href="<?=$helper->url('careerlist','career');?>">Post Career</a></li>
+                    <li><a  href="#">Match Candidate</a></li>
+                    <li><a href="#">Activities</a></li>
+                    <li><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
+                    <li><a  href="<?=$helper->url('watch-list','candidate');?>">Watch List</a></li>
                 </ul>
             </div>
+        </header>
         <?php }elseif($loginClient['usertype']==2){ ?>
-            <div class="nav-ribbon-bottom">
-                <ul class="nav-parent">
-                    <li><a class="link" href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>">Profile Builder</a></li>
-                    <li><a class="link" href="<?=$helper->url('profile','candidate');?>">My Profile</a></li>
-                    <li><a class="link" href="#">Activities</a></li>
-                    <li><a class="link" href="#">Match Opportunities</a></li>
+        <header class="sb-page-header">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li><a  href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>">Profile Builder</a></li>
+                    <li><a  href="<?=$helper->url('profile','candidate');?>">My Profile</a></li>
+                    <li><a href="#">Activities</a></li>
+                    <li><a  href="#">Match Opportunities</a></li>
                 </ul>
             </div>
-        <?php } ?>
+        </header>
+    <?php }} ?>
 
-    <?php } ?>
+
+
     <!-- /.container -->
+
 </nav>
+
 <!--Container-->
 <?php echo $this->layout()->content; ?>
 <!--End Container-->

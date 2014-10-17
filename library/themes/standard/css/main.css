@@ -13,9 +13,9 @@ body{
 .nav-ribbon a{color: #fff;}
 .page-header{border-bottom: 1px solid #ddd;}
 .lbl-log{ padding: 3px 5px;color: #2a6496;border: 1px solid #ddd; background-color: #fff; font-weight: bold;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     -moz-box-shadow: 0 0 5px #ddd;
     -webkit-box-shadow: 0 0 5px#ddd;
     box-shadow: 0 0 5px #ddd;
@@ -26,12 +26,14 @@ body{
 .nav-pills .dropdown-menu{font-size: 12px;}
 .nav-pills .dropdown-toggle{cursor: pointer; padding: 0 5px; border-right: 1px solid #eee;}
 /*Ribbon for nav bottom*/
+/*
 .nav-ribbon-bottom{ height: 40px;  width: 100%;background-color: #2a6496;}
 .nav-ribbon-bottom ul{list-style: none; padding:0}
 .nav-ribbon-bottom li{float:left;padding: 10px;}
 .nav-ribbon-bottom .link{color: #fff;border:0; font-weight: bold;}
 .nav-ribbon-bottom .nav-parent{width: 950px; margin: auto;}
 .nav-ribbon-bottom li a:hover{  text-decoration: none; }
+*/
 #footer{ width:100%; border-top: 3px solid #bbb;padding: 50px;background: #fff}
 #footer ul{margin:0;padding: 0; list-style: none;}
 #footer ul li{padding: 2px 0; }
@@ -42,6 +44,34 @@ body{
 
 }
 
+/**Header Search*/
+.sb-page-header-search{padding-bottom: 15px;}
+.sb-page-header-search i{color: #bbb}
+
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 8px;
+    pointer-events: none;
+}
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right:  30px; }
+
+/**********/
+.sb-page-header{background-color: #2a6496;}
+.sb-page-header a{color: #fff !important ; font-weight: bold;}
+.sb-page-header  ul.dropdown-menu a{
+    color: #333 !important;
+}
+.sb-page-header .dropdown-toggle:focus{
+    background-color: #2a6496 !important;
+
+}
 
 
 
