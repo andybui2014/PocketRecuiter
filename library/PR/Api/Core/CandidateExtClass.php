@@ -96,7 +96,7 @@ class PR_Api_Core_CandidateExtClass
     }
    public function updateCandidateProfile($userID,$updatefiles)   
     {
-       $avaiFields= array("firstname","lastname","CandidateProfileID","tagline","Overview","minimumsalary","maximumsalary","CandidateSkillID","SkillID","keywords","servicedescription");
+       $avaiFields= array("firstname","lastname","CandidateProfileID","tagline","overview","minimumsalary","maximumsalary","CandidateSkillID","SkillID","keywords","servicedescription");
        $api=new PR_Api_Core_CandidateClass();
       
       
@@ -115,7 +115,7 @@ class PR_Api_Core_CandidateExtClass
         }
         
         $candidateProfileID = $candidateInfo['CandidateProfileID'];
-        $updateFields1=array('tagline'=>$updatefiles["tagline"], 'Overview'=>$updatefiles["Overview"],'minimumsalary'=>$updatefiles["minimumsalary"], 'maximumsalary'=>$updatefiles["maximumsalary"],
+        $updateFields1=array('tagline'=>$updatefiles["tagline"], 'overview'=>$updatefiles["overview"],'minimumsalary'=>$updatefiles["minimumsalary"], 'maximumsalary'=>$updatefiles["maximumsalary"],
         'keywords'=>$updatefiles["keywords"],'servicedescription'=>$updatefiles["servicedescription"]);  
         $criteria1 = "CandidateProfileID = '$candidateProfileID'";        
         PR_Database::update('candidate_profile',$updateFields1,$criteria1);
