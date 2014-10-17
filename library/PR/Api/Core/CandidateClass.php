@@ -161,7 +161,8 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             $updateFields['institution_id'] = $institution_id;   
         }
         if($startYear > 0){
-            $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,1,1,$startYear));               
+            $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,1,1,$startYear));  
+			//echo("test:".$updateFields['startdate']);die();
         }
         if($endYear>0){
             $updateFields['enddate'] = date("Y-m-d H:i:s",mktime(0,0,0,12,30,$endYear)); 
