@@ -200,10 +200,14 @@
                             $listskill=$core->get_Listskill();
                             $SkillName=$core->getList_CandidateSkillsOnly($UserArray["UserID"]);
                             $arraySkill=array();
-                            foreach ($SkillName as $values)
+                            if($SkillName!="")
                             {
-                               $arraySkill[]=$values["SkillID"] ;
+                                foreach ($SkillName as $values)
+                                {
+                                   $arraySkill[]=$values["SkillID"] ;
+                                }
                             }
+                           
                            // echo("test:<pre>");print_r($arraySkill);echo("</pre>");
                             foreach ($listskill as $key=>$Skills)
                             {
@@ -359,13 +363,16 @@
                             <label for="credential">Skills </label>
                               <div id="requiredTest" class="form-control">
                                                 <?php
-                                                foreach($SkillName as $k=>$v){
-                                                    $skilID = $v['SkillID'];
-                                                    $SkillName = $v['SkillName']; ?>
+                                                if($SkillName!="")
+                                                {
+                                                    foreach($SkillName as $k=>$v){
+                                                        $skilID = $v['SkillID'];
+                                                        $SkillName = $v['SkillName']; ?>
 
                                             <span style='background:#ededed;' class="label-tag pull-left getSkillText">
                                                <?=$SkillName?> &nbsp; &nbsp;<imge class='removeskill removeSkillOnload glyphicon glyphicon-remove' height='15px'  style='cursor:pointer;color: #ccc' > <input type='hidden'  name='SkillName[]' value="<?=$SkillName?>" ></span>
                                                 <?php
+                                                }
                                                 }
                                                 ?>
                                                 
