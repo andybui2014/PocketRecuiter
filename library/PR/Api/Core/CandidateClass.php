@@ -515,11 +515,27 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         
        
    }     
+   public function getSKillName($skillid)  
+   {
+        $db = PR_Database::getInstance();
+        $sql= $db->select(); 
+        $sql="select SkillName from skill where SkillID='$skillid'";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        if(count($records)>0){
+            return  $records[0];
+        }
+         else {
+            return null;
+        }
+   }    
    public function getList_Skills($skillid)  
    {
         $db = PR_Database::getInstance();
         $sql= $db->select(); 
-        $sql="select * from skill as sk 
+        $sql="select  sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.CandidateProfileID
+         from skill as sk 
         LEFT JOIN candidate_skill as cask ON cask.SkillID=sk.SkillID
         where  ParentSkillID in (select SkillID from skill where SkillID = '$skillid')";
         $select = $db->query($sql);
@@ -560,7 +576,8 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                 foreach ($aray as $skills)
                 {
                    $record1["SkillID_dad"]=$skills; 
-
+                   $skillname=$this->getSKillName($skills);
+                   $record1["SkillName_dad"]=$skillname["SkillName"];
                    $record1["ParentSkillID"]=$this->getList_Skills($skills);  
                    array_push($record2,$record1);
                  
