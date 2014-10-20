@@ -162,7 +162,6 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         }
         if($startYear > 0){
             $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,1,1,$startYear));  
-			//echo("test:".$updateFields['startdate']);die();
         }
         if($endYear>0){
             $updateFields['enddate'] = date("Y-m-d H:i:s",mktime(0,0,0,12,30,$endYear)); 
@@ -516,6 +515,66 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         
        
    }     
+   public function getList_Skills($skillid)  
+   {
+        $db = PR_Database::getInstance();
+        $sql= $db->select(); 
+        $sql="select * from skill as sk 
+        LEFT JOIN candidate_skill as cask ON cask.SkillID=sk.SkillID
+        where  ParentSkillID in (select SkillID from skill where SkillID = '$skillid')";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        if(count($records)>0){
+            return  $records;
+        }
+         else {
+            return null;
+        }
+   }  
+    public function getList_CandidateSkillsDad($userID)  
+   {
+       $db = PR_Database::getInstance();
+        //$select = $db->select();
+        $sql= $db->select(); 
+        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.CandidateProfileID,us.UserID
+        FROM skill as sk
+        LEFT JOIN candidate_skill as cask ON sk.SkillID=cask.SkillID
+        LEFT JOIN user as us  ON cask.CandidateProfileID=us.CandidateProfileID
+        WHERE (us.UserID IS NULL OR us.UserID='2') and sk.SkillID  IN (SELECT  ParentSkillID FROM skill)
+        Order By sk.SkillName";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        if(count($records)>0){
+            $aray=array();
+            foreach($records as $values)
+            {
+                $aray[]=$values["SkillID"]; 
+                
+            }
+            $record1=array();
+            $record2=array();
+            if(!empty($aray)|| $aray!="")
+            {
+                foreach ($aray as $skills)
+                {
+                   $record1["SkillID_dad"]=$skills; 
+
+                   $record1["ParentSkillID"]=$this->getList_Skills($skills);  
+                   array_push($record2,$record1);
+                 
+                }     
+            }
+
+            return $record2;
+        } else {
+            return null;
+        }
+        
+       
+   }      
+  
     /************************************************************************************/
     /*************************************** Candidate Info *****************************/    
     public function getCandidateInfo($userID)
