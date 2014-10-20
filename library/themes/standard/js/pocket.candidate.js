@@ -323,6 +323,40 @@ pocketCandidate.prototype = {
                 }
             }
         });
+    },
+
+    addNewCandidateEmploy:function(){
+        var addemployment = $(this).attr('addemployment');
+
+        $('#form-add-edit-candidate-employment :input[type="text"]').change(function(){
+            if($(this).val() !='' && $(this).val().length > 0){
+                $(this).parent().removeClass('has-error');
+            }
+        });
+        $.ajax({
+            url: 'do-candidate-employment',
+            data: $('#form-add-edit-candidate-employment').serializeArray(),
+            type: 'POST',
+            success: function(xhr){
+                if(xhr.success){
+                    if(addemployment=='reloadYes'){
+                        location.reload();
+                    } else {
+                        $('.position-held').val("");
+                        $('.Candidate-employmentID').val("");
+                        $('.client-name').val("");
+                        $('.des').val("");
+                        $('.start-date').val("");
+                        $('.end-date').val("");
+                    }
+
+                }else{
+                   $.each(xhr.info,function(key,item){
+                       $('#form-add-edit-candidate-employment :input[name="'+key+'"]').parent().addClass('has-error');
+                  })
+                }
+            }
+        });
     }
 }
 
