@@ -285,7 +285,6 @@ pocketCandidate.prototype = {
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     },
-
     candidateCheckedAll:function(){
         if($("#ckAll").is(":checked")){
             $(".isck").prop('checked','checked');
@@ -294,7 +293,6 @@ pocketCandidate.prototype = {
             $(".isck").removeAttr('checked');
         }
     },
-
     candidateChecked:function(){
         var lengthAllCheckbox = $('.isck').length;
         if($('.isck').is(":checked")) {
@@ -311,7 +309,6 @@ pocketCandidate.prototype = {
             }
         }
     },
-
     deleteWatchList:function(id){
         $.ajax({
             url: 'delete-watch-list',
@@ -324,7 +321,6 @@ pocketCandidate.prototype = {
             }
         });
     },
-
     addNewCandidateEmploy:function(){
         var addemployment = $(this).attr('addemployment');
 
@@ -357,6 +353,103 @@ pocketCandidate.prototype = {
                 }
             }
         });
+    },
+    editContactInfo:function(){
+        $(this).button('loading');
+        var arrValidate = [
+            'firstname','lastname','email','country',
+            'addResLine','addResLine2','city','stateProvince','zipcode'
+        ];
+        var form = $('#form-contact');
+        var isError = false;
+        form.find('input[type="text"]').each(function(){
+            var item = $(this);
+            if($.inArray(item.attr('name'),arrValidate) >= 0){
+                if(item.val()==''){
+                    isError = true;
+                    item.parent().addClass('has-error');
+                }else{
+                    item.parent().removeClass('has-error');
+                }
+            }
+        });
+        if(isError==false){
+            $.post('./update-contact-info',{data:form.serializeArray()},function(xhr){
+                console.log(xhr);
+                $(this).button('reset');
+            })
+        }
+    },
+    editSkills: function(url){
+        $(window).load(function(){
+$(function  () {
+                $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+                $('.tree li.parent_li > span').on('click', function (e) {
+                    var children = $(this).parent('li.parent_li').find(' > ul > li');
+                    if (children.is(":visible")) {
+                        children.hide('fast');
+                        $(this).attr('title', 'Expand this branch')
+                            .find(' > i')
+                            .addClass('icon-plus-sign')
+                            .removeClass('icon-minus-sign');
+                        $(this).find('.img-toggle').attr('src',url+'images/trees/ico_add_sm.png');
+                    } else {
+                        children.show('fast');
+                        $(this).attr('title', 'Collapse this branch')
+                            .find(' > i')
+                            .addClass('icon-minus-sign')
+                            .removeClass('icon-plus-sign');
+                        $(this).find('.img-toggle').attr('src',url+'images/trees/ico_sub_sm.png');
+                    }
+                    e.stopPropagation();
+                });
+                //window ready loaded
+                $('.img-parent').unbind('click').bind('click',function(){
+                    if($(this).attr('data-status')=='select'){
+                        $(this).attr('data-status','deselect');
+                        $(this).attr('src',url+'images/trees/ico_expand.png');
+                        //
+                        $(this).parent().find('.img-item').attr('src',url+'images/trees/ico_expand_sm.png');
+
+
+                    }else if($(this).attr('data-status')=='deselect'){
+                        $(this).attr('data-status','select');
+                        $(this).attr('src',url+'images/trees/ico_colapse.png');
+                        $(this).parent().find('.img-item').attr('src',url+'images/trees/ico_colapse_sm.png');
+                    }
+                })
+
+                $('.img-item').unbind('click').bind('click',function(){
+                    var parentLi = $(this).closest('.parent_li');
+                    var isCheckAll = null;
+                    if($(this).attr('data-status')=='select'){
+                        //Select
+                        $(this).attr('data-status','deselect');
+                        $(this).attr('src',url+'images/trees/ico_expand_sm.png');
+                        var checkAll = function(){
+                            var arrPush = [];
+                            parentLi.find('.img-item').each(function(){ arrPush.push($(this).attr('data-status'));});
+                            return $.inArray('select',arrPush);
+                        }
+                        isCheckAll =  checkAll();
+                        if(isCheckAll < 0) {
+                            parentLi.find('.img-parent').attr('src',url+'images/trees/ico_expand.png');
+                            parentLi.find('.img-parent').attr('data-status','deselect');
+                        }
+                    }else{
+                        //Deselect
+                        $(this).attr('data-status','select');
+                        $(this).attr('src',url+'images/trees/ico_colapse_sm.png');
+
+                        var imgParent = parentLi.find('.img-parent');
+                        if(imgParent.attr('data-status')=='deselect'){
+                            imgParent.attr('data-status','select');
+                            imgParent.attr('src',url+'images/trees/ico_colapse.png');
+                        }
+                    }
+                });
+            });
+        });//]]>
     }
 }
 

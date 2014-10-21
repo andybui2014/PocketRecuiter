@@ -65,9 +65,122 @@ class CandidateController extends Application_Controller_Action
     }
 
     public function contactInfoAction(){
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $core = new PR_Api_Core_CandidateClass();
+        $info = $core->getContactInfo($client['UserID']);
+        $this->view->info = $info;
         $this->render('contact-info');
     }
+    public function updateContactInfoAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            if(!empty($params['data']) && sizeof($params['data'])){
+                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                $errors = array();
+                foreach($params['data'] as $item){
+                    if($item['name']=='firstname'){
+                        if(empty($item['value'])){
+                            $errors['firstname'] = 1;
+                        }else{
+                            $data['firstname'] = $item['value'];
+                        }
+                    }
+                    if($item['name']=='lastname'){
+                        if(empty($item['value'])){
+                            $errors['lastname'] = 1;
+                        }else{
+                            $data['lastname'] = $item['value'];
+                        }
+                    }
+                    if($item['name']=='email'){
+                        if(empty($item['value'])){
+                            $errors['email'] = 1;
 
+                        }else{
+                            if (!filter_var($item['value'], FILTER_VALIDATE_EMAIL)) {
+                                $errors['email'] = 1;
+                            }else{
+                                $data['emailaddress'] = $item['value'];
+                            }
+                        }
+                    }
+                    if($item['name']=='country'){
+                        if(empty($item['value'])){
+                            $errors['country'] = 1;
+                        }else{
+                            $data['Country']  = $item['value'];
+                        }
+                    }
+                    if($item['name']=='addResLine'){
+                        if(empty($item['value'])){
+                            $errors['addResLine'] = 1;
+                        }else{
+                            $data['Address1']  = $item['value'];
+                        }
+                    }
+                    if($item['name']=='addResLine2'){
+                        if(empty($item['value'])){
+                            $errors['addResLine2'] = 1;
+                        }else{
+                            $data['Address2']  = $item['value'];
+                        }
+                    }
+                    if($item['name']=='city'){
+                        if(empty($item['value'])){
+                            $errors['city'] = 1;
+                        }else{
+                            $data['City']  = $item['value'];
+                        }
+                    }
+                    if($item['name']=='stateProvince'){
+                        if(empty($item['value'])){
+                            $errors['stateProvince'] = 1;
+                        }else{
+                            $data['State']  = $item['value'];
+                        }
+                    }
+                    if($item['name']=='zipcode'){
+                        if(empty($item['value'])){
+                            $errors['zipcode'] = 1;
+                        }else{
+                            $data['PostalCode']  = $item['value'];
+                        }
+                    }
+
+                    if($item['name']=='phone')          $data['PhoneNumber']  = $item['value'];
+                    if($item['name']=='url')            $data['URL']  = $item['value'];
+                    //if($item['name']=='city')           $data['City']  = $item['value'];
+                    //if($item['name']=='country')        $data['Country']  = $item['value'];
+                    //if($item['name']=='zipcode')        $data['PostalCode']  = $item['value'];
+                    if($item['name']=='fax')            $data['faxnumber']  = $item['value'];
+                    //if($item['name']=='addResLine')     $data['Address1']  = $item['value'];
+                    //if($item['name']=='addResLine2')    $data['Address2']  = $item['value'];
+                    if($item['name']=='snu')            $data['URlnetwork']  = $item['value'];
+                    if($item['name']=='insMsg')         $data['instanmessaing']  = $item['value'];
+
+                }
+
+                if(empty($errors)){
+                    $core = new PR_Api_Core_CandidateClass();
+                    $core->saveContactInfo($client['UserID'],$data);
+                    $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = $errors;
+                }
+
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
     public function profileBuilderAction(){
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
@@ -251,6 +364,7 @@ class CandidateController extends Application_Controller_Action
                 }
 
                 if(empty($errors)){
+
                     $core = new PR_Api_Core_CandidateClass();
                     $core->saveContactInfo($client['UserID'],$data);
                     $ajaxRes['success'] = 1;

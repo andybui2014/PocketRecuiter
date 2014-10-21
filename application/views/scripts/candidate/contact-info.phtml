@@ -1,7 +1,7 @@
 <?php
 $helper = $this->layout()->_helper;
-$educationList = $this->list;
-$core = new PR_Api_Core_CandidateClass();
+//$educationList = $this->list;
+//$core = new PR_Api_Core_CandidateClass();
 
 ?>
 <style>
@@ -179,33 +179,33 @@ $core = new PR_Api_Core_CandidateClass();
                     <div class="col-md-8">
                         <form id="form-contact" role="form">
                             <div class="form-group">
-                                <label for="FirstName">First Name</label>
-                                <input value="<?=$this->info['firstname'];?>" name="firstname" type="text" class="form-control" id="" placeholder="Enter first name">
+                                <label for="">First Name*</label>
+                                <input value="<?=$this->info['firstname'];?>" name="firstname" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="LastName">Last Name</label>
-                                <input  value="<?=$this->info['lastname'];?>" name="lastname" type="text" class="form-control" id="" placeholder="Enter last name">
+                                <label for="">Last Name*</label>
+                                <input value="<?=$this->info['lastname'];?>" name="lastname" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="EmailAddress">Email address</label>
-                                <input  value="<?=$this->info['emailaddress'];?>" name="email" type="email" class="form-control" id="" placeholder="Enter email">
+                                <label for="">Email address</label>
+                                <input   value="<?=$this->info['emailaddress'];?>" name="email" type="text" class="form-control" readonly="readonly" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="PhoneNumber">Phone Number</label>
-                                <input value="<?=$this->info['PhoneNumber'];?>" name="phone" type="text" class="form-control" id="" placeholder="Enter phone number">
+                                <label for="">Phone Number</label>
+                                <input value="<?=$this->info['PhoneNumber'];?>" name="phone" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="FaxNumber">Fax Number</label>
-                                <input value="" name="fax" type="text" class="form-control" id="" placeholder="Enter fax number">
+                                <label for="">Fax Number</label>
+                                <input value="<?=$this->info['faxnumber'];?>" name="fax" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="Url">Website Url</label>
-                                <input value="<?=$this->info['URL'];?>" name="url" type="text" class="form-control" id="" placeholder="Enter url">
+                                <label for="">Website Url</label>
+                                <input value="<?=$this->info['URL'];?>" name="url" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="Url">Social Network URL</label>
+                                <label>Social Network URL</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control">
+                                    <input value="<?=$this->info['URlnetwork'];?>" name="snu" type="text" class="form-control">
                                     <div class="input-group-btn">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">- Selected - <span class="caret"></span></button>
 
@@ -223,9 +223,9 @@ $core = new PR_Api_Core_CandidateClass();
                                 </div><!-- /input-group -->
                             </div>
                             <div class="form-group">
-                                <label for="Url">Instant Messaging</label>
+                                <label for="">Instant Messaging</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control">
+                                    <input value="<?=$this->info['instanmessaing'];?>" name="insMsg" type="text" class="form-control">
                                     <div class="input-group-btn">
                                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">- Selected - <span class="caret"></span></button>
                                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
@@ -235,35 +235,35 @@ $core = new PR_Api_Core_CandidateClass();
                                         <button type="button" class="btn btn-default">
                                             <i class="glyphicon glyphicon-plus"></i>
                                         </button>
-                                    </div><!-- /btn-group -->
-                                </div><!-- /input-group -->
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="Country">Country *</label>
-                                <input value="<?=$this->info['Country'];?>"  name="country" type="text" class="form-control" id="" placeholder="Enter country">
+                                <label for="">Country *</label>
+                                <input value="<?=$this->info['Country'];?>" name="country" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="Address">Address Line 1 *</label>
-                                <input value=""  name="addResLine" type="text" class="form-control" id="" placeholder="Enter Address">
+                                <label for="">Address Line 1 *</label>
+                                <input value="<?=$this->info['Address1'];?>"  name="addResLine" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="Address">Address Line 2 *</label>
-                                <input value=""  name="addResLine2" type="text" class="form-control" id="" placeholder="Enter Address">
+                                <label for="">Address Line 2 *</label>
+                                <input value="<?=$this->info['Address2'];?>" name="addResLine2" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="City">City *</label>
-                                <input value="<?=$this->info['City'];?>" name="city" type="text" class="form-control" id="" placeholder="Enter city">
+                                <label for="">City *</label>
+                                <input value="<?=$this->info['City'];?>" name="city" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="City">State/Province *</label>
-                                <input value="" name="stateProvince" type="text" class="form-control" id="" placeholder="State Province">
+                                <label for="">State/Province *</label>
+                                <input  value="<?=$this->info['State'];?>"   name="stateProvince" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div class="form-group">
-                                <label for="ZipCode">Zip/Postal Code *</label>
-                                <input value="<?=$this->info['PostalCode'];?>"   name="zipcode" type="text" class="form-control" id="" placeholder="Enter zip code">
+                                <label for="">Zip/Postal Code *</label>
+                                <input value="<?=$this->info['PostalCode'];?>"   name="zipcode" type="text" class="form-control" id="" placeholder="">
                             </div>
                             <div>
-                                <button data-loading-text="Loading..." type="button" class="btn btn-primary" type="button"><strong>Save Change</strong></button>
+                                <button id="save-change" data-loading-text="Loading..." type="button" class="btn btn-primary" type="button"><strong>Save Change</strong></button>
                             </div>
                         </form>
                     </div>
@@ -277,4 +277,8 @@ $core = new PR_Api_Core_CandidateClass();
 <script type="text/javascript">
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
+
+    var prCandidate= new pocketCandidate();
+    $('#save-change').unbind('click').bind('click',prCandidate.editContactInfo);
+
 </script>

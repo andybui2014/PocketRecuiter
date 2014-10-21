@@ -289,75 +289,7 @@ $skills = $this->skills;
 </style>
 
 <script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
-
-<script type='text/javascript'>//<![CDATA[
-    $(window).load(function(){
-        $(function () {
-            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-            $('.tree li.parent_li > span').on('click', function (e) {
-                var children = $(this).parent('li.parent_li').find(' > ul > li');
-                if (children.is(":visible")) {
-                    children.hide('fast');
-                    $(this).attr('title', 'Expand this branch')
-                        .find(' > i')
-                        .addClass('icon-plus-sign')
-                        .removeClass('icon-minus-sign');
-                    $(this).find('.img-toggle').attr('src','<?=URL_THEMES;?>images/trees/ico_add_sm.png');
-                } else {
-                    children.show('fast');
-                    $(this).attr('title', 'Collapse this branch')
-                        .find(' > i')
-                        .addClass('icon-minus-sign')
-                        .removeClass('icon-plus-sign');
-                    $(this).find('.img-toggle').attr('src','<?=URL_THEMES;?>images/trees/ico_sub_sm.png');
-                }
-                e.stopPropagation();
-            });
-            //window ready loaded
-            $('.img-parent').unbind('click').bind('click',function(){
-                if($(this).attr('data-status')=='select'){
-                    $(this).attr('data-status','deselect');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_expand.png');
-                    //
-                    $(this).parent().find('.img-item').attr('src','<?=URL_THEMES;?>images/trees/ico_expand_sm.png');
-
-
-                }else if($(this).attr('data-status')=='deselect'){
-                    $(this).attr('data-status','select');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_colapse.png');
-                    $(this).parent().find('.img-item').attr('src','<?=URL_THEMES;?>images/trees/ico_colapse_sm.png');
-                }
-            })
-
-            $('.img-item').unbind('click').bind('click',function(){
-                var parentLi = $(this).closest('.parent_li');
-                var isCheckAll = null;
-                if($(this).attr('data-status')=='select'){
-                    //Select
-                    $(this).attr('data-status','deselect');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_expand_sm.png');
-                    var checkAll = function(){
-                        var arrPush = [];
-                        parentLi.find('.img-item').each(function(){ arrPush.push($(this).attr('data-status'));});
-                        return $.inArray('select',arrPush);
-                    }
-                    isCheckAll =  checkAll();
-                    if(isCheckAll < 0) {
-                        parentLi.find('.img-parent').attr('src','<?=URL_THEMES;?>images/trees/ico_expand.png');
-                        parentLi.find('.img-parent').attr('data-status','deselect');
-                    }
-                }else{
-                    //Deselect
-                    $(this).attr('data-status','select');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_colapse_sm.png');
-
-                    var imgParent = parentLi.find('.img-parent');
-                    if(imgParent.attr('data-status')=='deselect'){
-                        imgParent.attr('data-status','select');
-                        imgParent.attr('src','<?=URL_THEMES;?>images/trees/ico_colapse.png');
-                    }
-                }
-            });
-        });
-    });//]]>
+ <script>
+     var prCandidate= new pocketCandidate();
+     prCandidate.editSkills('<?=URL_THEMES;?>');
 </script>
