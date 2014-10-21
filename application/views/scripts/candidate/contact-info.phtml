@@ -1,8 +1,13 @@
 <?php
 $helper = $this->layout()->_helper;
-$skills = $this->skills;
+$educationList = $this->list;
+$core = new PR_Api_Core_CandidateClass();
+
 ?>
 <style>
+    .btn-edit:hover{cursor: pointer;text-decoration: underline}
+    .qst-remove{color: #bbb}
+    .qst-remove:hover{color: #333; cursor: pointer}
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
     ul#nav-left a{color: #777}
@@ -129,7 +134,7 @@ $skills = $this->skills;
     }
 
         /****/
-    .tree img{cursor: pointer}
+
 </style>
 <div class="container">
 
@@ -152,9 +157,9 @@ $skills = $this->skills;
                 <i class="lbl-log">Edit</i>
             </p>
             <ul id="nav-left">
-                <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" class="active"><strong>Profile builder</strong></a></li>
+                <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>"><strong>Profile builder</strong></a></li>
                 <li><a href="#">Overview</a></li>
-                <li><a href="#">Contact Info</a></li>
+                <li><a class="active" href="<?=$helper->url('contact-info','candidate');?>"><strong>Contact Info</strong></a></li>
                 <li><a href="#">Portfolio</a></li>
                 <li><a href="#">Education</a></li>
                 <li><a href="#">Skills</a></li>
@@ -167,197 +172,109 @@ $skills = $this->skills;
         <div class="col-md-9">
             <div class="page-header" style="color: #2a6496 ;margin-top:0">
                 <h2  style="color: #2a6496 ;margin-top:0"><span class="glyphicon glyphicon-briefcase"></span> <strong>Profile Builder</strong></h2>
+                <p>Basic information (*Required)</p>
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <div class="col-md-8">
+                        <form id="form-contact" role="form">
+                            <div class="form-group">
+                                <label for="FirstName">First Name</label>
+                                <input value="<?=$this->info['firstname'];?>" name="firstname" type="text" class="form-control" id="" placeholder="Enter first name">
+                            </div>
+                            <div class="form-group">
+                                <label for="LastName">Last Name</label>
+                                <input  value="<?=$this->info['lastname'];?>" name="lastname" type="text" class="form-control" id="" placeholder="Enter last name">
+                            </div>
+                            <div class="form-group">
+                                <label for="EmailAddress">Email address</label>
+                                <input  value="<?=$this->info['emailaddress'];?>" name="email" type="email" class="form-control" id="" placeholder="Enter email">
+                            </div>
+                            <div class="form-group">
+                                <label for="PhoneNumber">Phone Number</label>
+                                <input value="<?=$this->info['PhoneNumber'];?>" name="phone" type="text" class="form-control" id="" placeholder="Enter phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="FaxNumber">Fax Number</label>
+                                <input value="" name="fax" type="text" class="form-control" id="" placeholder="Enter fax number">
+                            </div>
+                            <div class="form-group">
+                                <label for="Url">Website Url</label>
+                                <input value="<?=$this->info['URL'];?>" name="url" type="text" class="form-control" id="" placeholder="Enter url">
+                            </div>
+                            <div class="form-group">
+                                <label for="Url">Social Network URL</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">- Selected - <span class="caret"></span></button>
 
-                    <div class="breadcrumb flat">
-                        <a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" <?=$this->step =='contact'? 'class="active"':'';?>>Contact Info</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=education','candidate');?>" <?=$this->step =='education'? 'class="active"':'';?>>Education</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=employment','candidate');?>" <?=$this->step =='employment'? 'class="active"':'';?>>Employment</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=skills','candidate');?>"  <?=$this->step =='skills'? 'class="active"':'';?>>Skills</a>
-                        <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
-                        <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="#">Selected</a></li>
+                                            <li><a href="#">UnSelected</a></li>
+                                        </ul>
+
+                                        <button type="button" class="btn btn-default">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </div><!-- /btn-group -->
+
+
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="form-group">
+                                <label for="Url">Instant Messaging</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">- Selected - <span class="caret"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                            <li><a href="#">Selected</a></li>
+                                            <li><a href="#">UnSelected</a></li>
+                                        </ul>
+                                        <button type="button" class="btn btn-default">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                        </button>
+                                    </div><!-- /btn-group -->
+                                </div><!-- /input-group -->
+                            </div>
+                            <div class="form-group">
+                                <label for="Country">Country *</label>
+                                <input value="<?=$this->info['Country'];?>"  name="country" type="text" class="form-control" id="" placeholder="Enter country">
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">Address Line 1 *</label>
+                                <input value=""  name="addResLine" type="text" class="form-control" id="" placeholder="Enter Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">Address Line 2 *</label>
+                                <input value=""  name="addResLine2" type="text" class="form-control" id="" placeholder="Enter Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="City">City *</label>
+                                <input value="<?=$this->info['City'];?>" name="city" type="text" class="form-control" id="" placeholder="Enter city">
+                            </div>
+                            <div class="form-group">
+                                <label for="City">State/Province *</label>
+                                <input value="" name="stateProvince" type="text" class="form-control" id="" placeholder="State Province">
+                            </div>
+                            <div class="form-group">
+                                <label for="ZipCode">Zip/Postal Code *</label>
+                                <input value="<?=$this->info['PostalCode'];?>"   name="zipcode" type="text" class="form-control" id="" placeholder="Enter zip code">
+                            </div>
+                            <div>
+                                <button data-loading-text="Loading..." type="button" class="btn btn-primary" type="button"><strong>Save Change</strong></button>
+                            </div>
+                        </form>
                     </div>
 
-                    <?php
-                        //$list = $this->list;
-                        foreach($skills as $key=>$tree){
-                            //echo '<pre>';print_r($skills);echo '</pre>';
-                    ?>
-                    <div class="col-md-4" style="margin:0;padding:0">
-                    <div class="tree">
-                            <ul><li>
-                                <img data-status="select" class="img-parent" src="<?=URL_THEMES;?>images/trees/ico_colapse.png">
-                                <a href=""><strong><?=$tree['SkillName_dad'];?></strong> </a>
-                                    <?=sizeof($tree['ParentSkillID']) > 0 ? '<span><img class="img-toggle" src="'.URL_THEMES.'images/trees/ico_sub_sm.png"/></span>':'<span><img src="'.URL_THEMES.'images/trees/ico_add_sm.png"/></span>'?>
-                                    <?php if(!empty($tree['ParentSkillID']) && sizeof($tree['ParentSkillID']) > 0){ ?>
-                                            <ul>
-                                        <?php foreach($tree['ParentSkillID'] as $item){ ?>
-                                                <li>
-                                                <span><img data-status="select" class="img-item" src="<?=URL_THEMES;?>images/trees/ico_colapse_sm.png"></span> <a href=""><?=$item['SkillName'];?></a>
-                                                </li>
-                                     <?php } ?>
-                                    </ul>
-                                     <?php } ?>
-                            </li>
-                        </ul>
-                    </div></div>
-                    <?php
-                        }
-                    ?>
-                <div class="col-md-12">
-                    <div style="margin-top: 30px">
-                        <button id="cmd-back" data-back="employment" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
-                        <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
-                        <button id="cmd-next" type="button" data-next="portfolio" class="btn btn-success" type="button"><strong>Next</strong></button>
-                    </div>
-                </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<style type='text/css'>
-
-    .tree {
-        font-size: 12px;
-        text-align: left;margin:0;padding:0;
-    }
-    .tree li {
-        list-style-type:none;
-        position:relative
-    }
-    .tree li::before, .tree li::after {
-        content:'';
-        left:-27px;
-        position:absolute;
-        right:auto
-    }
-    .tree li::before {
-        border-left:1px dotted #999;
-        bottom:50px;
-        height:100%;
-        top:0;
-        width:1px
-    }
-    .tree li::after {
-        border-top:1px dotted #999;
-        height:20px;
-        top:15px;
-        width:25px
-    }
-    .tree li span {
-       /*border-radius: 50%;
-        border:1px dotted #999;
-        display:inline-block;
-        padding: 5px;
-        text-decoration:none;
-        color: #2a6496;*/
-    }
-    .tree li.parent_li>span {
-        cursor:pointer
-    }
-    .tree>ul>li::before, .tree>ul>li::after {
-        border:0
-    }
-    .tree li:last-child::before {
-        height:30px
-    }
-    .tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
-        background:#eee;
-        border:1px dotted #94a0b4;
-
-    }
-    .tree .ico-expand{
-        font-size: 11px !important;
-        border-radius: 50%;
-        border:1px dotted #999;
-        display:inline-block;
-        padding: 2px;
-        text-decoration:none;
-        color: #2a6496;
-    }
-    .tree .ico-colapse{
-        border-radius: 50%;
-        border:1px dotted #999;
-        display:inline-block;
-        padding: 5px;
-        text-decoration:none;
-        color: #2a6496;
-    }
-</style>
-
 <script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
-
-<script type='text/javascript'>//<![CDATA[
-    $(window).load(function(){
-        $(function () {
-            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
-            $('.tree li.parent_li > span').on('click', function (e) {
-                var children = $(this).parent('li.parent_li').find(' > ul > li');
-                if (children.is(":visible")) {
-                    children.hide('fast');
-                    $(this).attr('title', 'Expand this branch')
-                        .find(' > i')
-                        .addClass('icon-plus-sign')
-                        .removeClass('icon-minus-sign');
-                    $(this).find('.img-toggle').attr('src','<?=URL_THEMES;?>images/trees/ico_add_sm.png');
-                } else {
-                    children.show('fast');
-                    $(this).attr('title', 'Collapse this branch')
-                        .find(' > i')
-                        .addClass('icon-minus-sign')
-                        .removeClass('icon-plus-sign');
-                    $(this).find('.img-toggle').attr('src','<?=URL_THEMES;?>images/trees/ico_sub_sm.png');
-                }
-                e.stopPropagation();
-            });
-            //window ready loaded
-            $('.img-parent').unbind('click').bind('click',function(){
-                if($(this).attr('data-status')=='select'){
-                    $(this).attr('data-status','deselect');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_expand.png');
-                    //
-                    $(this).parent().find('.img-item').attr('src','<?=URL_THEMES;?>images/trees/ico_expand_sm.png');
-
-
-                }else if($(this).attr('data-status')=='deselect'){
-                    $(this).attr('data-status','select');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_colapse.png');
-                    $(this).parent().find('.img-item').attr('src','<?=URL_THEMES;?>images/trees/ico_colapse_sm.png');
-                }
-            })
-
-            $('.img-item').unbind('click').bind('click',function(){
-                var parentLi = $(this).closest('.parent_li');
-                var isCheckAll = null;
-                if($(this).attr('data-status')=='select'){
-                    //Select
-                    $(this).attr('data-status','deselect');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_expand_sm.png');
-                    var checkAll = function(){
-                        var arrPush = [];
-                        parentLi.find('.img-item').each(function(){ arrPush.push($(this).attr('data-status'));});
-                        return $.inArray('select',arrPush);
-                    }
-                    isCheckAll =  checkAll();
-                    if(isCheckAll < 0) {
-                        parentLi.find('.img-parent').attr('src','<?=URL_THEMES;?>images/trees/ico_expand.png');
-                        parentLi.find('.img-parent').attr('data-status','deselect');
-                    }
-                }else{
-                    //Deselect
-                    $(this).attr('data-status','select');
-                    $(this).attr('src','<?=URL_THEMES;?>images/trees/ico_colapse_sm.png');
-
-                    var imgParent = parentLi.find('.img-parent');
-                    if(imgParent.attr('data-status')=='deselect'){
-                        imgParent.attr('data-status','select');
-                        imgParent.attr('src','<?=URL_THEMES;?>images/trees/ico_colapse.png');
-                    }
-                }
-            });
-        });
-    });//]]>
+<script type="text/javascript">
+    $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
+    $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true,format: " yyyy",viewMode: "years",minViewMode: "years"});
 </script>

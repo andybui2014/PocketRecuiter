@@ -64,6 +64,10 @@ class CandidateController extends Application_Controller_Action
             ->setBody($ajaxRes);
     }
 
+    public function contactInfoAction(){
+        $this->render('contact-info');
+    }
+
     public function profileBuilderAction(){
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
@@ -92,9 +96,15 @@ class CandidateController extends Application_Controller_Action
                     $this->render('profile-builder/employment');
                     break;
                 case 'skills':
+
+                    $core=new PR_Api_Core_CandidateClass();
+                    $skills = $core->getList_CandidateSkillsDad($client['UserID']);
+
                     $core = new PR_Api_Core_CandidateClass();
                     $this->view->list = $core->getListAll_CandidateSkills($client['UserID']);
                     $this->view->stepCount = '4/5 Steps';
+                    $this->view->skills = $skills;
+
                     $this->render('profile-builder/skills');
                     break;
                 case 'portfolio':
