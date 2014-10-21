@@ -20,7 +20,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
     public function saveContactInfo($userID, $data)
     {
         $avaiFields = array('firstname','middlename','lastname','dob','emailaddress',
-            'URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country');
+            'URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country','faxnumber','URlnetwork','instanmessaing');  
         $contactInfo = $this->getContactInfo($userID);
         
         $updateFields = array();
