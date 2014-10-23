@@ -208,6 +208,34 @@ $resultTestList =  $this->resultTestList;
                                             <input id="zipcode" name="zipcode" type="text" class="form-control" value="<?=$getListOpp['zipcode']?>">
                                         </div>
                                     </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Country </label>
+                                            <select name="country" id="country" class="form-control">
+                                                <?php
+                                                if($this->listCountry !=""){
+                                                    foreach($this->listCountry as $CK=>$countryInfo){
+                                                        $countryInfoName =   trim($countryInfo['name']);
+                                                         $getListOppcountry =   trim($getListOpp['country']);
+                                                         $selected = '';
+                                                        if($countryInfoName == $getListOppcountry){
+                                                            $selected = "selected = 'selected'";
+                                                        }
+                                                        ?>
+                                                        <option value ="<?=$countryInfo['code']?>" <?=$selected?> ><?=$countryInfo['name']?> </option>
+                                                    <?php
+                                                    }
+                                                }
+                                                ?>
+
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>City</label>
+                                            <input id="city" name="city" type="text" class="form-control" value="<?=$getListOpp['city']?>">
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label >Minimun Education*</label> <span id="minimuneducationLable" style="color: red"></span>
                                         <input id="minimuneducation" name="minimuneducation" type="text" class="form-control" value="<?=$getListOpp['minimuneducation']?>" >
@@ -263,9 +291,11 @@ $resultTestList =  $this->resultTestList;
                                     <div class="col-md-12">
                                         <label >Required Experience*</label> <span id="requiredExperienceLable" style="color: red"></span>
                                         <select  id="requiredExperience" name="requiredExperience" class="form-control">
-                                            <option value="3" <?=($getListOpp['experienced'] == '3') ? 'selected="selected"' : '' ?> > 3 months</option>
-                                            <option value="6" <?=($getListOpp['experienced'] == '6') ? 'selected="selected"' : '' ?> > 6 months</option>
-                                            <option value="12" <?=($getListOpp['experienced'] == '12') ? 'selected="selected"' : '' ?> > 1 year</option>
+                                            <option value="3 months" <?=($getListOpp['experienced'] == '3 months') ? 'selected="selected"' : '' ?> > 3 months</option>
+                                            <option value="6 months" <?=($getListOpp['experienced'] == '6 months') ? 'selected="selected"' : '' ?> > 6 months</option>
+                                            <option value="1 year" <?=($getListOpp['experienced'] == '1 year') ? 'selected="selected"' : '' ?> > 1 year</option>
+                                            <option value="1 to 2 years" <?=($getListOpp['experienced'] == '1 to 2 years') ? 'selected="selected"' : '' ?> > 1 to 2 years</option>
+                                            <option value="2 to 3 years" <?=($getListOpp['experienced'] == '2 to 3 years') ? 'selected="selected"' : '' ?> > 2 to 3 years</option>
                                         </select>
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
@@ -491,6 +521,8 @@ $resultTestList =  $this->resultTestList;
         })
         $('#careerTab').find('li.active').find('a').addClass('active');
         $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+
+        $('#savePostLaterEdit').unbind('click').bind('click',careerPrototype.postcareeredit)
     </script>
 
 

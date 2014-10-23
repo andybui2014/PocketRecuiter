@@ -242,6 +242,12 @@ career.prototype = {
             return;
         }
 
+        var postOrContinue = $(this).attr("id");
+        if(postOrContinue == 'postcareernew') {
+            $("#career_status").val(1);
+        } else if(postOrContinue == 'savePostLater'){
+            $("#career_status").val(0);
+        }
 
         $.ajax({
             url: 'save-career-new',
@@ -332,6 +338,12 @@ career.prototype = {
             return;
         }
 
+        var postOrContinue = $(this).attr("id");
+        if(postOrContinue == 'postcareeredit') {
+            $("#career_status").val(1);
+        } else if(postOrContinue == 'savePostLaterEdit'){
+            $("#career_status").val(0);
+        }
 
         $.ajax({
             url: 'edit-career',
@@ -469,8 +481,8 @@ career.prototype = {
         var btn = $(this);
         btn.button('loading');
         $.ajax({
-            url: 'do-search-career',
-            data: $('#form-careermatch').serializeArray(),
+            url: 'do-search-opportunity',
+            data: $('#form-match-opportunity-sear').serializeArray(),
             type: 'POST',
             error : function (xhr,error) {
                 btn.button('reset');

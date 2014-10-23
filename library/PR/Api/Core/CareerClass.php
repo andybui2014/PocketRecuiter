@@ -67,6 +67,11 @@ class PR_Api_Core_CareerClass
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('p'=>'opportunity'),array('*'));
+        $select->joinLeft(array('c'=>'company'),
+            'c.CompanyID = p.CompanyID',
+            array('Companyname')
+        );
+
         if(count($filters)>0)
         {
             if(isset($filters['CompanyID'])){
@@ -326,7 +331,7 @@ class PR_Api_Core_CareerClass
         }
 
         if(!empty($keyword)){
-            $keyword = "'".trim($keyword)."'";
+            $keyword = trim($keyword);
             $select->where("p.keywords LIKE \"%$keyword%\"");
            //$select->where("p.keywords LIKE ?", "%".$keyword."%");
 
@@ -346,5 +351,14 @@ class PR_Api_Core_CareerClass
         }
     }
 
+    public function getListCountry($filters=NULL,$limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('c'=>'country'),array('*'));
+
+        $records = PR_Database::fetchAll($select);
+        return $records;
+    }
 
 }

@@ -42,6 +42,8 @@ class CareerController extends Application_Controller_Action
 
         $getTestList_PR_Api_Core = new PR_Api_Core_TestClass();
         $resultTestList = $getTestList_PR_Api_Core->getTestList(array('CompanyID'=>$CompanyID));
+
+        $listCountry = $Oppotunity_PR_Api->getListCountry();
          /*echo "<pre>";
             print_r($getListOpp);
               echo "</pre>"; die(); */
@@ -52,6 +54,7 @@ class CareerController extends Application_Controller_Action
         $this->view->listCompany = $listCompany;
         $this->view->resultSkillList = $resultSkillList;
         $this->view->resultTestList = $resultTestList;
+        $this->view->listCountry = $listCountry;
 
 
     }
@@ -89,14 +92,17 @@ class CareerController extends Application_Controller_Action
 
         $companyInfo = $PR_Api_Core_Career->getCompanyByID($CompanyID);
         $listCompany = $PR_Api_Core_Career->getCompany();
-       // echo "<pre>";
-       // print_r($resultTestList);
-        //echo "</pre>";die();
+
+        $listCountry = $PR_Api_Core_Career->getListCountry();
+        /* echo "<pre>";
+        print_r($listCountry);
+        echo "</pre>";die(); */
         $this->view->resultCareerList = $resultCareerList;
         $this->view->resultSkillList = $resultSkillList;
         $this->view->resultTestList = $resultTestList;
         $this->view->companyInfo = $companyInfo;
         $this->view->listCompany = $listCompany;
+        $this->view->listCountry = $listCountry;
     }
 
     public function saveCareerNewAction()
@@ -133,13 +139,16 @@ class CareerController extends Application_Controller_Action
         $salaryRangeT = $request->getParam("salaryRangeT", "");
         $testid = $request->getParam("testid", array());
 
+        $country = $request->getParam("country", "");
+        $city = $request->getParam("city", "");
+
         $clientID =  $sestionUSER['UserID'];
         $career_PR_Api = new PR_Api_Career(null);
 
         $updateFields = array('CompanyID'=>$OppCompanyID,'postedby'=>$postedby, 'posteddate'=>$posteddate,
         'title'=>$title,'careerdescription'=>$careerdescription,'status'=>$status,'industry'=>$industry,'industry'=>$industry,'jobtype'=>$jobtype,
             'duration'=>$duration,'location'=>$location,'zipcode'=>$zipcode,'minimuneducation'=>$minimuneducation,'degreetitle'=>$degreetitle,'StaffFavorite'=>$StaffFavorite,
-            'salaryrangefrom'=>$salaryRangeF, 'salaryrangeto'=>$salaryRangeT,'experienced'=>$requiredExperience
+            'salaryrangefrom'=>$salaryRangeF, 'salaryrangeto'=>$salaryRangeT,'experienced'=>$requiredExperience, 'country'=>$country,'city'=>$city
         );
 
         $result = $career_PR_Api->saveCareer($updateFields);
@@ -194,6 +203,9 @@ class CareerController extends Application_Controller_Action
         $salaryRangeT = $request->getParam("salaryRangeT", "");
         $testid = $request->getParam("testid", array());
 
+        $country = $request->getParam("country", "");
+        $city = $request->getParam("city", "");
+
         $career_PR_Api = new PR_Api_Career($OpportunityID);
         /*echo "<pre>";
            print_r($OpportunityID);
@@ -201,7 +213,7 @@ class CareerController extends Application_Controller_Action
         $updateFields = array('CompanyID'=>$OppCompanyID,'postedby'=>$postedby, 'posteddate'=>$posteddate,
             'title'=>$title,'careerdescription'=>$careerdescription,'status'=>$status,'industry'=>$industry,'industry'=>$industry,'jobtype'=>$jobtype,
             'duration'=>$duration,'location'=>$location,'zipcode'=>$zipcode,'minimuneducation'=>$minimuneducation,'degreetitle'=>$degreetitle,'StaffFavorite'=>$StaffFavorite,
-            'salaryrangefrom'=>$salaryRangeF, 'salaryrangeto'=>$salaryRangeT,'experienced'=>$requiredExperience
+            'salaryrangefrom'=>$salaryRangeF, 'salaryrangeto'=>$salaryRangeT,'experienced'=>$requiredExperience, 'country'=>$country,'city'=>$city
         );
 
         $result = $career_PR_Api->saveCareer($updateFields);

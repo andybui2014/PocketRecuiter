@@ -1,6 +1,6 @@
-<script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<script src="<?=URL_THEMES.'js/pocket.candidate.js';?>"></script>
 <script>
-       var careerMatch = new career();
+       var objMatch = new pocketCandidate();
 </script>
 <style>
 
@@ -38,7 +38,7 @@
 </script>
 
     <!--Modal-->
-    <div class="modal fade" tabindex="-1" role="dialog" id="openModalSkill" data-keyboard="false" data-backdrop="static">
+    <div class="modal fade" tabindex="-1" role="dialog" id="match-opp-skills-id" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header">
@@ -48,7 +48,7 @@
             <div class="modal-body login-modal">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <select id="selectSkillToSearch" class="form-control">
+                            <select id="add-opp-skills" class="form-control">
                                 <option value="">Select Skill</option>
                                 <?php
                                 $SkillList = $this->skillList;
@@ -67,50 +67,112 @@
         </div>
     </div>
 </div>
-    <!--END-->
-    <div class="container">
 
-    <div style="height:80px; color: #2a6496" class="col-md-12">
-        <div class="panel-body">
-            <div class="col-md-12">
-                <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -60px"><label>Career Match</label> </h3></div>
-                <div class="col-md-6" style="text-align: right">
-                   <a href="careercreate" style="margin-top:15px; margin-right: -55px;background-color: #7aac34" class="btn btn-success" ><strong style="color: #fff!important;">Post Job</strong></a>
-                </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="this-job-was-applied" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header" style="border-bottom: none">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-title text-center" id="modal-this-job-was-applied"></div>
             </div>
-
         </div>
     </div>
+</div>
+    <!--END-->
+<div class="container" style="margin-top: 10px">
 
-    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px">
-        <div class="col-md-7" style="background-color: #fffbe0; border: 1px solid #e1b903; min-height: 176px">
-        <form id="form-careermatch" name="form-careermatch">
-            <div class="col-md-12" style="margin-top:16px; margin-left:-25px">
-                 <div class="col-md-12" style="padding-left:0px">
-                    <div class="col-md-8" style="padding-right:0px">
-                        <input type="text"  class="form-control" name="keyword" value="" placeholder="-Keyword-">
-                    </div>
-                    <div class="col-md-4">
-                        <button style="background-color: #7aac34; border: 1px solid #7aac34" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#openModalSkill" data-loading-text="Loading...">Add Skills</button>
-                    </div>
-                </div>
-
-                <div class="col-md-12" id="addSkillandKeyword" style="min-height: 74px; padding-top: 10px">
-
-                </div>
-                <div class="col-md-12" style="margin-bottom: -10px">
-
-                    <button  type="button" class="btn btn-sm btn-primary"  data-loading-text="Loading..." onclick="javascript:careerMatch.careerMatchSearch()">Search</button>
-
-                </div>
+    <div style="color: #2a6496;margin-bottom:11px; border-bottom: 2px solid #d6d6d6;" class="col-md-12">
+            <div class="col-md-12" style="margin-top: 25px;">
+               <h3 style="margin-left: -30px; margin-bottom: 0px"><label>Match Opportunities</label> </h3>
             </div>
-         </form>
-            <div style="float:right; margin-right: -16px"><img src="<?=URL_THEMES?>images/bg_yellow_text.png"></div>
-        </div>
-        <div class="col-md-5">
-            <img src="<?=URL_THEMES?>images/PremiumAccount.jpg">
-        </div>
 
+    </div>
+
+    <?php
+    $oppList = $this->oppList;
+    ?>
+
+    <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; border: 1px #ccc solid; min-height: 280px; background-color: #fff">
+    <form id="form-match-opportunity-sear" name="form-match-opportunity-sear">
+        <div style="margin-top: 15px"><span class="caret" style="float:right; margin-right: 8px"></span></div>
+        <div class="col-md-12" style="margin-top:0px">
+                    <div class="col-md-6">
+                       <select class="form-control" name="technology-id">
+                           <option value="">Information Technology </option>
+                        <?php
+                        if($this->industryList !=""){
+                            foreach ($this->industryList as $industry) {
+                                ?>
+                         <option value="<?=$industry?>"><?=$industry?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                       </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" name="experience-name">
+                            <option value="">Experienced</option>
+                            <?php
+                            if($this->experienced_List !=""){
+                                foreach ($this->experienced_List  as $experiencedInfo){ ?>
+                                    <option value="<?=$experiencedInfo?>" ><?=$experiencedInfo?></option>
+                            <?php
+                             }
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" name="country-name">
+                            <option value="">Country</option>
+                            <?php
+                            if($this->experienced_List !=""){
+                                foreach ($this->country_List  as $countryInfo){ ?>
+                                    <option value="<?=$countryInfo?>" ><?=$countryInfo?></option>
+                                <?php
+                                }
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" name="city-name">
+                            <option value="">City</option>
+                            <?php
+                            if($this->city_List !=""){
+                                foreach ($this->city_List  as $cityInfo){ ?>
+                                    <option value="<?=$cityInfo?>" ><?=$cityInfo?></option>
+                                <?php
+                                }
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+
+
+        </div>
+        <div class="col-md-12" style="padding-left: 28px; margin-top:15px"><label>Skills</label></div>
+        <div class="col-md-12" style="padding-left:30px; padding-right:30px" >
+            <div class="form-control" id="match-opp-skills" style="min-height: 80px"></div>
+        </div>
+        <div class="col-md-12">
+
+        </div>
+        <div class="col-md-12" style="margin-top:15px">
+            <div class="col-md-10"> </div>
+            <div class="col-md-2"><button class="btn btn-sm btn-default" style="float:right; margin-right: 0px; font-weight: bold; background-color: #fff; color: #2a6496"  type="button" data-target="#match-opp-skills-id" data-toggle="modal">+&nbsp; Add Skills</button></div>
+        </div>
+        <div class="col-md-12" style="margin-top:15px;">
+            <div class="col-md-2">
+                <button class="btn btn-sm btn-default  btn-primary" CandidateProfileID="<?=$this->CandidateProfileID?>" onclick="javascript:objMatch.matchOpportunities(<?=$this->CandidateProfileID?>)" style=" margin-right: 0px; font-weight: bold;"  type="button">Match</button>
+            </div>
+            <div class="col-md-10"></div>
+        </div>
+    </form>
     </div>
 
     <div class="col-md-12" style="background-color: #fff; min-height:374px; height: auto;border: 1px solid #ccc; margin-top: 20px">
@@ -118,8 +180,8 @@
         <!-- table-->
         <table border="0" style="width: 100%">
             <tr>
-                <td style="width:220px; border-right:1px solid #ccc ">
-                    <div class="col-md-12" style="margin-top:-2px;vertical-align: top ">
+                <td style="width:220px; border-right:1px solid #ccc;vertical-align: top  ">
+                    <div class="col-md-12" style="margin-top:-2px;">
                         <div><label>All Catogories</label></div>
                         <div><label style="color: #1a5187">IT & Programming</label></div>
                         <div>Design & Multimedia</div>
@@ -179,28 +241,24 @@
                 <td style="vertical-align: top" class="containerData">
                     <div class="col-md-12">
                         <?php
-                        $result = $this->result;
+                        $result = $this->oppList;
                         if($result!="") {
-                            foreach($result as $k=>$candidateInfo) {
-                            if($candidateInfo['image']==""){
-                               $image= 'avatar_nonex44.jpg';
-                            } else{
-                                $image = $candidateInfo['image'];
-                            }
+                            foreach($result as $k=>$oppListInfo) {
+                                $image= 'avatar_nonex44.jpg';
                             ?>
 
                             <div class="col-md-12 borderbottom_Gray" >
                                 <div class="col-md-12" >
                                     <div class="col-md-1" style="margin-left: -45px"> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
                                     <div class="col-md-11" style="margin-left: -25px">
-                                        <div class="col-md-12" style="color: #1a5187"><strong><?=$candidateInfo['firstname']?> &nbsp; <?=$candidateInfo['lastname']?></strong></div>
-                                        <div class="col-md-12"><strong>Expected Salary : &nbsp; <?=$candidateInfo['minimumsalary']?> &nbsp; <?=$candidateInfo['maximumsalary']?></strong></div>
+                                        <div class="col-md-12" style="color: #1a5187"><strong><?=$oppListInfo['title']?></strong></div>
+                                        <div class="col-md-12"><strong><?=$oppListInfo['Companyname']?></strong></div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12" style="margin-left:-30px">
                                     <div style="height:10px!important;"></div>
-                                    <?=$candidateInfo['overview']?>
+                                    <?=$oppListInfo['careerdescription']?>
                                 </div>
                                 <div class="col-md-12" style="margin-left:-30px">
                                   <span style="color: #1a5187" class="glyphicon glyphicon-play"></span><span style="color: #1a5187">Read more</span>
@@ -211,13 +269,13 @@
                                         <?php
                                         $skillname ="";
                                         $i =1;
-                                            foreach ($candidateInfo['skillName']as $kk => $skname){
-                                                if($i==1){
-                                                    $skillname = $skname;
-                                                } else{
-                                                    $skillname = $skillname. ', ' . $skname;
-                                                }
-                                                $i++;
+                                            foreach ($oppListInfo['Skills']as $kk => $skname){
+                                                    if($i==1){
+                                                        $skillname = $skname['SkillName'];
+                                                    } else{
+                                                        $skillname = $skillname. ', ' . $skname['SkillName'];
+                                                    }
+                                                    $i++;
                                             }
                                         ?>
                                     <?=$skillname?>.</span>
@@ -225,10 +283,11 @@
                                 <div class="col-md-12" style="margin-left:-30px">
                                     <div style="height:10px!important;"></div>
                                     <span><img src="<?=URL_THEMES?>images/USA_flag.jpg ?>"> <strong>Unied States</strong></span>
-                                    <span>|&nbsp;<?=$candidateInfo['Address1']?>|&nbsp;<strong>Distance:</strong> <?=$candidateInfo['tralveldistanceinmiles']?></span>
+                                    <span>|&nbsp;<?=$oppListInfo['location']?>|&nbsp;<strong>Distance:</strong> </span>
+                                    <span>|&nbsp;<strong>Salary:</strong> <?=$oppListInfo['salaryrangefrom']?>&nbsp;to&nbsp;<?=$oppListInfo['salaryrangeto']?></span>
                                 </div>
                                 <div class="col-md-12 text-right">
-                                    <button style="margin-top:15px; margin-right: -31px;" class="btn btn-primary" type="button"><strong>Contact</strong></button>
+                                    <button <?php if($oppListInfo['hadApplied']) echo 'disabled';?> style="margin-top:15px; margin-right: -31px;" class="btn btn-primary btn-for-apply" type="button" OpportunityID ="<?=$oppListInfo['OpportunityID']?>" CandidateProfileID ="<?=$this->CandidateProfileID?>"><strong>Apply</strong></button>
                                 </div>
                                 <div class="col-md-12" style="margin-left:-30px">
                                     <div style="height:10px!important;"></div>
@@ -252,7 +311,8 @@
 </div>
 <script>
     $(document).ready(function(){
-        $("#selectSkillToSearch").unbind("change").bind("change",careerMatch.selectSkillToSearch)
+        $("#add-opp-skills").unbind("change").bind("change",objMatch.addOppSkillsToSearch)
+        $(".btn-for-apply").unbind("click").bind("click",objMatch.candidateApply)
     })
 </script>
 

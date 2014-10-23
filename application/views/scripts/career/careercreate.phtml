@@ -206,6 +206,28 @@
                                             <input id="zipcode" name="zipcode" type="text" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-12" style="margin:0;padding:0">
+                                        <div class="col-md-6">
+                                            <label>Country </label>
+                                            <select name="country" id="country" class="form-control">
+                                                <?php
+                                                if($this->listCountry !=""){
+                                                    foreach($this->listCountry as $CK=>$countryInfo){
+                                                        ?>
+                                                        <option value ="<?=$countryInfo['code']?>" ><?=$countryInfo['name']?> </option>
+                                                <?php
+                                                    }
+                                                }
+                                                ?>
+
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>City</label>
+                                            <input id="city" name="city" type="text" class="form-control">
+                                        </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <label >Minimun Education*</label> <span id="minimuneducationLable" style="color: red"></span>
                                         <input id="minimuneducation" name="minimuneducation" type="text" class="form-control">
@@ -246,6 +268,8 @@
                                             <option value="3 months"> 3 months</option>
                                             <option value="6 months"> 6 months</option>
                                             <option value="1 year"> 1 year</option>
+                                            <option value="1 to 2 years"> 1 to 2 years</option>
+                                            <option value="2 to 3 years"> 2 to 3 years</option>
                                         </select>
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
@@ -454,6 +478,7 @@
         //attachment file
        /* $('input[type=file]').bootstrapFileInput();
         $('.file-inputs').bootstrapFileInput(); */
+        $('#savePostLater').unbind('click').bind('click',careerPrototype.postcareernew)
     </script>
 
 
