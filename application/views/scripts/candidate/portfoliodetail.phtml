@@ -237,7 +237,7 @@ overflow: hidden;
                 }
                 ?>
                 </div>
-                <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State"?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", ";?><?=$getUserArray["State"]?><?php if($getUserArray["State"]!="") echo ", ";?><?=$getUserArray["PostalCode"]?></span><span> <a href="<?= URL_BASE ?>candidate/editoverview" style="text-decoration: none;"><img src="<?=URL_THEMES?>images/btn_edit.png"></a></span> </span>
+                <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span <?php if($getUserArray["Address1"]!="") echo("class='line-r'")?>   style="font-weight:bold;font-size:13px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State"?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", ";?><?=$getUserArray["State"]?><?php if($getUserArray["State"]!="") echo ", ";?><?=$getUserArray["PostalCode"]?></span> </span>
              </div>
             <div class="">
                 <div class="panel-body" style="padding:0;padding-top:10px">

@@ -268,7 +268,8 @@
                                                     //echo "testt:<pre>";print_r($images);echo("</pre>");
                                                 ?>
                                                <!-- <img width="80px" height="50px" src="<?=$item['URL'];?>" alt="" title=""/>-->
-                                                <img width="80px" height="50px" src="<?=URL_MEDIA_PORTFOLIO.$images[0]["images"];?>" alt="" title=""/>
+                                               <iframe class="embed-responsive-item" frameborder="0" width="80px" height="50px" src="<?=$item["URL"]?>" scrolling="no"></iframe>
+                                               
                                                 </td>
                                                 <td>
                                                     <span style="margin:0;padding:0;font-weight:bold;cursor:pointer"><a style="color:#333;cursor:pointer" href="<?= URL_BASE ?>candidate/portfoliodetail?id=<?=$item['CandidatePortfolioID']?>" ><label style="cursor:pointer"><?=$item['Title'];?></label></a></span>
