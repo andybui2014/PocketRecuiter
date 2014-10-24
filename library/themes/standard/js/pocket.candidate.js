@@ -309,77 +309,7 @@ pocketCandidate.prototype = {
             }
         }
     },
-    deleteWatchList:function(id){
-        $.ajax({
-            url: 'delete-watch-list',
-            data: {OpportunityID:id},
-            type: 'POST',
-            success: function(data, status, xhr){
-                if(data){
-                    window.location = 'watch-list';
-                }
-            }
-        });
-    },
-    addNewCandidateEmploy:function(){
-        var addemployment = $(this).attr('addemployment');
-
-        $('#form-add-edit-candidate-employment :input[type="text"]').change(function(){
-            if($(this).val() !='' && $(this).val().length > 0){
-                $(this).parent().removeClass('has-error');
-            }
-        });
-        $.ajax({
-            url: 'do-candidate-employment',
-            data: $('#form-add-edit-candidate-employment').serializeArray(),
-            type: 'POST',
-            success: function(xhr){
-                if(xhr.success){
-                    if(addemployment=='reloadYes'){
-                        location.reload();
-                    } else {
-                        $('.position-held').val("");
-                        $('.Candidate-employmentID').val("");
-                        $('.client-name').val("");
-                        $('.des').val("");
-                        $('.start-date').val("");
-                        $('.end-date').val("");
-                    }
-
-                }else{
-                   $.each(xhr.info,function(key,item){
-                       $('#form-add-edit-candidate-employment :input[name="'+key+'"]').parent().addClass('has-error');
-                  })
-                }
-            }
-        });
-    },
-    editContactInfo:function(){
-        $(this).button('loading');
-        var arrValidate = [
-            'firstname','lastname','email','country',
-            'addResLine','addResLine2','city','stateProvince','zipcode'
-        ];
-        var form = $('#form-contact');
-        var isError = false;
-        form.find('input[type="text"]').each(function(){
-            var item = $(this);
-            if($.inArray(item.attr('name'),arrValidate) >= 0){
-                if(item.val()==''){
-                    isError = true;
-                    item.parent().addClass('has-error');
-                }else{
-                    item.parent().removeClass('has-error');
-                }
-            }
-        });
-        if(isError==false){
-            $.post('./update-contact-info',{data:form.serializeArray()},function(xhr){
-                console.log(xhr);
-                $(this).button('reset');
-            })
-        }
-    },
+    
     editSkills: function(url){
         $(window).load(function(){
 $(function  () {
@@ -450,6 +380,218 @@ $(function  () {
                 });
             });
         });//]]>
+    }, 
+	
+    editContactInfo:function(){
+        $(this).button('loading');
+        var arrValidate = [
+            'firstname','lastname','email','country',
+            'addResLine','addResLine2','city','stateProvince','zipcode'
+        ];
+        var form = $('#form-contact');
+        var isError = false;
+        form.find('input[type="text"]').each(function(){
+            var item = $(this);
+            if($.inArray(item.attr('name'),arrValidate) >= 0){
+                if(item.val()==''){
+                    isError = true;
+                    item.parent().addClass('has-error');
+                }else{
+                    item.parent().removeClass('has-error');
+                }
+            }
+        });
+        if(isError==false){
+            $.post('./update-contact-info',{data:form.serializeArray()},function(xhr){
+                console.log(xhr);
+                $(this).button('reset');
+            })
+        }
+    },
+	
+	deleteWatchList:function(id){
+        $.ajax({
+            url: 'delete-watch-list',
+            data: {OpportunityID:id},
+            type: 'POST',
+            success: function(data, status, xhr){
+                if(data){
+                    window.location = 'watch-list';
+                }
+            }
+        });
+    },
+    addNewCandidateEmploy:function(){
+        var addemployment = $(this).attr('addemployment');
+
+        $('#form-add-edit-candidate-employment :input[type="text"]').change(function(){
+            if($(this).val() !='' && $(this).val().length > 0){
+                $(this).parent().removeClass('has-error');
+            }
+        });
+        $.ajax({
+            url: 'do-candidate-employment',
+            data: $('#form-add-edit-candidate-employment').serializeArray(),
+            type: 'POST',
+            success: function(xhr){
+                if(xhr.success){
+                    if(addemployment=='reloadYes'){
+                        location.reload();
+                    } else {
+                        $('.position-held').val("");
+                        $('.Candidate-employmentID').val("");
+                        $('.client-name').val("");
+                        $('.des').val("");
+                        $('.start-date').val("");
+                        $('.end-date').val("");
+                    }
+
+                }else{
+                   $.each(xhr.info,function(key,item){
+                       $('#form-add-edit-candidate-employment :input[name="'+key+'"]').parent().addClass('has-error');
+                  })
+                }
+            }
+        });
+    },
+	
+	addOppSkillsToSearch:function(){
+        var skillText = $("#add-opp-skills option:selected").text();
+        var skilIDSelected = $("#add-opp-skills option:selected").val();
+
+            $("div#match-opp-skills").append("<span style='' class='label-tag pull-left'>" + skillText +
+                "&nbsp;&nbsp;<imge class='resetSkill delete-skills glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
+                "<input type='hidden'  name='matchopportunitySear[]' value='"+skilIDSelected+"' ></span>");
+
+
+        $(".delete-skills").unbind("click").bind("click",function(){
+            var skilID = $(this).attr("skilIDSelected");
+            $("#add-opp-skills").find("option[value='" + skilID + "']").css("display", "");
+            $(this).parent().next('span').remove();
+            $(this).parent().remove();
+
+
+        });
+
+
+        $("#add-opp-skills option:selected").css("display", "none");
+        $("#add-opp-skills option[value='']").prop("selected", "selected");
+
+
+    },
+
+    matchOpportunities:function(CandidateProfileID){
+       // var CandidateProfileID =$(this).attr('CandidateProfileID');
+        $.ajax({
+            url: 'do-search-opportunities',
+            data: $('#form-match-opportunity-sear').serializeArray(),
+            type: 'POST',
+            success: function(data, status, xhr){
+                var html = "";
+                if(data){
+
+                    var flagUS =  urlImage+'images/USA_flag.jpg';
+                    // alert(flagUS);
+                    $.each(data,function(k,oppList){
+                         var disabedYesNo = (oppList.hadApplied)?"disabled":'';
+                        //if($.isEmptyObject($oppList.image)){
+                            var images = urlImage+'images/avatar_nonex44.jpg';
+                       // } else {
+                       //     var images = urlImage+'images/'+$oppList.image;
+                       // }
+
+                        var skillname ="";
+                        var i =1;
+                        $.each(oppList.Skills,function(kk,skname){
+                            if(i==1){
+                                skillname = skname.SkillName;
+                            } else{
+                                skillname = skillname+ ', ' + skname.SkillName;
+                            }
+                            i = i+1;
+                        });
+
+                        html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
+                            "<div class='col-md-12'>" +
+                            "<div class='col-md-1' style='margin-left: -45px'> " +
+                            "<img src='"+images+"'>" +
+                            "</div>" +
+                            "<div class='col-md-11' style='margin-left: -25px'>" +
+                            "<div class='col-md-12' style='color: #1a5187'><strong>" + oppList.title +"</strong></div>" +
+                            "<div class='col-md-12'><strong>"+ oppList.Companyname +" </strong></div>" +
+                            "</div>" +
+                            "</div>  " +
+                            "<div class='col-md-12' style='margin-left:-30px'> " +
+                            "<div style='height:10px!important;'></div>  " +  oppList.careerdescription +
+                            "</div>" +
+                            "<div class='col-md-12' style='margin-left:-30px'> " +
+                            "<span style='color: #1a5187' class='glyphicon glyphicon-play'></span>" +
+                            "<span style='color: #1a5187'>Read more</span>" +
+                            "</div>" +
+                            "<div class='col-md-12' style='margin-left:-30px'>" +
+                            "<div style='height:10px!important;'></div>" +
+                            "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
+                            "<div class='col-md-12' style='margin-left:-30px'>" +
+                            " <div style='height:10px!important;'></div>" +
+                            "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span>" +
+                            "<span>&nbsp;|&nbsp;"+oppList.location +"&nbsp;|&nbsp;<strong>Distance: </strong> </span>" +
+                            "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.salaryrangefrom + "&nbsp; "+ oppList.salaryrangeto +"</span>" +
+                            "</div> "
+
+                            if(oppList.hadApplied){
+                                html +=   "<div class='col-md-12 text-right'> " +
+                                    "<button style='margin-top:15px; margin-right:0px;'" +
+                                    " class='btn btn-primary disabled btn-for-apply' type='button'  OpportunityID='"+oppList.OpportunityID+"'  CandidateProfileID='"+CandidateProfileID+"' ><strong>Apply</strong></button>" +
+                                    "</div>" +
+                                    "<div class='col-md-12' style='margin-left:-30px'>" +
+                                    "<div style='height:10px!important;'></div>" +
+                                    "</div>" +
+                                    "</div>"
+                            } else {
+                                html +=   "<div class='col-md-12 text-right'> " +
+                                    "<button style='margin-top:15px; margin-right:0px;' class='btn btn-primary btn-for-apply' OpportunityID='"+oppList.OpportunityID+"'  CandidateProfileID='"+CandidateProfileID+"'  type='button' ><strong>Apply</strong></button>" +
+                                    "</div>" +
+                                    "<div class='col-md-12' style='margin-left:-30px'>" +
+                                    "<div style='height:10px!important;'></div>" +
+                                    "</div>" +
+                                "</div>"
+                            }
+
+                    });
+
+                    $(".containerData").html("");
+                    $(".containerData").html(html);
+                    $(".btn-for-apply").unbind("click").bind("click",pocketCandidate.prototype.candidateApply)
+                }
+
+            }
+        });
+    },
+
+    candidateApply:function(){
+        $(this).addClass('disabled');
+        var  $me =  $(this)
+        var OpportunityID = $(this).attr('OpportunityID')
+        var CandidateProfileID = $(this).attr('CandidateProfileID')
+        $.ajax({
+            url: 'candidate-apply',
+            data: {CandidateProfileID:CandidateProfileID, OpportunityID:OpportunityID},
+            type: 'POST',
+            success: function(xhr){
+                if(xhr.success ==1){
+                    $('#this-job-was-applied').modal('show');
+
+                    $('#modal-this-job-was-applied').css("color","green");
+                    $('#modal-this-job-was-applied').text(xhr.error);
+                }else{
+                    $('#this-job-was-applied').modal('show');
+                    $('#modal-this-job-was-applied').css("color","red");
+                    $('#modal-this-job-was-applied').text(xhr.error);
+                }
+                $me.addClass('disabled');
+            }
+        });
+
     }
 }
 

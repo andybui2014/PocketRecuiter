@@ -642,8 +642,14 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $select->from(array('o'=>'opportunity'),array('OpportunityID','postedby','posteddate','title','careerdescription','CompanyID'));
         $select->join(array('w'=>'watchlist'),
             'w.OpportunityID = o.OpportunityID',
-            array()
+            array('CandidateID')
         );
+
+        $select->join(array('oca'=>'opportunity_candidate_apply'),
+            ('oca.CandidateProfileID = w.CandidateID and oca.OpportunityID = w.OpportunityID') ,
+            array('CandidateApplyDate')
+        );
+
         $select->joinLeft(array('c'=>'company'),
             'c.CompanyID = o.CompanyID',
             array('Companyname')
@@ -655,6 +661,9 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                 $select->where("w.CandidateID = '".$filters['CandidateID']."'");
             }
         }
+
+        //print_r($select->__toString());die();
+
         if ( $limit != 0 || $offset != 0)
             $select->limit($limit, $offset);
 
@@ -662,17 +671,134 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $records;
     }
 
-    public function deleteWatchList($OpportunityID)
+    public function deleteWatchList($OpportunityID, $CandidateProfileID)
     {
         if(empty($OpportunityID)){
             return true;
         }
         $db = PR_Database::getInstance();
         $db->delete('watchlist', array(
-            'OpportunityID = ?' => $OpportunityID
+            'OpportunityID = ?' => $OpportunityID, 'CandidateID = ?' => $CandidateProfileID,
+        ));
+
+        $db->delete('opportunity_candidate_apply', array(
+            'OpportunityID = ?' => $OpportunityID, 'CandidateProfileID = ?' => $CandidateProfileID,
         ));
         return true;
 
+    }
+       
+    public function getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('o'=>'opportunity'),array('OpportunityID'));
+
+        $select->join(array('sk'=>'opportunity_skill'),
+            'sk.OpportunityID = o.OpportunityID',
+            array()
+        );
+
+        $select->join(array('k'=>'skill'),
+            'sk.SkillID = k.SkillID',
+            array()
+        );
+
+        if(!empty($industry)){
+            $industry = trim($industry);
+            $select->where("o.industry LIKE \"%$industry%\"");
+
+        }
+
+        if(!empty($experienced)){
+            $experienced = trim($experienced);
+            $select->where("o.experienced LIKE \"%$experienced%\"");
+            //$select->where("p.keywords LIKE ?", "%".$keyword."%");
+        }
+
+        if(!empty($country)){
+            $country = trim($country);
+            $select->where("o.country LIKE \"%$country%\"");
+
+        }
+
+        if(!empty($city)){
+            $city = trim($city);
+            $select->where("o.city LIKE \"%$city%\"");
+
+        }
+
+        if(count($opportunitiesSearchList)>0){
+            $select->where("k.SkillID IN (".implode(',',$opportunitiesSearchList).")");
+        }
+
+       // print_r($select->__toString());die();
+
+        $select->distinct();
+        $records = PR_Database::fetchAll($select);
+
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $rec){
+                $list[] = $rec['OpportunityID'];
+            }
+            return $list;
+        }
+    }
+
+    public function saveOpportunityCandidateApply($updateFields)
+    {
+        $db = PR_Database::getInstance();
+        $result = 0;
+        $select = $db->select();
+        $select->from(array('oca'=>'opportunity_candidate_apply'),array('*'));
+
+        if(!empty($updateFields['OpportunityID']) && !empty($updateFields['CandidateProfileID'])){
+            $select->where("oca.OpportunityID = '".$updateFields['OpportunityID']."' && oca.CandidateProfileID = '".$updateFields['CandidateProfileID']."' ");
+
+           // print_r($select->__toString());die();
+            $records = PR_Database::fetchAll($select);
+            if(empty($records) && count($records)==0){
+                $updateFieldWatchList = array();
+                $updateFieldWatchList['OpportunityID'] = $updateFields['OpportunityID'];
+                $updateFieldWatchList['CandidateID'] = $updateFields['CandidateProfileID'];
+
+                $objDateNow = new Zend_Date();
+                $updateFields['CandidateApplyDate'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
+                $result = PR_Database::insert("opportunity_candidate_apply", $updateFields);
+                $resultW = PR_Database::insert("watchlist",$updateFieldWatchList);
+            } else {
+                $result = 0;
+            }
+
+        }
+
+        return $result;
+    }
+
+    public function opportunityCandidateHadApplied($opportunityID, $candidateProfileID)
+    {
+        $db = PR_Database::getInstance();
+        $result = 0;
+        $select = $db->select();
+        $select->from(array('oca'=>'opportunity_candidate_apply'),array('*'));
+
+        if(!empty($opportunityID) && !empty($candidateProfileID)){
+            $select->where("oca.OpportunityID = '".$opportunityID."' && oca.CandidateProfileID = '".$candidateProfileID."' ");
+
+            // print_r($select->__toString());die();
+            $records = PR_Database::fetchAll($select);
+            if(empty($records) && count($records)==0){
+                $result = false;
+            } else {
+                $result = true;
+            }
+
+        }
+
+        return $result;
     }
        
 }
