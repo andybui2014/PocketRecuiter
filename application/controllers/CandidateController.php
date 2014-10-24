@@ -805,7 +805,6 @@ class CandidateController extends Application_Controller_Action
         $Educationlist=$core->getCandidateEducation($CredentialExperienceID);
         $this->view->getCandidates=$getCandidates;   
         $this->view->Educationlist=$Educationlist; 
-      //echo("testt:<pre>");print_r($Educationlist);echo("</pre>");
         $this->render('edit-view-education');          
                      
     }
@@ -894,6 +893,258 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
+    }
+	 public function doEdieducationAction()
+    {           
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];       
+        $request = $this->getRequest();
+        $params= $request->getParams();
+        $return = array("success" => 0, "error" => "");
+        $updateFields=array();
+        foreach ($params as $key => $value) {
+            $updateFields[$key]=$value;
+            
+            }
+            
+        if(isset($updateFields["display"]))
+        {
+              $updateFields["display"]=1;
+        }
+        else{
+             $updateFields["display"]=0;  
+        }
+        $core=new PR_Api_Core_CandidateClass();
+        $core->updateEducation($updateFields["CredentialExperienceID"],$updateFields["institution_name"],
+        $updateFields["title"],$updateFields["startdate"],$updateFields["enddate"],$updateFields["comments"],$updateFields["display"]);
+       // echo("tetstt:<pre>");print_r($updateFields);echo("</pre>");die();   
+        $return["success"]=1;
+        
+                     
+    }
+	 public function addEducationAction()
+    {           
+       
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest(); 
+        $CredentialExperienceID=$request->getParam("CredentialExperienceID");     
+        $core=new PR_Api_Core_CandidateClass();
+        $getUserArray=$core->getCandidateInfo($UserID);   
+        $this->view->UserArray=$getUserArray;
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);   
+        $this->view->getCandidates=$getCandidates;
+        $a=$core->getList_CandidateSkillsDad($UserID);
+       // echo("tetst:<pre>");print_r($a);echo("</pre>");
+        $this->render('Add-education');
+                     
+    }
+	 public function doAddnewEducationAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $core=new PR_Api_Core_CandidateClass();
+             
+        if(isset($params["display"]))
+        {
+              $params["display"]=1;
+        }
+        else{
+             $params["display"]=0;  
+        }
+        $result=$core->addEducation($UserID,$params["institution_name"],$params["title"],$params["startdate"],$params["enddate"],$params["comments"],$params["display"]);
+        $return["success"]=1; 
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $return = json_encode($return);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($return), true)
+                ->setBody($return);                    
+        // echo ("tetstt:<pre>");print_r($params);echo("</pre>");
+     }
+	  public function portfolioAction()
+     {
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest(); 
+            
+        $core=new PR_Api_Core_CandidateClass();
+        $list = $core->getListCandidatePortfolio($UserID);
+        $this->view->list = $list;
+        $this->render('Portfolio');
+     }
+	 public function addportfolioAction()
+     {
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest(); 
+        $CredentialExperienceID=$request->getParam("CredentialExperienceID");     
+        
+        $this->render('add-portfolio');
+        //
+     }
+	 public function doAddnewportfolioAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $core=new PR_Api_Core_CandidateClass();
+        $portfolioId=$core->setPortfolioid();
+        $images=array();
+        for($i=0; $i<count($_FILES['file']['name']); $i++) {
+          //Get the temp file path
+          $tmpFilePath = $_FILES['file']['tmp_name'][$i];
+          
+          //Make sure we have a filepath
+          if ($tmpFilePath != ""){
+            //Setup our new file path
+            $filename = uniqid() ."_". $_FILES["file"]["name"][$i];   
+            move_uploaded_file($_FILES["file"]["tmp_name"][$i], DIR_MEDIA_PORTFOLIO . $filename); 
+             $url=URL_MEDIA_PORTFOLIO . $filename;  
+             $core->saveImagesPortfolio($portfolioId,$filename);             
+          //echo "<img src='$url' width='120' /><br />";                   
+           }
+          }
+        //  echo ("testt:<pre>");print_r($images);echo("</pre>");die();
+          $core->addCandidatePortfolio($UserID,$params["Title"],$params["URL"],
+        $params["Description"],"");
+        if(isset($params["AddPorfolio"])&& $params["AddPorfolio"]!="" )
+        {
+            header("Location: portfolio");
+        }
+        if(isset($params["AddAndAnothorPortfolio"])&& $params["AddAndAnothorPortfolio"]!="" )
+        {
+            header("Location: addportfolio");
+        }
+          $return["success"]=1; 
+     }
+	  public function editportfolioAction()
+     {
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest(); 
+        $CandidatePortfolioID=$request->getParam("id");     
+        $core=new PR_Api_Core_CandidateClass();
+        $portfolio=$core->getCandidatePortfolio($CandidatePortfolioID);
+        $images=$core->getImagesPortfolio($CandidatePortfolioID);
+        $this->view->Portfolio=$portfolio;
+        $this->view->ListImages=$images;
+       // echo("Testt:<pre>");print_r($images);echo("</pre>");
+        $this->render('edit-portfolio');
+     }
+	  public function deleteimagesAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        $request = $this->getRequest(); 
+        $id=$request->getParam("id");    
+        $portfolioid=$request->getParam("portfolioid"); 
+          
+        $core=new PR_Api_Core_CandidateClass();
+        //echo "tetst:";print_r($id);die();
+        $result=$core->deleteImagesPortfolio($id);
+        $ajaxRes['success'] = 1;
+        //$ajaxRes['portfolioid']=$id;
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+        
+     }
+	 public function doUpdateportfolioAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];   
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $core=new PR_Api_Core_CandidateClass();
+        $portfolioId=$request->getParam("CandidatePortfolioID");
+        //echo("Testt:<pre>");print_r($portfolioId);echo("</pre>");die();
+        if(isset($_FILES['file']['name'])){
+        for($i=0; $i<count($_FILES['file']['name']); $i++) {
+          //Get the temp file path
+          $tmpFilePath = $_FILES['file']['tmp_name'][$i];
+          
+          //Make sure we have a filepath
+          if ($tmpFilePath != ""){
+            //Setup our new file path
+            $filename = uniqid() ."_". $_FILES["file"]["name"][$i];   
+            move_uploaded_file($_FILES["file"]["tmp_name"][$i], DIR_MEDIA_PORTFOLIO . $filename); 
+             $url=URL_MEDIA_PORTFOLIO . $filename;  
+             $core->saveImagesPortfolio($portfolioId,$filename);             
+                           
+           }
+          }}
+
+          $core->updateCandidatePortfolio($portfolioId,$params["Title"],$params["URL"],
+        $params["Description"],"");
+        if(isset($params["AddPorfolio"])&& $params["AddPorfolio"]!="" )
+        {
+            header("Location: portfolio");
+        }
+        if(isset($params["AddAndAnothorPortfolio"])&& $params["AddAndAnothorPortfolio"]!="" )
+        {
+            header("Location: addportfolio");
+        }
+          $return["success"]=1; 
+     }
+	  public function portfoliodetailAction()
+    {           
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
+                
+        $api_candidate= new PR_Api_Core_CandidateClass();
+        
+        $getUserArray=$api_candidate->getCandidateInfo($UserID);
+        $this->view->client = $getUserArray;  
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+        $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
+        $SkillName=$api_candidate->getList_CandidateSkillsOnly($UserID);
+        $Skills=array();
+        if(!empty($SkillName)||$SkillName!=""){             
+        
+            foreach($SkillName as $key=>$values )
+            {
+               $Skills[$key]=$values;   
+            }
+        }
+        $this->view->SkillName=$Skills;
+        $CandidateEmployment=array();
+        if(!empty($getCandidates["CandidateEmploymentID"])||$getCandidates["CandidateEmploymentID"]!="")
+        {
+              foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
+                {
+                   $CandidateEmployment[$key]=$values;   
+                }
+        }
+        
+        $request = $this->getRequest();
+        $CandidatePortfolioID = $request->getParam("id");
+        $core=new PR_Api_Core_CandidateClass();
+        $portfolio=$core->getCandidatePortfolio($CandidatePortfolioID);
+        $images=$core->getImagesPortfolio($CandidatePortfolioID);
+        $this->view->Portfolio=$portfolio;
+        $this->view->ListImages=$images;
+         
+     // echo ("getUserArray:<pre>");print_r($portfolio);echo("</pre>");
+        $this->render('portfoliodetail');          
+                     
     }
 
 }

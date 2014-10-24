@@ -172,13 +172,13 @@
         /****/
 
 </style>
-<script src="<?=URL_THEMES.'js/ediOverview.js';?>"></script>
+<script src="<?=URL_THEMES.'js/Education.js';?>"></script>
+
 <?php
     $UserArray=$this->UserArray;
     $getCandidates=$this->getCandidates;
-    $listEducation=$this->listEducation;
-   
-  // echo("test:<pre>");print_r($listEducation);echo("</pre>");
+    //$listEducation=$this->Educationlist;
+
 ?>
 
 <div class="container" style="padding-top:40px;">
@@ -194,7 +194,7 @@
             <span>
                 <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$UserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$UserArray["Address1"]?><?php if($UserArray["Address1"]!="") echo ", ";?><?=$UserArray["State"]?></span>
             </span>
-            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="") echo "K";?></strong></span><br/>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="") echo"K";?></strong></span><br/>
             <p style="padding: 10px 0">
                 <!--<i class="lbl-log">Edit</i>>-->
                 <img src="<?=URL_THEMES?>images/btn_edit.png">
@@ -204,7 +204,7 @@
                 <li><a href="<?= URL_BASE ?>candidate/profile">Overview</a></li>
                 <li><a href="#">Contact Info</a></li>
                 <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
-                <li><strong><a href="<?= URL_BASE ?>candidate/viewducation" class="active">Education</a></strong></li>
+                <li><strong><a href="<?= URL_BASE ?>candidate/vieweducation" class="active">Education</a></strong></li>
                 <li><a href="#">Skills</a></li>
                 <li><a href="#">References</a></li>
                 <li><a href="#">Tests</a></li>
@@ -224,29 +224,60 @@
             <div class="">
                 <div class="panel-body" style="padding:0">
                     <div class="col-md-8"  style="padding:0;margin-top:15px;margin-botton:50px;border-radius: 10px;">
-                        <div><a href="<?= URL_BASE ?>candidate/add-education"><img src="<?=URL_THEMES.'images/btn_AddEducation_b.png';?>"></a></div>
+                        
+                         <form id="education-form" role="form" style="font-size:12px">
+                            <div class="form-group">
+                                <input name="CredentialExperienceID" id="CredentialExperienceID" type="hidden" class="form-control"  value="">
+                                <input name="display" id="display" type="checkbox" class="" checked="checked"><span style="padding-left:5px;font-size:12px">Display this education.</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Institution Name (no abbreviations,please)</label>
+                                <input name="institution_name" id="institution_name" type="text" class="form-control"  value="">
+                            </div>
+                            <div class="form-group">
+                                <label>Name and Type of Degree Name (no abbreviations,please)</label>
+                                <input name="title" id="title"  type="text" class="form-control" value="">
+                            </div>
+                            
+                              <div class="form-group" style="height:60px">
+                              
+                                    <label> <strong>Start Date (optional)</strong></label><br>
+                                <div class="col-md-6" style="margin:0;padding:0 50px 0 0">
+                                    <div class="input-group date" id="datetimepicker8">
+                                        <input type="text" name="startdate" id="startdate" class="form-control" data-date-format="M/YYYY" value="">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="height:60px">
+                                
+                                    <label> <strong>End Date (optional)</strong></label><br>
+                                    <div class="col-md-6" style="margin:0;padding: 0 50px 0 0">
+                                    <div class="input-group date" id="datetimepicker9">
+                                        <input type="text" ismap="enddate" name="enddate" class="form-control" value="">
+                                    <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                
+                                    <label> <strong>Institution</strong></label><br>
+                                    <textarea rows="6" class="form-control" name="comments" id="comments"></textarea>
+                                    
+                                    
+                                
+                            </div>
+                            <div class="form-group">
+                                <img src="<?=URL_THEMES.'images/btn_Save.png';?>"style="padding-right:5px;cursor:pointer" id="AddEducation">
+                                <img src="<?=URL_THEMES.'images/btn_SaveandAddAnother.png';?>" style="padding-right:5px;cursor:pointer" id="AddAndAnothorEducation">
+                                <img src="<?=URL_THEMES.'images/btn_Cacel.png';?>" id="Cancle" style="cursor:pointer" onclick="document.location='vieweducation'">
+                            </div>
+                        </form>
                         <div style="padding-top:20px;">
-                         <?php
-                            foreach($listEducation as $Educations)
-                            {
-                                if($Educations["display"]==1) {
-                          ?>
-                              <div style="padding-bottom:10px;">
-                                <span style="font-weight:bold;font-size:13px"><?=$Educations["title"]?></span><br>
-                                <span style="font-size:12px;"><?=$Educations["institution_name"]?></span><br>
-                                <span style="font-size:12px;">
-                                <?php
-                                    $StartDate=date('Y',strtotime($Educations["startdate"]));
-                                    $EndDate=date('Y',strtotime($Educations["enddate"]));
-                                    echo ($StartDate."-".$EndDate)
-                                ?>
-                                </span> 
-                                <br><span><a href="<?= URL_BASE ?>candidate/editvieweducation?CredentialExperienceID=<?= $Educations['CredentialExperienceID'] ?>&pageajax=editvieweducation"><img src="<?=URL_THEMES?>images/btn_edit.png"></a></span>    
-                              </div>               
-                          <?php      
-                            }
-                            }
-                         ?>
+                         
                          </div>
                                             
                    </div>
@@ -257,6 +288,11 @@
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">  
+    $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true,format: " MM,yyyy",viewMode: "months",minViewMode: "months"});
+    $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true,format: " MM,yyyy",viewMode: "months",minViewMode: "months"});
+    
+
+
 
 </script>

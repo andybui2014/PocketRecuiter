@@ -3,6 +3,7 @@
     body {
     background: none repeat scroll 0 0 #ededed;
     }
+
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
     ul#nav-left a{color: #777}
@@ -158,7 +159,33 @@
     }
     ul#nav-left {
     border-bottom: 2px solid #bbb;
-    border-top: 2px solid #bbb;}
+    border-top: 2px solid #bbb;
+    margin-top:10px}
+        #nav-left1 {
+    border-bottom: 1px solid #bbb;
+    height: 150px;
+    }
+.embed-responsive.embed-responsive-4by3 {
+    
+    padding-bottom: 200%;
+    padding-right: 150%;
+    }
+
+    #frame {  
+    position: relative;
+overflow: hidden;
+
+    -ms-zoom: 1;
+    -ms-transform-origin: 0 0;
+    -moz-transform: scale(1);
+    -moz-transform-origin: 0 0;
+    -o-transform: scale(1);
+    -o-transform-origin: 0 0;
+    -webkit-transform: scale(1);
+    -webkit-transform-origin: 0 0; 
+}
+
+    
         /****/
 
 </style>
@@ -166,9 +193,9 @@
     $getUserArray=$this->client;
     $getCandidates=$this->getCandidates;
     $SkillName=$this->SkillName;
-    $CandidateEmployment=$this->CandidateEmployment;
-    $Education=$this->Education;
-  // ("test:<pre>");print_r($CandidateEmployment);echo("</pre>");
+    $Portfolio=$this->Portfolio;
+    $ListImages=$this->ListImages;
+   //echo("<br/><br/><br/>test:<pre>");print_r($Portfolio);echo("</pre>");
 ?>
 <div class="container" style="padding-top:40px;">
 
@@ -183,23 +210,15 @@
             <span>
                 <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
             </span>
-            <br><span><strong style="font-size:13px">Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
-            <p style="padding: 10px 0">
-                <!--<i class="lbl-log">Edit</i>>-->
-                <img src="<?=URL_THEMES?>images/btn_edit.png">
-            </p>
+            
+            
             <ul id="nav-left">
-                <li><a >Profile builder</a></li>
-                <li><strong><a class="active" href="<?= URL_BASE ?>candidate/profile">Overview</a></strong></li>
-                <li><a href="#">Contact Info</a></li>
-                <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
-                <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
-                <li><a href="#">Skills</a></li>
-                <li><a href="#">References</a></li>
-                <li><a href="#">Tests</a></li>
-                <li><a href="#">Interest</a></li>
+                <span><strong style="font-size:13px">Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span>
             </ul>
-            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($getUserArray["Lastsigned"])) ?></p>
+             <div id="nav-left1">
+               <img src="<?=URL_THEMES?>images/img_Abc_1.jpg" width="200px;">
+            </div>
+           <br><br>
         </div>
         <div class="col-md-9" >
             <div class="page-header" style="margin:0;">
@@ -221,89 +240,64 @@
                 <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State"?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", ";?><?=$getUserArray["State"]?><?php if($getUserArray["State"]!="") echo ", ";?><?=$getUserArray["PostalCode"]?></span><span> <a href="<?= URL_BASE ?>candidate/editoverview" style="text-decoration: none;"><img src="<?=URL_THEMES?>images/btn_edit.png"></a></span> </span>
              </div>
             <div class="">
-                <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Overview</span></h4>
-                        <div class="col-xs-8"  style="padding:0">
-                            <span style="padding-right:20px;font-size:12px"><?=nl2br($getCandidates["overview"])?></span>
-                            </div>
-                        <div class=".col-xs-4" style="float:right;">
-                            <img width="230px" src="<?=URL_THEMES.'images/img_YourProfile.jpg';?>">
-                            
+                <div class="panel-body" style="padding:0;padding-top:10px">
+                   
+                        <div class="col-xs-4"  style="padding:0">
+                            <img src="<?=URL_THEMES?>images/arrow1.png" height="15px"><span style="font-weight:bold;font-size:15px;padding-left:10px">Back to Profile</span>
                         </div>
-                        <div class="col-xs-10" style="padding:0;padding-bottom:10px;padding-top:5px;">
-                            <div class="col-xs-5" style="padding:0;">
-                                <img width="230px" src="<?=URL_THEMES.'images/img_Youtube.jpg';?>">
-                            </div>
-                            <div class="col-xs-4" style="padding:0;">
-                                <img width="" src="<?=URL_THEMES.'images/img_AddVideo.jpg';?>">
-                            </div>
-                        </div>
-
-                </div>
-                <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Skills</span></h4>
-                    <div class="col-xs-8"  style="padding:0">
-                    <?php                   
-                    foreach($SkillName as $Skills)
-                    {                                           
-                    ?>
-                        <span style="" class="label-tag pull-left getSkillText"><?= $Skills["SkillName"]?>
+                        <div class=".col-xs-8" style="float:right;">
+                            <img  src="<?=URL_THEMES.'images/btn_EditPortfolio.png';?>">
+                            <img  src="<?=URL_THEMES.'images/btn_ViewPortfolio.png';?>">
+                            <img  src="<?=URL_THEMES.'images/btn_Contact_b.png';?>">
                             
-                        </span>
-                    <?php
-                    }?>
+                        </div> 
+                </div>
+                 <div class="panel-body" style="padding:0;padding-top:20px">
+                   
+                        <div class="col-xs-4"  style="padding:0">
+                            <img src="<?=URL_THEMES?>images/btn_Back.png" >
+                            <img src="<?=URL_THEMES?>images/btn_Next.png" >
+                        </div>
+                        <div class=".col-xs-8" style="float:right;">
+                            <img  src="<?=URL_THEMES.'images/ico_gird1.png';?>">
+                            <img  src="<?=URL_THEMES.'images/ico_gird2.png';?>">
+                            
+                            
+                        </div> 
+                        <div id="panel-body" class="panel-body" style="padding:0;padding-top:50px;height:250%;">
+                            
+                            <div class="col-xs-12" style="padding:0;height:100%" id="frame">
+                              <iframe seamless  class="embed-responsive-item" src="http://getbootstrap.com/components/" height="100%" width="100%" frameborder="0" scrolling="no" ></iframe>
 
-                    </div>
-                </div>
-                <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Employment</span><span style="padding-left:10px;"><img src="<?=URL_THEMES.'images/btn_AddEmployment.png';?>"></span></h4>
-                    <div class="col-xs-8"  style="padding:0">
+                              
+                            </div>
+                           
+
+                        </div> 
+                        <div id="panel-body" class="panel-body" style="padding:0;padding-top:20px;">
+                            <span style="font-size:17px;font-weight:bold">Description</span><img style="padding-left:5px" src="<?=URL_THEMES.'images/btn_reportViolation.png';?>">
+                            <p><?=$Portfolio["Description"]?></p>
+                        </div>
+                        <div class="page-header" style="margin:0;padding-top:10px">
+                        </div>
+                        <div id="panel-body" class="panel-body" style="padding:0;padding-top:20px;">
                         <?php
-                            foreach($CandidateEmployment as $Employments)
+                            foreach($ListImages as $images)
                             {
-                        ?>
-                        <div style="padding-bottom:10px;">
-                            <span style="font-weight:bold"><?=$Employments["CompanyName"]?></span><br>
-                            <span style="font-size:13px;"><?=$Employments["PostionHeld"]?></span><br>
-                            <span style="font-size:13px;">
-                            <?php
-                                $StartDate=date('Y',strtotime($Employments["StartDate"]));
-                                $EndDate=date('Y',strtotime($Employments["EndDate"]));
-                                echo ($StartDate."-".$EndDate)
-                               // echo ($EndDate[year]);
-                            ?>
-                            </span>     
-                          </div>               
-                              <?php
+                                ?>
+                        
+                          <div class="col-xs-6 col-md-3" style="padding:0">
+                              <img width="174px" height="138px" src="<?=URL_MEDIA_PORTFOLIO.$images["images"];?>" alt="">
+                            
+                          </div>
+                         
+                           <?php       
                             }
-                        ?>
-                    
-                    </div>
-                </div>
-                <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Education</span><span style="padding-left:10px;"><img src="<?=URL_THEMES.'images/btn_AddEducattion.png';?>"></span></h4>
-                    <div class="col-xs-8"  style="padding:0">
-                        <?php
-                            foreach($Education as $values)
-                            {
-                        ?>
-                        <div style="padding-bottom:10px;">
-                            <span style="font-weight:bold"><?=$values["title"]?></span><br>
-                            <span style="font-size:13px;"><?=$values["institution_name"]?></span><br>
-                            <span style="font-size:13px;">
-                            <?php
-                                $StartDate=date('Y',strtotime($values["startdate"]));
-                                $EndDate=date('Y',strtotime($values["enddate"]));
-                                echo ($StartDate."-".$EndDate)
-                               // echo ($EndDate[year]);
                             ?>
-                            </span>     
-                          </div>               
-                              <?php
-                            }
-                        ?>
-                    
-                    </div>
+                        </div>
+                        
+                        
+                        
                 </div>
             </div>
             <div style="padding-top:40px;">
@@ -312,6 +306,12 @@
         
     </div>
 </div>
-<script>
+
+
+
+
+<script type="text/javascript">
 
 </script>
+
+

@@ -1,0 +1,320 @@
+
+<style>
+    body {
+        background: none repeat scroll 0 0 #ededed;
+    }
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+
+    /****/
+
+    .breadcrumb {
+        width: 100%;
+        /*centering*/
+        padding:3px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        /*box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+        /*overflow: hidden;*/
+        /*border-radius: 5px;*/
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+    .breadcrumb a {
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        color: white;
+        /*need more margin on the left of links to accomodate the numbers*/
+        padding: 0 30px;
+        background: #666;
+        background: linear-gradient(#666, #333);
+        position: relative;
+    }
+        /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+    .breadcrumb a:first-child {
+        padding-left: 46px;
+        border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+    }
+    .breadcrumb a:first-child:before {
+        left: 14px;
+    }
+    .breadcrumb a:last-child {
+        border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+        padding-right: 20px;
+    }
+
+        /*hover/active styles*/
+    .breadcrumb a.active, .breadcrumb a:hover{
+        background: #333;
+        background: linear-gradient(#333, #000);
+    }
+    .breadcrumb a.active:after, .breadcrumb a:hover:after {
+        background: #333;
+        background: linear-gradient(135deg, #333, #000);
+    }
+
+        /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+    .breadcrumb a:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -18px; /*half of square's length*/
+        /*same dimension as the line-height of .breadcrumb a */
+        width: 36px;
+        height: 36px;
+        transform: scale(0.707) rotate(45deg);
+        /*we need to prevent the arrows from getting buried under the next link*/
+        z-index: 1;
+        /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+        background: #666;
+        background: linear-gradient(135deg, #666, #333);
+        /*stylish arrow design using box shadow*/
+        box-shadow:
+            /*2px -2px 0 2px rgba(0, 0, 0, 0.4),3px -3px 0 2px rgba(255, 255, 255, 0.1);*/
+            2px -2px 0 2px #bbb,
+            3px -3px 0 2px #eee;
+        border-radius: 0 5px 0 50px;
+    }
+        /*we dont need an arrow after the last link*/
+    .breadcrumb a:last-child:after {
+        content: none;
+    }
+        /*we will use the :before element to show numbers*/
+    .breadcrumb a:before {
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        margin: 8px 0;
+        position: absolute;
+        top: 0;
+        left: 30px;
+        background: #444;
+        background: linear-gradient(#444, #222);
+        font-weight: bold;
+    }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after{
+        background: #2a6496; color: #fff;
+    }
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+    
+    .well{
+        background-color: #f5f5f5;
+        border: 1px solid none;
+        margin-bottom: 0;
+        padding: 0;
+    }
+    .label-tag {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: #fff;
+        color: #000;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+    #requiredTest {
+        min-height: 200px; 
+        height:auto;
+        border: 1px solid #cccccc;
+    }
+   .table > thead > tr > th {
+    border: 0;
+   }
+   .table > thead > tr  {
+    border: 0;
+   }
+    .logo{
+        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+        width: 211px;
+        height: 165px;
+    }
+    .lbl-log {
+        color:black;
+    }
+    input[type="checkbox"] {
+        background: #ededed;
+    }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: 0;
+    font-size: 12px;
+    }
+
+        /****/
+
+</style>
+<script src="<?=URL_THEMES.'js/portfolio.js';?>"></script>
+
+<?php
+    $UserArray=$this->UserArray;
+    $getCandidates=$this->getCandidates;
+    //$listEducation=$this->Educationlist;
+
+?>
+
+<div class="container" style="padding-top:40px;">
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well text-center">
+              
+               <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?= $UserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$UserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$UserArray["Address1"]?><?php if($UserArray["Address1"]!="") echo ", ";?><?=$UserArray["State"]?></span>
+            </span>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="") echo"K";?></strong></span><br/>
+            <p style="padding: 10px 0">
+                <!--<i class="lbl-log">Edit</i>>-->
+                <img src="<?=URL_THEMES?>images/btn_edit.png">
+            </p>
+            <ul id="nav-left">
+                <li><a >Profile builder</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/profile">Overview</a></li>
+                <li><a href="#">Contact Info</a></li>
+                <li><strong><a href="<?= URL_BASE ?>candidate/portfolio" class="active">Portfolio</a></strong></li>
+                <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($UserArray["Lastsigned"])) ?></p>
+        </div>
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">Portfolio</span>
+                
+                
+             </div>
+              <div class="page-header" style="margin:0;padding-top:15px;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold;"><a href="<?= URL_BASE ?>candidate/addportfolio" style="cursor:pointer"><img src="<?=URL_THEMES.'images/btn_AddPortfolio.png';?>" style=""></a></span>
+                <div style="padding-top:10px">
+                    
+                </div>
+                
+             </div>
+            <div class="">
+                <div class="panel-body" style="padding:0;">
+                    
+                         
+                        <div class="col-xs-6"  style="padding:0">
+                          <!--<div class="panel panel-default">-->
+
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
+
+                                    <table id="portfolioList" class="table">
+                                        <thead>
+                                        <tr>
+                                            
+                                            <th width="7%"> <input style="" type="checkbox" id="port-check-all"/></th>
+                                            <th colspan="3" width="">
+                                                <a id="port-deletes1" style="cursor:pointer;text-decoration: none;"><span class="lbl-log"  style="font-size:12px">Delete</span> &nbsp;</a>
+                                                
+                                                <span class="dropdown lbl-log" style="font-size:12px">
+                                                    <span href="#" data-toggle="dropdown" class="dropdown-toggle">
+                                                        <strong>More Action</strong><span class="caret"></span>
+                                                    </span>
+                                                    <ul role="menu" class="dropdown-menu">
+                                                        <li><a id="port-edit" href="javascript: void(0);">Edit</a></li>
+                                                        <li><a id="port-delete" href="javascript: void(0);">Delete</a></li>
+                                                    </ul>
+                                                </span>
+                                            </th>
+                                        </tr>
+                                        <tr><td></td></tr>
+                                        </thead>
+                                        
+                                        <tbody >
+                                        <?php foreach($this->list as $key=>$item){ ?>
+                                            <tr style="background:#fff;">
+                                                <td><input data-text="<?=$item['Title'];?>" type="checkbox" name="CandidatePortfolioID" data-id="<?=$item['CandidatePortfolioID'];?>"/></td>
+                                                <td>
+                                                <?php
+                                                    $core=new PR_Api_Core_CandidateClass();
+                                                    $images=$core->getImagesPortfolio($item['CandidatePortfolioID']);  
+                                                    //echo "testt:<pre>";print_r($images);echo("</pre>");
+                                                ?>
+                                               <!-- <img width="80px" height="50px" src="<?=$item['URL'];?>" alt="" title=""/>-->
+                                                <img width="80px" height="50px" src="<?=URL_MEDIA_PORTFOLIO.$images[0]["images"];?>" alt="" title=""/>
+                                                </td>
+                                                <td>
+                                                    <span style="margin:0;padding:0;font-weight:bold"><a href="<?= URL_BASE ?>candidate/portfoliodetail?id=<?=$item['CandidatePortfolioID']?>" style="color:#333;"><label><?=$item['Title'];?></label></a></span>
+                                                    <p style="color: #777;margin:0;padding:0;font-size:11px"><?=$item['Description'];?></p><span><?=$item['IconURL'];?></span>
+                                                </td>
+                                                <td style="margin:0;padding:0">
+                                                    <a><img src="<?=URL_THEMES;?>images/btn_green.png" style="float:right"/></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td><td></td><td></td><td></td>
+                                            </tr>
+                                        <?php } ?>
+                                        <tr style="border-top: 2px solid #ddd;">
+                                        <td colspan="4"><span class="pull-right" style="font-weight:bold;font-size:12px">(<?=count($this->list);?> results)</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                 
+                                </div>
+                            </div>
+                       <!-- </div>  -->
+
+                        </div>
+                          <div class=".col-xs-4" style="float:right;padding-top:25px">
+                            <img width="230px" src="<?=URL_THEMES.'images/img_YourProfile.jpg';?>">
+                            
+                        </div>
+                        
+                    <div style="padding-top:20px;">
+                         
+                         </div>
+                                            
+
+                </div>
+            </div>
+            <div style="padding-top:40px;">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var prCandidate= new pocketCandidate();
+    $('#portfolioList #port-delete').unbind('click').bind('click',prCandidate.deletePortfolio);
+    $('#portfolioList #port-deletes1').unbind('click').bind('click',prCandidate.deletePortfolio);
+    $('#portfolioList #port-edit').unbind('click').bind('click',prCandidate.editPortfolio);
+    $('#portfolioList #port-check-all').unbind('change').bind('change',prCandidate.portfolioCheckAll);
+
+</script>

@@ -141,4 +141,139 @@ class PR_Api_Core_CandidateExtClass
         $api->saveCandidateSkills($userID,$CandidateSkillID,$skillIDs);
        
     }
+    public function updateEducation($CredentialExperienceID,$institutionName,$nameDegree,
+            $startdate,$enddate,$comments,$display)
+    {
+        $CandidateEducationInfo = $this->getCandidateEducation($CredentialExperienceID);
+        //print_r($CandidateEducationInfo);
+        if(count($CandidateEducationInfo)==0){
+            return;
+        }
+        $userID= $CandidateEducationInfo['UserID'];
+        $institutionName = trim($institutionName);        
+        $current_institution_id = $CandidateEducationInfo['institution_id'];
+        $current_institutionName = $CandidateEducationInfo['institution_name'];
+        
+        $institution_id = $current_institution_id;
+        if(!empty($institutionName) && $institutionName != $current_institutionName){
+            //$institution_id   
+            $institutionInfo = $this->getInstitutionByName($institutionName);
+            if(count($institutionInfo)>0){
+                $institution_id = $institutionInfo['institution_id'];
+            } else {
+                $institution_id = $this->addInstitution($userID,$institutionName);
+            }
+        }        
+
+        $updateFields = array();
+        if($institution_id != $current_institution_id){
+            $updateFields['institution_id'] = $institution_id;   
+        }
+        if(!empty($startdate)){
+            
+           $month = date("m",strtotime($startdate));
+           $year= (explode(",",$startdate));
+           $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,$month,1,$year[1]));  
+           
+        }
+        if(!empty($enddate)){
+           
+            $month = date("m",strtotime($enddate));
+            $year= (explode(",",$enddate));
+            $updateFields['enddate']=date("Y-m-d H:i:s",mktime(0,0,0,$month,1,$year[1]));   
+        }
+        if(!empty($nameDegree)){
+            $updateFields['title'] = $nameDegree;   
+        }
+        if(!empty($comments))
+        {
+             $updateFields['comments'] = $comments;
+        }
+         if(isset($display))
+        {
+             $updateFields['display'] = $display;
+        }
+        // echo("testt:<pre>");print_r($updateFields);echo("</pre>");    
+        if(count($updateFields)>0){
+            PR_Database::update('credentialexperience', $updateFields,
+                  "CredentialExperienceID = '$CredentialExperienceID'"
+            );            
+        }
+        
+        return;
+    }
+   public function addEducation($userID,
+            $institutionName,$nameDegree,
+            $startdate,$enddate,$comments,$display)
+    {
+        //user: UserID,usertype,CandidateProfileID
+        $candiInfo = $this->getCandidateInfo($userID);
+        if(empty($candiInfo)){
+            return 0;
+        }
+        
+        $institutionName = trim($institutionName);        
+        //--- institution:institution_id,institution_name,created_by_userid,created_datetime,last_updated_by_userid,last_updated_datetime,institution_type,comments
+        $institutionInfo = $this->getInstitutionByName($institutionName);
+        
+        if(count($institutionInfo)==0){
+            $institution_id = $this->addInstitution($userID,$institutionName);
+        } else {
+            $institution_id = $institutionInfo['institution_id'];
+        }
+        
+        $updateFields = array('CandidateProfileID'=>$candiInfo['CandidateProfileID'],
+                    'institution_id'=>$institution_id,
+                    'title'=>$nameDegree,
+                    'comments'=>$comments,
+                    'display'=>$display 
+        );        
+        if(!empty($startdate)){
+           $month = date("m",strtotime($startdate));
+           $year= (explode(",",$startdate));
+           $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,$month,1,$year[1])); 
+        }
+        if(!empty($enddate)){
+            $month = date("m",strtotime($enddate));
+            $year= (explode(",",$enddate));
+            $updateFields['enddate']=date("Y-m-d H:i:s",mktime(0,0,0,$month,1,$year[1]));   
+        }
+        
+        $CredentialExperienceID =   PR_Database::insert('credentialexperience',$updateFields, true );
+        return $CredentialExperienceID;                
+    }
+    public function setPortfolioid(){
+        $db = PR_Database::getInstance();
+        $maxIdSql = "SELECT MAX(CandidatePortfolioID) AS CandidatePortfolioID  FROM candidate_portfolio";
+        $result = $db->fetchAll($maxIdSql);
+        $portfolioID=$result[0]['CandidatePortfolioID']+1; 
+        return $portfolioID;
+    }
+   public function saveImagesPortfolio($portfolioID,$image)
+    {
+               
+        $updateFields = array('CandidatePortfolioID'=>$portfolioID,
+            'images'=>$image);       
+        $result = PR_Database::insert('upload_portfolio',$updateFields,true);
+        return $result;
+    }
+   public function getImagesPortfolio($portfolioID)
+    {
+         $db = PR_Database::getInstance();      
+         $select = $db->select();
+         $select->from('upload_portfolio', array('*'));
+         $select->where("CandidatePortfolioID = '$portfolioID'");
+         $records = PR_Database::fetchAll($select);
+         if(!empty($records))
+         {
+             return $records;  
+         }   
+         else return 0;   
+    }
+    public function deleteImagesPortfolio($id)
+    {
+         $db = PR_Database::getInstance();
+         $criteria = "ID = '$id'";
+         $result = $db->delete('upload_portfolio', $criteria);
+    }
 }

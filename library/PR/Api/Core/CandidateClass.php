@@ -161,7 +161,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             $updateFields['institution_id'] = $institution_id;   
         }
         if($startYear > 0){
-            $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,1,1,$startYear));  
+            $updateFields['startdate'] = date("Y-m-d H:i:s",mktime(0,0,0,1,1,$startYear));               
         }
         if($endYear>0){
             $updateFields['enddate'] = date("Y-m-d H:i:s",mktime(0,0,0,12,30,$endYear)); 
@@ -187,7 +187,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('ce'=>'credentialexperience'), 
-            array('CredentialExperienceID','CandidateProfileID','institution_id','startdate','enddate','title','comments')
+            array('CredentialExperienceID','CandidateProfileID','institution_id','startdate','enddate','title','comments','display')
         );
         $select->join(array('u'=>'user'),
             'u.CandidateProfileID = ce.CandidateProfileID',
@@ -422,14 +422,14 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
    public function saveCandidateSkills($userID,$CandidateSkillID, $skillIDs)
    {
        $candidatesInfo = $this->getCandidateInfo($userID);
-     
+      // echo("testt:<pre>")  ;print_r($candidateskillInfo);echo("</pre>");
        $CandidateProfileID=$candidatesInfo["CandidateProfileID"];
       
       //--- select current skills
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from('candidate_skill',array('CandidateSkillID','CandidateProfileID','SkillID','YearsExperience','LevelOfExperience'));
-        $select->where("CandidateSkillID = '".$CandidateSkillID."' ");
+        $select->where("CandidateSkillID = '".$CandidateSkillID."' ");   
         $records = PR_Database::fetchAll($select);
         
         $currentSkills = array();
@@ -445,13 +445,14 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             $result = $db->delete('candidate_skill', $criteria);
         } else if(count($currentSkills)==0){
             foreach($skillIDs as $id){
-              //  echo ("tets");
+                echo ("tets");
                 $updateFields=array('CandidateSkillID'=>$CandidateSkillID,
                             'SkillID'=>$id,'CandidateProfileID'=>$CandidateProfileID,'YearsExperience'=>'','LevelOfExperience'=>'');
                 $result = PR_Database::insert("candidate_skill", $updateFields);                
             }
         } else {
             $arrayDiff_1 = array_diff($currentSkills,$skillIDs);
+           // echo("diff:");print_r($arrayDiff_1);
             if(count($arrayDiff_1) > 0){
                 $criteria = "CandidateSkillID = '$CandidateSkillID' AND SkillID IN (".implode(",",$arrayDiff_1).")";
                 $result = $db->delete('candidate_skill', $criteria);
@@ -491,7 +492,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         
        
    }    
-    
+   
    public function getList_CandidateSkillsOnly($userID)  
    {
        $db = PR_Database::getInstance();
@@ -514,7 +515,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         }
         
        
-   }     
+   }
    public function getSKillName($skillid)  
    {
         $db = PR_Database::getInstance();
@@ -551,7 +552,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
     public function getList_CandidateSkillsDad($userID)  
    {
        $db = PR_Database::getInstance();
-        //$select = $db->select();
+        //$select = $db->select();   getSKillName
         $sql= $db->select(); 
         $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.CandidateProfileID,us.UserID
         FROM skill as sk
@@ -625,15 +626,15 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         if(!empty($userInfo['CandidateProfileID'])) {
             $candidateProfileID = $userInfo['CandidateProfileID'];
         } else {
-        $candidateProfileID = PR_Database::insert('candidate_profile',array('usercol1'=>''),true);
-        PR_Database::update('user',array('CandidateProfileID'=>$candidateProfileID),
-                "UserID = '$userID'"
-        );
+            $candidateProfileID = PR_Database::insert('candidate_profile',array('usercol1'=>''),true);
+            PR_Database::update('user',array('CandidateProfileID'=>$candidateProfileID),
+                    "UserID = '$userID'"
+            );            
         }
         //print_r($userInfo);
         return $candidateProfileID;
     }
-       
+    
     public function getWatchList($filters=NULL,$limit=0, $offset=0)
     {
         $db = PR_Database::getInstance();
