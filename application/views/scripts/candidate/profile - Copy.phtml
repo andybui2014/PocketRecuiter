@@ -156,9 +156,6 @@
         width: 211px;
         height: 165px;
     }
-    ul#nav-left {
-    border-bottom: 2px solid #bbb;
-    border-top: 2px solid #bbb;}
         /****/
 
 </style>
@@ -179,21 +176,20 @@
 
             </div>
             <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>
-            <span style="font-weight:bold;font-size:13px">View my profile</span> <br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
             <span>
-                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
             </span>
-            <br><span><strong style="font-size:13px">Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
             <p style="padding: 10px 0">
                 <!--<i class="lbl-log">Edit</i>>-->
                 <img src="<?=URL_THEMES?>images/btn_edit.png">
             </p>
             <ul id="nav-left">
-                <li><a href="<?= URL_BASE ?>candidate/profile-builder?utm_source=contact">Profile builder</a></li>
+                <li><a >Profile builder</a></li>
                 <li><strong><a class="active" href="<?= URL_BASE ?>candidate/profile">Overview</a></strong></li>
-                <li><a href="<?= URL_BASE ?>candidate/contact-info">Contact Info</a></li>
-                <li><a href="<?= URL_BASE ?>candidate/employment">Employment</a></li>
-                <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
+                <li><a href="#">Contact Info</a></li>
+                <li><a href="#">Portfolio</a></li>
                 <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
                 <li><a href="#">Skills</a></li>
                 <li><a href="#">References</a></li>
@@ -257,7 +253,7 @@
                     </div>
                 </div>
                 <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Employment</span><span style="padding-left:10px;"><a href="<?= URL_BASE ?>candidate/employment"><img src="<?=URL_THEMES.'images/btn_AddEmployment.png';?>"></a></span></h4>
+                    <h4><span style="font-weight:bold">Employment</span><span style="padding-left:10px;"><img src="<?=URL_THEMES.'images/btn_AddEmployment.png';?>"></span></h4>
                     <div class="col-xs-8"  style="padding:0">
                         <?php
                             foreach($CandidateEmployment as $Employments)
@@ -282,7 +278,7 @@
                     </div>
                 </div>
                 <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Education</span><span style="padding-left:10px;"><a href="<?= URL_BASE ?>candidate/add-education" style="cursor:pointer"><img src="<?=URL_THEMES.'images/btn_AddEducattion.png';?>"></a></span></h4>
+                    <h4><span style="font-weight:bold">Education</span><span style="padding-left:10px;"><img src="<?=URL_THEMES.'images/btn_AddEducattion.png';?>"></span></h4>
                     <div class="col-xs-8"  style="padding:0">
                         <?php
                             foreach($Education as $values)

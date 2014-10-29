@@ -1325,5 +1325,46 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($return), true)
             ->setBody($return);
     }
+     public function myprofileAction()
+    {           
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
+                
+        $api_candidate= new PR_Api_Core_CandidateClass();
+        
+        $getUserArray=$api_candidate->getCandidateInfo($UserID);
+        $this->view->client = $getUserArray;  
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+        $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
+        $SkillName=$api_candidate->getList_CandidateSkillsOnly($UserID);
+        $Skills=array();
+        if(!empty($SkillName)||$SkillName!=""){             
+        
+            foreach($SkillName as $key=>$values )
+            {
+               $Skills[$key]=$values;   
+            }
+        }
+        $this->view->SkillName=$Skills;
+        $portfolio = $api_candidate->getListCandidatePortfolio($UserID);
+        $this->view->Portfolio=$portfolio;
+       // $CandidateEmployment=array();
+       // if(!empty($getCandidates["CandidateEmploymentID"])||$getCandidates["CandidateEmploymentID"]!="")
+       // {
+         //     foreach($getCandidates["CandidateEmploymentID"] as $key=>$values )
+            //    {
+               //    $CandidateEmployment[$key]=$values;   
+               // }
+        //}
+        
+       // $this->view->CandidateEmployment=$CandidateEmployment;
+        //$Education = $api_candidate->getCandidateEducationList(2); 
+        //$this->view->Education=$Education;
+         
+      // echo ("getUserArray:<pre>");print_r($portfolio);echo("</pre>");
+        $this->render('myprofile');                  
+                     
+    }
 
 }

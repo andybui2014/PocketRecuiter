@@ -1,0 +1,367 @@
+
+<style>
+    body {
+    background: none repeat scroll 0 0 #ededed;
+    }
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+
+    /****/
+
+    .breadcrumb {
+        width: 100%;
+        /*centering*/
+        padding:3px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        /*box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+        /*overflow: hidden;*/
+        /*border-radius: 5px;*/
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+    .breadcrumb a {
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        color: white;
+        /*need more margin on the left of links to accomodate the numbers*/
+        padding: 0 30px;
+        background: #666;
+        background: linear-gradient(#666, #333);
+        position: relative;
+    }
+        /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+    .breadcrumb a:first-child {
+        padding-left: 46px;
+        border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+    }
+    .breadcrumb a:first-child:before {
+        left: 14px;
+    }
+    .breadcrumb a:last-child {
+        border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+        padding-right: 20px;
+    }
+
+        /*hover/active styles*/
+    .breadcrumb a.active, .breadcrumb a:hover{
+        background: #333;
+        background: linear-gradient(#333, #000);
+    }
+    .breadcrumb a.active:after, .breadcrumb a:hover:after {
+        background: #333;
+        background: linear-gradient(135deg, #333, #000);
+    }
+
+        /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+    .breadcrumb a:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -18px; /*half of square's length*/
+        /*same dimension as the line-height of .breadcrumb a */
+        width: 36px;
+        height: 36px;
+        
+        transform: scale(0.707) rotate(45deg);
+        /*we need to prevent the arrows from getting buried under the next link*/
+        z-index: 1;
+        /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+        background: #666;
+        background: linear-gradient(135deg, #666, #333);
+        /*stylish arrow design using box shadow*/
+        box-shadow:
+            /*2px -2px 0 2px rgba(0, 0, 0, 0.4),3px -3px 0 2px rgba(255, 255, 255, 0.1);*/
+            2px -2px 0 2px #bbb,
+            3px -3px 0 2px #eee;
+        
+        border-radius: 0 5px 0 50px;
+    }
+        /*we dont need an arrow after the last link*/
+    .breadcrumb a:last-child:after {
+        content: none;
+    }
+        /*we will use the :before element to show numbers*/
+    .breadcrumb a:before {
+       
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        margin: 8px 0;
+        position: absolute;
+        top: 0;
+        left: 30px;
+        background: #444;
+        background: linear-gradient(#444, #222);
+        font-weight: bold;
+    }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after{
+        background: #2a6496; color: #fff;
+    }
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+    .line-r{
+         border-right: 1px solid #d6d6d6;
+         padding-right: 10px;
+         height: 10px;
+    
+    }
+    .line-l{
+         border-left: 1px solid #d6d6d6;
+         padding-left: 5px;
+         height: 10px;
+    
+    }
+    .well{
+        margin-bottom: 0;
+        padding:0;
+    }
+    .label-tag {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background-color: #fff;
+        color: #000;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+    .logo{
+        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+        width: 211px;
+        height: 165px;
+    }
+    ul#nav-left {
+    border-bottom: 2px solid #bbb;
+    border-top: 2px solid #bbb;}
+        /****/
+
+</style>
+<?php
+    $getUserArray=$this->client;
+    $getCandidates=$this->getCandidates;
+    $SkillName=$this->SkillName;
+    $Portfolio=$this->Portfolio;
+   // $CandidateEmployment=$this->CandidateEmployment;
+    //$Education=$this->Education;
+  //echo ("<br><br>test:<pre>");print_r($getCandidates);echo("</pre>");
+?>
+<div class="container" style="padding-top:40px;">
+
+    <div class="row">
+     <div class="col-md-3">
+        <div class="well text-center">
+          <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold;font-size:13px">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
+            </span>
+             
+            <ul id="nav-left">
+                <span><strong style="font-size:13px">Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span>
+            </ul>
+             <div id="nav-left1">
+               <img src="<?=URL_THEMES?>images/img_Abc_1.jpg" width="200px;">
+            </div>
+           <br><br>
+        </div>
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?=$getUserArray["firstname"]." ".$getUserArray["lastname"]?></span>
+                <div style="padding-bottom:5px">
+                <?php
+                    $count=0;
+                    foreach($SkillName as $Skills)
+                    {
+                        $count=$count+1;
+                    
+                ?>
+                <span <?php if ($count==1) echo "class=''"; else echo "class='line-l'";?>  style="font-weight:bold;font-size:14px"><a href="#" style="text-decoration:none;color: #777;"><?=$Skills["SkillName"]?></a></span>
+                <?php
+                }
+                ?>
+                </div>
+                <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span <?php if($getUserArray["Address1"]!="") echo("class='line-r'")?>   style="font-weight:bold;font-size:13px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State"?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", ";?><?=$getUserArray["State"]?><?php if($getUserArray["State"]!="") echo ", ";?><?=$getUserArray["PostalCode"]?></span> </span>
+             </div>
+            <div class="">
+                <div class="panel-body" style="padding:0">
+                    <h4><span style="font-weight:bold">Overview</span></h4>
+                        <div class="col-xs-12"  style="padding:0;font-size:12px" id="limitedTextSpace" >
+                           <!-- <?=nl2br($getCandidates["overview"])?>-->
+                           <div class="comment" style="">
+                           <?php
+                           $words = explode(" ",$getCandidates["overview"]); 
+                            $str= implode(" ",array_splice($words,0,56));
+                          //  echo "etstt:".$str."....end";
+                            $b=0;
+                            $a=str_word_count($getCandidates["overview"]);
+                            $b=$a-1;
+                            $str1= implode(" ",array_splice($words,0,$b));
+                           // echo "etstt11:".$b.$str1."....end";
+                           ?>
+                          <p> <?=$str?><span class="collapse-group"><span class="collapse"><?=" ".$str1?></span><br/><a class="btn" href="#" style="padding:0;padding-top:5px"><img src="<?=URL_THEMES?>images/btn_ReadMore.png"></a></span></p>
+        <p class="collapsed">
+
+           
+                         </div>                          
+                        </div>
+                        
+                        <div class="col-xs-12" style="padding:0;padding-bottom:10px;padding-top:5px;">
+                            <h4><span style="font-weight:bold;">Portfolio</span></h4>
+                             <div id="panel-body" class="panel-body" style="padding:0;">
+                        <?php
+                            foreach($Portfolio as $images)
+                            {
+                                //  echo ("<br><br>test:<pre>");print_r($images["URL"]);echo("</pre>");
+                                ?>
+                        
+                          <div class="col-xs-6 col-md-3" style="padding:0">
+                              <!--<img width="174px" height="138px" src="<?=URL_MEDIA_PORTFOLIO.$images["images"];?>" alt="">-->
+                              <iframe  class="embed-responsive-item" frameborder="0" width="174px" height="138px" src="<?=$images["URL"]?>" scrolling="no"></iframe>
+                            
+                          </div>
+                         
+                           <?php       
+                            }
+                            ?>
+                        </div>
+                        </div>
+
+                </div>
+                <div class="panel-body" style="padding:0">
+                    <h4><span style="font-weight:bold">Skills</span></h4>
+                    <div class="col-xs-12"  style="padding:0">
+                    <?php                   
+                    foreach($SkillName as $Skills)
+                    {                                           
+                    ?>
+                        <span style="" class="label-tag pull-left getSkillText"><?= $Skills["SkillName"]?>
+                            
+                        </span>
+                    <?php
+                    }?>
+
+                    </div>
+                </div>
+                <div class="panel-body" style="padding:0;padding-top:10px">
+                  <h4><span style="font-weight:bold">Passed Test</span></h4>  
+                  <div id="panel-body" class="col-xs-12" style="padding:0;padding-top:10px">
+                    <div class="col-xs-12 col-md-2" style="padding:0;margin-right:10px">
+                        <img src="<?=URL_THEMES?>images/picture1.png" width="116px">
+                        <div style="text-align:center;font-weight:bold;font-size:12px">Joomla! 90%</div>
+                    </div>
+                    <div class="col-xs-12 col-md-2" style="padding:0;margin-right:10px">
+                        <img src="<?=URL_THEMES?>images/picture2.png" width="116px">
+                        <div style="text-align:center;font-weight:bold;font-size:12px">WordPress! 75%</div>
+                    </div>
+                    <div class="col-xs-12 col-md-2" style="padding:0;margin-right:10px">
+                        <img src="<?=URL_THEMES?>images/picture3.png" width="116px">
+                        <div style="text-align:center;font-weight:bold;font-size:12px">Ecommerce! 99%</div>
+                    </div>
+                    <div class="col-xs-12 col-md-2" style="padding:0;margin-right:10px">
+                        <img src="<?=URL_THEMES?>images/picture4.png" width="116px">
+                        <div style="text-align:center;font-weight:bold;font-size:12px">Jquery! 60%</div>
+                    </div>
+                    <div class="col-xs-12 col-md-2" style="padding:0;" >
+                        <img src="<?=URL_THEMES?>images/picture5.png" width="116px">
+                        <div style="text-align:center;font-weight:bold;font-size:12px">HTML5! 50%</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="page-header" style="margin:0;padding-top:10px;">
+                </div>
+                <div class="panel-body" style="padding:0;padding-top:10px;">
+                    <h4><span style="font-weight:bold">Service Description</span></h4>  
+                    <p style="font-size:12px"><?=$getCandidates["servicedescription"]?></p>
+                </div>
+                 <div class="panel-body" style="padding:0;padding-top:10px;">
+                    <h4><span style="font-weight:bold;">Interest</span></h4>  
+                     <div class="col-xs-12"  style="padding:0">
+                   
+                        <span style="" class="label-tag pull-left getSkillText">Playing musical instrument</span>
+                        <span style="" class="label-tag pull-left getSkillText">Bird watching</span>
+                        <span style="" class="label-tag pull-left getSkillText">Web sawy</span>
+                        <span style="" class="label-tag pull-left getSkillText">Cooking</span>
+                        <span style="" class="label-tag pull-left getSkillText">Traveling - Exploring Exotic Countries</span>                   <span style="" class="label-tag pull-left getSkillText">Fashion and modeling</span>
+                        <span style="" class="label-tag pull-left getSkillText">Collecting Stamps, Postcards and Pens</span>                   <span style="" class="label-tag pull-left getSkillText">Dancing</span>
+                        <span style="" class="label-tag pull-left getSkillText">Astrology</span>
+                        <span style="" class="label-tag pull-left getSkillText">Child Care</span>
+                        <span style="" class="label-tag pull-left getSkillText">Wine Testing Group</span>
+
+                    </div>
+                    <div class="col-xs-12"  style="padding:0;padding-top:10px;margin-top:20px;background-color: #fff;height:40px;font">
+                        <span class="line-r" style="padding-left:10px">Overview</span>
+                        <span class="line-r" style="padding-left:10px">Career History</span>
+                        <span class="line-r" style="padding-left:10px">Portfolio</span>
+                        <span class="" style="padding-left:10px">Report Violation</span>
+                    </div>
+                </div>
+                
+                <div class="panel-body" style="padding:0;padding-top:10px;">
+                    <h4><span style="font-weight:bold;color:#777">Keywords</span></h4>  
+                    <div  class="col-sm-4" style="font-size:12px;color:#777;padding:0">
+                    <?php
+                    $keywords = preg_split("/[\s,]+/", $getCandidates["keywords"]);
+                   //echo"tetstt:<pre>"; print_r($keywords);echo("</pre>");
+
+                   foreach ($keywords as $key)
+                   {
+                   ?>
+                   <div class="col-xs-4 col-sm-6" style="padding:0;"><?php echo str_replace("'","", $key)."<br/>";?></div>
+                   <?php
+                       
+                   }
+                    ?>
+                  </div>
+                  </div>  
+                </div>
+                
+                
+            <div style="padding-top:40px;">
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script>
+$('.btn').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+
+   // $('p.collapsed').hide() ;
+    var $collapse = $this.closest('.collapse-group').find('.collapse');
+    $collapse.collapse('toggle');
+   
+});
+
+
+</script>
