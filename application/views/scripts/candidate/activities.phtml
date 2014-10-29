@@ -1,0 +1,112 @@
+<script src="<?=URL_THEMES.'js/pocket.candidate.js';?>"> </script>
+<script>
+    var objPK = new pocketCandidate();
+</script>
+<style type="text/css" >
+    div.cellFull {
+       border-left: 1px #ccc solid;
+       border-collapse: collapse;
+       margin-top:-1px;
+        height: 100%;
+       display:flex;
+       align-items:center;
+    }
+
+    div.gradientGreen{
+        background: -webkit-linear-gradient(#a4cd71, #87b84d , #a4cd71); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#a4cd71, #87b84d , #a4cd71); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#a4cd71, #87b84d , #a4cd71); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#a4cd71, #87b84d , #a4cd71); /* Standard syntax (must be last) */
+        color:white;
+    }
+
+    div.gradientRed{
+        background: -webkit-linear-gradient(#ed7777, #c86260   , #ed7777); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#ed7777, #c86260   , #ed7777); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#ed7777, #c86260   , #ed7777); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#ed7777, #c86260   , #ed7777); /* Standard syntax (must be last) */
+        color:white;
+    }
+
+    div.gradientGray{
+        background: -webkit-linear-gradient(#ffffff, #e5e5e5 , #ffffff); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#ffffff, #e5e5e5 , #ffffff); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#ffffff, #e5e5e5 , #ffffff); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#ffffff, #e5e5e5 , #ffffff); /* Standard syntax (must be last) */
+        color: #ccc;
+    }
+
+   table {
+       height: 100%;border-collapse: collapse;
+   }
+   td.fullHeigh {
+       height: 100%;  border-collapse: collapse; padding: 0px!important; margin:0px!important;
+   }
+
+    .table-striped1 > tbody > tr:nth-child(1n) > td {
+        background-color: white;
+    }
+
+</style>
+<div class="container" >
+    <div class="">
+        <h1 style="height:40px; padding-top:10px">
+            <span class="text-left" style="color: #2a6496"></span>
+        </h1>
+    </div>
+    <div style="height:40px;background-color: #2a6496; padding-top:10px; color:white"><label class="text-center">4 Active State</label> </div>
+     <table style="margin-bottom:0;"  class="table table-striped1 table-bordered table-hover" cellpadding=0 cellspacing=0 >
+            <thead>
+            <tr>
+                <th style="width:135px">
+                    <span><input type="checkbox" id="ckAll" name=""/> <strong>Career Create</strong></span>
+                </th>
+                <th style="width:135px"><strong>Company Name</strong></th>
+                <th style="width:200px">Career Title</th>
+                <th>Status</th>
+                <th style="width:120px">Apply Date</th>
+                <th style="width:80px">Action<span class="caret"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $aclist = $this->activelist;
+            if($aclist !=""){
+                foreach($aclist as $kk=>$aclistInfo){
+                    ?>
+                    <tr>
+                        <td style="vertical-align: middle"><span><input type="checkbox" class="" name=""/> <strong style="color:#666"><?=$aclistInfo['posteddate']?></strong></span> <span class="pull-right" style="padding-right:5px"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                        <td style="color: #777; vertical-align: middle " ><?=$aclistInfo['Companyname']?></td>
+                        <td style="color: #777; vertical-align: middle;" ><?=$aclistInfo['title']?></td>
+                        <td style="color: #777;" class="fullHeigh">
+                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGreen" style="padding-left: 5px;"> <span style="padding-left:5px;margin-top:-6px"><strong>Applied</strong></span></div>
+                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientRed" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Screen</span></div>
+                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Schedule</span></div>
+                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Feedback</span></div>
+                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style="padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Offer</span></div>
+                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Onboard</span></div>
+
+                        </td>
+                        <td style="vertical-align: middle"><strong style="color:#666"><?=$aclistInfo['CandidateApplyDate']?></strong></td>
+                        <td style="vertical-align: middle">
+                            <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#f7ce12"></span>&nbsp;
+                            <img onclick="javascript:objPK.deleteWatchList(<?=$aclistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px">
+                        </td>
+                    </tr>
+            <?php    }
+            }
+            ?>
+
+
+
+            </tbody>
+        </table>
+
+        <div class="" style="height: 40px;background-color: #333"></div>
+
+
+</div>
+<script>
+   // $('#ckAll').unbind('click').bind('click',objPK.candidateCheckedAll);
+   // $('.isck').unbind('click').bind('click',objPK.candidateChecked);
+</script>

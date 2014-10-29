@@ -1325,6 +1325,17 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($return), true)
             ->setBody($return);
     }
+	
+	    public function activitiesAction(){
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+
+        $CandidateID =$user['CandidateProfileID'];
+
+        $PR_Api = new PR_Api_Core_CandidateClass();
+        $activelist = $PR_Api->getWatchList(array('CandidateID'=>$CandidateID));
+        $this->view->activelist = $activelist;
+    }
+	
      public function myprofileAction()
     {           
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
