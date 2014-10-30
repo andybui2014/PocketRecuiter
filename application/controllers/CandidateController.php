@@ -1332,7 +1332,7 @@ class CandidateController extends Application_Controller_Action
         $CandidateID =$user['CandidateProfileID'];
 
         $PR_Api = new PR_Api_Core_CandidateClass();
-        $activelist = $PR_Api->getWatchList(array('CandidateID'=>$CandidateID));
+        $activelist = $PR_Api->getOpportunityCandidateMatchActivities($CandidateID);
         $this->view->activelist = $activelist;
     }
 	

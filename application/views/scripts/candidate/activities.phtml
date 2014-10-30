@@ -54,7 +54,10 @@
             <span class="text-left" style="color: #2a6496"></span>
         </h1>
     </div>
-    <div style="height:40px;background-color: #2a6496; padding-top:10px; color:white"><label class="text-center">4 Active State</label> </div>
+    <?php
+    $aclist = $this->activelist;
+    ?>
+    <div style="height:40px;background-color: #2a6496; padding-top:10px; color:white"><label class="text-center"><?=count($aclist)?>&nbsp; Active State</label> </div>
      <table style="margin-bottom:0;"  class="table table-striped1 table-bordered table-hover" cellpadding=0 cellspacing=0 >
             <thead>
             <tr>
@@ -70,7 +73,7 @@
             </thead>
             <tbody>
             <?php
-            $aclist = $this->activelist;
+            $aclist;
             if($aclist !=""){
                 foreach($aclist as $kk=>$aclistInfo){
                     ?>
@@ -90,7 +93,7 @@
                         <td style="vertical-align: middle"><strong style="color:#666"><?=$aclistInfo['CandidateApplyDate']?></strong></td>
                         <td style="vertical-align: middle">
                             <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#f7ce12"></span>&nbsp;
-                            <img onclick="javascript:objPK.deleteWatchList(<?=$aclistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px">
+                            <img  src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px">
                         </td>
                     </tr>
             <?php    }
