@@ -228,7 +228,8 @@
                             $str1= implode(" ",array_splice($words,0,$b));
                            // echo "etstt11:".$b.$str1."....end";
                            ?>
-                          <p> <?=$str?><span class="collapse-group"><span class="collapse"><?=" ".$str1?></span><br/><a class="btn" href="#" style="padding:0;"><img src="<?=URL_THEMES?>images/btn_ReadMore.png"></a></span></p>
+                          <p><span class="collapse-group"><span><?=$str?></span><span class="collapse"><?=" ".$str1?></span><br/>
+                          <img class="btn1" src="<?=URL_THEMES?>images/btn_ReadMore.png" style="padding-top:5px"></span></p>
         <p class="collapsed">
 
            
@@ -353,7 +354,7 @@
     </div>
 </div>
 <script>
-$('.btn').on('click', function(e) {
+$('.btn1').on('click', function(e) {
     e.preventDefault();
     var $this = $(this);
 
