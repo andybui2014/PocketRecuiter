@@ -1,6 +1,5 @@
 <?php
 $helper = $this->layout()->_helper;
-$skills = $this->skills;
 ?>
 <style>
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
@@ -155,7 +154,6 @@ $skills = $this->skills;
                 <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" class="active"><strong>Profile builder</strong></a></li>
                 <li><a href="<?=$helper->url('profile','candidate');?>">Overview</a></li>
                 <li><a href="<?=$helper->url('contact-info','candidate');?>">Contact Info</a></li>
-				<li><a href="<?=$helper->url('employment','candidate');?>">Employment</a></li>
                 <li><a href="<?=$helper->url('portfolio','candidate');?>">Portfolio</a></li>
                 <li><a href="<?=$helper->url('vieweducation','candidate');?>">Education</a></li>
                 <li><a href="#">Skills</a></li>
@@ -181,32 +179,7 @@ $skills = $this->skills;
                         <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
 
-                    <?php
-                        //$list = $this->list;
-                        foreach($skills as $key=>$tree){
-                            //echo '<pre>';print_r($skills);echo '</pre>';
-                    ?>
-                    <div class="col-md-4" style="margin:0;padding:0">
-                    <div class="tree">
-                            <ul><li>
-                                <img data-status="select" class="img-parent" src="<?=URL_THEMES;?>images/trees/ico_colapse.png">
-                                <a href=""><strong><?=$tree['SkillName_dad'];?></strong> </a>
-                                    <?=sizeof($tree['ParentSkillID']) > 0 ? '<span><img class="img-toggle" src="'.URL_THEMES.'images/trees/ico_sub_sm.png"/></span>':'<span><img src="'.URL_THEMES.'images/trees/ico_add_sm.png"/></span>'?>
-                                    <?php if(!empty($tree['ParentSkillID']) && sizeof($tree['ParentSkillID']) > 0){ ?>
-                                            <ul>
-                                        <?php foreach($tree['ParentSkillID'] as $item){ ?>
-                                                <li>
-                                                <span><img data-status="select" class="img-item" src="<?=URL_THEMES;?>images/trees/ico_colapse_sm.png"></span> <a href=""><?=$item['SkillName'];?></a>
-                                                </li>
-                                     <?php } ?>
-                                    </ul>
-                                     <?php } ?>
-                            </li>
-                        </ul>
-                    </div></div>
-                    <?php
-                        }
-                    ?>
+                    <?=$this->tree;?>
                 <div class="col-md-12">
                     <div style="margin-top: 30px">
                         <button id="cmd-back" data-back="employment" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
