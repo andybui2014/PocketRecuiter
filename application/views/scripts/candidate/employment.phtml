@@ -156,7 +156,6 @@
                             <strong>Cancel</strong>
                         </button>
                     </div>
-                    
                 </div>
             </div>
             <!-- end Add-->
@@ -172,7 +171,7 @@
     });
 
     $('.btn-cancel').unbind('click').bind('click',function(){
-        $('#view-employment').show();
+        /*$('#view-employment').show();
         $('#NewEmployment').hide();
         $('#show-case').hide();
 
@@ -182,7 +181,8 @@
         $('.client-name').val("");
         $('.des').val("");
         $('.start-date').val("");
-        $('.end-date').val("");
+        $('.end-date').val(""); */
+        location.reload();
     });
 
     $('.btn-edit').unbind('click').bind('click',function(){
@@ -213,5 +213,5 @@
     objempl = new pocketCandidate();
 
     $('#NewEmployment .add-employment').unbind('click').bind('click',objempl.addNewCandidateEmploy)
-    $('#NewEmployment .add-another-employment').unbind('click').bind('click',objempl.addNewCandidateEmploy)
+
 </script>
