@@ -805,10 +805,12 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
 	{
        $db = PR_Database::getInstance();
         $sql= $db->select(); 
-        $sql="select distinct sk.*,ck.CandidateProfileID,u.UserID from skill as sk 
-        left join candidate_skill ck on ck.SkillID=sk.SkillID
-        left join user u on u.CandidateProfileID = ck.CandidateProfileID
-        where sk.ParentSkillID='$skillid' and (u.UserID is null or u.UserID='$userID')";
+        $sql="select distinct sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,
+		(CASE WHEN u.UserID IS NOT NULL THEN 1 ELSE 0 END) Checked 
+		from skill as sk 
+		left join candidate_skill ck on ck.SkillID=sk.SkillID
+		left join user u on u.CandidateProfileID = ck.CandidateProfileID
+		where sk.ParentSkillID='$skillid' and (u.UserID is null or u.UserID='$userID');";
         $select = $db->query($sql);
        
         $records = $select->fetchAll();
