@@ -684,6 +684,10 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $db->delete('opportunity_candidate_apply', array(
             'OpportunityID = ?' => $OpportunityID, 'CandidateProfileID = ?' => $CandidateProfileID,
         ));
+
+        $db->delete('opportunity_candidate_match', array(
+            'OpportunityID = ?' => $OpportunityID, 'CandidateProfileID = ?' => $CandidateProfileID,
+        ));
         return true;
 
     }
@@ -765,10 +769,26 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                 $updateFieldWatchList['OpportunityID'] = $updateFields['OpportunityID'];
                 $updateFieldWatchList['CandidateID'] = $updateFields['CandidateProfileID'];
 
+                //params for opportunity_candidate_match
+
+                //OpportunityID CandidateProfileID CandidateAppliedStatus CandidateScreenStatus CandidateScheduleStatus
+               // CandidateFeedbackStatus  CandidateOfferStatus CandiateOnboardStatus CandidateFavorite CandidateHideStatus
+                $updateFieldOCM['OpportunityID'] = $updateFields['OpportunityID'];
+                $updateFieldOCM['CandidateProfileID'] = $updateFields['CandidateProfileID'];
+                $updateFieldOCM['CandidateAppliedStatus'] = $updateFields['CandidateAppliedStatus'];
+                $updateFieldOCM['CandidateScreenStatus'] = 0;
+                $updateFieldOCM['CandidateScheduleStatus'] = 0;
+                $updateFieldOCM['CandidateFeedbackStatus'] = 0;
+                $updateFieldOCM['CandidateOfferStatus'] = 0;
+                $updateFieldOCM['CandiateOnboardStatus'] = 0;
+                $updateFieldOCM['CandidateFavorite'] = 0;
+                $updateFieldOCM['CandidateHideStatus'] = $updateFields['CandidateHideStatus'];
+
                 $objDateNow = new Zend_Date();
                 $updateFields['CandidateApplyDate'] = $objDateNow->toString('yyyy-MM-dd hh:mm:ss');
                 $result = PR_Database::insert("opportunity_candidate_apply", $updateFields);
                 $resultW = PR_Database::insert("watchlist",$updateFieldWatchList);
+                $resultOCM = PR_Database::insert("opportunity_candidate_match",$updateFieldOCM);
             } else {
                 $result = 0;
             }
@@ -800,6 +820,25 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
 
         return $result;
     }
+
+    public function getOpportunityCandidateMatchActivities($CandidateID=NULL,$limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('oca'=>'opportunity_candidate_match'),array('*'));
+            if($CandidateID !=""){
+                $select->where("oca.CandidateProfileID = '".$CandidateID."'");
+            }
+
+        //print_r($select->__toString());die();
+
+        if ( $limit != 0 || $offset != 0)
+            $select->limit($limit, $offset);
+
+        $records = PR_Database::fetchAll($select);
+        return $records;
+    }
+
 	//find children of the node with candidate info.
 	public function getList_CandidateSkillsChildren($skillid,$userID)  
 	{
@@ -821,5 +860,61 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             return null;
         }
 	}   
+       
+    public function update_andidate_skill($CandidateProfileID,$skillIDs){
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cs'=>'candidate_skill'),
+            array('*')
+        );
+
+        $select->where("cs.CandidateProfileID = '$CandidateProfileID'");
+        $records = PR_Database::fetchAll($select);
+        if(count($records)>0){
+            if(empty($skillIDs) || count($skillIDs)==0){
+                $criteria = "CandidateProfileID = '$CandidateProfileID'";
+                $result = $db->delete('candidate_skill', $criteria);
+            } else{
+                $currentSkills = array();
+                if(count($records)>0){
+                    foreach($records as $rec){
+                        $currentSkills[]=$rec['SkillID'];
+                    }
+                }
+                $NotExistInUpdate = array_diff($currentSkills,$skillIDs);
+                if($NotExistInUpdate !=""){
+                    foreach($NotExistInUpdate as $kk=>$CandidateSkillID){
+                        $db->delete('candidate_skill', array(
+                            'CandidateProfileID = ?' => $CandidateProfileID, 'SkillID = ?' => $CandidateSkillID,
+                        ));
+                    }
+                }
+
+                $diffSkillIDs = array_diff($skillIDs,$currentSkills);
+                if($diffSkillIDs !=""){
+                    foreach($diffSkillIDs as $kk=>$diffID){
+                        $insertDiff=array('CandidateProfileID'=>$CandidateProfileID, 'SkillID'=>$diffID);
+                        $result = PR_Database::insert("candidate_skill", $insertDiff);
+                    }
+                }
+
+                $upSkillIDs = array_diff($skillIDs,$diffSkillIDs);
+                if($upSkillIDs !=""){
+                    foreach($upSkillIDs as $kk=>$UpSkillID){
+                        $result = PR_Database::update("candidate_skill", $CandidateProfileID, $UpSkillID);
+                    }
+                }
+
+            }
+        } else {
+            if(empty($SkillID) || count($SkillID)==0){
+                foreach($skillIDs as $id){
+                    $updateFields=array('CandidateProfileID'=>$CandidateProfileID, 'SkillID'=>$id);
+                    $result = PR_Database::insert("candidate_skill", $updateFields);
+                }
+            }
+        }
+
+    }
        
 }
