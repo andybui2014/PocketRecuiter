@@ -277,7 +277,7 @@
 												$words = explode(" ",$item['Description']); 
 												$str= implode(" ",array_splice($words,0,10));
 												?>
-                                                    <span style="margin:0;padding:0;font-weight:bold;cursor:pointer"><a style="color:#333;cursor:pointer" href="<?= URL_BASE ?>candidate/portfoliodetail?id=<?=$item['CandidatePortfolioID']?>" ><label style="cursor:pointer"><?=$item['Title'];?></label></a></span>
+                                                    <span style="margin:0;padding:0;font-weight:bold;cursor:pointer"><label style="cursor:pointer"><a href="<?= URL_BASE ?>candidate/portfoliodetail?id=<?=$item['CandidatePortfolioID']?>" style="color:#333;cursor:pointer"><?=$item['Title'];?></a></label></span>
                                                     <p style="color: #777;margin:0;padding:0;font-size:11px"><?=$str;?></p><span><?=$item['IconURL'];?></span>
                                                 </td>
                                                 <td style="margin:0;padding:0">
