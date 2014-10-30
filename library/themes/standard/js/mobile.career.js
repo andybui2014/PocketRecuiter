@@ -481,8 +481,8 @@ career.prototype = {
         var btn = $(this);
         btn.button('loading');
         $.ajax({
-            url: 'do-search-opportunity',
-            data: $('#form-match-opportunity-sear').serializeArray(),
+            url: 'do-search-career',
+            data: $('#form-careermatch').serializeArray(),
             type: 'POST',
             error : function (xhr,error) {
                 btn.button('reset');
@@ -519,7 +519,7 @@ career.prototype = {
                                 "</div>" +
                                     "<div class='col-md-11' style='margin-left: -25px'>" +
                                             "<div class='col-md-12' style='color: #1a5187'><strong>" + candidateInfo.firstname +" &nbsp;"+ candidateInfo.lastname +" </strong></div>" +
-                                            "<div class='col-md-12'><strong>Expected Salary :"+ candidateInfo.minimumsalary +" &nbsp; "+ candidateInfo.maximumsalary +" &nbsp; </strong></div>" +
+                                            "<div class='col-md-12'><strong>Expected Salary :"+ candidateInfo.minimumsalary +" - "+ candidateInfo.maximumsalary +" &nbsp; </strong></div>" +
                                     "</div>" +
                                 "</div>  " +
                                 "<div class='col-md-12' style='margin-left:-30px'> " +

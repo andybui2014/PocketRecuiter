@@ -181,6 +181,48 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
     }
+
+    private function skillChilds($ParentSkillID, $level) {
+        $source = '';
+        if(!empty($ParentSkillID)){
+            $core = new PR_Api_Core_CandidateClass();
+            $client = PR_Session::getSession(PR_Session::SESSION_USER);
+            $Child = $core->getList_CandidateSkillsChildren($ParentSkillID,$client['UserID']);
+            if(!empty($Child)){
+                $source = '<ul>';
+                foreach($Child as $item){
+                    if ($item['Level'] > 0) {
+                        $checked = $item['Checked'] ? 'select':'deselect';
+                        $st = $item['Checked'] ? 'ico_colapse_sm.png':'ico_expand_sm.png';
+                        $src = URL_THEMES.'images/trees/'.$st;
+                        $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
+                        $sub = $this->skillChilds($item['SkillID'], $level + 1);
+                        if(!empty($sub)){
+                            $source .= "<li>";
+                            $source .= "<img data-status='".$checked."' class='img-item root' src='".$src."'>
+                                   <a href='#'> ".$item['SkillName']."</a><span><img class='img-toggle' src='".$toggle."'/></span>
+                                   ";
+                            $source .=  $sub;
+                            $source .=  "</li>";
+                        }else{
+                            $source .= "<li>";
+                            $source .= "<span><img data-status='".$checked."' class='img-item root' src='".$src."'></span>
+                                   <a href='#'> ".$item['SkillName']."</a>
+                                   ";
+                            $source .=  $sub;
+                            $source .=  "</li>";
+                        }
+
+                    }else{
+                        //$source .= "<li><a href='#'>".$item['SkillName']."</a></li>";
+
+                    }
+                }
+                $source .= "</ul>";
+            }
+        }
+        return $source;
+    }
     public function profileBuilderAction(){
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
@@ -209,15 +251,27 @@ class CandidateController extends Application_Controller_Action
                     $this->render('profile-builder/employment');
                     break;
                 case 'skills':
-
-                    $core=new PR_Api_Core_CandidateClass();
-                    $skills = $core->getList_CandidateSkillsDad($client['UserID']);
-
+                    $tree = '';
                     $core = new PR_Api_Core_CandidateClass();
-                    $this->view->list = $core->getListAll_CandidateSkills($client['UserID']);
-                    $this->view->stepCount = '4/5 Steps';
-                    $this->view->skills = $skills;
+                    $skills = $core->getListAll_CandidateSkills($client['UserID']);
+                    if(!empty($skills)){
+                        foreach($skills as $item){
+                            $select = !empty($tree['CandidateProfileID']) && !empty($tree['UserID']) ? 'select':'deselect';
+                            $src = !empty($tree['CandidateProfileID']) && !empty($tree['UserID']) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
+                            $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
+                            //Tree View
+                            $tree .= "<div class='col-md-4' style='margin:0;padding:0'><div class='tree'><ul>";
+                            $tree .= "<li>
+                                        <img data-status='".$select."' class='img-parent' src='".$src."'/>
+                                        <a href='#'><strong>" . $item['SkillName'] . "</strong></a>
+                                        <span><img class='img-toggle' src='".$toggle."'/></span>";
+                            $tree .= $this->skillChilds($item['SkillID'], $item['Level']+1);
+                            $tree .= "</li></ul></div></div>";
+                        }
+                    }
 
+                    $this->view->stepCount = '4/5 Steps';
+                    $this->view->tree = $tree;
                     $this->render('profile-builder/skills');
                     break;
                 case 'portfolio':
@@ -1332,7 +1386,7 @@ class CandidateController extends Application_Controller_Action
         $CandidateID =$user['CandidateProfileID'];
 
         $PR_Api = new PR_Api_Core_CandidateClass();
-        $activelist = $PR_Api->getWatchList(array('CandidateID'=>$CandidateID));
+        $activelist = $PR_Api->getOpportunityCandidateMatchActivities($CandidateID);
         $this->view->activelist = $activelist;
     }
 	
