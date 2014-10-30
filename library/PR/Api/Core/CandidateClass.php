@@ -800,5 +800,24 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
 
         return $result;
     }
+	//find children of the node with candidate info.
+	public function getList_CandidateSkillsChildren($skillid,$userID)  
+	{
+       $db = PR_Database::getInstance();
+        $sql= $db->select(); 
+        $sql="select distinct sk.*,ck.CandidateProfileID,u.UserID from skill as sk 
+        left join candidate_skill ck on ck.SkillID=sk.SkillID
+        left join user u on u.CandidateProfileID = ck.CandidateProfileID
+        where sk.ParentSkillID='$skillid' and (u.UserID is null or u.UserID='$userID')";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        if(count($records)>0){
+            return  $records;
+        }
+         else {
+            return null;
+        }
+	}   
        
 }
