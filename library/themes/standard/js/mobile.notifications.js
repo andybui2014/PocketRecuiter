@@ -167,11 +167,11 @@ notifications.prototype = {
         });
 
         if(length > 0){
-            $(".ischecktr input:checked").each(function(){
+           /* $(".ischecktr input:checked").each(function(){
                 var list = "";
                     list = $(this).attr('NotiID');
                     listNotiID.push(list);
-            });
+            }); */
 
             $.ajax({
                 url: 'delete-notifications',
@@ -204,7 +204,7 @@ notifications.prototype = {
              url: 'delete-notifications',
              data:{listNotiID:listNotiID,idCurrentActive:idCurrentActive},
              type: 'POST',
-             success: function(data,xhr){
+             success: function(xhr){
              if(xhr.success){
              window.location = 'list';
              }else{

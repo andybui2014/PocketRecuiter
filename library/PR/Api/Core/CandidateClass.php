@@ -825,9 +825,25 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
     {
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from(array('oca'=>'opportunity_candidate_match'),array('*'));
-            if($CandidateID !=""){
-                $select->where("oca.CandidateProfileID = '".$CandidateID."'");
+        $select->from(array('o'=>'opportunity'),array('OpportunityID','postedby','posteddate','title','careerdescription','CompanyID'));
+        $select->join(array('ocm'=>'opportunity_candidate_match'),
+            'ocm.OpportunityID = o.OpportunityID',
+            array('*')
+        );
+
+        $select->join(array('oca'=>'opportunity_candidate_apply'),
+            ('oca.CandidateProfileID = ocm.CandidateProfileID and oca.OpportunityID = ocm.OpportunityID') ,
+            array('CandidateApplyDate')
+        );
+
+        $select->joinLeft(array('c'=>'company'),
+            'c.CompanyID = o.CompanyID',
+            array('Companyname')
+        );
+
+        if($CandidateID !="")
+        {
+                $select->where("ocm.CandidateProfileID = '".$CandidateID."'");
             }
 
         //print_r($select->__toString());die();
