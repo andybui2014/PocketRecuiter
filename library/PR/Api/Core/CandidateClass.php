@@ -474,7 +474,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
        $db = PR_Database::getInstance();
         //$select = $db->select();
         $sql= $db->select(); 
-        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.SkillID,cask.CandidateProfileID,us.UserID
+        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.CandidateProfileID,us.UserID
         FROM skill as sk
         LEFT JOIN candidate_skill as cask ON sk.SkillID=cask.SkillID
         LEFT JOIN user as us  ON cask.CandidateProfileID=us.CandidateProfileID
@@ -877,7 +877,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         }
 	}   
        
-    public function update_candidate_skill($CandidateProfileID,$skillIDs){
+    public function updateCandidateSkill($CandidateProfileID,$skillIDs){
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('cs'=>'candidate_skill'),
@@ -898,16 +898,15 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                     }
                 }
                 $NotExistInUpdate = array_diff($currentSkills,$skillIDs);
-                if($NotExistInUpdate !=""){
+                if($NotExistInUpdate !="" && !empty($NotExistInUpdate)){
                     foreach($NotExistInUpdate as $kk=>$CandidateSkillID){
                         $db->delete('candidate_skill', array(
                             'CandidateProfileID = ?' => $CandidateProfileID, 'SkillID = ?' => $CandidateSkillID,
                         ));
                     }
                 }
-
                 $diffSkillIDs = array_diff($skillIDs,$currentSkills);
-                if($diffSkillIDs !=""){
+                if($diffSkillIDs !="" && !empty($diffSkillIDs)){
                     foreach($diffSkillIDs as $kk=>$diffID){
                         $insertDiff=array('CandidateProfileID'=>$CandidateProfileID, 'SkillID'=>$diffID);
                         $result = PR_Database::insert("candidate_skill", $insertDiff);
@@ -915,12 +914,13 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                 }
 
                 $upSkillIDs = array_diff($skillIDs,$diffSkillIDs);
-                if($upSkillIDs !=""){
+                if($upSkillIDs !="" && !empty($upSkillIDs)){
                     foreach($upSkillIDs as $kk=>$UpSkillID){
-                        $result = PR_Database::update("candidate_skill", $CandidateProfileID, $UpSkillID);
+                        $updateFields=array('CandidateProfileID'=>$CandidateProfileID, 'SkillID'=>$UpSkillID);
+                        $criteria = "CandidateSkillID = '$UpSkillID' AND CandidateProfileID = '$CandidateProfileID'";
+                        $result = PR_Database::update("candidate_skill", $updateFields, $criteria);
                     }
                 }
-
             }
         } else {
             if(empty($SkillID) || count($SkillID)==0){
@@ -930,7 +930,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                 }
             }
         }
-
+        return true;
     }
        
     public function deleteActivities($OpportunityID, $CandidateProfileID)

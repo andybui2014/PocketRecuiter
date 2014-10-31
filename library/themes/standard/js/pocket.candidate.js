@@ -281,12 +281,23 @@ pocketCandidate.prototype = {
                     $this.button('reset');
                 }
             });
+        }else if(dataId=='skills'){
+            var data = [];
+            $('#tree-lst').find('img').each(function(idx,item){
+                if($(this).attr('class') !=='img-toggle' && $(this).attr('data-status')=='select'){
+                    data.push($(this).attr('data-id'));
+                }
+            });
+            $.post('./do-update-skills',{data:data},function(xhr){
+                if(xhr.success){
+                    location.href = './profile-builder?utm_source=' + $this.attr('data-next');
+                }
+            })
         }else{
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     },
-
-    watchListCheckedAll:function(){
+    candidateCheckedAll:function(){
         if($("#ckAll").is(":checked")){
             $(".isck").prop('checked','checked');
 
@@ -294,8 +305,7 @@ pocketCandidate.prototype = {
             $(".isck").removeAttr('checked');
         }
     },
-
-    watchListIsChecked:function(){
+    candidateChecked:function(){
         var lengthAllCheckbox = $('.isck').length;
         if($('.isck').is(":checked")) {
             if ($(".trIsck input:checked").length === lengthAllCheckbox) {
@@ -338,46 +348,40 @@ $(function  () {
                 //window ready loaded
                 $('.img-parent').unbind('click').bind('click',function(){
                     if($(this).attr('data-status')=='select'){
-                        $(this).attr('data-status','deselect');
-                        $(this).attr('src',url+'images/trees/ico_expand.png');
-                        //
-                        $(this).parent().find('.img-item').attr('src',url+'images/trees/ico_expand_sm.png');
+                        $(this)
+                            .attr('src',url+'images/trees/ico_expand.png')
+                            .attr('data-status','deselect');
 
+                        $(this).parent()
+                            .find('.img-item')
+                            .attr('src',url+'images/trees/ico_expand_sm.png')
+                            .attr('data-status',$(this).attr('data-status'));
 
                     }else if($(this).attr('data-status')=='deselect'){
-                        $(this).attr('data-status','select');
-                        $(this).attr('src',url+'images/trees/ico_colapse.png');
-                        $(this).parent().find('.img-item').attr('src',url+'images/trees/ico_colapse_sm.png');
+                        $(this).attr('src',url+'images/trees/ico_colapse.png').attr('data-status','select');
+                        $(this).parent()
+                            .find('.img-item')
+                            .attr('src',url+'images/trees/ico_colapse_sm.png')
+                            .attr('data-status',$(this).attr('data-status'));
                     }
                 })
 
                 $('.img-item').unbind('click').bind('click',function(){
                     var parentLi = $(this).closest('.parent_li');
-                    var isCheckAll = null;
                     if($(this).attr('data-status')=='select'){
-                        //Select
-                        $(this).attr('data-status','deselect');
-                        $(this).attr('src',url+'images/trees/ico_expand_sm.png');
-                        var checkAll = function(){
-                            var arrPush = [];
-                            parentLi.find('.img-item').each(function(){ arrPush.push($(this).attr('data-status'));});
-                            return $.inArray('select',arrPush);
-                        }
-                        isCheckAll =  checkAll();
-                        if(isCheckAll < 0) {
-                            parentLi.find('.img-parent').attr('src',url+'images/trees/ico_expand.png');
-                            parentLi.find('.img-parent').attr('data-status','deselect');
-                        }
+                        $(this)
+                            .attr('src',url+'images/trees/ico_expand_sm.png')
+                            .attr('data-status','deselect');
                     }else{
-                        //Deselect
-                        $(this).attr('data-status','select');
-                        $(this).attr('src',url+'images/trees/ico_colapse_sm.png');
-
-                        var imgParent = parentLi.find('.img-parent');
-                        if(imgParent.attr('data-status')=='deselect'){
-                            imgParent.attr('data-status','select');
-                            imgParent.attr('src',url+'images/trees/ico_colapse.png');
+                        $(this)
+                            .attr('src',url+'images/trees/ico_colapse_sm.png')
+                            .attr('data-status','select');
                         }
+                    if($(this).nextAll('span:first').attr('title')=='Collapse this branch'){
+                        $(this).nextAll('ul')
+                            .find('.img-item')
+                            .attr('data-status',$(this).attr('data-status'))
+                            .attr('src',$(this).attr('src'));
                     }
                 });
             });
