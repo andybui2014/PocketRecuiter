@@ -188,6 +188,7 @@ class CandidateController extends Application_Controller_Action
             $core = new PR_Api_Core_CandidateClass();
             $client = PR_Session::getSession(PR_Session::SESSION_USER);
             $Child = $core->getList_CandidateSkillsChildren($ParentSkillID,$client['UserID']);
+
             if(!empty($Child)){
                 $source = '<ul>';
                 foreach($Child as $item){
@@ -233,12 +234,9 @@ class CandidateController extends Application_Controller_Action
             if(!empty($params['data']) && sizeof($params['data']) > 0){
                 $core = new PR_Api_Core_CandidateClass();
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
-                echo '<pre>';
-                print_r($params['data']);
-                echo '</pre>';
-                //if($core->updateCandidateSkill($client['CandidateProfileID'],$params['data'])){
-                //    $ajaxRes['success'] = 1;
-                //}
+                if($core->updateCandidateSkill($client['CandidateProfileID'],$params['data'])){
+                    $ajaxRes['success'] = 1;
+                }
             }
         }
         $response = $this->getResponse();
@@ -278,14 +276,17 @@ class CandidateController extends Application_Controller_Action
                     $this->render('profile-builder/employment');
                     break;
                 case 'skills':
+
+
                     $tree = '';
                     $core = new PR_Api_Core_CandidateClass();
                     $skills = $core->getListAll_CandidateSkills($client['UserID']);
+
+
                     if(!empty($skills)){
                         foreach($skills as $item){
-                            //var_dump($item['SkillID']);
-                            $select = !empty($tree['CandidateProfileID']) && !empty($tree['UserID']) ? 'select':'deselect';
-                            $src = !empty($tree['CandidateProfileID']) && !empty($tree['UserID']) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
+                            $select = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ? 'select':'deselect';
+                            $src = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
                             $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
                             //Tree View
                             $tree .= "<div class='col-md-4' style='margin:0;padding:0'><div class='tree'><ul>";
