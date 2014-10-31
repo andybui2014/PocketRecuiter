@@ -474,7 +474,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
        $db = PR_Database::getInstance();
         //$select = $db->select();
         $sql= $db->select(); 
-        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.SkillID,cask.CandidateProfileID,us.UserID
+        $sql="SELECT DISTINCT sk.SkillID,sk.SkillName,sk.ParentSkillID,sk.Level,cask.CandidateProfileID,us.UserID
         FROM skill as sk
         LEFT JOIN candidate_skill as cask ON sk.SkillID=cask.SkillID
         LEFT JOIN user as us  ON cask.CandidateProfileID=us.CandidateProfileID
@@ -877,7 +877,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         }
 	}   
        
-    public function update_candidate_skill($CandidateProfileID,$skillIDs){
+    public function updateCandidateSkill($CandidateProfileID,$skillIDs){
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('cs'=>'candidate_skill'),
@@ -930,7 +930,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
                 }
             }
         }
-
+        return true;
     }
        
     public function deleteActivities($OpportunityID, $CandidateProfileID)
