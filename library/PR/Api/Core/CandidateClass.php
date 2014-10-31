@@ -877,7 +877,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         }
 	}   
        
-    public function update_andidate_skill($CandidateProfileID,$skillIDs){
+    public function update_candidate_skill($CandidateProfileID,$skillIDs){
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('cs'=>'candidate_skill'),
@@ -931,6 +931,26 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             }
         }
 
+    }
+       
+    public function deleteActivities($OpportunityID, $CandidateProfileID)
+    {
+        if(empty($OpportunityID)){
+            return true;
+        }
+        $db = PR_Database::getInstance();
+        $db->delete('watchlist', array(
+            'OpportunityID = ?' => $OpportunityID, 'CandidateID = ?' => $CandidateProfileID,
+        ));
+
+        $db->delete('opportunity_candidate_apply', array(
+            'OpportunityID = ?' => $OpportunityID, 'CandidateProfileID = ?' => $CandidateProfileID,
+        ));
+
+        $db->delete('opportunity_candidate_match', array(
+            'OpportunityID = ?' => $OpportunityID, 'CandidateProfileID = ?' => $CandidateProfileID,
+        ));
+        return true;
     }
        
 }
