@@ -58,6 +58,9 @@ pocketCandidate.prototype = {
                     });
             });
         }
+		if(arrTests.length==0){
+			alert("Please check portfolio");
+		}
 
 
     },
