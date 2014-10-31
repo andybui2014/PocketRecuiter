@@ -5,7 +5,6 @@
 <style type="text/css" >
     div.cellFull {
        border-left: 1px #ccc solid;
-       border-collapse: collapse;
        margin-top:-1px;
         height: 100%;
        display:flex;
@@ -37,10 +36,10 @@
     }
 
    table {
-       height: 100%;border-collapse: collapse;
+       height: 100%;
    }
    td.fullHeigh {
-       height: 100%;  border-collapse: collapse; padding: 0px!important; margin:0px!important;
+       height: 100%; padding: 0px!important; margin:0px!important;
    }
 
     .table-striped1 > tbody > tr:nth-child(1n) > td {
@@ -58,55 +57,56 @@
     $aclist = $this->activelist;
     ?>
     <div style="height:40px;background-color: #2a6496; padding-top:10px; color:white"><label class="text-center"><?=count($aclist)?>&nbsp; Active State</label> </div>
-     <table style="margin-bottom:0;"  class="table table-striped1 table-bordered table-hover" cellpadding=0 cellspacing=0 >
-            <thead>
-            <tr>
-                <th style="width:135px">
-                    <span><input type="checkbox" id="Active-Check-All" name=""/> <strong>Career Create</strong></span>
-                </th>
-                <th style="width:135px"><strong>Company Name</strong></th>
-                <th style="width:200px">Career Title</th>
-                <th>Status</th>
-                <th style="width:120px">Apply Date</th>
-                <th style="width:80px">Action<span class="caret"></span></th>
-            </tr>
-            </thead>
-            <tbody >
-            <?php
-            $aclist;
-            if($aclist !=""){
-                foreach($aclist as $kk=>$aclistInfo){
-                    ?>
-                    <tr class="activitiesIsChecked">
-                        <td style="vertical-align: middle"><span><input type="checkbox" class="Active-Is-Check" name=""/> <strong style="color:#666"><?=$aclistInfo['posteddate']?></strong></span> <span class="pull-right" style="padding-right:5px"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
-                        <td style="color: #777; vertical-align: middle " ><?=$aclistInfo['Companyname']?></td>
-                        <td style="color: #777; vertical-align: middle;" ><?=$aclistInfo['title']?></td>
-                        <td style="color: #777;" class="fullHeigh">
-                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGreen" style="padding-left: 5px;"> <span style="padding-left:5px;margin-top:-6px"><strong>Applied</strong></span></div>
-                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientRed" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Screen</span></div>
-                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Schedule</span></div>
-                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Feedback</span></div>
-                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style="padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Offer</span></div>
-                            <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Onboard</span></div>
+    <div class="table-responsive">
+        <table style="margin-bottom:0;"  class="table table-striped1 table-bordered table-hover" cellpadding=0 cellspacing=0 >
+                <thead>
+                <tr>
+                    <th style="width:135px">
+                        <span><input type="checkbox" id="Active-Check-All" name=""/> <strong>Career Create</strong></span>
+                    </th>
+                    <th style="width:135px"><strong>Company Name</strong></th>
+                    <th style="width:200px">Career Title</th>
+                    <th>Status</th>
+                    <th style="width:120px">Apply Date</th>
+                    <th style="width:80px">Action<span class="caret"></span></th>
+                </tr>
+                </thead>
+                <tbody >
+                <?php
+                $aclist;
+                if($aclist !=""){
+                    foreach($aclist as $kk=>$aclistInfo){
+                        ?>
+                        <tr class="activitiesIsChecked">
+                            <td style="vertical-align: middle"><span><input type="checkbox" class="Active-Is-Check" name=""/> <strong style="color:#666"><?=$aclistInfo['posteddate']?></strong></span> <span class="pull-right" style="padding-right:5px"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                            <td style="color: #777; vertical-align: middle " ><?=$aclistInfo['Companyname']?></td>
+                            <td style="color: #777; vertical-align: middle;" ><?=$aclistInfo['title']?></td>
+                            <td style="color: #777;" class="fullHeigh">
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGreen" style="padding-left: 5px;"> <span style="padding-left:5px;margin-top:-6px"><strong>Applied</strong></span></div>
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientRed" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Screen</span></div>
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Schedule</span></div>
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Feedback</span></div>
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style="padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Offer</span></div>
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Onboard</span></div>
 
-                        </td>
-                        <td style="vertical-align: middle"><strong style="color:#666"><?=$aclistInfo['CandidateApplyDate']?></strong></td>
-                        <td style="vertical-align: middle">
-                            <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#f7ce12"></span>&nbsp;
-                            <img  onclick="javascript:objActivities.deleteActivities(<?=$aclistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px; cursor: pointer">
-                        </td>
-                    </tr>
-            <?php    }
-            }
-            ?>
+                            </td>
+                            <td style="vertical-align: middle"><strong style="color:#666"><?=$aclistInfo['CandidateApplyDate']?></strong></td>
+                            <td style="vertical-align: middle">
+                                <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#f7ce12"></span>&nbsp;
+                                <img  onclick="javascript:objActivities.deleteActivities(<?=$aclistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px; cursor: pointer">
+                            </td>
+                        </tr>
+                <?php    }
+                }
+                ?>
 
 
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
         <div class="" style="height: 40px;background-color: #333"></div>
-
+    </div>
 
 </div>
 <script>
