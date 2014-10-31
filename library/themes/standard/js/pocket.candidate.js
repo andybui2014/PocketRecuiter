@@ -297,7 +297,7 @@ pocketCandidate.prototype = {
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     },
-    candidateCheckedAll:function(){
+    watchListCheckedAll:function(){
         if($("#ckAll").is(":checked")){
             $(".isck").prop('checked','checked');
 
@@ -305,7 +305,8 @@ pocketCandidate.prototype = {
             $(".isck").removeAttr('checked');
         }
     },
-    candidateChecked:function(){
+
+    watchListIsChecked:function(){
         var lengthAllCheckbox = $('.isck').length;
         if($('.isck').is(":checked")) {
             if ($(".trIsck input:checked").length === lengthAllCheckbox) {

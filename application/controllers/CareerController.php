@@ -392,6 +392,4 @@ class CareerController extends Application_Controller_Action
         $this->_helper->viewRenderer('careermatch');
     }
 
-
-
 }

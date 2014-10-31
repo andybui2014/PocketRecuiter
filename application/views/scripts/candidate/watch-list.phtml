@@ -40,7 +40,7 @@
                         <td><strong><?=$wlistInfo['CandidateApplyDate']?></strong></td>
                         <td>
                             <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#f7ce12"></span>&nbsp;
-                            <img onclick="javascript:objPK.deleteWatchList(<?=$wlistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px">
+                            <img onclick="javascript:objPK.deleteWatchList(<?=$wlistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px; cursor: pointer">
                         </td>
                     </tr>
 
@@ -57,6 +57,6 @@
 
 </div>
 <script>
-    $('#ckAll').unbind('click').bind('click',objPK.candidateCheckedAll);
-    $('.isck').unbind('click').bind('click',objPK.candidateChecked);
+    $('#ckAll').unbind('click').bind('click',objPK.watchListCheckedAll);
+    $('.isck').unbind('click').bind('click',objPK.watchListIsChecked);
 </script>

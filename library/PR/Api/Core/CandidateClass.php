@@ -953,4 +953,27 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return true;
     }
        
+    public function getCanSkills($candidateProfileID)
+    {
+        $db = PR_Database::getInstance();
+        $result = 0;
+        $select = $db->select();
+        $select->from(array('ck'=>'candidate_skill'),array('*'));
+
+        if($candidateProfileID !=""){
+            $select->where("ck.CandidateProfileID = '".$candidateProfileID."' ");
+
+            // print_r($select->__toString());die();
+            $records = PR_Database::fetchAll($select);
+            if(empty($records) && count($records)==0){
+                $result = false;
+            } else {
+                $result = true;
+            }
+
+        }
+
+        return $result;
+    }
+       
 }
