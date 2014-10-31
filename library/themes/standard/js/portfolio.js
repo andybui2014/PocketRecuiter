@@ -9,7 +9,7 @@ pocketCandidate.prototype = {
     init: function(){
        // $('#cmd-next').unbind('click').bind('click',this.next);
        // $('#cmd-back').unbind('click').bind('click',this.back);
-       // $('#AddPorfolio').unbind('click').bind('click',this.AddPorfolio);
+        $('#portfolioList #port-deletes1').unbind('click').bind('click',this.deleteimage);
     },
     
     portfolioCheckAll: function(){
@@ -90,8 +90,8 @@ pocketCandidate.prototype = {
     deleteimage: function(){
                                
 
-                                    $( "a" ).click(function() {
-                                     var id=$(this).attr('data-id');
+                                   //$( "a" ).click(function() {
+                                     var id=$('#port-deletes1').attr('data-id');
                                     // arrTests.push(id);
                                      if(id.length > 0){
                           
@@ -103,10 +103,10 @@ pocketCandidate.prototype = {
                                        if(xhr.success){                            
                                         location.reload();                                  
                                          }}
-                                });
-                                }
+                             //  });
+                               // }
     
-                            });
+                            });}
 //alert("tetsttt:"+arrTests);
        
 
