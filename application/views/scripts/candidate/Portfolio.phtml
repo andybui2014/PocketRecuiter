@@ -242,7 +242,7 @@
                                             
                                             <th width="7%"> <input style="" type="checkbox" id="port-check-all"/></th>
                                             <th colspan="3" width="">
-                                                <span class="lbl-log"  style="font-size:12px"><a id="port-deletes1" style="cursor:pointer;text-decoration: none;color:#333">Delete</a></span> &nbsp;
+                                                <span class="lbl-log"  style="font-size:12px"><a id="port-deletes2" style="cursor:pointer;text-decoration: none;color:#333">Delete</a></span> &nbsp;
                                                 
                                                 <span class="dropdown lbl-log" style="font-size:12px">
                                                     <span href="#" data-toggle="dropdown" class="dropdown-toggle">
@@ -319,7 +319,7 @@
 <script>
     var prCandidate= new pocketCandidate();
     $('#portfolioList #port-delete').unbind('click').bind('click',prCandidate.deletePortfolio);
-    $('#portfolioList #port-deletes1').unbind('click').bind('click',prCandidate.deletePortfolio);
+    $('#portfolioList #port-deletes2').unbind('click').bind('click',prCandidate.deletePortfolio);
     $('#portfolioList #port-edit').unbind('click').bind('click',prCandidate.editPortfolio);
     $('#portfolioList #port-check-all').unbind('change').bind('change',prCandidate.portfolioCheckAll);
 
