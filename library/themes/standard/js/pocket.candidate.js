@@ -285,7 +285,8 @@ pocketCandidate.prototype = {
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     },
-    candidateCheckedAll:function(){
+
+    watchListCheckedAll:function(){
         if($("#ckAll").is(":checked")){
             $(".isck").prop('checked','checked');
 
@@ -293,7 +294,8 @@ pocketCandidate.prototype = {
             $(".isck").removeAttr('checked');
         }
     },
-    candidateChecked:function(){
+
+    watchListIsChecked:function(){
         var lengthAllCheckbox = $('.isck').length;
         if($('.isck').is(":checked")) {
             if ($(".trIsck input:checked").length === lengthAllCheckbox) {
@@ -592,6 +594,45 @@ $(function  () {
             }
         });
 
+    },
+
+    activitiesCheckedAll:function(){
+        if($("#Active-Check-All").is(":checked")){
+            $(".Active-Is-Check").prop('checked','checked');
+
+        } else {
+            $(".Active-Is-Check").removeAttr('checked');
+        }
+    },
+
+    activitiesChecked:function(){
+        var lengthAllCheckbox = $('.Active-Is-Check').length;
+        if($('.Active-Is-Check').is(":checked")) {
+            if ($(".activitiesIsChecked input:checked").length === lengthAllCheckbox) {
+                $('#Active-Check-All').prop('checked', true);
+            } else {
+                $('#Active-Check-All').prop('checked',false);
+            }
+        } else{
+            if ($(".activitiesIsChecked input:checked").length === lengthAllCheckbox) {
+                $('#Active-Check-All').prop('checked', true);
+            } else {
+                $('#Active-Check-All').prop('checked',false);
+            }
+        }
+    },
+
+    deleteActivities:function(id){
+        $.ajax({
+            url: 'delete-activities',
+            data: {OpportunityID:id},
+            type: 'POST',
+            success: function(data, status, xhr){
+                if(data){
+                    window.location = 'activities';
+                }
+            }
+        });
     }
 }
 

@@ -1,6 +1,6 @@
 <script src="<?=URL_THEMES.'js/pocket.candidate.js';?>"> </script>
 <script>
-    var objPK = new pocketCandidate();
+    var objActivities = new pocketCandidate();
 </script>
 <style type="text/css" >
     div.cellFull {
@@ -62,7 +62,7 @@
             <thead>
             <tr>
                 <th style="width:135px">
-                    <span><input type="checkbox" id="ckAll" name=""/> <strong>Career Create</strong></span>
+                    <span><input type="checkbox" id="Active-Check-All" name=""/> <strong>Career Create</strong></span>
                 </th>
                 <th style="width:135px"><strong>Company Name</strong></th>
                 <th style="width:200px">Career Title</th>
@@ -71,14 +71,14 @@
                 <th style="width:80px">Action<span class="caret"></span></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
             <?php
             $aclist;
             if($aclist !=""){
                 foreach($aclist as $kk=>$aclistInfo){
                     ?>
-                    <tr>
-                        <td style="vertical-align: middle"><span><input type="checkbox" class="" name=""/> <strong style="color:#666"><?=$aclistInfo['posteddate']?></strong></span> <span class="pull-right" style="padding-right:5px"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
+                    <tr class="activitiesIsChecked">
+                        <td style="vertical-align: middle"><span><input type="checkbox" class="Active-Is-Check" name=""/> <strong style="color:#666"><?=$aclistInfo['posteddate']?></strong></span> <span class="pull-right" style="padding-right:5px"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span></td>
                         <td style="color: #777; vertical-align: middle " ><?=$aclistInfo['Companyname']?></td>
                         <td style="color: #777; vertical-align: middle;" ><?=$aclistInfo['title']?></td>
                         <td style="color: #777;" class="fullHeigh">
@@ -93,7 +93,7 @@
                         <td style="vertical-align: middle"><strong style="color:#666"><?=$aclistInfo['CandidateApplyDate']?></strong></td>
                         <td style="vertical-align: middle">
                             <span class="glyphicon glyphicon-star" style="padding-left:15px;color:#f7ce12"></span>&nbsp;
-                            <img  src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px">
+                            <img onclick="javascript:objActivities.deleteActivities(<?=$aclistInfo['OpportunityID']?>)" src="<?=URL_THEMES?>images/ico_del.png?>" style="height:13px; width:13px; margin-top:-5px">
                         </td>
                     </tr>
             <?php    }
@@ -110,6 +110,6 @@
 
 </div>
 <script>
-   // $('#ckAll').unbind('click').bind('click',objPK.candidateCheckedAll);
-   // $('.isck').unbind('click').bind('click',objPK.candidateChecked);
+   $('#Active-Check-All').unbind('click').bind('click',objActivities.activitiesCheckedAll);
+   $('.Active-Is-Check').unbind('click').bind('click',objActivities.activitiesChecked);
 </script>

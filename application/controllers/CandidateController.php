@@ -1432,4 +1432,24 @@ class CandidateController extends Application_Controller_Action
                      
     }
 
+    public function deleteActivitiesAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $OpportunityID = $request->getParam("OpportunityID","");
+
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $CandidateProfileID = $client['CandidateProfileID'];
+
+        $PR_Api = new PR_Api_Core_CandidateClass();
+        $res = $PR_Api->deleteActivities($OpportunityID, $CandidateProfileID);
+
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $res = json_encode($res);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($res), true)
+            ->setBody($res);
+    }
+
 }
