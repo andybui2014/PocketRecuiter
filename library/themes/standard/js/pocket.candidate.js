@@ -289,7 +289,9 @@ pocketCandidate.prototype = {
                 }
             });
             $.post('./do-update-skills',{data:data},function(xhr){
-                console.log(xhr);
+                if(xhr.success){
+                    location.href = './profile-builder?utm_source=' + $this.attr('data-next');
+                }
             })
         }else{
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
