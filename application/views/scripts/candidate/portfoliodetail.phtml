@@ -243,7 +243,7 @@ overflow: hidden;
                 <div class="panel-body" style="padding:0;padding-top:10px">
                    
                         <div class="col-xs-4"  style="padding:0">
-                            <img src="<?=URL_THEMES?>images/arrow1.png" height="15px"><span style="font-weight:bold;font-size:15px;padding-left:10px">Back to Profile</span>
+                            <a href="<?= URL_BASE ?>candidate/portfolio" style="text-decoration:none"><img src="<?=URL_THEMES?>images/arrow1.png" height="15px"></a><span style="font-weight:bold;font-size:15px;padding-left:10px"><a href="<?= URL_BASE ?>candidate/portfolio" style="text-decoration:none;color:#333">Back to Profile</a></span>
                         </div>
                         <div class=".col-xs-8" style="float:right;">
                             <a style="cursor:pointer" href="<?= URL_BASE ?>candidate/editportfolio?id=<?=$Portfolio["CandidatePortfolioID"]?>"><img  src="<?=URL_THEMES.'images/btn_EditPortfolio.png';?>"></a>
@@ -255,8 +255,8 @@ overflow: hidden;
                  <div class="panel-body" style="padding:0;padding-top:20px">
                    
                         <div class="col-xs-4"  style="padding:0">
-                            <img src="<?=URL_THEMES?>images/btn_Back.png" >
-                            <img src="<?=URL_THEMES?>images/btn_Next.png" >
+                           <!-- <img src="<?=URL_THEMES?>images/btn_Back.png" >
+                            <img src="<?=URL_THEMES?>images/btn_Next.png" >-->
                         </div>
                         <div class=".col-xs-8" style="float:right;">
                             <img  src="<?=URL_THEMES.'images/ico_gird1.png';?>">
