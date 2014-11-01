@@ -33,12 +33,12 @@ $helper = $this->layout()->_helper;
                 <i class="lbl-log">Edit</i>
             </p>
             <ul id="nav-left">
-                <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>" class="active"><strong>Profile builder</strong></a></li>
+                <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>"><strong>Profile builder</strong></a></li>
                 <li><a href="<?=$helper->url('profile','candidate');?>">Overview</a></li>
                 <li><a href="<?=$helper->url('contact-info','candidate');?>">Contact Info</a></li>
                 <li><a href="<?=$helper->url('portfolio','candidate');?>">Portfolio</a></li>
                 <li><a href="<?=$helper->url('vieweducation','candidate');?>">Education</a></li>
-                <li><a href="<?=$helper->url('skills?utm_source=index','candidate');?>">Skills</a></li>
+                <li><a class="active" href="<?=$helper->url('skills?utm_source=index','candidate');?>"><strong>Skills</strong></a></li>
                 <li><a href="#">References</a></li>
                 <li><a href="#">Tests</a></li>
                 <li><a href="#">Interest</a></li>
