@@ -1352,10 +1352,15 @@ class CandidateController extends Application_Controller_Action
         $country = $request->getParam("country-name","");
         $city = $request->getParam("city-name","");
 
-        if(isset($params['matchopportunitySear'])){
+        /*if(isset($params['matchopportunitySear'])){
             $opportunitiesSearchList = $request->getParam("matchopportunitySear","");
         } else{
             $opportunitiesSearchList = array();
+        } */
+        $opportunitiesSearchList = $request->getParam("matchopportunitySear","");
+
+        if(empty($opportunitiesSearchList)){
+            $opportunitiesSearchList =array();
         }
 
         $core = new PR_Api_Core_CandidateClass();
