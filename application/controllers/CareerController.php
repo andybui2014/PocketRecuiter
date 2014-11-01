@@ -44,6 +44,8 @@ class CareerController extends Application_Controller_Action
         $resultTestList = $getTestList_PR_Api_Core->getTestList(array('CompanyID'=>$CompanyID));
 
         $listCountry = $Oppotunity_PR_Api->getListCountry();
+
+        $listExperienced = $Oppotunity_PR_Api->getListExperiencedTime();
          /*echo "<pre>";
             print_r($getListOpp);
               echo "</pre>"; die(); */
@@ -55,7 +57,7 @@ class CareerController extends Application_Controller_Action
         $this->view->resultSkillList = $resultSkillList;
         $this->view->resultTestList = $resultTestList;
         $this->view->listCountry = $listCountry;
-
+        $this->view->listExperienced = $listExperienced;
 
     }
     public function getTestAction(){
@@ -94,6 +96,8 @@ class CareerController extends Application_Controller_Action
         $listCompany = $PR_Api_Core_Career->getCompany();
 
         $listCountry = $PR_Api_Core_Career->getListCountry();
+
+        $listExperienced = $PR_Api_Core_Career->getListExperiencedTime();
         /* echo "<pre>";
         print_r($listCountry);
         echo "</pre>";die(); */
@@ -103,6 +107,7 @@ class CareerController extends Application_Controller_Action
         $this->view->companyInfo = $companyInfo;
         $this->view->listCompany = $listCompany;
         $this->view->listCountry = $listCountry;
+        $this->view->listExperienced = $listExperienced;
     }
 
     public function saveCareerNewAction()

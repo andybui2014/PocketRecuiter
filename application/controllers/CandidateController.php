@@ -1280,7 +1280,7 @@ class CandidateController extends Application_Controller_Action
 
         $industryListUnique = array();
         $industryList = array();
-        $experiencedUnique = array();
+       // $experiencedUnique = array();
         $experienced_List = array();
         $countryUnique = array();
         $country_List = array();
@@ -1294,7 +1294,7 @@ class CandidateController extends Application_Controller_Action
         if($result !=""){
             foreach ($result as $kk=>$oppListInfo){
                 $industryListUnique[] = trim(strtolower($oppListInfo['industry']));
-                $experiencedUnique[] = $oppListInfo['experienced'];
+               // $experiencedUnique[] = $oppListInfo['experienced'];
                 $countryUnique[] = $oppListInfo['country'];
                 $cityUnique[] =trim(strtolower($oppListInfo['city']));
 
@@ -1310,7 +1310,7 @@ class CandidateController extends Application_Controller_Action
             }
 
             $industryListUnique = array_unique($industryListUnique);
-            $experienced_List = array_unique($experiencedUnique);
+            //$experienced_List = array_unique($experiencedUnique);
             $country_List = array_unique($countryUnique);
             $cityUnique = array_unique($cityUnique);
 
@@ -1322,9 +1322,13 @@ class CandidateController extends Application_Controller_Action
                 $city_List[] = ucwords($cityInfo);
             }
         }
+
+        $experienced_List = $PR_Api->getListExperiencedTime();
         /*echo "<pre>";
-            print_r($oppList);
-        echo "</pre>"; die();*/
+            print_r($experienced_List);
+        echo "</pre>"; die(); */
+
+
 
         $this->view->skillList = $skillList;
         $this->view->oppList = $oppList;

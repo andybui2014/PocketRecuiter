@@ -290,12 +290,24 @@ $resultTestList =  $this->resultTestList;
                                     </div>
                                     <div class="col-md-12">
                                         <label >Required Experience*</label> <span id="requiredExperienceLable" style="color: red"></span>
+
                                         <select  id="requiredExperience" name="requiredExperience" class="form-control">
-                                            <option value="3 months" <?=($getListOpp['experienced'] == '3 months') ? 'selected="selected"' : '' ?> > 3 months</option>
-                                            <option value="6 months" <?=($getListOpp['experienced'] == '6 months') ? 'selected="selected"' : '' ?> > 6 months</option>
-                                            <option value="1 year" <?=($getListOpp['experienced'] == '1 year') ? 'selected="selected"' : '' ?> > 1 year</option>
-                                            <option value="1 to 2 years" <?=($getListOpp['experienced'] == '1 to 2 years') ? 'selected="selected"' : '' ?> > 1 to 2 years</option>
-                                            <option value="2 to 3 years" <?=($getListOpp['experienced'] == '2 to 3 years') ? 'selected="selected"' : '' ?> > 2 to 3 years</option>
+                                            <?php
+                                            $listExperienced = $this->listExperienced;
+                                            if($listExperienced !=""){
+                                                foreach ($listExperienced as $ek=>$listExperiencedInfo) {
+                                                    $selected = '';
+                                                    if($getListOpp['experienced'] == $listExperiencedInfo['experience_id']) {
+                                                        $selected = "selected = 'selected'";
+                                                    }
+                                                    ?>
+                                                    <option value="<?=$listExperiencedInfo['experience_id']?>" <?=$selected?> > <?=$listExperiencedInfo['experience_descrip']?></option>
+                                                <?php
+                                                }
+                                            }
+
+                                            ?>
+
                                         </select>
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">

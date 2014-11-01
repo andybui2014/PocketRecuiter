@@ -115,8 +115,8 @@
                             <option value="">Experienced</option>
                             <?php
                             if($this->experienced_List !=""){
-                                foreach ($this->experienced_List  as $experiencedInfo){ ?>
-                                    <option value="<?=$experiencedInfo?>" ><?=$experiencedInfo?></option>
+                                foreach ($this->experienced_List  as $ek=>$experiencedInfo){ ?>
+                                    <option value="<?=$experiencedInfo['experience_id']?>" ><?=$experiencedInfo['experience_descrip']?></option>
                             <?php
                              }
                             }

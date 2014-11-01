@@ -359,6 +359,16 @@ class PR_Api_Core_CareerClass
 
         $records = PR_Database::fetchAll($select);
         return $records;
+    }     //
+
+    public function getListExperiencedTime()
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('e'=>'experienced_times'),array('*'));
+
+        $records = PR_Database::fetchAll($select);
+        return $records;
     }
 
 }
