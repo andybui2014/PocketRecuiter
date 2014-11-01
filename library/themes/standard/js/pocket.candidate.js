@@ -297,7 +297,7 @@ pocketCandidate.prototype = {
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     },
-    watchListCheckedAll:function(){
+    candidateCheckedAll:function(){
         if($("#ckAll").is(":checked")){
             $(".isck").prop('checked','checked');
 
@@ -305,8 +305,7 @@ pocketCandidate.prototype = {
             $(".isck").removeAttr('checked');
         }
     },
-
-    watchListIsChecked:function(){
+    candidateChecked:function(){
         var lengthAllCheckbox = $('.isck').length;
         if($('.isck').is(":checked")) {
             if ($(".trIsck input:checked").length === lengthAllCheckbox) {
@@ -322,7 +321,23 @@ pocketCandidate.prototype = {
             }
         }
     },
-    
+    skillViewNext:function(){
+        var data = [];
+        $('#tree-lst').find('img').each(function(idx,item){
+            if($(this).attr('class') !=='img-toggle' && $(this).attr('data-status')=='select'){
+                data.push($(this).attr('data-id'));
+            }
+        });
+        $.post('./do-update-skills',{data:data},function(xhr){
+            if(xhr.success){
+                //location.href = './profile-builder?utm_source=' + $this.attr('data-next');
+                location.reload();
+            }
+        })
+    },
+    skillViewBack:function(){
+        location.reload();
+    },
     editSkills: function(url){
         $(window).load(function(){
 $(function  () {

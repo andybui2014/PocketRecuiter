@@ -188,6 +188,7 @@ class CandidateController extends Application_Controller_Action
             $core = new PR_Api_Core_CandidateClass();
             $client = PR_Session::getSession(PR_Session::SESSION_USER);
             $Child = $core->getList_CandidateSkillsChildren($ParentSkillID,$client['UserID']);
+
             if(!empty($Child)){
                 $source = '<ul>';
                 foreach($Child as $item){
@@ -246,7 +247,44 @@ class CandidateController extends Application_Controller_Action
             ->setBody($ajaxRes);
 
     }
+    public function skillsAction(){
+        $params = $this->getRequest()->getParams();
+        if(!empty($params) && isset($params['utm_source'])){
+            $client = PR_Session::getSession(PR_Session::SESSION_USER);
+            $this->view->step = $params['utm_source'];
+            switch($params['utm_source']){
+                case 'index':
+                    $tree = '';
+                    $core = new PR_Api_Core_CandidateClass();
+                    $skills = $core->getListAll_CandidateSkills($client['UserID']);
 
+
+                    if(!empty($skills)){
+                        foreach($skills as $item){
+                            $select = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ? 'select':'deselect';
+                            $src = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
+                            $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
+                            //Tree View
+                            $tree .= "<div class='col-md-4' style='margin:0;padding:0'><div class='tree'><ul>";
+                            $tree .= "<li>
+                                        <img data-id='".$item['SkillID']."' data-status='".$select."' class='img-parent' src='".$src."'/>
+                                        <a href='#'><strong>" . $item['SkillName'] . "</strong></a>
+                                        <span><img class='img-toggle' src='".$toggle."'/></span>";
+                            $tree .= $this->skillChilds($item['SkillID'], $item['Level']+1);
+                            $tree .= "</li></ul></div></div>";
+                        }
+                    }
+                    $this->view->tree = $tree;
+                    $this->render('skills/index');
+                    break;
+                default:
+            $this->render('skills/index');
+                    break;
+            }
+        }else{
+            $this->render('skills/index');
+        }
+    }
     public function profileBuilderAction(){
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
@@ -280,11 +318,12 @@ class CandidateController extends Application_Controller_Action
                     $tree = '';
                     $core = new PR_Api_Core_CandidateClass();
                     $skills = $core->getListAll_CandidateSkills($client['UserID']);
+
+
                     if(!empty($skills)){
                         foreach($skills as $item){
-                            //var_dump($item['SkillID']);
-                            $select = !empty($tree['CandidateProfileID']) && !empty($tree['UserID']) ? 'select':'deselect';
-                            $src = !empty($tree['CandidateProfileID']) && !empty($tree['UserID']) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
+                            $select = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ? 'select':'deselect';
+                            $src = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
                             $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
                             //Tree View
                             $tree .= "<div class='col-md-4' style='margin:0;padding:0'><div class='tree'><ul>";
