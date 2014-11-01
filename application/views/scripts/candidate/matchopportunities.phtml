@@ -129,8 +129,8 @@
                             <option value="">Country</option>
                             <?php
                             if($this->experienced_List !=""){
-                                foreach ($this->country_List  as $countryInfo){ ?>
-                                    <option value="<?=$countryInfo?>" ><?=$countryInfo?></option>
+                                foreach ($this->country_List  as $kc=>$countryInfo){ ?>
+                                    <option value="<?=$countryInfo['code']?>" ><?=$countryInfo['name']?></option>
                                 <?php
                                 }
                             }
@@ -282,10 +282,38 @@
                                 </div>
                                 <div class="col-md-12" style="margin-left:-30px">
                                     <div style="height:10px!important;"></div>
-                                    <span><img src="<?=URL_THEMES?>images/USA_flag.jpg ?>"> <strong>Unied States</strong></span>
-                                    <span>|&nbsp;<?=$oppListInfo['location']?>|&nbsp;<strong>Distance:</strong> </span>
+                                    <span><img src="<?=URL_THEMES?>images/USA_flag.jpg"> <strong>United States</strong></span>
+                                    <span>|&nbsp;
+                                        <?php
+                                            if($oppListInfo['location'] !=""){ ?>
+                                                <?=$oppListInfo['location']?>|&nbsp;
+                                           <?php }
+                                        ?>
+
+                                        <strong>Distance:</strong> </span>
+                                    <?php
+                                    if($oppListInfo['salaryrangefrom'] !="" && $oppListInfo['salaryrangeto'] !=""){
+                                        ?>
                                     <span>|&nbsp;<strong>Salary:</strong> <?=$oppListInfo['salaryrangefrom']?>&nbsp;to&nbsp;<?=$oppListInfo['salaryrangeto']?></span>
                                 </div>
+                                     <?php
+
+                                    } else if($oppListInfo['salaryrangefrom'] !="" ){ ?>
+                                <span>|&nbsp;<strong>Salary:</strong> <?=$oppListInfo['salaryrangefrom']?>&nbsp;</span>
+                                </div>
+                                <?php
+
+                                    } else if($oppListInfo['salaryrangeto'] !=""){
+                                ?>
+                                <span>|&nbsp;<strong>Salary:</strong>&nbsp;;<?=$oppListInfo['salaryrangeto']?></span>
+                                     </div>
+                                   <?php } else{
+                                       ?>
+                                       </div>
+                               <?php
+                                   }
+                                    ?>
+
                                 <div class="col-md-12 text-right">
                                     <button <?php if($oppListInfo['hadApplied']) echo 'disabled';?> style="margin-top:15px; margin-right: -31px;" class="btn btn-primary btn-for-apply" type="button" OpportunityID ="<?=$oppListInfo['OpportunityID']?>" CandidateProfileID ="<?=$this->CandidateProfileID?>"><strong>Apply</strong></button>
                                 </div>

@@ -488,7 +488,7 @@ career.prototype = {
                 btn.button('reset');
             },
             success: function(data, status, xhr){
-                var httml = "";
+                var html = "";
                 if(data){
                     btn.button('reset');
                     var flagUS =  urlImage+'images/USA_flag.jpg';
@@ -512,14 +512,24 @@ career.prototype = {
                                 i = i+1;
                                 });
 
-                            httml +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
+                            html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
                                 "<div class='col-md-12'>" +
                                 "<div class='col-md-1' style='margin-left: -45px'> " +
                                 "<img src='"+images+"'>" +
                                 "</div>" +
                                     "<div class='col-md-11' style='margin-left: -25px'>" +
                                             "<div class='col-md-12' style='color: #1a5187'><strong>" + candidateInfo.firstname +" &nbsp;"+ candidateInfo.lastname +" </strong></div>" +
-                                            "<div class='col-md-12'><strong>Expected Salary :"+ candidateInfo.minimumsalary +" - "+ candidateInfo.maximumsalary +" &nbsp; </strong></div>" +
+                                            "<div class='col-md-12'><strong>Expected Salary :&nbsp;"
+                                if(candidateInfo.minimumsalary !=null && candidateInfo.maximumsalary !=null){
+                                    html +=  candidateInfo.minimumsalary +"K &nbsp; - "+ candidateInfo.maximumsalary + "K "
+                                } else if (candidateInfo.minimumsalary !=null){
+                                    html +=  candidateInfo.minimumsalary + "K "
+                                } else if(candidateInfo.maximumsalary !=null){
+                                    html +=  candidateInfo.maximumsalary + "K "
+                                }
+
+
+                                html +=" &nbsp; </strong></div>" +
                                     "</div>" +
                                 "</div>  " +
                                 "<div class='col-md-12' style='margin-left:-30px'> " +
@@ -534,8 +544,18 @@ career.prototype = {
                                         "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
                               "<div class='col-md-12' style='margin-left:-30px'>" +
                                 " <div style='height:10px!important;'></div>" +
-                                "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span>" +
-                                "<span>"+candidateInfo.Address1 +"|&nbsp;|&nbsp;<strong>Distance: "+candidateInfo.tralveldistanceinmiles+"</strong> </span>" +
+                                "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span><span>"
+
+                                if(candidateInfo.Address1 !=null){
+                                    html += candidateInfo.Address1 +"|&nbsp;"
+                                }
+
+                                html +="|&nbsp;<strong>Distance: "
+                                if(candidateInfo.tralveldistanceinmiles!=null){
+                                    html += candidateInfo.tralveldistanceinmiles
+                                }
+
+                                html +=  "</strong> </span>" +
                                 "</div> " +
                                 "<div class='col-md-12 text-right'> " +
                                 "<button style='margin-top:15px; margin-right:0px;' class='btn btn-primary' type='button'><strong>Contact</strong></button>" +
@@ -546,7 +566,7 @@ career.prototype = {
                         "</div>"
                     });
 
-                        $(".containerData").html(httml);
+                        $(".containerData").html(html);
 
                     $(".resetSkill").each(function(){
                         var skilID = $(this).attr("skilIDSelected");

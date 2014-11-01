@@ -297,7 +297,7 @@ pocketCandidate.prototype = {
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }
     },
-    candidateCheckedAll:function(){
+    watchListCheckedAll:function(){
         if($("#ckAll").is(":checked")){
             $(".isck").prop('checked','checked');
 
@@ -305,7 +305,8 @@ pocketCandidate.prototype = {
             $(".isck").removeAttr('checked');
         }
     },
-    candidateChecked:function(){
+
+    watchListIsChecked:function(){
         var lengthAllCheckbox = $('.isck').length;
         if($('.isck').is(":checked")) {
             if ($(".trIsck input:checked").length === lengthAllCheckbox) {
@@ -555,10 +556,25 @@ $(function  () {
                             "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
                             "<div class='col-md-12' style='margin-left:-30px'>" +
                             " <div style='height:10px!important;'></div>" +
-                            "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span>" +
-                            "<span>&nbsp;|&nbsp;"+oppList.location +"&nbsp;|&nbsp;<strong>Distance: </strong> </span>" +
-                            "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.salaryrangefrom + "&nbsp; "+ oppList.salaryrangeto +"</span>" +
-                            "</div> "
+                            "<span><img src='"+flagUS+"'> <strong>United States</strong></span>"
+                            if(oppList.location !=""){
+                                html += "<span>&nbsp;|&nbsp;"+oppList.location +"&nbsp;|&nbsp;<strong>Distance: </strong> </span>"
+                            }else{
+                                html += "<span>&nbsp;|&nbsp;<strong>Distance: </strong> </span>"
+                            }
+
+                            if(oppList.salaryrangefrom !=null && oppList.salaryrangeto !=null){
+                                html += "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.salaryrangefrom + "K &nbsp;to&nbsp;"+ oppList.salaryrangeto +"K</span></div>"
+                            } else if(oppList.salaryrangefrom !=null){
+                                html += "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.salaryrangefrom + "K</span></div> "
+                            } else if(oppList.salaryrangeto!=null){
+                                html += "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.oppList.salaryrangeto + "K</span></div> "
+                            } else{
+                                html += "</div> "
+                            }
+
+
+
 
                             if(oppList.hadApplied){
                                 html +=   "<div class='col-md-12 text-right'> " +

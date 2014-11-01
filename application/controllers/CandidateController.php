@@ -1283,7 +1283,7 @@ class CandidateController extends Application_Controller_Action
        // $experiencedUnique = array();
         $experienced_List = array();
         $countryUnique = array();
-        $country_List = array();
+        //$country_List = array();
         $cityUnique = array();
         $city_List = array();
 
@@ -1311,7 +1311,7 @@ class CandidateController extends Application_Controller_Action
 
             $industryListUnique = array_unique($industryListUnique);
             //$experienced_List = array_unique($experiencedUnique);
-            $country_List = array_unique($countryUnique);
+            //$country_List = array_unique($countryUnique);
             $cityUnique = array_unique($cityUnique);
 
             foreach ($industryListUnique as $industryInfo) {
@@ -1323,7 +1323,8 @@ class CandidateController extends Application_Controller_Action
             }
         }
 
-        $experienced_List = $PR_Api->getListExperiencedTime();
+        $experienced_List = $PR_Api->getListExperiencedTime();   //
+        $country_List = $core->getCountryList();
         /*echo "<pre>";
             print_r($experienced_List);
         echo "</pre>"; die(); */

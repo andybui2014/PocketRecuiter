@@ -976,4 +976,14 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $result;
     }
        
+    public function getCountryList()
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('c'=>'country'),array('*'));
+
+        $records = PR_Database::fetchAll($select);
+        return $records;
+    }
+       
 }
