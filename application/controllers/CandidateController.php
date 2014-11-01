@@ -1347,10 +1347,10 @@ class CandidateController extends Application_Controller_Action
         $CandidateProfileID = $client['CandidateProfileID'];
         $request = $this->getRequest();
         $params = $this->getRequest()->getParams();
-        $industry = $request->getParam("technology-id","");
-        $experienced = $request->getParam("experience-name","");
-        $country = $request->getParam("country-name","");
-        $city = $request->getParam("city-name","");
+        $industry = $request->getParam("technology_id","");
+        $experienced = $request->getParam("experience_name","");
+        $country = $request->getParam("country_name","");
+        $city = $request->getParam("city_name","");
 
         /*if(isset($params['matchopportunitySear'])){
             $opportunitiesSearchList = $request->getParam("matchopportunitySear","");
