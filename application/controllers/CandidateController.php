@@ -1369,8 +1369,8 @@ class CandidateController extends Application_Controller_Action
         $PR_Api = new PR_Api_Core_CareerClass();
 
         $oppList = array();
-        $result = array();
-        if($opportunityListID !=""){
+        //$result = array();
+       /* if($opportunityListID !=""){
             foreach($opportunityListID as $key=>$opportunityID){
                 $result = $PR_Api->getOpportunityInfoByID($opportunityID);
 
@@ -1384,9 +1384,9 @@ class CandidateController extends Application_Controller_Action
                    $oppList[] = $result;
                }
             }
-        }
+        } */
 
-
+        $oppList = $opportunityListID;
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
         $oppList = json_encode($oppList);
