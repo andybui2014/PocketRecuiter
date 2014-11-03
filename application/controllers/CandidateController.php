@@ -1370,10 +1370,9 @@ class CandidateController extends Application_Controller_Action
 
         $oppList = array();
         //$result = array();
-       /* if($opportunityListID !=""){
+       if($opportunityListID !=""){
             foreach($opportunityListID as $key=>$opportunityID){
                 $result = $PR_Api->getOpportunityInfoByID($opportunityID);
-
                $hadApplied = $core->opportunityCandidateHadApplied($opportunityID,$CandidateProfileID);
 
                if($hadApplied){
@@ -1384,12 +1383,14 @@ class CandidateController extends Application_Controller_Action
                    $oppList[] = $result;
                }
             }
-        } */
+        }
 
-        $oppList = $opportunityListID;
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
         $oppList = json_encode($oppList);
+        echo "<pre>";
+        print_r($oppList);
+        echo "</pre>"; die();
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($oppList), true)
             ->setBody($oppList);
