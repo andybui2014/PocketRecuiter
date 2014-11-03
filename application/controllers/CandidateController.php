@@ -1063,7 +1063,7 @@ class CandidateController extends Application_Controller_Action
         $this->view->getCandidates=$getCandidates;
         $a=$core->getList_CandidateSkillsDad($UserID);
        // echo("tetst:<pre>");print_r($a);echo("</pre>");
-        $this->render('add-education');
+        $this->render('Add-education');
                      
     }
 	 public function doAddnewEducationAction()
@@ -1102,7 +1102,7 @@ class CandidateController extends Application_Controller_Action
         $core=new PR_Api_Core_CandidateClass();
         $list = $core->getListCandidatePortfolio($UserID);
         $this->view->list = $list;
-        $this->render('portfolio');
+        $this->render('Portfolio');
      }
 	 public function addportfolioAction()
      {
@@ -1381,18 +1381,6 @@ class CandidateController extends Application_Controller_Action
             }
         }
 
-        echo "<pre>";
-        echo "industry=".$industry; echo "<br>";
-        echo "experience_name=".$experienced; echo "<br>";
-        echo "country_name=".$country; echo "<br>";
-        echo "city_name=".$city; echo "<br>";
-        echo "opportunitiesSearchList = "; print_r($opportunitiesSearchList); echo "<br>";
-
-        echo "opportunityListID = "; print_r($opportunityListID); echo "<br>";
-
-        echo "oppList = "; print_r($oppList); echo "<br>";
-        echo "</pre>"; die();
-
 
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
@@ -1400,7 +1388,7 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($oppList), true)
             ->setBody($oppList);
-        $this->_helper->viewRenderer('matchopportunities');
+       $this->_helper->viewRenderer('matchopportunities');
 
     }
 

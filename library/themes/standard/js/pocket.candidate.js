@@ -506,13 +506,13 @@ $(function  () {
     matchOpportunities:function(CandidateProfileID){
        // var CandidateProfileID =$(this).attr('CandidateProfileID');
         var dataform = $('#form-match-opportunity-sear').serializeArray();
-        console.log(dataform);
         $.ajax({
             url: 'do-search-opportunities',
+            dataType: 'json',
             data: dataform,
             type: 'POST',
-            error : function (data, xhr,error) {
-             console.log(data);  console.log(xhr); console.log(error);
+            error : function (status, xhr,error) {
+             console.log(status);  console.log(xhr); console.log(error);
             },
             success: function(data, status, xhr){
                 var html = "";
