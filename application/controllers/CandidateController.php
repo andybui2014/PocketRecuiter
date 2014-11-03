@@ -1352,19 +1352,25 @@ class CandidateController extends Application_Controller_Action
         $country = $request->getParam("country_name","");
         $city = $request->getParam("city_name","");
 
-        /*if(isset($params['matchopportunitySear'])){
+        if(isset($params['matchopportunitySear'])){
             $opportunitiesSearchList = $request->getParam("matchopportunitySear","");
         } else{
             $opportunitiesSearchList = array();
-        } */
-        $opportunitiesSearchList = $request->getParam("matchopportunitySear","");
-
-        if(empty($opportunitiesSearchList)){
-            $opportunitiesSearchList =array();
         }
 
         $core = new PR_Api_Core_CandidateClass();
         $opportunityListID = $core->getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList);
+
+
+        echo "<pre>";
+        echo "industry=".$industry; echo "<br>";
+        echo "experience_name=".$experienced; echo "<br>";
+        echo "country_name=".$country; echo "<br>";
+        echo "city_name=".$city; echo "<br>";
+        echo "opportunitiesSearchList = "; print_r($opportunitiesSearchList); echo "<br>";
+
+        echo "opportunityListID = "; print_r($opportunityListID);
+        echo "</pre>"; die();
 
         $PR_Api = new PR_Api_Core_CareerClass();
 
