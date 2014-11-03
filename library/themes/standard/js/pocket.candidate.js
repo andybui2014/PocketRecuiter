@@ -416,6 +416,7 @@ $(function  () {
         form.find('input[type="text"]').each(function(){
             var item = $(this);
             if($.inArray(item.attr('name'),arrValidate) >= 0){
+              //  console.log(item.val());
                 if(item.val()==''){
                     isError = true;
                     item.parent().addClass('has-error');
@@ -427,7 +428,7 @@ $(function  () {
         if(isError==false){
             $.post('./update-contact-info',{data:form.serializeArray()},function(xhr){
                 console.log(xhr);
-                $(this).button('reset');
+               // $(this).button('reset');
             })
         }
     },
