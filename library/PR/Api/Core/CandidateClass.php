@@ -716,8 +716,8 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
 
         if(!empty($experienced)){
             $experienced = trim($experienced);
-            $select->where("o.experienced LIKE \"%$experienced%\"");
-            //$select->where("p.keywords LIKE ?", "%".$keyword."%");
+            $select->where("o.experienced = '".$experienced."'");
+   
         }
 
         if(!empty($country)){
