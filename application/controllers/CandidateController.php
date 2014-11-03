@@ -1348,6 +1348,7 @@ class CandidateController extends Application_Controller_Action
 
     public function doSearchOpportunitiesAction(){
         $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $CandidateProfileID = $client['CandidateProfileID'];
         $request = $this->getRequest();
@@ -1388,13 +1389,10 @@ class CandidateController extends Application_Controller_Action
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
         $oppList = json_encode($oppList);
-        echo "<pre>";
-        print_r($oppList);
-        echo "</pre>"; die();
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($oppList), true)
             ->setBody($oppList);
-       $this->_helper->viewRenderer('matchopportunities');
+       //$this->_helper->viewRenderer('matchopportunities');
 
     }
 
