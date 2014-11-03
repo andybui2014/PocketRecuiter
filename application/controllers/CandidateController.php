@@ -1063,7 +1063,7 @@ class CandidateController extends Application_Controller_Action
         $this->view->getCandidates=$getCandidates;
         $a=$core->getList_CandidateSkillsDad($UserID);
        // echo("tetst:<pre>");print_r($a);echo("</pre>");
-        $this->render('Add-education');
+        $this->render('add-education');
                      
     }
 	 public function doAddnewEducationAction()
@@ -1102,7 +1102,7 @@ class CandidateController extends Application_Controller_Action
         $core=new PR_Api_Core_CandidateClass();
         $list = $core->getListCandidatePortfolio($UserID);
         $this->view->list = $list;
-        $this->render('Portfolio');
+        $this->render('portfolio');
      }
 	 public function addportfolioAction()
      {
