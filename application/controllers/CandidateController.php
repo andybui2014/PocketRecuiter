@@ -1361,17 +1361,6 @@ class CandidateController extends Application_Controller_Action
         $core = new PR_Api_Core_CandidateClass();
         $opportunityListID = $core->getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList);
 
-
-        echo "<pre>";
-        echo "industry=".$industry; echo "<br>";
-        echo "experience_name=".$experienced; echo "<br>";
-        echo "country_name=".$country; echo "<br>";
-        echo "city_name=".$city; echo "<br>";
-        echo "opportunitiesSearchList = "; print_r($opportunitiesSearchList); echo "<br>";
-
-        echo "opportunityListID = "; print_r($opportunityListID);
-        echo "</pre>"; die();
-
         $PR_Api = new PR_Api_Core_CareerClass();
 
         $oppList = array();
@@ -1392,33 +1381,18 @@ class CandidateController extends Application_Controller_Action
             }
         }
 
-        /*echo "<pre>";
-        print_r($oppList);
-        echo "</pre>";die();*/
+        echo "<pre>";
+        echo "industry=".$industry; echo "<br>";
+        echo "experience_name=".$experienced; echo "<br>";
+        echo "country_name=".$country; echo "<br>";
+        echo "city_name=".$city; echo "<br>";
+        echo "opportunitiesSearchList = "; print_r($opportunitiesSearchList); echo "<br>";
 
-        /*if($oppList !=""){
-            foreach ($oppList as $kk=>$oppListInfo){
-                $industryListUnique[] = trim(strtolower($oppListInfo['industry']));
-                $experiencedUnique[] = $oppListInfo['experienced'];
-                $countryUnique[] = $oppListInfo['country'];
-                $cityUnique[] =trim(strtolower($oppListInfo['city']));
+        echo "opportunityListID = "; print_r($opportunityListID); echo "<br>";
 
-            }
+        echo "oppList = "; print_r($oppList); echo "<br>";
+        echo "</pre>"; die();
 
-            $industryListUnique = array_unique($industryListUnique);
-            $cityUnique = array_unique($cityUnique);
-
-            $experienced_List = array_unique($experiencedUnique);
-            $country_List = array_unique($countryUnique);
-
-            foreach ($industryListUnique as $industryInfo) {
-                $industryList[] = ucwords($industryInfo);
-            }
-
-            foreach ($cityUnique as $cityInfo) {
-                $city_List[] = ucwords($cityInfo);
-            }
-        } */
 
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
