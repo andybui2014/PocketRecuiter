@@ -1,0 +1,294 @@
+
+<style>
+    body {
+    background: none repeat scroll 0 0 #ededed;
+    }
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+
+    /****/
+
+    .breadcrumb {
+        width: 100%;
+        /*centering*/
+        padding:3px;
+        border: 1px solid #ddd;
+        display: inline-block;
+        /*box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+        /*overflow: hidden;*/
+        /*border-radius: 5px;*/
+        /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+        counter-reset: flag;
+    }
+
+    .breadcrumb a {
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        color: white;
+        /*need more margin on the left of links to accomodate the numbers*/
+        padding: 0 30px;
+        background: #666;
+        background: linear-gradient(#666, #333);
+        position: relative;
+    }
+        /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+    .breadcrumb a:first-child {
+        padding-left: 46px;
+        border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+    }
+    .breadcrumb a:first-child:before {
+        left: 14px;
+    }
+    .breadcrumb a:last-child {
+        border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+        padding-right: 20px;
+    }
+
+        /*hover/active styles*/
+    .breadcrumb a.active, .breadcrumb a:hover{
+        background: #333;
+        background: linear-gradient(#333, #000);
+    }
+    .breadcrumb a.active:after, .breadcrumb a:hover:after {
+        background: #333;
+        background: linear-gradient(135deg, #333, #000);
+    }
+
+        /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+    .breadcrumb a:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -18px; /*half of square's length*/
+        /*same dimension as the line-height of .breadcrumb a */
+        width: 36px;
+        height: 36px;
+        
+        transform: scale(0.707) rotate(45deg);
+        /*we need to prevent the arrows from getting buried under the next link*/
+        z-index: 1;
+        /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+        background: #666;
+        background: linear-gradient(135deg, #666, #333);
+        /*stylish arrow design using box shadow*/
+        box-shadow:
+            /*2px -2px 0 2px rgba(0, 0, 0, 0.4),3px -3px 0 2px rgba(255, 255, 255, 0.1);*/
+            2px -2px 0 2px #bbb,
+            3px -3px 0 2px #eee;
+        
+        border-radius: 0 5px 0 50px;
+    }
+        /*we dont need an arrow after the last link*/
+    .breadcrumb a:last-child:after {
+        content: none;
+    }
+        /*we will use the :before element to show numbers*/
+    .breadcrumb a:before {
+       
+        border-radius: 100%;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        margin: 8px 0;
+        position: absolute;
+        top: 0;
+        left: 30px;
+        background: #444;
+        background: linear-gradient(#444, #222);
+        font-weight: bold;
+    }
+
+
+    .flat a, .flat a:after {
+        background: white;
+        color: black;
+        transition: all 0.5s;
+    }
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after{
+        background: #2a6496; color: #fff;
+    }
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+    
+
+    .well{
+        margin-bottom: 0;
+        padding:0;
+    }
+
+    .logo{
+        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+        width: 211px;
+        height: 165px;
+    }
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+         background-color: #DFD8DA;
+         border-color: #DFD8DA #DFD8DA transparent;
+    }
+    .nav-tabs > li > a:hover{
+         background-color: transparent;
+         
+    }
+    .nav-tabs {
+    border-bottom: 2px solid #DFD8DA;
+    }
+    .progress {
+         height: 15px;
+          margin-bottom: 5px;
+    }
+    .progress-bar {
+        font-size:10px;
+    }
+    .btn-primary {
+    background-color: #3071a9;
+    
+}
+  /*  .progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:3px; left:48%; }       */
+        /****/
+
+</style>
+
+<script src="<?=URL_THEMES.'js/function.js';?>"></script>
+
+
+
+
+
+<?php
+    $getUserArray=$this->client;
+    $getCandidates=$this->getCandidates;
+    $SkillName=$this->SkillName;
+    $CandidateEmployment=$this->CandidateEmployment;
+    $Education=$this->Education;
+  // ("test:<pre>");print_r($CandidateEmployment);echo("</pre>");
+?>
+<div class="container" style="padding-top:40px;">
+
+    <div class="row">
+     <div class="col-md-3">
+        <div class="well text-center">
+          <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
+            </span>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
+            <p style="padding: 10px 0">
+                <!--<i class="lbl-log">Edit</i>>-->
+                <img src="<?=URL_THEMES?>images/btn_edit.png">
+            </p>
+            <ul id="nav-left">
+                <li><a href="<?= URL_BASE ?>candidate/profile-builder?utm_source=contact" >Profile builder</a></li>
+                <li><strong><a class="active" href="<?= URL_BASE ?>candidate/profile">Overview</a></strong></li>
+                <li><a href="<?= URL_BASE ?>candidate/contact-info">Contact Info</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/employment">Employment</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($getUserArray["Lastsigned"])) ?></p>
+        </div>
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">Upload Video</span>
+                
+             </div>
+            
+                <div class="panel-body" style="padding:0;margin-top:20px;background:#fff">
+                 <div class="col-md-9" style="padding:0;padding-left:40px">
+                    <ul class="nav nav-tabs" role="tablist" style="font-weight:bold">
+                      <li role="presentation" class="active"><a href="#">Upload Video</a></li>
+                      <li role="presentation"><a href="#" style="color:#ddd;">Embed Video</a></li>
+                      
+                    </ul>   
+                    <div style="">
+                        <h3 class="text-left" style="font-size: 22px;text-shadow: 1px 2px 3px #ddd;">Upload Video from your Computer</h3>
+                      <!--  <div class="form-group" style="padding-top:10px">
+                        <input type="file">
+                        <span style="font-size:12px">Support Formats mpeg, mov, m4v, mp4, dat, flv, aac, avi, mp3, wav</span>
+                        </div>
+                        <div class="progress">
+  <div  class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+    <span class="sr-only">40% Complete (success)</span>
+                        
+  </div>
+  
+</div>
+                    <span style="font-size:12px">Completed</span>
+                    <div style="margin-bottom:40px;padding-top:10px"> <img src="<?=URL_THEMES?>images/upload.png"></div>
+                    </div>       -->
+                 
+                   
+                        <form role="form" action="<?= URL_BASE ?>candidate/uploadfile" method="post" enctype="multipart/form-data" onsubmit="return doUpload();">
+                          <div class="form-group"; style="padding-top:10px">
+                            
+                            <input type="file"  name="myfile" id="myfile" multiple >
+                            <div style="font-size:12px;margin-top:10px">Support Formats mpeg, mov, m4v, mp4, dat, flv, aac, avi, mp3, wav</div> 
+                          </div>    
+                           
+                            <div id="progress-group">
+                                <div class="progress" style="">
+                                  <div class="progress-bar" >
+                                    
+                                  </div>
+                                  <div class="progress-text">
+
+                                  </div>
+                                </div>   
+                                <span style="font-size:12px" class="completed"> </span>
+                              
+                            </div>
+                          <div style="margin-bottom:40px;padding-top:20px">
+                            <button type="submit" class="btn btn-primary"><b style="font-size:16px">Upload</b> </button/>
+                            </div>
+                          
+                        </form>
+                       
+                    
+     
+ 
+ 
+                        
+
+                    </div>
+                              
+                    </div>
+                    
+            <div style="padding-top:40px;">
+            </div>
+        </div>
+        
+    </div>
+    </div>
+</div>
+<script>
+</script>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct = "UA-850242-2";
+urchinTracker();
+</script>

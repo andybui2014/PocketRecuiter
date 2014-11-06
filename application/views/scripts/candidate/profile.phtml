@@ -159,6 +159,9 @@
     ul#nav-left {
     border-bottom: 2px solid #bbb;
     border-top: 2px solid #bbb;}
+    audio, canvas, progress, video {
+        width: 230px;
+    }
         /****/
 
 </style>
@@ -233,10 +236,30 @@
                         </div>
                         <div class="col-xs-10" style="padding:0;padding-bottom:10px;padding-top:5px;">
                             <div class="col-xs-5" style="padding:0;">
+                             <?php
+                            if(!empty($getCandidates["video"]))
+                            {   
+                                
+                                $video=URL_MEDIA_VIDEO.$getCandidates["video"];
+                               // echo $video;
+                                //echo "<video controls autoplay>
+                               // <source src='./library/media/video/$video' type='video/mp4'>
+                               // </video>";
+                              // echo("testt:<pre>");print_r($_SERVER["SERVER_NAME"]);echo("</pre>");
+                            ?>
+                           <iframe id="ytplayer" type="text/html" width="230"  src="http://<?=$_SERVER["SERVER_NAME"].$video?>?autoplay=1&origin=http://example.com" frameborder="0"/></iframe>
+                            <?php
+                            }
+                            
+                            else{
+                            ?>
                                 <img width="230px" src="<?=URL_THEMES.'images/img_Youtube.jpg';?>">
+                              <?php
+                            }
+                            ?>
                             </div>
                             <div class="col-xs-4" style="padding:0;">
-                                <img width="" src="<?=URL_THEMES.'images/img_AddVideo.jpg';?>">
+                                <a href="<?= URL_BASE ?>candidate/upload-video"><img width="" src="<?=URL_THEMES.'images/img_AddVideo.jpg';?>"></a>
                             </div>
                         </div>
 

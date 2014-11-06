@@ -1499,5 +1499,73 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($res), true)
             ->setBody($res);
     }
+	public function uploadVideoAction()
+    {           
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
+                
+        $api_candidate= new PR_Api_Core_CandidateClass();
+        
+        $getUserArray=$api_candidate->getCandidateInfo($UserID);
+        $this->view->client = $getUserArray;  
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+        $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
+       
+        $this->render('upload-video');                  
+                     
+    }
+	 public function uploadfileAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        //echo("testt:");print_r($user);
+        $core=new PR_Api_Core_CandidateClass();  
+        $CandidateProfileID=$user["CandidateProfileID"];
+        $return = array("status" => "", "message" => "");    
+        $allowedExts = array("jpg", "jpeg", "gif", "png", "mp3", "mp4", "wma","flv","mpeg","mov","m4v","dat","aac","avi");
+        $extension = pathinfo($_FILES['myfile']['name'],PATHINFO_EXTENSION);
+        $mimes = array(
+        'image/jpeg', 'image/png', 'image/gif', 'image/pjpeg', 'video/mp4', 'audio/mp3', 'audio/wma'
+        );
+        if(in_array($extension, $allowedExts)){  
+        sleep(2);
+        
+        if (isset($_FILES['myfile'])) {
+            $fileName = $_FILES['myfile']['name'];
+            $fileType = $_FILES['myfile']['type'];
+            $fileError = $_FILES['myfile']['error'];
+            $fileStatus = array(
+                'status' => 0,
+                'message' => '' 
+            );
+            if ($fileError== 1) { 
+                $fileStatus['message'] = 'Size over the allowed limit';
+                $fileStatus['status'] = 0;
+            //} //elseif (!in_array($fileType, $mimes)) { 
+              //  $fileStatus['message'] = 'format error';
+              //  $fileStatus['status'] = 0; 
+            } else { 
+                move_uploaded_file($_FILES['myfile']['tmp_name'], DIR_MEDIA_VIDEO.$fileName);
+                $fileStatus['status'] = 1;
+                $fileStatus['message'] = "Completed";
+                $core->updateCandidateProfileVideo($CandidateProfileID,$fileName);
+            }   
+                $return["status"]= $fileStatus['status'];
+                $return["message"]= $fileStatus['message'];
+               // header("Location: profile");  
+             echo json_encode($return);
+            
+  
+
+        
+            }    } else echo "format error";  
+             
+       
+
+     }
 
 }

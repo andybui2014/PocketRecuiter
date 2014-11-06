@@ -13,6 +13,7 @@ class Application_Controller_Action extends Zend_Controller_Action {
         define('URL_BASE', $uri->getBaseUrl() . "/");
         define('URL_MEDIA_COMPANY_PROFILE',  URL_BASE.'library/media/companyprofiles/');
         define('URL_MEDIA_PORTFOLIO',  URL_BASE.'library/media/portfolio/');
+        define('URL_MEDIA_VIDEO',  URL_BASE.'library/media/video/');
          
         define('URL_THEMES', URL_BASE. "library/themes/standard/");
         //Mobile
@@ -30,6 +31,7 @@ class Application_Controller_Action extends Zend_Controller_Action {
         define('DIR_BASE',  realpath(APPLICATION_PATH . '/../'));
         define('DIR_MEDIA_COMPANY_PROFILE',  DIR_BASE.'/library/media/companyprofiles/');
         define('DIR_MEDIA_PORTFOLIO',  DIR_BASE.'/library/media/portfolio/');
+        define('DIR_MEDIA_VIDEO',  DIR_BASE.'/library/media/video/');
         
         define('DIR_MEDIA',  DIR_BASE.'/library/media/');
         define('DIR_MEDIA_TEMP',  DIR_MEDIA.'temp/');
