@@ -353,7 +353,7 @@ class CareerController extends Application_Controller_Action
 
     public function doSearchCareerAction(){
         $this->_helper->layout->disableLayout();
-        //$this->_helper->viewRenderer->setNoRender();
+        $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
         $skilIDSear = $request->getParam("skilIDSear","");
         $keyword = $request->getParam("keyword","");
@@ -394,7 +394,6 @@ class CareerController extends Application_Controller_Action
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($candidateInfo), true)
             ->setBody($candidateInfo);
-        $this->_helper->viewRenderer('careermatch');
     }
 
 }
