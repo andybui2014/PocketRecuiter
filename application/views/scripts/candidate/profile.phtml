@@ -247,13 +247,17 @@
                                // </video>";
                               // echo("testt:<pre>");print_r($_SERVER["SERVER_NAME"]);echo("</pre>");
                             ?>
-                           <iframe id="ytplayer" type="text/html" width="230"  src="http://<?=$_SERVER["SERVER_NAME"].$video?>?autoplay=1&origin=http://example.com" frameborder="0"/></iframe>
+                             <video width="230px" controls autoplay >
+                                <source src="<?=$video?>">
+                             </video>
+                           <!--<iframe style="padding:0" id="ytplayer" type="text/html" width="230"  src="http://<?=$_SERVER["SERVER_NAME"].$video?>?autoplay=1&origin=http://example.com" frameborder="0"/></iframe>-->
                             <?php
                             }
                             
                             else{
                             ?>
                                 <img width="230px" src="<?=URL_THEMES.'images/img_Youtube.jpg';?>">
+                               
                               <?php
                             }
                             ?>

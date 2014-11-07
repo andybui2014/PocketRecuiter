@@ -137,15 +137,15 @@
         height: 165px;
     }
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-         background-color: #DFD8DA;
-         border-color: #DFD8DA #DFD8DA transparent;
+         background-color: #E2E2E4;
+         border-color:  #DFD8DA transparent;
     }
     .nav-tabs > li > a:hover{
          background-color: transparent;
          
     }
     .nav-tabs {
-    border-bottom: 2px solid #DFD8DA;
+    border-bottom: 2px solid #E2E2E4;
     }
     .progress {
          height: 15px;
@@ -204,7 +204,7 @@
                 <li><a href="<?= URL_BASE ?>candidate/employment">Employment</a></li>
                 <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
                 <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
-                <li><a href="#">Skills</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/skills?utm_source=index">Skills</a></li>
                 <li><a href="#">References</a></li>
                 <li><a href="#">Tests</a></li>
                 <li><a href="#">Interest</a></li>
@@ -218,7 +218,8 @@
                 
              </div>
             
-                <div class="panel-body" style="padding:0;margin-top:20px;background:#fff">
+               <!-- <div class="panel-body" style="padding:0;margin-top:20px;background:#fff">-->
+                <div class="panel panel-body" style="padding:0;margin-top:20px;">
                  <div class="col-md-9" style="padding:0;padding-left:40px">
                     <ul class="nav nav-tabs" role="tablist" style="font-weight:bold">
                       <li role="presentation" class="active"><a href="#">Upload Video</a></li>
@@ -245,7 +246,6 @@
                    
                         <form role="form" action="<?= URL_BASE ?>candidate/uploadfile" method="post" enctype="multipart/form-data" onsubmit="return doUpload();">
                           <div class="form-group"; style="padding-top:10px">
-                            
                             <input type="file"  name="myfile" id="myfile" multiple >
                             <div style="font-size:12px;margin-top:10px">Support Formats mpeg, mov, m4v, mp4, dat, flv, aac, avi, mp3, wav</div> 
                           </div>    
