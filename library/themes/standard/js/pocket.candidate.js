@@ -406,7 +406,7 @@ $(function  () {
     }, 
 	
     editContactInfo:function(){
-      //  $(this).button('loading');
+        $(this).button('loading');
         var arrValidate = [
             'firstname','lastname','email','country',
             'addResLine','addResLine2','city','stateProvince','zipcode'
@@ -416,7 +416,6 @@ $(function  () {
         form.find('input[type="text"]').each(function(){
             var item = $(this);
             if($.inArray(item.attr('name'),arrValidate) >= 0){
-              //  console.log(item.val());
                 if(item.val()==''){
                     isError = true;
                     item.parent().addClass('has-error');
@@ -508,103 +507,19 @@ $(function  () {
        // var CandidateProfileID =$(this).attr('CandidateProfileID');
         var dataform = $('#form-match-opportunity-sear').serializeArray();
         $.ajax({
-            url: 'do-search-opportunities',
-            dataType: 'json',
+            url: 'match-opportunity',
+            dataType: 'html',
             data: dataform,
+            cache: false,
             type: 'POST',
-            error : function (status, xhr,error) {
+            context: this,
+            error : function (status,xhr,error) {
              console.log(status);  console.log(xhr); console.log(error);
             },
-            success: function(data, status, xhr){
-                var html = "";
+            success: function(data,status,xhr){
                 if(data){
-
-                    var flagUS =  urlImage+'images/USA_flag.jpg';
-                    // alert(flagUS);
-                    $.each(data,function(k,oppList){
-                         var disabedYesNo = (oppList.hadApplied)?"disabled":'';
-                        //if($.isEmptyObject($oppList.image)){
-                            var images = urlImage+'images/avatar_nonex44.jpg';
-                       // } else {
-                       //     var images = urlImage+'images/'+$oppList.image;
-                       // }
-
-                        var skillname ="";
-                        var i =1;
-                        $.each(oppList.Skills,function(kk,skname){
-                            if(i==1){
-                                skillname = skname.SkillName;
-                            } else{
-                                skillname = skillname+ ', ' + skname.SkillName;
-                            }
-                            i = i+1;
-                        });
-
-                        html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
-                            "<div class='col-md-12'>" +
-                            "<div class='col-md-1' style='margin-left: -45px'> " +
-                            "<img src='"+images+"'>" +
-                            "</div>" +
-                            "<div class='col-md-11' style='margin-left: -25px'>" +
-                            "<div class='col-md-12' style='color: #1a5187'><strong>" + oppList.title +"</strong></div>" +
-                            "<div class='col-md-12'><strong>"+ oppList.Companyname +" </strong></div>" +
-                            "</div>" +
-                            "</div>  " +
-                            "<div class='col-md-12' style='margin-left:-30px'> " +
-                            "<div style='height:10px!important;'></div>  " +  oppList.careerdescription +
-                            "</div>" +
-                            "<div class='col-md-12' style='margin-left:-30px'> " +
-                            "<span style='color: #1a5187' class='glyphicon glyphicon-play'></span>" +
-                            "<span style='color: #1a5187'>Read more</span>" +
-                            "</div>" +
-                            "<div class='col-md-12' style='margin-left:-30px'>" +
-                            "<div style='height:10px!important;'></div>" +
-                            "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
-                            "<div class='col-md-12' style='margin-left:-30px'>" +
-                            " <div style='height:10px!important;'></div>" +
-                            "<span><img src='"+flagUS+"'> <strong>United States</strong></span>"
-                            if(oppList.location !=""){
-                                html += "<span>&nbsp;|&nbsp;"+oppList.location +"&nbsp;|&nbsp;<strong>Distance: </strong> </span>"
-                            }else{
-                                html += "<span>&nbsp;|&nbsp;<strong>Distance: </strong> </span>"
-                            }
-
-                            if(oppList.salaryrangefrom !=null && oppList.salaryrangeto !=null){
-                                html += "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.salaryrangefrom + "K &nbsp;to&nbsp;"+ oppList.salaryrangeto +"K</span></div>"
-                            } else if(oppList.salaryrangefrom !=null){
-                                html += "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.salaryrangefrom + "K</span></div> "
-                            } else if(oppList.salaryrangeto!=null){
-                                html += "<span>|&nbsp;<strong>Salary:&nbsp;</strong>" + oppList.oppList.salaryrangeto + "K</span></div> "
-                            } else{
-                                html += "</div> "
-                            }
-
-
-
-
-                            if(oppList.hadApplied){
-                                html +=   "<div class='col-md-12 text-right'> " +
-                                    "<button style='margin-top:15px; margin-right:0px;'" +
-                                    " class='btn btn-primary disabled btn-for-apply' type='button'  OpportunityID='"+oppList.OpportunityID+"'  CandidateProfileID='"+CandidateProfileID+"' ><strong>Apply</strong></button>" +
-                                    "</div>" +
-                                    "<div class='col-md-12' style='margin-left:-30px'>" +
-                                    "<div style='height:10px!important;'></div>" +
-                                    "</div>" +
-                                    "</div>"
-                            } else {
-                                html +=   "<div class='col-md-12 text-right'> " +
-                                    "<button style='margin-top:15px; margin-right:0px;' class='btn btn-primary btn-for-apply' OpportunityID='"+oppList.OpportunityID+"'  CandidateProfileID='"+CandidateProfileID+"'  type='button' ><strong>Apply</strong></button>" +
-                                    "</div>" +
-                                    "<div class='col-md-12' style='margin-left:-30px'>" +
-                                    "<div style='height:10px!important;'></div>" +
-                                    "</div>" +
-                                "</div>"
-                            }
-
-                    });
-
                     $(".containerData").html("");
-                    $(".containerData").html(html);
+                    $(".containerData").html(data);
                     $(".btn-for-apply").unbind("click").bind("click",pocketCandidate.prototype.candidateApply)
                 }
 

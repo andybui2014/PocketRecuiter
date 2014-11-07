@@ -1315,8 +1315,6 @@ class CandidateController extends Application_Controller_Action
             }
 
             $industryListUnique = array_unique($industryListUnique);
-            //$experienced_List = array_unique($experiencedUnique);
-            //$country_List = array_unique($countryUnique);
             $cityUnique = array_unique($cityUnique);
 
             foreach ($industryListUnique as $industryInfo) {
@@ -1328,7 +1326,7 @@ class CandidateController extends Application_Controller_Action
             }
         }
 
-        $experienced_List = $PR_Api->getListExperiencedTime();   //
+        $experienced_List = $PR_Api->getListExperiencedTime();
         $country_List = $core->getCountryList();
         /*echo "<pre>";
             print_r($experienced_List);
@@ -1337,13 +1335,58 @@ class CandidateController extends Application_Controller_Action
 
 
         $this->view->skillList = $skillList;
-        $this->view->oppList = $oppList;
+        //$this->view->oppList = $oppList;
         $this->view->industryList = $industryList;
         $this->view->experienced_List = $experienced_List;
         $this->view->country_List = $country_List;
         $this->view->city_List = $city_List;
         $this->view->CandidateProfileID = $client['CandidateProfileID'];
         // $this->render('profile');
+    }
+
+    public function matchOpportunityAction(){
+        $this->_helper->layout->disableLayout();
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $CandidateProfileID = $client['CandidateProfileID'];
+        $request = $this->getRequest();
+        $params = $this->getRequest()->getParams();
+
+        $industry = $request->getParam("technology_id","");
+        $experienced = $request->getParam("experience_name","");
+        $country = $request->getParam("country_name","");
+        $city = $request->getParam("city_name","");
+
+        if(isset($params['matchopportunitySear'])){
+            $opportunitiesSearchList = $request->getParam("matchopportunitySear","");
+        } else{
+            $opportunitiesSearchList = array();
+        }
+
+        $core = new PR_Api_Core_CandidateClass();
+        $opportunityListID = $core->getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList);
+
+        $PR_Api = new PR_Api_Core_CareerClass();
+
+        $oppList = array();
+        //$result = array();
+       if($opportunityListID !=""){
+            foreach($opportunityListID as $key=>$opportunityID){
+                $result = $PR_Api->getOpportunityInfoByID($opportunityID);
+               $hadApplied = $core->opportunityCandidateHadApplied($opportunityID,$CandidateProfileID);
+
+               if($hadApplied){
+                    $result['hadApplied'] =true ;
+                    $oppList[] = $result;
+               } else {
+                   $result['hadApplied'] =false ;
+                   $oppList[] = $result;
+               }
+            }
+        }
+
+        $this->view->oppList = $oppList;
+        $this->view->CandidateProfileID = $client['CandidateProfileID'];
+
     }
 
     public function doSearchOpportunitiesAction(){

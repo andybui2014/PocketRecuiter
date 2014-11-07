@@ -342,13 +342,8 @@ class CareerController extends Application_Controller_Action
                 $candidateInfo[] = $info;
             }
         }
-        /*echo "<pre>";
-        print_r($skillList);
-        echo "</pre>"; die(); */
         $this->view->skillList = $skillList;
         $this->view->result = $candidateInfo;
-
-        ////
     }
 
     public function doSearchCareerAction(){
@@ -394,6 +389,106 @@ class CareerController extends Application_Controller_Action
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($candidateInfo), true)
             ->setBody($candidateInfo);
+    }
+
+    public function careermatchpremiumAction()
+    {
+        $request = $this->getRequest();
+        $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+        $CompanyID = $sestionClient['CompanyID'];
+
+        $request = $this->getRequest();
+        $skilIDSear = $request->getParam("skilIDSear","");
+        $keyword = $request->getParam("keyword","");
+
+        if(empty($skilIDSear)){
+            $skilIDSear =array();
+        }
+
+        if(empty($keyword)) {
+            $keyword = "";
+        }
+
+        $list_PR_Api = new PR_Api_Core_CareerClass();
+        $skillList = $list_PR_Api->getListSkill();
+
+        $list_PR_Api = new PR_Api_Core_CareerClass();
+        $candidateList = array();
+        $candidateList = $list_PR_Api->getCandidateProfileIDsForCareerMatch($keyword,$skilIDSear);
+        $result = $list_PR_Api->getCandidateProfiles_byProfileIDs($candidateList);
+        $candidateInfo = array();
+        if($result){
+            $PR_Api_CandidateClass = new PR_Api_Core_CandidateClass();
+            foreach ($result as $k=>$info){
+                $skID =  $PR_Api_CandidateClass->getList_CandidateSkillsOnly($info['UserID']);
+                $sk = array();
+                if($skID){
+                    foreach ($skID as $key=>$skInfo){
+                        $sk[] = $skInfo['SkillName'];
+                    }
+                } else{
+                    $sk[] = "";
+                }
+                $info['skillName'] = $sk;
+                $candidateInfo[] = $info;
+            }
+        }
+
+        $stringKeyword = $list_PR_Api->getListKeyWordToString();
+        $keyword = $stringKeyword;
+        $listKeyword = explode(",", $keyword);
+        /*echo "<pre>";
+        print_r($listKeyword);
+        echo "</pre>"; die(); */
+        $this->view->skillList = $skillList;
+        $this->view->result = $candidateInfo;
+        $this->view->stringKeyword = $stringKeyword;
+        $this->view->listKeyword = $listKeyword;
+
+    }
+
+    public function careermatchPremiumAccountAction(){
+        $this->_helper->layout->disableLayout();
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $CandidateProfileID = $client['CandidateProfileID'];
+        $request = $this->getRequest();
+        $params = $this->getRequest()->getParams();
+
+        if(isset($params['skill_match_premium'])){
+            $skill_match_premium = $request->getParam("skill_match_premium","");
+        } else{
+            $skill_match_premium = array();
+        }
+
+        if(isset($params['keyword_match_premium'])){
+            $keyword_match_premium = $request->getParam("keyword_match_premium","");
+        } else{
+            $keyword_match_premium = array();
+        }
+
+        $PR_Api = new PR_Api_Core_CareerClass();
+        $listCandidateID = $PR_Api->getCandidateProfileIDsForCareerMatchPremiumAccount($keyword_match_premium,$skill_match_premium);
+        $result = $PR_Api->getCandidateProfiles_byProfileIDs($listCandidateID);
+        $candidateInfo = array();
+        if($result){
+            $PR_Api_CandidateClass = new PR_Api_Core_CandidateClass();
+            foreach ($result as $k=>$info){
+                $skID =  $PR_Api_CandidateClass->getList_CandidateSkillsOnly($info['UserID']);
+                $sk = array();
+                if($skID){
+                    foreach ($skID as $key=>$skInfo){
+                        $sk[] = $skInfo['SkillName'];
+                    }
+                } else{
+                    $sk[] = "";
+                }
+                $info['skillName'] = $sk;
+                $candidateInfo[] = $info;
+            }
+        }
+
+        $this->view->CandidateProfileID = $CandidateProfileID;
+        $this->view->result = $candidateInfo;
     }
 
 }

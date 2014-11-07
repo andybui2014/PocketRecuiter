@@ -338,7 +338,70 @@ class PR_Api_Core_CareerClass
         }
 
         $select->distinct();
+        //print_r($select->__toString());die();
         $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $rec){
+                $list[] = $rec['CandidateProfileID'];
+            }
+            return $list;
+        }
+    }
+
+    public function getCandidateProfileIDsForCareerMatchPremiumAccount($keyword,$skillIDs)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('p'=>'candidate_profile'),array('CandidateProfileID'));
+        $select->join(array('sk'=>'candidate_skill'),
+            'sk.CandidateProfileID = p.CandidateProfileID',
+            array()
+        );
+
+        if(count($skillIDs)>0){
+            $select->where("sk.SkillID IN (".implode(',',$skillIDs).")");
+        }
+
+        $where = "";
+        $j =1;
+
+        if(count($keyword)>0){
+            foreach ($keyword as $kw=>$keyword1){
+                $i =1;
+                $whOR ="";
+               foreach($keyword1 as $keywordInfo){
+                   $kd = trim($keywordInfo);
+                   $whOR1 = "p.keywords LIKE \"%$kd%\"";
+                   if($i==1){
+                       $whOR = $whOR1;
+                   } else{
+                       $whOR = $whOR ." OR ". $whOR1;
+                   }
+                   $i++;
+               }
+
+                if($j==1){
+                    $where =$whOR;
+                } else {
+                    $where = "(" .$where.")" ." AND "."(". $whOR.")";
+                }
+
+                $j++;
+
+            }
+                $select->where($where);
+                //$select->where("p.keywords LIKE ?", "%".$keyword."%");
+            }
+
+
+        $select->distinct();
+
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+
 
         if(empty($records) && count($records)==0){
             return array();
@@ -369,6 +432,64 @@ class PR_Api_Core_CareerClass
 
         $records = PR_Database::fetchAll($select);
         return $records;
+    }
+
+    public function getListKeyWordToString()
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('c'=>'candidate_profile'),array('keywords'));
+
+        $records = PR_Database::fetchAll($select);
+        $stringkeyword ="";
+        $i =1;
+        if(count($records) >0 && !empty($records)){
+            foreach ($records as $kk=>$keywordInfo){
+                if(!empty($keywordInfo['keywords'])){
+                    $toStringkeyword = htmlentities($keywordInfo['keywords']);
+                    if($i==1){
+                        $stringkeyword = $toStringkeyword;
+                    } else{
+                        $stringkeyword = $stringkeyword.",".$toStringkeyword;
+                    }
+                    $i++;
+
+                }
+            }
+        }
+
+        $listStringWords ="";
+        $j=1;
+        if($stringkeyword !=""){
+            $stringkeywordToArr = array();
+            $stringkeywordToArr1 = explode(",",$stringkeyword);
+            foreach ($stringkeywordToArr1 as $stringkeywordToArr2){
+                $stringkeywordToArr[] = trim($stringkeywordToArr2);
+            }
+
+            $stringkeywordToArr = array_unique($stringkeywordToArr);
+
+            foreach($stringkeywordToArr as $info){
+
+                $info = htmlentities($info);
+                $info = trim($info);
+                $characterToCut = "'\\\'"; $characterToCut = htmlentities($characterToCut);
+
+                $info = rtrim($info, $characterToCut);
+
+                $chrLeft = "\\\'";  $chrLeft = htmlentities($chrLeft);
+
+                $info = ltrim($info,$chrLeft);
+                if($j==1){
+                    $listStringWords = $info;
+                } else{
+                    $listStringWords = $listStringWords.",".$info;
+                }
+                $j++;
+
+            }
+        }
+        return $listStringWords;
     }
 
 }

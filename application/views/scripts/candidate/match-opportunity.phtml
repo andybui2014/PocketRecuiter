@@ -1,0 +1,94 @@
+<div class="col-md-12">
+    <?php
+    $result = $this->oppList;
+    if($result!="") {
+    $count =0;
+    foreach($result as $k=>$oppListInfo) {
+    $count ++;
+    $image= 'avatar_nonex44.jpg';
+    ?>
+    <div class="col-md-12 borderbottom_Gray" >
+        <?php
+        if($count >1){
+            echo '<div class="col-md-12" style="height:10px!important"></div>';
+        }
+        ?>
+        <div class="col-md-12" >
+            <div class="col-md-1" style="margin-left: -45px"> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
+            <div class="col-md-11" style="margin-left: -25px">
+                <div class="col-md-12" style="color: #1a5187"><strong><?=$oppListInfo['title']?></strong></div>
+                <div class="col-md-12"><strong><?=$oppListInfo['Companyname']?></strong></div>
+            </div>
+        </div>
+
+        <div class="col-md-12" style="margin-left:-30px">
+            <div style="height:10px!important;"></div>
+            <?=$oppListInfo['careerdescription']?>
+        </div>
+        <div class="col-md-12" style="margin-left:-30px">
+            <span style="color: #1a5187" class="glyphicon glyphicon-play"></span><span style="color: #1a5187">Read more</span>
+        </div>
+        <div class="col-md-12" style="margin-left:-30px">
+            <div style="height:10px!important;"></div>
+                                    <span><strong>Skills:</strong>
+                                        <?php
+                                        $skillname ="";
+                                        $i =1;
+                                        foreach ($oppListInfo['Skills']as $kk => $skname){
+                                            if($i==1){
+                                                $skillname = $skname['SkillName'];
+                                            } else{
+                                                $skillname = $skillname. ', ' . $skname['SkillName'];
+                                            }
+                                            $i++;
+                                        }
+                                        ?>
+                                        <?=$skillname?>.</span>
+        </div>
+        <div class="col-md-12" style="margin-left:-30px">
+            <div style="height:10px!important;"></div>
+            <span><img src="<?=URL_THEMES?>images/USA_flag.jpg"> <strong>United States</strong></span>
+                                    <span>|&nbsp;
+                                        <?php
+                                        if($oppListInfo['location'] !=""){ ?>
+                                            <?=$oppListInfo['location']?>|&nbsp;
+                                        <?php }
+                                        ?>
+
+                                        <strong>Distance:</strong> </span>
+            <?php
+            if($oppListInfo['salaryrangefrom'] !="" && $oppListInfo['salaryrangeto'] !=""){
+            ?>
+            <span>|&nbsp;<strong>Salary:</strong> <?=$oppListInfo['salaryrangefrom']?>K &nbsp;to&nbsp;<?=$oppListInfo['salaryrangeto']?>K</span>
+        </div>
+        <?php
+
+        } else if($oppListInfo['salaryrangefrom'] !="" ){ ?>
+        <span>|&nbsp;<strong>Salary:</strong> <?=$oppListInfo['salaryrangefrom']?>K&nbsp;</span>
+    </div>
+    <?php
+
+    } else if($oppListInfo['salaryrangeto'] !=""){
+    ?>
+    <span>|&nbsp;<strong>Salary:</strong>&nbsp;;<?=$oppListInfo['salaryrangeto']?>K</span>
+</div>
+<?php } else{
+    ?>
+    </div>
+<?php
+}
+?>
+
+<div class="col-md-12 text-right">
+    <button <?php if($oppListInfo['hadApplied']) echo 'disabled';?> style="margin-top:15px; margin-right: -31px;" class="btn btn-primary btn-for-apply" type="button" OpportunityID ="<?=$oppListInfo['OpportunityID']?>" CandidateProfileID ="<?=$this->CandidateProfileID?>"><strong>Apply</strong></button>
+</div>
+<div class="col-md-12" style="margin-left:-30px">
+    <div style="height:10px!important;"></div>
+</div>
+</div>
+<?php
+}
+}
+?>
+
+</div>

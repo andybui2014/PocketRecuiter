@@ -491,9 +491,11 @@ career.prototype = {
                 var html = "";
                 if(data){
                     btn.button('reset');
+                    var count =0;
                     var flagUS =  urlImage+'images/USA_flag.jpg';
                    // alert(flagUS);
                     $.each(data,function(k,candidateInfo){
+                        count ++;
                         btn.button('reset');
                             if($.isEmptyObject(candidateInfo.image)){
                                var images = urlImage+'images/avatar_nonex44.jpg';
@@ -511,7 +513,9 @@ career.prototype = {
                                 }
                                 i = i+1;
                                 });
-
+                            if(count >1){
+                                html += "<div class='col-md-12' style='height:10px!important'></div>" 
+                            }
                             html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
                                 "<div class='col-md-12'>" +
                                 "<div class='col-md-1' style='margin-left: -45px'> " +
@@ -576,6 +580,94 @@ career.prototype = {
                     skillSearch =1;
                 } else {
                     btn.button('reset');
+                }
+
+            }
+        });
+    },
+
+    AddSkillToSear:function(){
+        var skillText = $(this).closest('.col-md-8').siblings().find('#Select-Skill option:selected').text();
+        var skilIDSelected = $(this).closest('.col-md-8').siblings().find('#Select-Skill option:selected').val();
+
+        $(this).siblings(".add-skills").append("<span style='' class='label-tag pull-left'>" + skillText +
+            "&nbsp;&nbsp;<imge class='reset-Skill glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
+            "<input type='hidden'  name='skilID_match_premium[]' value='"+skilIDSelected+"' ></span>");
+
+
+        $(".reset-Skill").unbind("click").bind("click",function(){
+            var skilID = $(this).attr("skilIDSelected");
+            $(this).closest('.col-md-8').siblings().find("#Select-Skill option[value='" + skilID + "']").css("display", "");
+            $(this).parent().remove();
+
+
+        });
+
+        $(this).closest('.col-md-8').siblings().find('#Select-Skill option:selected').css("display", "none");
+        $(this).closest('.col-md-8').siblings().find("#Select-Skill option[value='']").prop("selected", "selected");
+    },
+
+    AddKeywordToSear:function(){
+        var skillText = $(this).closest('.col-md-7').siblings().find('.Select-keyword option:selected').text();
+        var skilIDSelected = $(this).closest('.col-md-7').siblings().find('.Select-keyword option:selected').val();
+
+        $(this).siblings(".add-key-word").append("<span style='' class='label-tag pull-left'>" + skillText +
+            "&nbsp;&nbsp;<imge class='reset-Skill glyphicon glyphicon-remove' height='15px' skilIDSelected='"+skilIDSelected+"' style='cursor:pointer; color:#ccc;' > " +
+            "<input type='hidden'  name='keyword_match_premium[]' value='"+skilIDSelected+"' ></span>");
+
+
+        $(".reset-Skill").unbind("click").bind("click",function(){
+            var skilID = $(this).attr("skilIDSelected");
+            $(this).closest('.col-md-7').siblings().find(".Select-keyword option[value='" + skilID + "']").css("display", "");
+            $(this).parent().remove();
+
+
+        });
+
+        $(this).closest('.col-md-7').siblings().find('.Select-keyword option:selected').css("display", "none");
+        $(this).closest('.col-md-7').siblings().find(".Select-keyword option[value='']").prop("selected", "selected");
+    },
+
+    careerMatchPremiun:function(){
+        var skill_match_premium =[];
+
+        var keyword_match_premium_arr =[];
+        var i = 0;
+        $(".search-search .add-key-word").each(function(){
+            var keyword_match_premium =[];
+            $(this).find("input").each(function(){
+                var kmpValue="";
+                kmpValue = $(this).attr("value")
+                keyword_match_premium.push(kmpValue);
+            })
+
+            keyword_match_premium_arr[i] = keyword_match_premium;
+            i++;
+        });
+
+        $(".search-search .add-skills").each(function(){
+            $(this).find("input").each(function(){
+                var skValue="";
+                skValue = $(this).attr("value")
+                skill_match_premium.push(skValue);
+            })
+        });
+
+        $.ajax({
+            url: 'careermatch-premium-account',
+            dataType: 'html',
+            data: {keyword_match_premium:keyword_match_premium_arr, skill_match_premium:skill_match_premium},
+            cache: false,
+            type: 'POST',
+            context: this,
+            error : function (status,xhr,error) {
+
+            },
+            success: function(data,status,xhr){
+                if(data){
+                    $(".containerData").html("");
+                    $(".containerData").html(data);
+
                 }
 
             }

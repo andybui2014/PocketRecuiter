@@ -1,0 +1,314 @@
+<script src="<?=URL_THEMES.'js/mobile.career.js';?>"></script>
+<script>
+       var cmpobj = new career();
+</script>
+<style>
+
+ .borderbottom_Gray {
+     border-bottom: 1px solid #ccc;
+ }
+
+ .border_radius_careermatch {
+     background-color: #fff;
+     background-image: none;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+     color: #555;
+     display: block;
+     font-size: 14px;
+     line-height: 1.42857;
+     /*padding: 6px 12px;*/
+     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+     width: 90px;
+    }
+
+ .border_search {
+     border: 1px solid #ccc;
+     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.075);
+     display: block;
+     font-size: 14px;
+     line-height: 1.42857;
+     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+ }
+
+ .bordercolorccc {
+     min-height:60px; padding-left: 0px; padding-right: 0px; border-bottom: 1px solid #ccc;
+     display:flex;
+     align-items:center;
+ }
+
+ .label-tag{
+     border: 1px solid #ddd; padding: 3px;
+     background-color: #eee;
+     color: #000;
+     -webkit-border-radius: 5px;
+     -moz-border-radius: 5px;
+     border-radius: 5px;
+     margin-right: 10px;margin-bottom: 5px;
+ }
+
+ .btn-disabled{
+     background-color: #ccc; border-color: #ccc;
+ }
+
+</style>
+<script>
+    var urlImage = '<?=URL_THEMES;?>';
+    var ico_expand = urlImage+'images/trees/ico_expand.png';
+    var ico_del = urlImage+'images/ico_del.png';
+    var keywordStrt = "<?=$this->stringKeyword?>";
+    keywordStrt = keywordStrt.split(",");
+</script>
+
+<div class="container">
+
+    <div style="height:80px; color: #2a6496" class="col-md-12">
+        <div class="panel-body">
+            <div class="col-md-12">
+                <div class="col-md-6"><h3 style="margin-top: 18px; margin-left: -60px"><label>Career Match</label> </h3></div>
+                <div class="col-md-6" style="text-align: right">
+                   <a href="careercreate" style="margin-top:15px; margin-right: -55px;background-color: #7aac34" class="btn btn-success" ><strong style="color: #fff!important;">Post Job</strong></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-12 border_search" style="padding-left: 0px; padding-right: 0px;">
+        <form id="form-career-match" name="form-career-match">
+            <div class="col-md-12 bordercolorccc search-search" style="background-color: #f1ffde;">
+                <div class="col-md-1" ><img data-status="select" class="img-check" src="<?=URL_THEMES?>images/trees/ico_check_green.png"></div>
+                <div class="col-md-3" style="margin-left:-30px">
+                    <select id="Select-Skill" class="form-control">
+                        <option value="">-Select Skills-</option>
+                        <?php
+                        $SkillList = $this->skillList;
+                        foreach ($SkillList as $k=>$skillInfo) {
+                            ?>
+                            <option value="<?=$skillInfo['SkillID']?>" ><?=$skillInfo['SkillName']?></option>
+                        <?php
+                        }
+
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-8">
+                    <span class = "add-skills "></span>
+                    <button  class="btn btn-sm btn-primary add-skills-to-search" type="button" style="background-color: #7aac34; border: 1px solid #7aac34; font-weight: bold">Add Skills</button>
+                </div>
+        </div>
+            <div id="contain-div-keywork">
+                <div class="col-md-12 bordercolorccc" style="background-color:#f8f8f8;">
+                    <div class="col-md-1" ><img data-status="deselect" class="img-check" src="<?=URL_THEMES?>images/trees/ico_expand.png"></div>
+                    <div class="col-md-3" style="margin-left:-30px">
+                        <select class="Select-keyword form-control">
+                            <option value="">-Keyword-</option>
+                            <?php
+                                if(!empty($this->listKeyword) && count($this->listKeyword) >0){
+                                    foreach ($this->listKeyword as $keywordInfo){
+                                        ?>
+                                        <option value="<?=$keywordInfo?>"><?=$keywordInfo?></option>
+                            <?php
+                                    }
+                                }
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <span class = "add-key-word"></span>
+                        <button data-target="" data-toggle="modal" class="btn btn-sm btn-primary disabled add-keyword-to-sear" type="button" style="background-color: #ccc; border-color:#ccc;font-weight: bold">Add Skills</button>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px"><img class="delete-div-keywork" src="<?=URL_THEMES?>images/ico_del.png?>" style="float:right ;height:15px; width:15px; margin-top:-5px; cursor: pointer"></div>
+                </div>
+                <div class="col-md-12 bordercolorccc " style="background-color:#f8f8f8;">
+                    <div class="col-md-1" ><img data-status="deselect" class="img-check" src="<?=URL_THEMES?>images/trees/ico_expand.png"></div>
+                    <div class="col-md-3" style="margin-left:-30px">
+                        <select class="Select-keyword form-control" >
+                            <option value="">-Keyword-</option>
+                            <?php
+                            if(!empty($this->listKeyword) && count($this->listKeyword) >0){
+                                foreach ($this->listKeyword as $keywordInfo){
+                                    ?>
+                                    <option value="<?=$keywordInfo?>"><?=$keywordInfo?></option>
+                                <?php
+                                }
+                            }
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-7">
+                        <span class = "add-key-word"></span>
+                        <button data-target="" data-toggle="modal" class="btn btn-sm btn-primary disabled add-keyword-to-sear" type="button" style="background-color: #ccc; border-color: #ccc; font-weight: bold">Add Skills</button>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px"><img class="delete-div-keywork" src="<?=URL_THEMES?>images/ico_del.png?>" style=" float:right;height:15px; width:15px; margin-top:-5px; cursor: pointer"></div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="col-md-12" style="height:65px; padding-left: 0px; padding-right: 0px; background-color:#fff; border-top: 1px solid #ccc; display:flex;
+     align-items:center;">
+            <div class="col-md-10" style="margin-left:3px">
+                <button data-target="" data-toggle="modal" class="btn btn-sm btn-primary add-div-keyword" type="button" style="background-color:#7b7b7b; border-color: #7b7b7b; font-weight: bold">+ Add Field</button>
+            </div>
+            <div class="col-md-2" style="margin-right:16px">
+                <button  class="btn btn-sm btn-primary" type="button" style="float:right; font-weight: bold" onclick="javascript:cmpobj.careerMatchPremiun()">Search</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12" style="background-color: #fff; min-height:374px; height: auto;border: 1px solid #ccc; margin-top: 20px">
+        <div style="height: 20px!important;"></div>
+        <!-- table-->
+        <table border="0" style="width: 100%">
+            <tr>
+                <td style="width:220px; border-right:1px solid #ccc; vertical-align: top ">
+                    <div class="col-md-12" style="margin-top:-2px;vertical-align: top ">
+                        <div><label>All Catogories</label></div>
+                        <div><label style="color: #1a5187">IT & Programming</label></div>
+                        <div>Design & Multimedia</div>
+                        <div>Writing & Translation</div>
+                        <div>Sale & Marketing</div>
+                        <div>Admin Support</div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>All Career Types</label></div>
+                        <div>Fixed Price</div>
+                        <div>Hourly</div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Any Budget</label></div>
+                        <div>Specific Budget</div>
+                    </div>
+
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>All Locations</label></div>
+                        <div>Region</div>
+                        <div>Country</div>
+                        <div>Specific Location</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Any Time Left</label></div>
+                        <div>Less than 24 hours left</div>
+                        <div>Less than 3 days left</div>
+                        <div>Less than 7 days left</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Any Posted Date</label></div>
+                        <div>Posted within 24 hours</div>
+                        <div>Posted within 3 days</div>
+                        <div>Posted within 7 days</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>All Career Options</label></div>
+                        <div class="col-md-12" style="padding-left: 0px;padding-right: 0px">
+                            <div class="col-md-5" style="margin-left: -15px"><input type="checkbox"> Only</div>
+                            <div class="col-md-6 border_radius_careermatch"><strong style="color: #1a5187">Featured</strong></div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Status Open</label></div>
+                        <div style="color: #1a5187; font-weight: bold">Any Status</div>
+                        <div>Hiring Open</div>
+                    </div>
+                    <div class="col-md-12" style="margin-top:20px;">
+                        <div><label>Group</label></div>
+                        <div style="color: #1a5187; font-weight: bold">No Group</div>
+                        <div>Selected Group</div>
+                    </div>
+                </td>
+                <td style="vertical-align: top" class="containerData">
+
+                </td>
+            </tr>
+        </table>
+
+
+        <!-- table -->
+    </div>
+    <div style="clear: both"></div>
+    <div style="height: 40px;background-color: #333"> </div>
+</div>
+<script>
+    $(document).ready(function(){
+        cmpobj.careerMatchPremiun();
+        $('.img-check').unbind('click').bind('click',function(){
+            if($(this).attr('data-status')=='select'){
+                $(this).attr('src',urlImage+'images/trees/ico_expand.png')
+                $(this).attr('data-status','deselect');
+                $(this).parent().siblings().find("button").css({"backgroundColor":"#ccc","borderColor":"#ccc"});
+                $(this).parent().siblings().find("button").addClass("disabled");
+                $(this).closest('.col-md-12').removeClass("search-search");
+            }else if($(this).attr('data-status')=='deselect'){
+                $(this).attr('src',urlImage+'images/trees/ico_check_green.png').attr('data-status','select');
+                $(this).parent().siblings().find("button").css({"backgroundColor":"#7aac34","borderColor":"#7aac34"});
+                $(this).parent().siblings().find("button").removeClass("disabled");
+                $(this).closest('.col-md-12').addClass("search-search");
+            }
+        });
+
+        $('.delete-div-keywork').unbind('click').bind('click',function(){
+            $(this).parent().parent().remove();
+        });
+
+        $('.add-div-keyword').unbind('click').bind('click',function(){
+            var selectOption = "<option value=''>-Keyword-</option>";
+            if(keywordStrt.length > 0){
+                $.each(keywordStrt, function(id,infokeyword){
+                    selectOption +="<option value='"+infokeyword+"'>"+infokeyword+"</option>"
+                });
+            }
+
+            var html ="";
+            html = "<div class='col-md-12 bordercolorccc ' style='background-color:#f8f8f8;'>" +
+                "<div class='col-md-1' ><img data-status='deselect' class='img-check' src='"+ico_expand+"'></div>" +
+                "<div class='col-md-3' style='margin-left:-30px'>" +
+                "<select class='Select-keyword form-control'>" + selectOption +
+                "</select> " +
+                "</div>" +
+                "<div class='col-md-7'>" +
+                "<span class = 'add-key-word'></span>" +
+                "<button data-target='' data-toggle='modal' class='btn btn-sm btn-primary disabled add-keyword-to-sear' type='button' style='background-color: #ccc; border-color:#ccc;font-weight: bold'>Add Skills</button>" +
+                "</div>" +
+                "<div class='col-md-1' style='padding-right: 0px'><img class='delete-div-keywork' style='float:right ;height:15px; width:15px; margin-top:-5px; cursor: pointer' src='"+ico_del+"'></div>" +
+                "</div>"
+
+            $("div#contain-div-keywork").append(html);
+
+            //bind event for new
+            $('.delete-div-keywork').unbind('click').bind('click',function(){
+                $(this).parent().parent().remove();
+            });
+
+            $('.img-check').unbind('click').bind('click',function(){
+                if($(this).attr('data-status')=='select'){
+                    $(this).attr('src',urlImage+'images/trees/ico_expand.png')
+                    $(this).attr('data-status','deselect');
+                    $(this).parent().siblings().find("button").css({"backgroundColor":"#ccc","borderColor":"#ccc"});
+                    $(this).parent().siblings().find("button").addClass("disabled");
+                    $(this).closest('.col-md-12').removeClass("search-search");
+                }else if($(this).attr('data-status')=='deselect'){
+                    $(this).attr('src',urlImage+'images/trees/ico_check_green.png').attr('data-status','select');
+                    $(this).parent().siblings().find("button").css({"backgroundColor":"#7aac34","borderColor":"#7aac34"});
+                    $(this).parent().siblings().find("button").removeClass("disabled");
+                    $(this).closest('.col-md-12').addClass("search-search");
+                }
+            });
+
+            $('.add-keyword-to-sear').unbind('click').bind('click',cmpobj.AddKeywordToSear);
+        });
+
+        $('.add-skills-to-search').unbind('click').bind('click',cmpobj.AddSkillToSear)
+        $('.add-keyword-to-sear').unbind('click').bind('click',cmpobj.AddKeywordToSear)
+    })
+</script>
+
+
+
