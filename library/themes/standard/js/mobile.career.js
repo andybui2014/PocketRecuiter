@@ -514,7 +514,7 @@ career.prototype = {
                                 i = i+1;
                                 });
                             if(count >1){
-                                html += "<div class='col-md-12' style='height:10px!important'></div>" 
+                                html += "<div class='col-md-12' style='height:10px!important'></div>"
                             }
                             html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
                                 "<div class='col-md-12'>" +
@@ -540,8 +540,8 @@ career.prototype = {
                                     "<div style='height:10px!important;'></div>  " +  candidateInfo.overview +
                                 "</div>" +
                                 "<div class='col-md-12' style='margin-left:-30px'> " +
-                                    "<span style='color: #1a5187' class='glyphicon glyphicon-play'></span>" +
-                                    "<span style='color: #1a5187'>Read more</span>" +
+                                    "<small><span style='color: #1a5187' class='glyphicon glyphicon-play'></span></small>" +
+                                    "<span style='color: #1a5187; font-weight: bold'>Read more</span>" +
                                 "</div>" +
                                "<div class='col-md-12' style='margin-left:-30px'>" +
                                 "<div style='height:10px!important;'></div>" +
