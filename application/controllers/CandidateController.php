@@ -251,6 +251,15 @@ class CandidateController extends Application_Controller_Action
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
             $client = PR_Session::getSession(PR_Session::SESSION_USER);
+			//
+            $UserID=$client["UserID"];                  
+            $api_candidate= new PR_Api_Core_CandidateClass();                
+            $getUserArray=$api_candidate->getCandidateInfo($UserID);
+            $this->view->UserArray = $getUserArray;  
+            $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+            $getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+            $this->view->getCandidates=$getCandidates;
+            //
             $this->view->step = $params['utm_source'];
             switch($params['utm_source']){
                 case 'index':
@@ -265,10 +274,11 @@ class CandidateController extends Application_Controller_Action
                             $src = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
                             $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
                             //Tree View
+							$id=$item['SkillID'];  
                             $tree .= "<div class='col-md-4' style='margin:0;padding:0'><div class='tree'><ul>";
                             $tree .= "<li>
                                         <img data-id='".$item['SkillID']."' data-status='".$select."' class='img-parent' src='".$src."'/>
-                                        <a href='#'><strong>" . $item['SkillName'] . "</strong></a>
+                                        <a href='skills-edit?SkillID=$id'><strong>" . $item['SkillName'] . "</strong></a>
                                         <span><img class='img-toggle' src='".$toggle."'/></span>";
                             $tree .= $this->skillChilds($item['SkillID'], $item['Level']+1);
                             $tree .= "</li></ul></div></div>";
