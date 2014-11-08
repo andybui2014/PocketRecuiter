@@ -14,14 +14,14 @@ function uploadFile(file, index) {
     var http = new XMLHttpRequest();
     http_arr.push(http);
 
-    //Div.Progress-group
+    //Div.Progress-group 
     var ProgressGroup = document.getElementById('progress-group');
     //Div.Progress
     var Progress = document.createElement('div');
     Progress.className = 'progress';
     //Div.Progress-bar
     var ProgressBar = document.createElement('div');
-    ProgressBar.className = 'progress-bar';
+    ProgressBar.className = 'progress-bar progress-bar-striped';
     //Div.Progress-text
     var ProgressText = document.createElement('div');
     ProgressText.className = 'progress-text';   
@@ -52,7 +52,7 @@ function uploadFile(file, index) {
         var fileProgress = parseInt((fileLoaded/fileTotal)*100) || 0; 
         var speed = speedRate(oldTime, event.timeStamp, oldLoaded, event.loaded);
         
-        ProgressBar.innerHTML = fileName + ' dang duoc upload...';
+        ProgressBar.innerHTML = fileName + ' Loading up...';
         ProgressBar.style.width = fileProgress + '%';
         ProgressText.innerHTML = fileProgress + '% Upload Speed: '+speed+'KB/s';
         ProgressText.innerHTML = fileProgress + '%';
