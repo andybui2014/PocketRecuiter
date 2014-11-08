@@ -1,0 +1,248 @@
+<?php
+$helper = $this->layout()->_helper;
+?>
+<style>
+
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+        /****/
+    .tree img{cursor: pointer}
+    .tree-title{padding: 0 0 10px 40px;}
+    /*.btn-default {
+       background-color: #777;
+        border-color: #ccc;
+        color: #fff;
+        }
+    .btn-default:hover{
+        background-color: #777;
+        color: #fff;
+    }*/
+    .logo{
+        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+        width: 211px;
+        height: 165px;
+    }
+     ul#nav-left {
+    border-bottom: 2px solid #bbb;
+    border-top: 2px solid #bbb;}
+    .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        color:#2a6496;
+    }
+    ul.test-list-item{
+        margin:0;padding:0;list-style: none;
+    }
+    btn1 {
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 5px 10px;
+    width: 50px;
+}
+.btn-group{
+    width: 400px;
+}
+</style>
+<?php
+$UserArray=$this->UserArray;
+$getCandidates=$this->getCandidates;
+$Skills=$this->Skills;
+//echo("<br><br><br>User:<pre>");print_r($UserArray);echo("</pre>");
+?>
+<div class="container">
+
+    <div class="row" style="padding-top: 40px;">
+        <div class="col-md-3">
+            <div class="text-center">
+                 <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+
+            </div>
+            <a href="#"><?=$UserArray["emailaddress"]?></a><br/>
+            <strong>View my profile</strong> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$UserArray["Country"]?><?php if($UserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$UserArray["Address1"]?><?php if($UserArray["Address1"]!="") echo ", "; ?> <?=$UserArray["State"]?></span>
+            </span>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
+            <p style="padding: 10px 0">
+                <i class="lbl-log">Edit</i>
+            </p>
+            <ul id="nav-left">
+                <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>"><strong>Profile builder</strong></a></li>
+                <li><a href="<?=$helper->url('profile','candidate');?>">Overview</a></li>
+                <li><a href="<?=$helper->url('contact-info','candidate');?>">Contact Info</a></li>
+                <li><a href="<?=$helper->url('portfolio','candidate');?>">Portfolio</a></li>
+                <li><a href="<?=$helper->url('vieweducation','candidate');?>">Education</a></li>
+                <li><a class="active" href="<?=$helper->url('skills?utm_source=index','candidate');?>"><strong>Skills</strong></a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($UserArray["Lastsigned"])) ?></p>
+        </div>
+        <div class="col-md-9">
+            <div class="page-header" style="color: #2a6496 ;margin-top:0">
+                <h2 style="color: #2a6496 ;margin-top:0"><span class=""></span> <strong>Skills Builder</strong></h2>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding:0">
+                     
+                    <div style="background-color: #E2E2E4">
+                        
+                        <ul class="nav nav-tabs" role="tablist">
+                            <?php
+                            
+                            if(!empty($Skills))
+                            {
+                                $i=0;
+                                foreach($Skills as $skillarray)
+                                {
+                                    
+                                    if(!empty($skillarray["CandidateProfileID"]))
+                                    {
+                                        $i=$i+1;
+                                       // echo $skillarray["SkillName"]."<br>";
+                            ?>
+                            <li role="presentation" <?php if($skillarray["SkillID"]==$this->SkillID) echo "class='active'"; ?>><a href="#" style="font-weight:bold;font-size:12px"><?=$skillarray["SkillName"]?></a></li>
+                            <?php
+                                    }
+                                }
+                            }
+                        ?>
+                          
+                        </ul>
+                        
+                    </div>
+                    <div class="tab-content">
+
+                            <div class="tab-pane active" >
+                               <div style="padding-top:10px;padding-left:20px"> <strong style="font-size:17px">Java Questionnaire</strong></div>
+                                <div class="col-md-9" style="padding-left:30px;padding-top:20px">
+                                    <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> How many years real world experience in Java overall?</span>
+                                    <div class="form-group" style="margin-left:60px">
+                                        <select class="form-control" style="width:300px;">
+                                            <option>ect...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-left:60px">
+                                        <select class="form-control" style="width:300px;">
+                                            <option>8 year</option>
+                                        </select>
+                                    </div>
+                                     </div>
+                                <div class="col-md-9" style="padding-left:30px;padding-top:10px">
+                                    <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Leve of expertise</span>
+                                    <div class="form-group" style="margin-left:60px">
+                                        <select class="form-control" style="width:300px;">
+                                            <option>Beginner</option>
+                                        </select>
+                                    </div>                                    
+                                     </div>
+                                <div class="col-md-9" style="padding-left:30px;padding-top:10px">
+                                    <img src="<?=URL_THEMES.'images/trees/ico_expand.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Peroin mauris tortor, congue sed rhoncus eu.</span>
+                                                                        
+                                     </div>
+                                <div class="col-md-9" style="padding-left:30px;padding-top:10px">
+                                    <img src="<?=URL_THEMES.'images/trees/ico_expand.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Peroin mauris tortor, congue sed rhoncus eu.</span>
+                                                                        
+                                </div>
+                                <div class="col-md-9" style="padding-left:30px;padding-top:10px">
+                                    <img src="<?=URL_THEMES.'images/trees/ico_expand.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Peroin mauris tortor, congue sed rhoncus eu.</span>
+                                                                        
+                                </div>
+                            </div>
+                    <div class="col-md-12">
+                    <div style="margin-top: 30px;margin-bottom:40px;margin-left:20px">
+                        <button id="cmbackview" data-back="" class="btn btn-default" type="button" onclick="document.location='skills?utm_source=index'"><strong>Back</strong></button> &nbsp;
+                        <button id="cmd-nextview" data-id="" type="button" data-next="" class="btn btn-success" type="button"><strong>Save & Next</strong></button>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type='text/css'>
+
+    .tree {
+        font-size: 12px;
+        text-align: left;margin:0;padding:0;
+    }
+    .tree li {
+        list-style-type:none;
+        position:relative
+    }
+    .tree li::before, .tree li::after {
+        content:'';
+        left:-27px;
+        position:absolute;
+        right:auto
+    }
+    .tree li::before {
+        border-left:1px dotted #999;
+        bottom:50px;
+        height:100%;
+        top:0;
+        width:1px
+    }
+    .tree li::after {
+        border-top:1px dotted #999;
+        height:20px;
+        top:15px;
+        width:25px
+    }
+    .tree li span {
+       /*border-radius: 50%;
+        border:1px dotted #999;
+        display:inline-block;
+        padding: 5px;
+        text-decoration:none;
+        color: #2a6496;*/
+    }
+    .tree li.parent_li>span {
+        cursor:pointer
+    }
+    .tree>ul>li::before, .tree>ul>li::after {
+        border:0
+    }
+    .tree li:last-child::before {
+        height:30px
+    }
+    .tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+        background:#eee;
+        border:1px dotted #94a0b4;
+
+    }
+    .tree .ico-expand{
+        font-size: 11px !important;
+        border-radius: 50%;
+        border:1px dotted #999;
+        display:inline-block;
+        padding: 2px;
+        text-decoration:none;
+        color: #2a6496;
+    }
+    .tree .ico-colapse{
+        border-radius: 50%;
+        border:1px dotted #999;
+        display:inline-block;
+        padding: 5px;
+        text-decoration:none;
+        color: #2a6496;
+    }
+</style>
+
+<script src="<?=URL_THEMES;?>js/pocket.candidate.js"></script>
+ <script>
+     var prCandidate= new pocketCandidate();
+     prCandidate.editSkills('<?=URL_THEMES;?>');
+     $('#cmd-nextview').unbind('click').bind('click',prCandidate.skillViewNext);
+     $('#cmd-backview').unbind('click').bind('click',prCandidate.skillViewBack);
+     $(document).ready(function(){
+      $("button").click(function(){
+        $("p:first").addClass("intro");
+      });
+    });
+</script>
