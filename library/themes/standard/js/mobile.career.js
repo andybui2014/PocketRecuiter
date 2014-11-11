@@ -516,9 +516,9 @@ career.prototype = {
                             if(count >1){
                                 html += "<div class='col-md-12' style='height:10px!important'></div>"
                             }
-                            html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px' >" +
+                            html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px; margin-right: 5px' >" +
                                 "<div class='col-md-12'>" +
-                                "<div class='col-md-1' style='margin-left: -45px'> " +
+                                "<div class='col-md-1' style='margin-left: -25px'> " +
                                 "<img src='"+images+"'>" +
                                 "</div>" +
                                     "<div class='col-md-11' style='margin-left: -25px'>" +
@@ -536,17 +536,17 @@ career.prototype = {
                                 html +=" &nbsp; </strong></div>" +
                                     "</div>" +
                                 "</div>  " +
-                                "<div class='col-md-12' style='margin-left:-30px'> " +
+                                "<div class='col-md-12 text-justify' style='margin-left:-10px'> " +
                                     "<div style='height:10px!important;'></div>  " +  candidateInfo.overview +
                                 "</div>" +
-                                "<div class='col-md-12' style='margin-left:-30px'> " +
+                                "<div class='col-md-12' style='margin-left:-10px'> " +
                                     "<small><span style='color: #1a5187' class='glyphicon glyphicon-play'></span></small>" +
                                     "<span style='color: #1a5187; font-weight: bold'>Read more</span>" +
                                 "</div>" +
-                               "<div class='col-md-12' style='margin-left:-30px'>" +
+                               "<div class='col-md-12' style='margin-left:-10px'>" +
                                 "<div style='height:10px!important;'></div>" +
                                         "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
-                              "<div class='col-md-12' style='margin-left:-30px'>" +
+                              "<div class='col-md-12' style='margin-left:-10px'>" +
                                 " <div style='height:10px!important;'></div>" +
                                 "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span><span>"
 
@@ -570,6 +570,7 @@ career.prototype = {
                         "</div>"
                     });
 
+                    $(".containerData").html("");
                         $(".containerData").html(html);
 
                     $(".resetSkill").each(function(){
