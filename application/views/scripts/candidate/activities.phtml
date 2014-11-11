@@ -1,7 +1,9 @@
+
 <script src="<?=URL_THEMES.'js/pocket.candidate.js';?>"> </script>
 <script>
     var objActivities = new pocketCandidate();
 </script>
+
 <style type="text/css" >
     div.cellFull {
        border-left: 1px #ccc solid;
@@ -56,7 +58,7 @@
     <?php
     $aclist = $this->activelist;
     ?>
-    <div style="height:40px;background-color: #2a6496; padding-top:10px; color:white"><label class="text-center"><?=count($aclist)?>&nbsp; Active State</label> </div>
+    <div style="height:40px;background-color: #2a6496; padding-top:10px; padding-left: 9px; color:white"><label>Active State</label> </div>
     <div class="table-responsive">
         <table style="margin-bottom:0;"  class="table table-striped1 table-bordered table-hover" cellpadding=0 cellspacing=0 >
                 <thead>
@@ -68,7 +70,7 @@
                     <th style="width:200px">Career Title</th>
                     <th>Status</th>
                     <th style="width:120px">Apply Date</th>
-                    <th style="width:80px">Action<span class="caret"></span></th>
+                    <th style="width:80px">Action<span ></span></th>
                 </tr>
                 </thead>
                 <tbody >
@@ -83,7 +85,7 @@
                             <td style="color: #777; vertical-align: middle;" ><?=$aclistInfo['title']?></td>
                             <td style="color: #777;" class="fullHeigh">
                                 <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGreen" style="padding-left: 5px;"> <span style="padding-left:5px;margin-top:-6px"><strong>Applied</strong></span></div>
-                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientRed" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Screen</span></div>
+                                <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Screen</span></div>
                                 <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Schedule</span></div>
                                 <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style=" padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Feedback</span></div>
                                 <div class="col-md-2 glyphicon glyphicon-ok cellFull gradientGray" style="padding-left: 5px"><span style="padding-left:5px;margin-top:-6px">Offer</span></div>
@@ -109,7 +111,9 @@
     </div>
 
 </div>
+
 <script>
    $('#Active-Check-All').unbind('click').bind('click',objActivities.activitiesCheckedAll);
    $('.Active-Is-Check').unbind('click').bind('click',objActivities.activitiesChecked);
 </script>
+
