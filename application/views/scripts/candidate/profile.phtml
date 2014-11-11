@@ -1,4 +1,11 @@
-
+<?php
+    $getUserArray=$this->client;
+    $getCandidates=$this->getCandidates;
+    $SkillName=$this->SkillName;
+    $CandidateEmployment=$this->CandidateEmployment;
+    $Education=$this->Education;
+ // echo ("<br><br><br>test:<pre>");print_r($getCandidates);echo("</pre>");
+?>
 <style>
     body {
     background: none repeat scroll 0 0 #ededed;
@@ -152,7 +159,11 @@
         margin-bottom: 5px;
     }
     .logo{
-        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+       /* background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;*/
+       <?php
+        $image=URL_MEDIA_PHOTO.$getCandidates["image"];
+       ?>
+       background: url('<?php if(!empty($getCandidates["image"])) echo  $image; else echo URL_THEMES."images/avatar_none.jpg";?>') no-repeat;
         width: 211px;
         height: 165px;
     }
@@ -165,20 +176,13 @@
         /****/
 
 </style>
-<?php
-    $getUserArray=$this->client;
-    $getCandidates=$this->getCandidates;
-    $SkillName=$this->SkillName;
-    $CandidateEmployment=$this->CandidateEmployment;
-    $Education=$this->Education;
-  // ("test:<pre>");print_r($CandidateEmployment);echo("</pre>");
-?>
+
 <div class="container" style="padding-top:40px;">
 
     <div class="row">
      <div class="col-md-3">
         <div class="text-center">
-          <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+          <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
 
             </div>
             <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>
@@ -189,7 +193,7 @@
             <br><span><strong style="font-size:13px">Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
             <p style="padding: 10px 0">
                 <!--<i class="lbl-log">Edit</i>>-->
-                <img src="<?=URL_THEMES?>images/btn_edit.png">
+                <a href="<?= URL_BASE ?>candidate/editoverview"><img src="<?=URL_THEMES?>images/btn_edit.png"></a>
             </p>
             <ul id="nav-left">
                 <li><a href="<?= URL_BASE ?>candidate/profile-builder?utm_source=contact">Profile builder</a></li>
@@ -247,7 +251,7 @@
                                // </video>";
                               // echo("testt:<pre>");print_r($_SERVER["SERVER_NAME"]);echo("</pre>");
                             ?>
-                             <video width="230px" controls autoplay >
+                             <video width="230px" controls autoplay loop>
                                 <source src="<?=$video?>">
                              </video>
                            <!--<iframe style="padding:0" id="ytplayer" type="text/html" width="230"  src="http://<?=$_SERVER["SERVER_NAME"].$video?>?autoplay=1&origin=http://example.com" frameborder="0"/></iframe>-->

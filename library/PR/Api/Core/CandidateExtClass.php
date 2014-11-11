@@ -276,10 +276,19 @@ class PR_Api_Core_CandidateExtClass
          $criteria = "ID = '$id'";
          $result = $db->delete('upload_portfolio', $criteria);
     }
-     public function updateCandidateProfileVideo($CandidateProfileID,$video)
+    public function updateCandidateProfileVideo($CandidateProfileID,$video)
     {
         
        $result= PR_Database::update('candidate_profile',array('video'=>$video),
+                "CandidateProfileID = '$CandidateProfileID'"
+        );
+
+        return $result;
+    }
+   public function updateCandidateProfilePhoto($CandidateProfileID,$image)
+    {
+        
+       $result= PR_Database::update('candidate_profile',array('image'=>$image),
                 "CandidateProfileID = '$CandidateProfileID'"
         );
 
