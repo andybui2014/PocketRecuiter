@@ -80,6 +80,36 @@ pocketCandidate.prototype = {
         }
     },
     editPortfolio: function(){
+       //console.log('test');
+        var arrTests = [];
+        var stest = '';
+        var $idx = 0;
+        $('#portfolioList :input[type="checkbox"]').each(function(idx,item){
+            if($(this).is(':checked')){
+                var $id = $(this).attr('data-id');
+                if($id > 0){
+                    arrTests.push($id);
+                }
+            }
+        })
+        if(arrTests.length){
+            $.post('./get-portfolio',{data: arrTests},function(xhr){
+                if(xhr.success){
+                    console.log(xhr.data.CandidatePortfolioID);
+                    $('#portfolio-form input[name="title"]').val(xhr.data.Title);
+                    $('#portfolio-form input[name="url"]').val(xhr.data.URL);
+                    $('#portfolio-form #portDesc').val(xhr.data.Description);
+                    $('#portfolio-form input[name="portId"]').val(xhr.data.CandidatePortfolioID);
+                    $('#portfolio-form #add-another').attr('data-status','update').html('<strong>Update Portfolio</strong>');
+
+                }
+            })
+        }else{
+            $modal.modal("show").on("shown.bs.modal", function () {
+                $modal.find('#myModalLabel').html('<span style="color: #b81900">Warning</span>');
+                $modal.find('#modal-content').html('<p>Only one portfolio</p>');
+            });
+        }
 
     },
     portfolioCheckAll: function(){
@@ -252,6 +282,13 @@ pocketCandidate.prototype = {
                     $this.button('reset');
                 }
 
+            }else{
+                //update
+                $.post('./do-update-portfolio2',{data: $('#portfolio-form').serializeArray()},function(xhr){
+                    if(xhr.success){
+                        location.reload();
+                    }
+                })
             }
         }
         //$this.button('reset');

@@ -1191,8 +1191,64 @@ class CandidateController extends Application_Controller_Action
         }
           $return["success"]=1; 
      }
-	  public function editportfolioAction()
-     {
+
+    public function getPortfolioAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            if(!empty($params['data']) && count($params['data'])==1){
+                if(!empty($params['data'][0])){
+                    $core=new PR_Api_Core_CandidateClass();
+                    $ajaxRes['data'] =$core->getCandidatePortfolio($params['data'][0]);
+                    $ajaxRes['success'] = 1;
+                }
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+    public function doUpdatePortfolio2Action(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+
+            $portId = null;
+            $title = null;
+            $url = null;
+            $description = null;
+
+            if(!empty($params)){
+                foreach($params['data'] as $item){
+                    if($item['name']=='portId') $portId = $item['value'];
+                    if($item['name']=='title')  $title = $item['value'];
+                    if($item['name']=='url')    $url = $item['value'];
+                    if($item['name']=='description') $description = $item['value'];
+                }
+                $core = new PR_Api_Core_CandidateClass();
+                if($core -> updateCandidatePortfolio( $portId, $title, $url, $description,null)){
+                    $ajaxRes['success'] = 1;
+                }
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+
+
+    }
+
+    public function editportfolioAction(){
         $user = PR_Session::getSession(PR_Session::SESSION_USER);
         $UserID=$user["UserID"];   
         $request = $this->getRequest(); 
