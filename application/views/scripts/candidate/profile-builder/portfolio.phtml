@@ -248,10 +248,17 @@ $helper = $this->layout()->_helper;
                                         <?php foreach($this->list as $key=>$item){ ?>
                                             <tr>
                                                 <td><input data-text="<?=$item['Title'];?>" type="checkbox" name="" data-id="<?=$item['CandidatePortfolioID'];?>"/></td>
-                                                <td><img width="100px" height="80px" src="<?=$item['URL'];?>" alt="" title=""/></td>
                                                 <td>
+                                                <!--<img width="100px" height="80px" src="<?=$item['URL'];?>" alt="" title=""/>-->
+                                                 <iframe class="embed-responsive-item" frameborder="0" width="100px" height="80px" src="<?=$item["URL"]?>" scrolling="no"></iframe>
+                                                </td>
+                                                <td>
+                                                <?php
+                                                $words = explode(" ",$item['Description']); 
+                                                $str= implode(" ",array_splice($words,0,18));
+                                                ?>
                                                     <h5 style="margin:0;padding:0;"><label><?=$item['Title'];?></label></h5>
-                                                    <p style="color: #777;margin:0;padding:0;"><?=$item['Description'];?></p>
+                                                    <p style="color: #777;margin:0;padding:0;"><?=$str;?></p>
                                                 </td>
                                                 <td style="margin:0;padding:0">
                                                     <a><img src="<?=URL_THEMES;?>images/btn_green.png"/></a>
