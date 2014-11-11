@@ -1,4 +1,11 @@
-
+<?php
+    $getUserArray=$this->client;
+    $getCandidates=$this->getCandidates;
+    $SkillName=$this->SkillName;
+    $Portfolio=$this->Portfolio;
+    $ListImages=$this->ListImages;
+//echo("<br/><br/><br/>test:<pre>");print_r($Portfolio);echo("</pre>");
+?>
 <style>
     body {
     background: none repeat scroll 0 0 #ededed;
@@ -153,7 +160,11 @@
         margin-bottom: 5px;
     }
     .logo{
-        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+       /* background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;*/
+       <?php
+        $image=URL_MEDIA_PHOTO.$getCandidates["image"];
+       ?>
+       background: url('<?php if(!empty($getCandidates["image"])) echo  $image; else echo URL_THEMES."images/avatar_none.jpg";?>') no-repeat;
         width: 211px;
         height: 165px;
     }
@@ -189,20 +200,13 @@ overflow: hidden;
         /****/
 
 </style>
-<?php
-    $getUserArray=$this->client;
-    $getCandidates=$this->getCandidates;
-    $SkillName=$this->SkillName;
-    $Portfolio=$this->Portfolio;
-    $ListImages=$this->ListImages;
-//echo("<br/><br/><br/>test:<pre>");print_r($Portfolio);echo("</pre>");
-?>
+
 <div class="container" style="padding-top:40px;">
 
     <div class="row">
      <div class="col-md-3">
         <div class="text-center">
-          <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+          <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
 
             </div>
             <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>

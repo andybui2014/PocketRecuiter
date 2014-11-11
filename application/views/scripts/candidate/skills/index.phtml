@@ -1,5 +1,8 @@
 <?php
 $helper = $this->layout()->_helper;
+$UserArray=$this->UserArray;
+$getCandidates=$this->getCandidates;
+//echo("<br><br><br>User:<pre>");print_r($UserArray);echo("</pre>");
 ?>
 <style>
 
@@ -21,7 +24,11 @@ $helper = $this->layout()->_helper;
         color: #fff;
     }
     .logo{
-        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+       /* background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;*/
+       <?php
+        $image=URL_MEDIA_PHOTO.$getCandidates["image"];
+       ?>
+       background: url('<?php if(!empty($getCandidates["image"])) echo  $image; else echo URL_THEMES."images/avatar_none.jpg";?>') no-repeat;
         width: 211px;
         height: 165px;
     }
@@ -30,16 +37,14 @@ $helper = $this->layout()->_helper;
     border-top: 2px solid #bbb;}
 </style>
 <?php
-$UserArray=$this->UserArray;
-$getCandidates=$this->getCandidates;
-//echo("<br><br><br>User:<pre>");print_r($UserArray);echo("</pre>");
+
 ?>
 <div class="container">
 
     <div class="row" style="padding-top: 40px;">
         <div class="col-md-3">
             <div class="text-center">
-                 <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+                 <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
 
             </div>
             <a href="#"><?=$UserArray["emailaddress"]?></a><br/>
@@ -49,7 +54,8 @@ $getCandidates=$this->getCandidates;
             </span>
             <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
             <p style="padding: 10px 0">
-                <i class="lbl-log">Edit</i>
+               <!-- <i class="lbl-log">Edit</i>-->
+                 <a href="<?= URL_BASE ?>candidate/editoverview"><img src="<?=URL_THEMES?>images/btn_edit.png"></a>
             </p>
             <ul id="nav-left">
                 <li><a href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>"><strong>Profile builder</strong></a></li>

@@ -69,6 +69,12 @@ class CandidateController extends Application_Controller_Action
         $core = new PR_Api_Core_CandidateClass();
         $info = $core->getContactInfo($client['UserID']);
         $this->view->info = $info;
+        
+        $getUserArray=$core->getCandidateInfo($client['UserID']);
+        $this->view->client = $getUserArray;  
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+        $getCandidates=$core->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
         $this->render('contact-info');
     }
     public function updateContactInfoAction(){
@@ -299,10 +305,17 @@ class CandidateController extends Application_Controller_Action
         $params = $this->getRequest()->getParams();
         if(!empty($params) && isset($params['utm_source'])){
             $client = PR_Session::getSession(PR_Session::SESSION_USER);
+            $core = new PR_Api_Core_CandidateClass();
+            $getUserArray=$core->getCandidateInfo($client['UserID']);
+            $this->view->client = $getUserArray;  
+            $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+            $getCandidates=$core->getCandidateProfile($Candidateprofile_ID);
+            $this->view->getCandidates=$getCandidates;
             $this->view->step = $params['utm_source'];
             switch($params['utm_source']){
                 case 'contact':
                     $core = new PR_Api_Core_CandidateClass();
+                   
                     $info = $core->getContactInfo($client['UserID']);
                     $this->view->stepCount = '1/5 Steps';
                     $this->view->info = $info;
@@ -310,6 +323,7 @@ class CandidateController extends Application_Controller_Action
                     break;
                 case 'education':
                     $core = new PR_Api_Core_CandidateClass();
+                   
                     $list = $core->getCandidateEducationList($client['UserID']);
                     $this->view->list = $list;
                     $this->view->stepCount = '2/5 Steps';
@@ -317,6 +331,7 @@ class CandidateController extends Application_Controller_Action
                     break;
                 case 'employment':
                     $core = new PR_Api_Core_CandidateClass();
+                    
                     $list = $core->getCandidateEmployments($client['UserID']);
                     $this->view->list = $list;
                     $this->view->stepCount = '3/5 Steps';
@@ -327,6 +342,7 @@ class CandidateController extends Application_Controller_Action
 
                     $tree = '';
                     $core = new PR_Api_Core_CandidateClass();
+                   
                     $skills = $core->getListAll_CandidateSkills($client['UserID']);
 
 
@@ -352,6 +368,7 @@ class CandidateController extends Application_Controller_Action
                     break;
                 case 'portfolio':
                     $core = new PR_Api_Core_CandidateClass();
+                    
                     $list = $core->getListCandidatePortfolio($client['UserID']);
                     $this->view->list = $list;
                     $this->view->stepCount = '5/5 Steps';
@@ -954,7 +971,9 @@ class CandidateController extends Application_Controller_Action
 
         $core = new PR_Api_Core_CandidateClass();
         $list = $core->getCandidateEmployments($UserID);
-
+        $CandidateprofileID=$client["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);
+        $this->view->getCandidates=$getCandidates;
         $this->view->client = $getUserArray;
         $this->view->list = $list;
 
@@ -1125,7 +1144,12 @@ class CandidateController extends Application_Controller_Action
         $UserID=$user["UserID"];   
         $request = $this->getRequest(); 
         $CredentialExperienceID=$request->getParam("CredentialExperienceID");     
-        
+         $core=new PR_Api_Core_CandidateClass();
+        $getUserArray=$core->getCandidateInfo($UserID);   
+        $this->view->UserArray=$getUserArray;
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);   
+        $this->view->getCandidates=$getCandidates;
         $this->render('add-portfolio');
         //
      }
@@ -1178,6 +1202,12 @@ class CandidateController extends Application_Controller_Action
         $images=$core->getImagesPortfolio($CandidatePortfolioID);
         $this->view->Portfolio=$portfolio;
         $this->view->ListImages=$images;
+
+        $getUserArray=$core->getCandidateInfo($UserID);   
+        $this->view->UserArray=$getUserArray;
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getCandidates=$core->getCandidateProfile($CandidateprofileID);   
+        $this->view->getCandidates=$getCandidates;
        // echo("Testt:<pre>");print_r($images);echo("</pre>");
         $this->render('edit-portfolio');
      }

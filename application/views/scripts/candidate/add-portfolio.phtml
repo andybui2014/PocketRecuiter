@@ -1,4 +1,9 @@
+<?php
+    $UserArray=$this->UserArray;
+    $getCandidates=$this->getCandidates;
+   // echo("<br><br>tetst:<pre>");print_r($UserArray);echo("<pre>");
 
+?>
 <style>
     body {
         background: none repeat scroll 0 0 #ededed;
@@ -146,7 +151,11 @@
     }
    
     .logo{
-        background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;
+       /* background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;*/
+       <?php
+        $image=URL_MEDIA_PHOTO.$getCandidates["image"];
+       ?>
+       background: url('<?php if(!empty($getCandidates["image"])) echo  $image; else echo URL_THEMES."images/avatar_none.jpg";?>') no-repeat;
         width: 211px;
         height: 165px;
     }
@@ -193,12 +202,7 @@
 </style>
 <script src="<?=URL_THEMES.'js/portfolio.js';?>"></script>
 
-<?php
-    $UserArray=$this->UserArray;
-    $getCandidates=$this->getCandidates;
-    //$listEducation=$this->Educationlist;
 
-?>
 
 <div class="container" style="padding-top:40px;">
 
@@ -206,7 +210,7 @@
         <div class="col-md-3">
             <div class="text-center">
               
-               <div class="logo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></div>
+               <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
             </div>
             <span  style="font-size: 12px;color: #005595;"><?= $UserArray["emailaddress"]?></span><br/>
             <span style="font-weight:bold">View my profile</span> <br/>
