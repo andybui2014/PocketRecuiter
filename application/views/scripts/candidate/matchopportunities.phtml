@@ -252,6 +252,8 @@
         $("#add-opp-skills").unbind("change").bind("change",objMatch.addOppSkillsToSearch)
         $(".btn-for-apply").unbind("click").bind("click",objMatch.candidateApply)
         objMatch.matchOpportunities(<?=$this->CandidateProfileID?>)
+        $("#nav li").removeClass("active");
+        $('#Opportunities').addClass('active'); 
     })
 </script>
 

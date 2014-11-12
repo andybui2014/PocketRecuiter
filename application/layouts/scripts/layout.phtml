@@ -19,6 +19,11 @@ $helper = $this->layout()->_helper;
     <script src="<?=URL_THEMES.'js/bootstrap.min.js';?>"></script>
     <script src="<?=URL_THEMES.'js/bootstrap-datepicker.js';?>"></script>
     <script src="<?=URL_THEMES.'js/pocket.main.js';?>"></script>
+    <style>
+    .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+background-color: #146EA3;
+}
+    </style>
 
 </head>
 
@@ -205,11 +210,11 @@ $loginClient = $this->layout()->loginclient;
         <?php }elseif($loginClient['usertype']==2){ ?>
         <header class="sb-page-header">
             <div class="container">
-                <ul class="nav navbar-nav">
-                    <li><a  href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>">Profile Builder</a></li>
-                    <li><a  href="<?=$helper->url('myprofile','candidate');?>">My Profile</a></li>
-                    <li><a href="<?= URL_BASE . 'candidate/activities' ?>">Activities</a></li>
-                    <li><a  href="<?=$helper->url('matchopportunities','candidate');?>">Match Opportunities</a></li>
+                <ul class="nav navbar-nav" id="nav">
+                    <li class="active" id=""><a  href="<?=$helper->url('profile-builder?utm_source=contact','candidate');?>">Profile Builder</a></li>
+                    <li id="myprofile"><a  href="<?=$helper->url('myprofile','candidate');?>">My Profile</a></li>
+                    <li id="Activities"><a href="<?= URL_BASE . 'candidate/activities' ?>">Activities</a></li>
+                    <li id="Opportunities"><a  href="<?=$helper->url('matchopportunities','candidate');?>">Match Opportunities</a></li>
                 </ul>
             </div>
         </header>
@@ -298,6 +303,7 @@ $loginClient = $this->layout()->loginclient;
 </footer>
 <!--Footer-->
 <!--End Container-->
+
 </body>
 
 </html>

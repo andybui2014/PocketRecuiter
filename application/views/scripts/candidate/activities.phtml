@@ -115,5 +115,11 @@
 <script>
    $('#Active-Check-All').unbind('click').bind('click',objActivities.activitiesCheckedAll);
    $('.Active-Is-Check').unbind('click').bind('click',objActivities.activitiesChecked);
+   $(document).ready(function () {
+        $("#nav li").removeClass("active");//this will remove the active class from  
+                                           //previously active menu item 
+        $('#Activities').addClass('active');
+        
+    });
 </script>
 
