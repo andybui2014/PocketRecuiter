@@ -1,7 +1,7 @@
 <script src="<?=URL_THEMES.'js/mobile.career.js?vs=1';?>"></script>
 <script>
        var careerMatch = new career();
-       
+
        $(".navbar-nav li").removeClass("active");//this will remove the active class from previously active menu  item
 </script>
 <style>
@@ -199,9 +199,9 @@
                                     echo '<div class="col-md-12" style="height:10px!important"></div>';
                                 }
                                 ?>
-                                <div class="col-md-12" >
-                                    <div class="col-md-1" style=""> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
-                                    <div class="col-md-11" style="">
+                                <div class="col-md-12" style="padding-left: 0" >
+                                    <div class="col-md-1" style="padding-left: 6px"> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
+                                    <div class="col-md-11" style="padding-left: 0">
                                         <div class="col-md-12" style="color: #1a5187"><strong><?=$candidateInfo['firstname']?> &nbsp; <?=$candidateInfo['lastname']?></strong></div>
                                         <div class="col-md-12"><strong>Expected Salary :  &nbsp;
                                                 <?php

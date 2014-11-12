@@ -517,8 +517,8 @@ career.prototype = {
                                 html += "<div class='col-md-12' style='height:10px!important'></div>"
                             }
                             html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px; margin-right: 5px' >" +
-                                "<div class='col-md-12'>" +
-                                "<div class='col-md-1' style=''> " +
+                                "<div class='col-md-12' style='padding-left: 0px'>" +
+                                "<div class='col-md-1' style='padding-left: 6px'> " +
                                 "<img src='"+images+"'>" +
                                 "</div>" +
                                     "<div class='col-md-11' style=''>" +
