@@ -518,10 +518,10 @@ career.prototype = {
                             }
                             html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px; margin-right: 5px' >" +
                                 "<div class='col-md-12'>" +
-                                "<div class='col-md-1' style='margin-left: -25px'> " +
+                                "<div class='col-md-1' style=''> " +
                                 "<img src='"+images+"'>" +
                                 "</div>" +
-                                    "<div class='col-md-11' style='margin-left: -25px'>" +
+                                    "<div class='col-md-11' style=''>" +
                                             "<div class='col-md-12' style='color: #1a5187'><strong>" + candidateInfo.firstname +" &nbsp;"+ candidateInfo.lastname +" </strong></div>" +
                                             "<div class='col-md-12'><strong>Expected Salary :&nbsp;"
                                 if(candidateInfo.minimumsalary !=null && candidateInfo.maximumsalary !=null){
