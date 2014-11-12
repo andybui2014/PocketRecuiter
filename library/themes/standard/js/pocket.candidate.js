@@ -8,7 +8,9 @@ pocketCandidate.prototype.constructor = pocketCandidate;
 pocketCandidate.prototype = {
     init: function(){
         $('#cmd-next').unbind('click').bind('click',this.next);
+        $('#cmd-next1').unbind('click').bind('click',this.next);
         $('#cmd-back').unbind('click').bind('click',this.back);
+        $('#cmd-back1').unbind('click').bind('click',this.back);
         $('#add-another').unbind('click').bind('click',this.addAnother);
     },
     editEmployment: function(){

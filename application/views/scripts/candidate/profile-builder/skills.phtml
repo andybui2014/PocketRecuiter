@@ -186,6 +186,11 @@ $getCandidates=$this->getCandidates;
                         <a href="<?=$helper->url('profile-builder?utm_source=portfolio','candidate');?>" <?=$this->step =='portfolio'? 'class="active"':'';?>>Portfolio</a>
                         <span class="pull-right" style="position: relative;vertical-align: bottom;font-weight: bold;margin: 7px 10px auto auto"><?=$this->stepCount;?></span>
                     </div>
+                
+                <div class="pull-right" style="padding-right:15px">
+                            <button class="btn btn-sm btn-default" type="button" id="cmd-back1" data-back="employment"><strong><i class="glyphicon glyphicon-chevron-left"></i></strong></button>
+                            <button class="btn btn-sm btn-success" type="button" id="cmd-next1" data-next="portfolio"><strong><i class="glyphicon glyphicon-chevron-right"></i></strong></button>
+                </div>
                 <div id="tree-lst">
                     <?=$this->tree;?>
                 </div>
@@ -193,7 +198,7 @@ $getCandidates=$this->getCandidates;
                 <div class="col-md-12">
                     <div style="margin-top: 30px">
                         <button id="cmd-back" data-back="employment" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
-                        <button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;
+                        <!--<button class="btn btn-default disabled" type="button"><strong>Skip</strong></button> &nbsp;-->
                         <button id="cmd-next" data-id="skills" type="button" data-next="portfolio" class="btn btn-success" type="button"><strong>Next</strong></button>
                     </div>
                 </div>

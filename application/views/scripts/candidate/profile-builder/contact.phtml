@@ -190,6 +190,12 @@ $helper = $this->layout()->_helper;
                             <?=$this->stepCount;?>
                         </span>
                     </div>
+                   <!-- <div class="col-md-3">-->
+                        <div class="pull-right" style="padding-right:15px">
+                           <!-- <button class="btn btn-sm btn-default" type="button" id="cmd-back" data-back="skills"><strong><i class="glyphicon glyphicon-chevron-left"></i></strong></button>-->
+                            <button class="btn btn-sm btn-success" type="button" id="cmd-next1" data-next="education"><strong><i class="glyphicon glyphicon-chevron-right"></i></strong></button>
+                        <!--</div>-->
+                    </div>
                     <div class="col-md-8" style="padding-left:0;">
 
                         <form id="form-contact" role="form">
@@ -227,10 +233,14 @@ $helper = $this->layout()->_helper;
                             </div>
                             <div>
 
-                                <button id="cmd-back" class="btn btn-default disabled" type="button"  data-back="contact"><strong>Skip</strong></button> &nbsp;
+                               <!-- <button id="cmd-back" class="btn btn-default disabled" type="button"  data-back="contact"><strong>Skip</strong></button> &nbsp;-->
                                 <button data-loading-text="Loading..." type="button" class="btn btn-success" data-next="education" data-id="contact" id="cmd-next" type="button"><strong>Next</strong></button>
                             </div>
+                           
                         </form>
+                    </div>
+                    
+                                            
                     </div>
                 </div>
             </div>
