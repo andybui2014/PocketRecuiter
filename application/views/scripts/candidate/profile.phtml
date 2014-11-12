@@ -4,7 +4,7 @@
     $SkillName=$this->SkillName;
     $CandidateEmployment=$this->CandidateEmployment;
     $Education=$this->Education;
- // echo ("<br><br><br>test:<pre>");print_r($getCandidates);echo("</pre>");
+ // echo ("<br><br><br>test:<pre>");print_r($Education);echo("</pre>");
 ?>
 <style>
     body {
@@ -318,6 +318,7 @@
                         <?php
                             foreach($Education as $values)
                             {
+                                if($values["display"]==1){
                         ?>
                         <div style="padding-bottom:10px;">
                             <span style="font-weight:bold"><?=$values["title"]?></span><br>
@@ -332,7 +333,7 @@
                             </span>     
                           </div>               
                               <?php
-                            }
+                                }}
                         ?>
                     
                     </div>

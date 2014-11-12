@@ -4,10 +4,21 @@ var http_arr = new Array();
 function doUpload() {
     document.getElementById('progress-group').innerHTML = ''; 
     var files = document.getElementById('myfile').files; 
+  //  for (i=0;i<files.length;i++) {
+       // uploadFile(files[i], i);
+    //}
+   // return false;
+   var test= $('#myfile').val();
+   // alert("tetst:"+test);
+   if(test!="")
+   {
     for (i=0;i<files.length;i++) {
         uploadFile(files[i], i);
     }
     return false;
+   }else{
+       location.reload();
+   }
 }
  
 function uploadFile(file, index) {

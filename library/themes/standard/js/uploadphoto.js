@@ -4,10 +4,17 @@ var http_arr = new Array();
 function doUpload() {
     document.getElementById('progress-group').innerHTML = ''; 
     var files = document.getElementById('myfile').files; 
+    var test= $('#myfile').val();
+   // alert("tetst:"+test);
+   if(test!="")
+   {
     for (i=0;i<files.length;i++) {
         uploadFile(files[i], i);
     }
     return false;
+   }else{
+       location.reload();
+   }
 }
  
 function uploadFile(file, index) {
@@ -70,6 +77,7 @@ function uploadFile(file, index) {
     var data = new FormData();
     data.append('filename', file.name);
     data.append('myfile', file);
+  //  data: $('#Register').serializeArray(),
   //  http.open('POST', 'uploadfile', true);
     http.open('POST', 'do-upload-photo', true);
     http.send(data);
