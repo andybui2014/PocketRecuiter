@@ -696,7 +696,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
     {
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from(array('o'=>'opportunity'),array('OpportunityID'));
+        $select->from(array('o'=>'opportunity'),array('OpportunityID','status'));
 
         $select->join(array('sk'=>'opportunity_skill'),
             'sk.OpportunityID = o.OpportunityID',
@@ -746,7 +746,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         } else {
             $list = array();
             foreach($records as $rec){
-                $list[] = $rec['OpportunityID'];
+                $list[] = $rec;
             }
             return $list;
         }
@@ -976,12 +976,16 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $result;
     }
        
-    public function getCountryList()
+    public function getCountryList($codes)
     {
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('c'=>'country'),array('*'));
-
+        if(!empty($codes) || count($codes)>0){
+            $query_include = "'".implode("','",$codes)."'";
+            $select->where("c.code  IN ($query_include)");
+    }
+       // print_r($select->__toString());die();
         $records = PR_Database::fetchAll($select);
         return $records;
     }

@@ -1,7 +1,13 @@
 
 <?php
 $helper = $this->layout()->_helper;
+function echoActiveClassIfRequestMatches($requestUri)
+{
+    $current_file_name = basename($_SERVER['REQUEST_URI'], ".php");
 
+    if ($current_file_name == $requestUri)
+        echo 'class="active-146EA3"';
+}
 ?>
 <!DOCTYPE html>
 <html class="full" lang="en">
@@ -23,6 +29,7 @@ $helper = $this->layout()->_helper;
     .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
 background-color: #146EA3;
 }
+        .active-146EA3 { background-color: #146EA3;}
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     background-color: #146EA3;
     color: #fff;
@@ -194,7 +201,7 @@ $loginClient = $this->layout()->loginclient;
         <header class="sb-page-header">
             <div class="container">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown">
+                    <li class="dropdown active" id="dasboard-test">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Dashboard <span class="caret"></span>
                         </a>
@@ -203,11 +210,11 @@ $loginClient = $this->layout()->loginclient;
                             <li><a href="<?=$helper->url('index','test');?>">Manage Test</a></li>
                         </ul>
                     </li>
-                    <li><a  href="<?=$helper->url('careerlist','career');?>">Post Career</a></li>
-                    <li><a  href="<?=$helper->url('careermatch','career');?>">Match Candidate</a></li>
-                    <li><a href="<?= URL_BASE . 'candidate/activities' ?>">Activities</a></li>
-                    <li><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
-                    <li><a  href="<?=$helper->url('watch-list','candidate');?>">Watch List</a></li>
+                    <li <?=echoActiveClassIfRequestMatches("careerlist")?>><a  href="<?=$helper->url('careerlist','career');?>">Post Career</a></li>
+                    <li <?=echoActiveClassIfRequestMatches("careermatch")?>><a  href="<?=$helper->url('careermatch','career');?>">Match Candidate</a></li>
+                    <li <?=echoActiveClassIfRequestMatches("activities")?>><a href="<?= URL_BASE . 'candidate/activities' ?>">Activities</a></li>
+                    <li <?=echoActiveClassIfRequestMatches("list")?>><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
+                    <li <?=echoActiveClassIfRequestMatches("watch-list")?>><a  href="<?=$helper->url('watch-list','candidate');?>">Watch List</a></li>
                 </ul>
             </div>
         </header>

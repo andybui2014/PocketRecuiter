@@ -69,12 +69,6 @@ class CandidateController extends Application_Controller_Action
         $core = new PR_Api_Core_CandidateClass();
         $info = $core->getContactInfo($client['UserID']);
         $this->view->info = $info;
-        
-        $getUserArray=$core->getCandidateInfo($client['UserID']);
-        $this->view->client = $getUserArray;  
-        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
-        $getCandidates=$core->getCandidateProfile($Candidateprofile_ID);
-        $this->view->getCandidates=$getCandidates;
         $this->render('contact-info');
     }
     public function updateContactInfoAction(){
@@ -1387,6 +1381,7 @@ class CandidateController extends Application_Controller_Action
         //$country_List = array();
         $cityUnique = array();
         $city_List = array();
+        $country_code = array();
 
         $core = new PR_Api_Core_CandidateClass();
 
@@ -1394,10 +1389,15 @@ class CandidateController extends Application_Controller_Action
 
         if($result !=""){
             foreach ($result as $kk=>$oppListInfo){
+                if($oppListInfo['status'] ==1){
                 $industryListUnique[] = trim(strtolower($oppListInfo['industry']));
-               // $experiencedUnique[] = $oppListInfo['experienced'];
+                    if($oppListInfo['country'] !="" || !empty($oppListInfo['country'])){
                 $countryUnique[] = $oppListInfo['country'];
+                    }
+
+                    if($oppListInfo['city'] !="" || !empty($oppListInfo['city'])){
                 $cityUnique[] =trim(strtolower($oppListInfo['city']));
+                    }
 
                 $hadApplied = $core->opportunityCandidateHadApplied($oppListInfo['OpportunityID'],$CandidateProfileID);
                 if($hadApplied){
@@ -1407,7 +1407,8 @@ class CandidateController extends Application_Controller_Action
                     $oppListInfo['hadApplied'] =false ;
                     $oppList[] = $oppListInfo;
                 }
-
+                }
+               // $experiencedUnique[] = $oppListInfo['experienced'];
             }
 
             $industryListUnique = array_unique($industryListUnique);
@@ -1420,16 +1421,12 @@ class CandidateController extends Application_Controller_Action
             foreach ($cityUnique as $cityInfo) {
                 $city_List[] = ucwords($cityInfo);
             }
+
+            $country_code = array_unique($countryUnique);
         }
 
         $experienced_List = $PR_Api->getListExperiencedTime();
-        $country_List = $core->getCountryList();
-        /*echo "<pre>";
-            print_r($experienced_List);
-        echo "</pre>"; die(); */
-
-
-
+        $country_List = $core->getCountryList($country_code);
         $this->view->skillList = $skillList;
         //$this->view->oppList = $oppList;
         $this->view->industryList = $industryList;
@@ -1459,16 +1456,19 @@ class CandidateController extends Application_Controller_Action
         }
 
         $core = new PR_Api_Core_CandidateClass();
-        $opportunityListID = $core->getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList);
-
+        $opportunityList1 = $core->getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList);
+        /*echo "<pre>";
+            print_r($opportunityList1Info); echo "<br>";
+        echo "</pre>"; die(); */
         $PR_Api = new PR_Api_Core_CareerClass();
 
         $oppList = array();
         //$result = array();
-       if($opportunityListID !=""){
-            foreach($opportunityListID as $key=>$opportunityID){
-                $result = $PR_Api->getOpportunityInfoByID($opportunityID);
-               $hadApplied = $core->opportunityCandidateHadApplied($opportunityID,$CandidateProfileID);
+       if($opportunityList1 !=""){
+            foreach($opportunityList1 as $key=>$opportunityList1Info){
+                if($opportunityList1Info['status']==1){
+                   $result = $PR_Api->getOpportunityInfoByID($opportunityList1Info['OpportunityID']);
+                   $hadApplied = $core->opportunityCandidateHadApplied($opportunityList1Info['OpportunityID'],$CandidateProfileID);
 
                if($hadApplied){
                     $result['hadApplied'] =true ;
@@ -1477,6 +1477,8 @@ class CandidateController extends Application_Controller_Action
                    $result['hadApplied'] =false ;
                    $oppList[] = $result;
                }
+            }
+
             }
         }
 

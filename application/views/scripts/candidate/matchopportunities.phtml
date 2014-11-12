@@ -92,7 +92,7 @@
 
     <div class="col-md-12" style="padding-left: 0px; padding-right: 0px; border: 1px #ccc solid; min-height: 280px; background-color: #fff">
         <form id="form-match-opportunity-sear" name="form-match-opportunity-sear">
-            <div style="margin-top: 15px"><span class="caret" style="float:right; margin-right: 8px"></span></div>
+            <div style="margin-top: 15px"><span class="caret11" style="float:right; margin-right: 8px"></span></div>
             <div class="col-md-12" style="margin-top:0px">
                 <div class="col-md-6">
                     <select class="form-control" name="technology_id">
@@ -126,7 +126,7 @@
                     <select class="form-control" name="country_name">
                         <option value="">Country</option>
                         <?php
-                        if($this->experienced_List !=""){
+                        if($this->country_List !=""){
                             foreach ($this->country_List  as $kc=>$countryInfo){ ?>
                                 <option value="<?=$countryInfo['code']?>" ><?=$countryInfo['name']?></option>
                             <?php
@@ -141,7 +141,8 @@
                         <option value="">City</option>
                         <?php
                         if($this->city_List !=""){
-                            foreach ($this->city_List  as $cityInfo){ ?>
+                            foreach ($this->city_List  as $cityInfo){
+                                ?>
                                 <option value="<?=$cityInfo?>" ><?=$cityInfo?></option>
                             <?php
                             }

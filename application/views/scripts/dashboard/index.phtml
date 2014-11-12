@@ -250,5 +250,10 @@ $helper = $this->layout()->_helper;
 </div>
 <script src="<?=URL_THEMES.'js/pocket.dashboard.js';?>"></script>
 <script>
+    $(document).ready(function () {
+        $("#nav li").removeClass("active");//this will remove the active class from previously active menu item
+        $('#dasboard-test').addClass('active');
+
+    });
 
 </script>
