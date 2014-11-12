@@ -96,7 +96,7 @@
             <div class="col-md-12" style="margin-top:0px">
                 <div class="col-md-6">
                     <select class="form-control" name="technology_id">
-                        <option value="">Information Technology </option>
+                        <option value="" style="color: red!important" >Select Industry</option>
                         <?php
                         if($this->industryList !=""){
                             foreach ($this->industryList as $industry) {
@@ -110,7 +110,7 @@
                 </div>
                 <div class="col-md-2">
                     <select class="form-control" name="experience_name">
-                        <option value="">Experienced</option>
+                        <option value="">Select Experience</option>
                         <?php
                         if($this->experienced_List !=""){
                             foreach ($this->experienced_List  as $ek=>$experiencedInfo){ ?>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-md-2">
                     <select class="form-control" name="country_name">
-                        <option value="">Country</option>
+                        <option value="">Select Country</option>
                         <?php
                         if($this->country_List !=""){
                             foreach ($this->country_List  as $kc=>$countryInfo){ ?>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="col-md-2">
                     <select class="form-control" name="city_name">
-                        <option value="">City</option>
+                        <option value="">Select City</option>
                         <?php
                         if($this->city_List !=""){
                             foreach ($this->city_List  as $cityInfo){
