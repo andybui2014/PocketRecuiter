@@ -86,7 +86,7 @@ $getCandidates=$this->getCandidates;
                 </div>
                 <div class="col-md-12">
                     <div style="margin-top: 30px">
-                        <button id="cmd-backview" data-back="" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;
+                      <!--  <button id="cmd-backview" data-back="" class="btn btn-default" type="button"><strong>Back</strong></button> &nbsp;-->
                         <button id="cmd-nextview" data-id="" type="button" data-next="" class="btn btn-success" type="button"><strong>Next</strong></button>
                     </div>
                 </div>
@@ -170,5 +170,5 @@ $getCandidates=$this->getCandidates;
      var prCandidate= new pocketCandidate();
      prCandidate.editSkills('<?=URL_THEMES;?>');
      $('#cmd-nextview').unbind('click').bind('click',prCandidate.skillViewNext);
-     $('#cmd-backview').unbind('click').bind('click',prCandidate.skillViewBack);
+    // $('#cmd-backview').unbind('click').bind('click',prCandidate.skillViewBack);
 </script>

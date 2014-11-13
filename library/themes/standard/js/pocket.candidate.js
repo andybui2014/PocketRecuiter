@@ -367,16 +367,34 @@ pocketCandidate.prototype = {
             if($(this).attr('class') !=='img-toggle' && $(this).attr('data-status')=='select'){
                 data.push($(this).attr('data-id'));
             }
+            
         });
+        
         $.post('./do-update-skills',{data:data},function(xhr){
             if(xhr.success){
-                //location.href = './profile-builder?utm_source=' + $this.attr('data-next');
-                location.reload();
+                //console.log(data);
+            
+                for(var i=0; i<data.length; i++){
+                  var id=data[0];
+                }
+            //alert(id);
+                location.href = 'skills-edit?id='+id;
+                //location.reload();
             }
         })
     },
     skillViewBack:function(){
         location.reload();
+    },
+    updateskill:function(){
+        $.post('./do-edit-skill',{data: $('#form-skill').serializeArray()},function(xhr){
+                    if(xhr.success){
+                        location.reload();
+                    }
+                })
+                
+         
+        
     },
     editSkills: function(url){
         $(window).load(function(){

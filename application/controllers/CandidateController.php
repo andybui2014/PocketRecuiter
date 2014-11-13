@@ -69,6 +69,12 @@ class CandidateController extends Application_Controller_Action
         $core = new PR_Api_Core_CandidateClass();
         $info = $core->getContactInfo($client['UserID']);
         $this->view->info = $info;
+        
+        $getUserArray=$core->getCandidateInfo($client['UserID']);
+        $this->view->client = $getUserArray;  
+        $Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+        $getCandidates=$core->getCandidateProfile($Candidateprofile_ID);
+        $this->view->getCandidates=$getCandidates;
         $this->render('contact-info');
     }
     public function updateContactInfoAction(){
@@ -278,7 +284,7 @@ class CandidateController extends Application_Controller_Action
                             $tree .= "<div class='col-md-4' style='margin:0;padding:0'><div class='tree'><ul>";
                             $tree .= "<li>
                                         <img data-id='".$item['SkillID']."' data-status='".$select."' class='img-parent' src='".$src."'/>
-                                        <a href='skills-edit?SkillID=$id'><strong>" . $item['SkillName'] . "</strong></a>
+                                        <a href='#'><strong>" . $item['SkillName'] . "</strong></a>
                                         <span><img class='img-toggle' src='".$toggle."'/></span>";
                             $tree .= $this->skillChilds($item['SkillID'], $item['Level']+1);
                             $tree .= "</li></ul></div></div>";
@@ -1724,7 +1730,7 @@ class CandidateController extends Application_Controller_Action
         $this->render('upload-photo');                  
                      
      }
-      public function doUploadPhotoAction()
+     public function doUploadPhotoAction()
      {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -1782,7 +1788,7 @@ class CandidateController extends Application_Controller_Action
 			$request = $this->getRequest();
 			$params = $request->getParams();        
 			$api_candidate= new PR_Api_Core_CandidateClass();
-			$SkillID=$params["SkillID"]; 
+			$SkillID=$params["id"]; 
 			$this->view->SkillID= $SkillID;
 			$getUserArray=$api_candidate->getCandidateInfo($UserID);
 			$this->view->UserArray = $getUserArray;  
@@ -1795,5 +1801,37 @@ class CandidateController extends Application_Controller_Action
 		   // echo("testt:<pre>");print_r($params);echo("</pre>");
 		   
 	  }  
+     public function doEditSkillAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER); 
+        $CandidateProfileID=$user["CandidateProfileID"];
+        $ajaxRes = array('success'=>0,'info'=>null);
+       // echo("testt:<prre>");print_r($params);echo("</pre>");die();
+         if(!empty($params)){
+                foreach($params['data'] as $item){
+                    if($item['name']=='skill_id') $SkillID = $item['value'];
+                    if($item['name']=='YearsExperience') $YearsExperience = $item['value'];
+                    if($item['name']=='LevelOfExperience')  $LevelOfExperience = $item['value'];
+                }
+                $core = new PR_Api_Core_CandidateClass();
+                if($core->updateCandidate_skill($CandidateProfileID,$SkillID,$YearsExperience,$LevelOfExperience)){
+                    $ajaxRes['success'] = 1;
+                }
+            }
+            
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+       
+        
+     }
+      
 
 }

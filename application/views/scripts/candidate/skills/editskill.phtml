@@ -3,7 +3,7 @@ $helper = $this->layout()->_helper;
 $UserArray=$this->UserArray;
 $getCandidates=$this->getCandidates;
 $Skills=$this->Skills;
-//echo("<br><br><br>User:<pre>");print_r($UserArray);echo("</pre>");
+//echo("<br><br><br>User:<pre>");print_r($Skills);echo("</pre>");
 ?>
 <style>
 
@@ -108,9 +108,10 @@ $Skills=$this->Skills;
                                     if(!empty($skillarray["CandidateProfileID"]))
                                     {
                                         $i=$i+1;
+                                        $id=$skillarray["SkillID"];
                                        // echo $skillarray["SkillName"]."<br>";
                             ?>
-                            <li role="presentation" <?php if($skillarray["SkillID"]==$this->SkillID) echo "class='active'"; ?>><a href="#" style="font-weight:bold;font-size:12px"><?=$skillarray["SkillName"]?></a></li>
+                            <li role="presentation" <?php if($skillarray["SkillID"]==$this->SkillID) echo "class='active'"; ?>><a href="<?= URL_BASE ?>candidate/skills-edit?id=<?=$skillarray["SkillID"]?>" style="font-weight:bold;font-size:12px"><?=$skillarray["SkillName"]?></a></li>
                             <?php
                                     }
                                 }
@@ -123,29 +124,55 @@ $Skills=$this->Skills;
                     <div class="tab-content">
 
                             <div class="tab-pane active" >
-                               <div style="padding-top:10px;padding-left:20px"> <strong style="font-size:17px">Java Questionnaire</strong></div>
-                                <div class="col-md-9" style="padding-left:30px;padding-top:20px">
-                                    <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> How many years real world experience in Java overall?</span>
-                                    <div class="form-group" style="margin-left:60px">
+
+                            <?php
+                            $id=$_REQUEST["id"];
+                            $core=new PR_Api_Core_CandidateClass();
+                            $list=$core->get_skill_array($id);
+                          //  echo ("list:<pre>");print_r($list);echo("</pre>");
+                           foreach($list as $values)
+                           {
+                            ?>
+                               <div style="padding-top:10px;padding-left:20px"> <strong style="font-size:17px"><?=$values["SkillName"]?> Questionnaire</strong></div>
+                               <form role="form" method="post" name="form-skill" id="form-skill">
+                               <input type="hidden" name="skill_id" id="skill_id" value="<?=$id?>">
+                                <div class="col-md-10" style="padding-left:30px;padding-top:20px">
+                                    <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> How many years real world experience in <?=$values["SkillName"]?> overall?</span>
+                                   <!-- <div class="form-group" style="margin-left:60px">
                                         <select class="form-control" style="width:300px;">
                                             <option>ect...</option>
                                         </select>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group" style="margin-left:60px">
-                                        <select class="form-control" style="width:300px;">
-                                            <option>8 year</option>
+                                        <select class="form-control" style="width:300px;" name="YearsExperience" id="YearsExperience">
+                                        <option>select</option>
+                                            <option value="1" <?php if($values["YearsExperience"]==1) echo "selected";?>>1 Year</option>
+                                            <option value="2" <?php if($values["YearsExperience"]==2) echo "selected";?> >2 Years</option>
+                                            <option value="3" <?php if($values["YearsExperience"]==3) echo "selected";?>>3 Years</option>
+                                            <option value="4" <?php if($values["YearsExperience"]==4) echo "selected";?>>4 Years</option>
+                                            <option value="5" <?php if($values["YearsExperience"]==5) echo "selected";?>>5 Years</option>
+                                            <option value="6" <?php if($values["YearsExperience"]==6) echo "selected";?>>6 Years</option>
+                                            <option value="7" <?php if($values["YearsExperience"]==7) echo "selected";?>>7 Years</option>
+                                            <option value="8" <?php if($values["YearsExperience"]==8) echo "selected";?>>8 Years</option>
+                                            <option value="9" <?php if($values["YearsExperience"]==9) echo "selected";?>>9 Years</option>
+                                            <option value="10" <?php if($values["YearsExperience"]==10) echo "selected";?>>10 Years</option>
+                                            <option value="11" <?php if($values["YearsExperience"]==11) echo "selected";?>>>10 Years</option>
                                         </select>
                                     </div>
                                      </div>
                                 <div class="col-md-9" style="padding-left:30px;padding-top:10px">
-                                    <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Leve of expertise</span>
+                                    <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Level of expertise</span>
                                     <div class="form-group" style="margin-left:60px">
-                                        <select class="form-control" style="width:300px;">
-                                            <option>Beginner</option>
+                                        <select class="form-control" style="width:300px;" name="LevelOfExperience" id="LevelOfExperience">
+                                            <option>select</option>
+                                            <option value="Beginner" <?php if($values["LevelOfExperience"]=='Beginner') echo "selected";?>>Beginner</option>
+                                            <option value="Intermediate" <?php if($values["LevelOfExperience"]=='Intermediate') echo "selected";?>>Intermediate</option>
+                                            <option value="Senior" <?php if($values["LevelOfExperience"]=='Senior') echo "selected";?>>Senior</option>
+                                            <option value="Skilled" <?php if($values["LevelOfExperience"]=='Skilled') echo "selected";?>>Skilled</option>
                                         </select>
                                     </div>                                    
                                      </div>
-                                <div class="col-md-9" style="padding-left:30px;padding-top:10px">
+                                <!--<div class="col-md-9" style="padding-left:30px;padding-top:10px">
                                     <img src="<?=URL_THEMES.'images/trees/ico_expand.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Peroin mauris tortor, congue sed rhoncus eu.</span>
                                                                         
                                      </div>
@@ -156,12 +183,16 @@ $Skills=$this->Skills;
                                 <div class="col-md-9" style="padding-left:30px;padding-top:10px">
                                     <img src="<?=URL_THEMES.'images/trees/ico_expand.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> Peroin mauris tortor, congue sed rhoncus eu.</span>
                                                                         
-                                </div>
+                                </div><!-->
+                                </form>
+                                <?php
+                           }?>
                             </div>
+                           
                     <div class="col-md-12">
                     <div style="margin-top: 30px;margin-bottom:40px;margin-left:20px">
                         <button id="cmbackview" data-back="" class="btn btn-default" type="button" onclick="document.location='skills?utm_source=index'"><strong>Back</strong></button> &nbsp;
-                        <button id="cmd-nextview" data-id="" type="button" data-next="" class="btn btn-success" type="button"><strong>Save & Next</strong></button>
+                        <button id="cmd-save" data-id="" type="button" data-next="" class="btn btn-success" type="button"><strong>Save</strong></button>
                     </div>
                 </div>
                 </div>
@@ -244,7 +275,7 @@ $Skills=$this->Skills;
  <script>
      var prCandidate= new pocketCandidate();
      prCandidate.editSkills('<?=URL_THEMES;?>');
-     $('#cmd-nextview').unbind('click').bind('click',prCandidate.skillViewNext);
+     $('#cmd-save').unbind('click').bind('click',prCandidate.updateskill);
      $('#cmd-backview').unbind('click').bind('click',prCandidate.skillViewBack);
      $(document).ready(function(){
       $("button").click(function(){

@@ -294,4 +294,35 @@ class PR_Api_Core_CandidateExtClass
 
         return $result;
     }
+   public function get_skill_array($SKILLID)
+   {
+       
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('sk'=>'skill'),array('*'));
+        $select->join(array('c_sk'=>'candidate_skill'),
+                    'c_sk.SkillID = sk.SkillID',
+                    array('*')
+        );
+       
+        $select->where("c_sk.SkillID = '$SKILLID'");
+        $records = PR_Database::fetchAll($select);
+        if(!empty($records))
+        {
+            return $records;
+        }
+        else
+        {
+            return 0;
+        }
+   }
+   public function updateCandidate_skill($CandidateProfileID,$SkillID,$YearsExperience,$LevelOfExperience)
+    {
+        
+       $result= PR_Database::update('candidate_skill',array('YearsExperience'=>$YearsExperience,'LevelOfExperience'=>                   $LevelOfExperience),
+                array("SkillID = '$SkillID'","CandidateProfileID='$CandidateProfileID'")
+        );
+
+        return $result;
+    }
 }
