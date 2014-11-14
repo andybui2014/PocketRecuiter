@@ -44,6 +44,86 @@ border-bottom: 1px solid #ddd;
 }
 #Register .message{color: #b81900;}
 </style>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalselectCompany" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel" style="color:#005595">Select or Add Company </h2>
+            </div>
+            <div class="modal-body login-modal" style="height:150px">
+            <form name="company-form" id="company-form">
+            <div class="col-md-12" >
+            
+                <div class="form-group">
+                    <label >Company Name* </label><span id="companynameLable" style="color: red"></span>
+               
+                    <select class="form-control" id="CompanyID" name="CompanyID">
+                        <option value="">Select Company</option>
+                        <?php
+                        $core= new PR_Api_Core_ClientClass();
+                        $listCompany = $core->getListCompany();
+                        foreach($listCompany as $k=>$v){
+                            $CompanyID = $v['CompanyID'];
+                            $Companyname = $v['Companyname'];
+                            ?>
+                            <option value="<?=$CompanyID?>"><?=$Companyname?></option>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                
+                <div style="padding-top:10px">
+                    <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#openModalCompany">Add Company</button></div>
+                </div>    
+                </div>
+                </form>
+            </div>
+            </div>
+        
+    </div>
+</div>
+<!--Modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalCompany" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel" style="color:#005595">Company Profile</h2>
+            </div>
+            <div class="modal-body login-modal">
+                <form id="form-companyProfile" name="form-companyProfile">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-group">
+                            <input value="" type="text" name="Companyname" id="Companyname" placeholder="Company Name" class="form-control">
+                             <span class="message" id="Companyname_message" style="color:#b81900"></span>
+                          </div>
+                            <input value="" type="text" name="Industry"  placeholder="Industry" class="form-control">
+                            <br>
+                            <input value="" type="text" name="Address"  placeholder="Address" class="form-control">
+                            
+                            <textarea style="display:none" val="" name="Description" placeholder="Description" class="form-control"></textarea>
+                            <br>
+                            <input value="" type="text" name="PhoneNumber"  placeholder="PhoneNumber" class="form-control">
+                            <br>
+                            <input value="" type="text" name="country"  placeholder="country" class="form-control">
+                            <br>
+                            <input value="" type="text" name="emailinfo"  placeholder="emailinfo" class="form-control">
+                            <br>
+                        </div>
+                    </div>
+                    <button id="saveCompanyProfile" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal-->
+
+<!---->
 <div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
     <div class="container">
         <span style="font-size:15px">This is the resume of the future! With Pocket Recruiter,</span><br/>
@@ -220,5 +300,28 @@ $SourceHtml .="</select>";
     $('#emailaddress').tooltip({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
     $('#emailaddress').tooltip('show');
     
+    
+    //
+
+    $('input:radio').on( "click", function() {
+        var usertype=$( "input:checked" ).val();
+        if(usertype=='1'){
+          //  alert("tetst");
+            $('#openModalselectCompany').modal('show')
+        }
+   
+    
+    });
+    $('#Companyname').blur(function () {
+       if($('#Companyname').val()=='')
+         {
+             $("#Companyname_message").addClass('has-error');
+                $("#Companyname_message").html("Companyname is not empty");
+                
+        }else{
+                $("#Companyname_message").removeClass('has-error').addClass('has-success');
+                $("#Companyname_message").html('');
+         } 
+    });
     });
 </script>

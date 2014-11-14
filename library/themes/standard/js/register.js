@@ -5,6 +5,8 @@ register.prototype = {
         $("#cmd-register").unbind('click').bind('click',this.profile);
        // $("#cmd-updateprofile").unbind('click').bind('click',this.isValidContactPhone);
         $('#show-profile').unbind('click').bind('click',this.reset);
+        //
+        $('#saveCompanyProfile').unbind('click').bind('click',this.saveCompanyProfile);
     },
     reset: function(){
         $('#Register-message').html('');
@@ -17,6 +19,7 @@ register.prototype = {
          $('#Register :input[name="RetypePassword"]').val('');
         $('#Register :input[name="usertype"]').val('');
     //   $('#Register :input[name="loginname"]').val('');
+        $('#form-companyProfile').find('[name="Companyname"]').value='';
         $('#Register').find('[name="About_us"]').value='';
         $('#Register :input[name="accept"]').val('');
         $('#Register #emailaddress').html('');
@@ -26,12 +29,72 @@ register.prototype = {
         $('#Register #password').html('');
         $('#Register #usertype').html('');
         $('#Register #About_us').html('');
+        $('#form-companyProfile #Companyname').html('');
         $('#Register #accept').html('');
        // $('#Register #loginname').html('');
        
         $('#cmd-register').button('reset');
+        $('#saveCompanyProfile').button('reset');
     },
-   
+   saveCompanyProfile:function(){
+        var btn = $(this);
+        btn.button('loading');
+        var fields = {
+             Companyname: { notEmpty: {message: 'Companyname is required.'}},
+        }
+        var Companyname = $('#form-companyProfile').find('[name="Companyname"]');
+        var Companyname_message = $('#form-companyProfile #Companyname_message');
+          if( typeof Companyname !=='undefined' && typeof Companyname !==undefined &&  Companyname.length > 0 ){
+            var error = false;
+               if(Companyname.val() ==''){
+                error = true;
+               Companyname_message.parent().addClass('has-error');
+               Companyname_message.html(fields.Companyname.notEmpty.message).fadeOut().fadeIn();
+            }else{
+               Companyname_message.parent().removeClass('has-error').addClass('has-success');
+               Companyname_message.html('');
+           }
+          }
+          if(error == false)
+          {
+                $.ajax({
+                url: 'register/do-company-profile',
+                data: $('#form-companyProfile').serializeArray(),
+                    type: 'POST',
+                error : function (xhr,error) {
+                    btn.button('reset');
+                },
+                success: function(data, status, xhr){
+                    if(data){
+                        btn.button('reset');
+                        $("#openModalCompany").modal('hide');
+                        var str = "<option value=''>Select Company</option>";
+                        var comID = data.comID;
+                        delete data.comID;
+                        $.each(data,function(k,val){
+                            var CompanyID = val["CompanyID"];
+                            var Companyname = val["Companyname"];
+
+                           if(comID == CompanyID){
+                                str +="<option value='"+CompanyID+"' selected='selected'>"+Companyname+"</option>";
+                           } else {
+                             str +="<option  value='"+CompanyID+"'>"+Companyname+"</option>";
+                            }
+
+                        });
+                        $('#CompanyID').find('option').remove().end().append(str) ;
+                       // career.prototype.setTestComp();
+                     
+                    }else{
+                        btn.button('reset');
+                    }
+                }
+            });
+          }
+          else{
+              btn.button('reset');
+          }
+    },
     
     profile: function(){
    var $this = $(this);
@@ -47,9 +110,6 @@ register.prototype = {
             RetypePassword: { identical: {message: 'Password and Retype Password are not the same.'}},
             loginname: { notEmpty: {message: 'User Name is required.'}}
             
-           
-           
-         
         }
 
         var fn = $('#Register :input[name="firstname"]');
@@ -161,9 +221,11 @@ register.prototype = {
                 pmrm_message.html('');
             }
             if(error==false){
+                var Register = $('#Register').serializeArray();
+                var company=$('#company-form').serializeArray();
                 $.ajax({
                     url:  'register/do-register' ,
-                    data: $('#Register').serializeArray(),
+                    data:{Register,company},
                     type: 'POST',
                     success: function(xhr){
                        

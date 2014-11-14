@@ -43,7 +43,8 @@ class PR_Api_Core_Register
             "emailaddress" => "emailaddress",
             "usertype" => "usertype",
             "password" => "password",
-            "HeardFrom" => "HeardFrom"
+            "HeardFrom" => "HeardFrom",
+            "CompanyID" =>"CompanyID"
 //"loginname" => "loginname"
             
         );
@@ -84,7 +85,8 @@ class PR_Api_Core_Register
                         "password" => $data['password'],
                         "HeardFrom" => $data['HeardFrom'],
                        // "loginname" => $data['loginname'],
-                        "CompanyID"=>$defaultCompanyID
+                        //"CompanyID"=>$defaultCompanyID
+                         "CompanyID"=>$data['CompanyID']
                         
             ));
                     }

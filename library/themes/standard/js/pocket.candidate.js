@@ -391,6 +391,9 @@ pocketCandidate.prototype = {
                     if(xhr.success){
                         location.reload();
                     }
+                    else{
+                        location.reload();
+                    }
                 })
                 
          
