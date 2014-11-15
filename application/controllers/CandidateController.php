@@ -1883,7 +1883,7 @@ class CandidateController extends Application_Controller_Action
             $listTestID=$PR_Api->getTestIDbyOpportunity($candidate_applied_list); //getQuestionsAnswer
 
             if(!empty($listTestID) && count($listTestID)>0){
-                //$questionAnswerList =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID,0,0);
+                $questionAnswerList =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID,0,0);
                 $rsRow =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID, $size,$offset);
                 $countRows = count($questionAnswerList);
                // $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($rsRow));
