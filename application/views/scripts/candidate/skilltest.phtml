@@ -1,0 +1,84 @@
+
+<style>
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+
+    .well{
+        margin-bottom: 0;
+        background-color: #ebebeb;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+        margin-bottom: 20px;
+        min-height: 20px;
+        padding: 19px;
+    }
+
+    .logo {
+        background: url("<?=URL_THEMES?>images/avatar_A.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        height: 165px;
+        width: 211px;
+    }
+
+
+</style>
+<script>
+    var urlImage = '<?=URL_THEMES;?>';
+    var ico_expand = urlImage+'images/trees/ico_expand.png';
+</script>
+<?php
+    $getUserArray = $this->client;
+?>
+<div class="container" style="padding-top:40px;margin-top:0px">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="well text-center col-md-12" style="padding:0px">
+                <div class="" style='height: 165px; width: 211px; background-position: center center; background-image:url("<?=URL_THEMES?>images/avatar_A.jpg"); background-repeat: no-repeat;display: inline-block;'>
+                </div>
+                <div class='col-md-12' style="text-align: right; padding-right:0px"><img style="" src="<?=URL_THEMES?>images/bg_grey_text.png"> </div>
+            </div>
+
+            <span  style="font-size: 12px;color: #005595;">andybui@gmail.com</span><br/>
+            <span style="font-weight:bold">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px">United States</span><span style="padding-left:5px;font-size:13px" class="">San Diego, CA, 12345</span>
+            </span>
+            <span><strong>Expected Salary: </strong></span><br/>
+            <p style="padding: 10px 0">
+                <img src="<?=URL_THEMES?>images/btn_edit.png">
+            </p>
+            <ul id="nav-left">
+                <li><a href="<?= URL_BASE ?>candidate/profile-builder?utm_source=contact">Profile builder</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/profile">Overview</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/contact-info">Contact Info</a></li>
+				<li><strong><a class="active" href="<?= URL_BASE ?>candidate/employment">Employment</a></strong></li>
+                <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
+                <li><a href="#">Skills</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Tests</a></li>
+                <li><a href="#">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($getUserArray["Lastsigned"])) ?></p>
+        </div>
+
+        <div class="col-md-9 contain-right">
+
+
+        </div>
+    </div>
+</div>
+<script src="<?=URL_THEMES.'js/pocket.candidate.js';?>"></script>
+<script type="text/javascript">
+    var objSkTest = new pocketCandidate();
+    $(document).ready(function(){
+        objSkTest.skill_Test_View();
+    })
+</script>
+

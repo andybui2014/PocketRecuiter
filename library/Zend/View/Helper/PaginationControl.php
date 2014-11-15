@@ -128,4 +128,6 @@ class PaginationControl extends AbstractHelper
     {
         return static::$defaultViewPartial;
     }
+
+
 }

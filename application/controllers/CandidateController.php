@@ -1833,5 +1833,75 @@ class CandidateController extends Application_Controller_Action
         
      }
       
+public function skilltestAction()
+    {
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
+        $emailaddress = $client["emailaddress"];
+        $password = $client["password"];
+        $Api = new PR_Api_User();
+        $authData = array('emailaddress' => $emailaddress, 'password' => $password);
+        $getUserArray=$Api->getUserArray($authData);
+        $this->view->client = $getUserArray;
+
+    }
+
+    public function skillTestViewAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+
+        $CandidateID = $client["CandidateProfileID"];
+        $PR_Api = new PR_Api_Core_CandidateClass();
+        $candidate_applied = $PR_Api->getOpportunityCandidateMatchActivities($CandidateID);
+        $request = $this->getRequest();
+        $params = $this->getRequest()->getParams();
+        if(isset($params['SaveTestAnswer'])){
+            if($params['SaveTestAnswer']){
+                $TestQuestionAnswerID = $params['TestQuestionAnswerID'];
+                $PR_Api->saveAnswerTest($CandidateID, $TestQuestionAnswerID);
+            }
+        }
+
+        $page = $params['page'];
+        $size = 1;
+        if (!empty($page)){
+            $page = $page;
+        }  else {
+            $page = 1;
+        }
+        $offset = ($page * $size) - $size;
+        $candidate_applied_list = array();
+        $questionAnswerList = "";
+        $countRows ="";
+        $paginator="";
+        if(!empty($candidate_applied) && count($candidate_applied) >0){
+            foreach($candidate_applied as $kk=>$candidate_appliedInfo){
+                $candidate_applied_list[] =  $candidate_appliedInfo['OpportunityID'];
+            }
+
+            $listTestID=$PR_Api->getTestIDbyOpportunity($candidate_applied_list); //getQuestionsAnswer
+
+            if(!empty($listTestID) && count($listTestID)>0){
+                $questionAnswerList =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID,0,0);
+
+
+                $rsRow =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID, $size,$offset);
+                $countRows = count($questionAnswerList);
+                $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($rsRow));
+                $paginator = Zend_Paginator::factory($rsRow);
+                $paginator->setItemCountPerPage(1)
+                    ->setPageRange(1)
+                    ->setCurrentPageNumber($page);
+            }
+        }
+       /*echo "<pre>";
+            print_r($paginator);
+        echo "</pre>"; die(); */
+        $this->view->questionAnswerList = $questionAnswerList;
+        $this->view->paginator = $paginator;
+        $this->view->numberTestQuests = $countRows;
+        $this->view->page = $page;
+    }
 
 }

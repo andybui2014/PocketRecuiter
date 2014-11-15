@@ -1,0 +1,92 @@
+
+            <div class="page-header" style="margin:0;">
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">... Test</span>
+             </div>
+            <?php
+            $AnswerList =  $this->paginator;
+            ?>
+            <div class="col-md-12" style="height: 40px; background-color:#ddedfc; padding-left: 0; padding-right: 0;">
+                <div class="col-md-8 text-left" style="font-weight: bold; padding-top: 9px;">Question  <?=$this->page?>  of <?=$this->numberTestQuests?></div>
+                <div class="col-md-4 text-right" style="font-weight: bold; padding-top: 9px; color: #005595">Time Remaining:</div>
+            </div>
+
+            <div class="col-md-12" style="min-height: 80px; padding-left: 0;background-color:#fff; padding-left: 0;padding-right: 0">
+                <?php
+                if(!empty($AnswerList)&& count($AnswerList)>0){
+                    foreach ($AnswerList as $k=>$AnswerListInfo){
+                        ?>
+                        <div class="col-md-12" style="padding-left:26px; height: 50px;padding-top:10px; font-weight: bold; color: #005595 "> <?=$AnswerListInfo['Question']?></div>
+                   <?php
+                    if(!empty($AnswerListInfo['AnswerText'])){
+                        foreach($AnswerListInfo['AnswerText'] as $kk=>$AnswerInfo){
+                            $class = 'class = "col-md-12"';
+                            $src ='src="'.URL_THEMES.'images/trees/ico_expand.png"';
+                            $datastatus = 'data-status="deselect"';
+                            $backgroundcolor = 'background-color: #f8f8f8';
+                            foreach($AnswerInfo['TestQuestionAnswerID_existing'] as $TQKey=>$TestQuestionAnswerID_existingInfo){
+                                if($TestQuestionAnswerID_existingInfo){
+                                    $class = 'class = "col-md-12 existingCheck"';
+                                    $src ='src="'.URL_THEMES.'images/trees/ico_colapse.png"';
+                                    $datastatus = 'data-status="select"';
+                                    $backgroundcolor = 'background-color: #fffbd5';
+                                }else{
+                                    $class = 'class = "col-md-12"';
+                                }
+
+                            };
+
+                            ?>
+                            <div <?=$class?> style="margin-bottom:20px">
+                                <div class="col-md-1" style="padding-left:10px"><img <?=$datastatus?> class="img-check" TestQuestionAnswerID="<?=$AnswerInfo['TestQuestionAnswerID']?>" <?=$src?> ></div>
+                                <div class="col-md-11 form-control" style="width:90%;<?=$backgroundcolor?>">
+                                    <samp><?=$AnswerInfo['AnswerText']?></samp>
+                                </div>
+                            </div>
+                     <?php   }
+
+                        }
+                    }
+                }
+                ?>
+
+
+                <div style="padding-left: 27px; margin-bottom:25px">
+                    <button class="btn btn-sm continue paginator disabled" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
+                    <button class="btn btn-sm paginator" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
+
+                </div>
+
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('.img-check').unbind('click').bind('click',function(){
+                        var existingFlag = false;
+                        if($(this).attr('data-status')=='select'){
+                            $(this).attr('src',urlImage+'images/trees/ico_expand.png')
+                            $(this).attr('data-status','deselect');
+                            $(this).closest('.col-md-12').removeClass("existingCheck");
+                            $('.existingCheck').each(function() {
+                                existingFlag = true;
+                            });
+                            $(this).parent().next('.form-control').css({"backgroundColor":"#f8f8f8"});
+                            if(!existingFlag){
+                                $(this).parent().parent().siblings().find(".continue").css({"backgroundColor":"#f2f2f2","borderColor":"#f2f2f2"});
+                                $(this).parent().parent().siblings().find(".continue").addClass('disabled');
+                            }
+                        }else if($(this).attr('data-status')=='deselect'){
+                            $(this).attr('src',urlImage+'images/trees/ico_colapse.png').attr('data-status','select');
+                            $(this).parent().next('.form-control').css({"backgroundColor":"#fffbd5"});
+                            $(this).parent().parent().siblings().find(".continue").css({"backgroundColor":"#7aac34","borderColor":"#7aac34"});
+                            $(this).parent().parent().siblings().find(".continue").removeClass('disabled');
+                            $('.existingCheck').each(function() {
+                                $(this).removeClass("existingCheck");
+                                $(this).find('.img-check').attr('src',urlImage+'images/trees/ico_expand.png')
+                                $(this).find('.img-check').attr('data-status','deselect');
+                                $(this).find('.form-control').css({"backgroundColor":"#f8f8f8"});
+                            });
+                            $(this).closest('.col-md-12').addClass("existingCheck");
+                        }
+                    });
+
+                })
+            </script>

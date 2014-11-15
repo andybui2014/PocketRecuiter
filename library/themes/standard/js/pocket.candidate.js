@@ -650,6 +650,67 @@ $(function  () {
                 }
             }
         });
+    },
+
+    skill_Test_View :function(){
+        var page = $(this).attr('page');
+        var size = $("#pagesize").val();
+        if (typeof(page) === 'undefined')
+            page = 1;
+        $.ajax({
+            url: 'skill-test-view',
+            dataType: 'html',
+            data: {page:page, size:size},
+            cache: false,
+            type: 'POST',
+            context: this,
+            error : function (status,xhr,error) {
+            },
+            success: function(data,status,xhr){
+                if(data){
+                    $(".contain-right").html("");
+                    $(".contain-right").html(data);
+                    jQuery(".paginator").unbind("click").bind("click", pocketCandidate.prototype.STV_changepage);
+                }
+
+            }
+        });
+    },
+
+    STV_changepage:function()
+    {
+        //--- page,size
+        var page = $(this).attr('page');
+        var totalpage = $(this).attr('totalpage');
+        var SaveTestAnswer = $(this).attr('SaveTestAnswer');
+        var TestQuestionAnswerID = $('.existingCheck').find('.img-check').attr('TestQuestionAnswerID');
+
+        if(SaveTestAnswer){
+            if(page>0 && page < totalpage){
+                page ++ ;
+            } else{
+                page = totalpage;
+            }
+        } else{
+            if(page>0 && page < totalpage){
+                page ++ ;
+            } else{
+                return;
+            }
+        }
+
+        var size = $("#pagesize").val();
+        if (typeof(page) === 'undefined')
+            page = 1;
+        $.ajax({
+            type: "POST",
+            url: "skill-test-view",
+            data: {page:page, size:size,SaveTestAnswer:SaveTestAnswer,TestQuestionAnswerID:TestQuestionAnswerID },
+            success:function(html) {
+                jQuery('.contain-right').html(html);
+                jQuery(".paginator").unbind("click").bind("click", pocketCandidate.prototype.STV_changepage);
+            }
+        });
     }
 }
 

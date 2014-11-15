@@ -845,7 +845,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         {
                 $select->where("ocm.CandidateProfileID = '".$CandidateID."'");
             }
-
+        $select->distinct();
         //print_r($select->__toString());die();
 
         if ( $limit != 0 || $offset != 0)
@@ -989,5 +989,149 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $records = PR_Database::fetchAll($select);
         return $records;
     }
+       
+    public function getTestIDbyOpportunity($OppList)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('o'=>'opportunity_test'),array('TestID'));
+        if(!empty($OppList) || count($OppList)>0){
+            $select->where("o.CareerID  IN (".implode(",",$OppList).")");
+        }
+
+        $select->distinct();
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $k=>$rec){
+                $list[] = $rec['TestID'];
+            }
+            return $list;
+        }
+    }
+
+    public function getQuestionsAnswer($questionListID=NULL, $candidate_ID =NULL ,$limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('t'=>'test_question'),array('Test_TestID','TestQuestionID','Question'));
+
+
+        if(!empty($questionListID) || count($questionListID)>0){
+            $select->where("t.Test_TestID  IN (".implode(",",$questionListID).")");
+        }
+        //print_r($select->__toString());die();
+        if ( $limit != 0 || $offset != 0)
+            $select->limit($limit, $offset);
+
+
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $rec){
+                $rec['AnswerText'] = $this->getQuestionAnswerbyTestQuestionID($rec['TestQuestionID'], $candidate_ID);
+
+                $list[] = $rec;
+            }
+
+            return $list;
+        }
+    }
+
+    public function getQuestionAnswerbyTestQuestionID($TestQuestionID,$candidate_ID, $limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('tqa'=>'test_question_answer'),array('TestQuestionAnswerID','AnswerText'));
+        $select->where("tqa.TestQuestion_TestQuestionID = '".$TestQuestionID."' ");
+
+        if ( $limit != 0 || $offset != 0)
+            $select->limit($limit, $offset);
+        $records = PR_Database::fetchAll($select);
+
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $kk=>$recordInfo){
+                $recordInfo['TestQuestionAnswerID_existing'] = $this->getAnswerTestbyCandidateID($recordInfo['TestQuestionAnswerID'], $candidate_ID);
+                $list[] = $recordInfo;
+            }
+            return $list;
+        }
+    }
+
+    public function getAnswerTestbyCandidateID($TestQuestionAnswerID, $candidate_ID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cta'=>'candidate_test_answer'),array('TestQuestionAnswerID'));
+
+        $select->where("cta.TestQuestionAnswerID='".$TestQuestionAnswerID."' AND cta.CandidateProfileID='".$candidate_ID."'");
+
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $k=>$rec){
+                $list[] = $rec['TestQuestionAnswerID'];
+            }
+            return $list;
+        }
+    }
+
+  /*  public function saveAnswerTest($candidateID, $TestQuestionAnswerID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cta'=>'candidate_test_answer'),array());
+
+        $updateFields=array('CandidateProfileID'=>$candidateID, 'TestQuestionAnswerID'=>$TestQuestionAnswerID);
+        $result = PR_Database::insert("candidate_test_answer", $updateFields);
+
+        //print_r($select->__toString());die();
+
+        return $result;
+    } */
+
+    public function saveAnswerTest($candidateID, $TestQuestionAnswerID){
+/*
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cta'=>'candidate_test_answer'),array());
+
+        $select->where("cta.CandidateProfileID='".$candidateID."' AND cta.TestQuestionAnswerID='".$TestQuestionAnswerID."'");
+
+        $records = PR_Database::fetchAll($select);
+
+        if(count($records)>0){
+
+            return true;
+        } else {
+
+            if($candidateID !="" && $TestQuestionAnswerID !=""){
+
+                $select->where(" cta.TestQuestionAnswerID='".$TestQuestionAnswerID."'");
+                $records = PR_Database::fetchAll($select);
+                if(count($records)>0){
+
+                } else{
+                    $updateFields=array('CandidateProfileID'=>$candidateID, 'TestQuestionAnswerID'=>$TestQuestionAnswerID);
+                    $result = PR_Database::insert("candidate_test_answer", $updateFields);
+                }
+
+            }
+        }*/
+        return true;
+    }
+
        
 }
