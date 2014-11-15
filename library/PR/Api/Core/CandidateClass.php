@@ -844,7 +844,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         if($CandidateID !="")
         {
                 $select->where("ocm.CandidateProfileID = '".$CandidateID."'");
-            }
+        }
         $select->distinct();
         //print_r($select->__toString());die();
 
@@ -984,12 +984,12 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         if(!empty($codes) || count($codes)>0){
             $query_include = "'".implode("','",$codes)."'";
             $select->where("c.code  IN ($query_include)");
-    }
+        }
        // print_r($select->__toString());die();
         $records = PR_Database::fetchAll($select);
         return $records;
     }
-       
+
     public function getTestIDbyOpportunity($OppList)
     {
         $db = PR_Database::getInstance();
@@ -1081,9 +1081,12 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             return array();
         } else {
             $list = array();
-            foreach($records as $k=>$rec){
-                $list[] = $rec['TestQuestionAnswerID'];
+            if($records !=""){
+                foreach($records as $k=>$rec){
+                    $list[] = $rec['TestQuestionAnswerID'];
+                }
             }
+
             return $list;
         }
     }
