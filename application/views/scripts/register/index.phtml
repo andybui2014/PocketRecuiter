@@ -205,6 +205,13 @@ border-bottom: 1px solid #ddd;
                 
                 
             </div>
+            <!-- fg-->
+            <div class="form-group" id="opencompany" style="display:none">
+            <label>Company Name</label>
+            <input value="" type="text" name="Companyname" id="Companyname"  class="form-control">
+            <span class="message" id="Companyname_message" style="color:#b81900"></span>
+            </div>
+            <!--gf-->
                             <?php
                 //$source = new PR_Api_Register();
                 $source= new PR_Api_Core_Register();
@@ -306,13 +313,17 @@ $SourceHtml .="</select>";
     $('input:radio').on( "click", function() {
         var usertype=$( "input:checked" ).val();
         if(usertype=='1'){
-          //  alert("tetst");
-            $('#openModalselectCompany').modal('show')
+          
+           // $('#openModalselectCompany').modal('show')
+            $('#opencompany').show();
+        }
+        else{
+            $('#opencompany').hide();
         }
    
     
     });
-    $('#Companyname').blur(function () {
+   /* $('#Companyname').blur(function () {
        if($('#Companyname').val()=='')
          {
              $("#Companyname_message").addClass('has-error');
@@ -323,5 +334,11 @@ $SourceHtml .="</select>";
                 $("#Companyname_message").html('');
          } 
     });
+    
+    $( "#CompanyID" ) .change(function() {
+      //  alert("tetst");
+      $("#openModalselectCompany").modal('hide');
+    })
+  .trigger( "change" );*/
     });
 </script>

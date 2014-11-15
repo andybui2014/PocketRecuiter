@@ -76,6 +76,33 @@ class PR_Api_Core_Register
                 {
                     if($data['usertype']==1)
                     {
+                       // echo ("tetstt:<pre>");print_r($data);echo("</pre>");die();
+                        $maxIdSql = "SELECT MAX(CompanyID) AS CompanyID  FROM company";
+                        $result = $db->fetchAll($maxIdSql);
+                        $CompanyID=$result[0]['CompanyID'];
+                       /* $Companyname=$data['Companyname'];
+                        $select1 = $db->select()->from(PR_Database::TABLE_COMPANY, 
+                                    array('Companyname'));
+                        $select1->where("Companyname = '$Companyname'");
+                        $res1 = $db->fetchAll($select1);
+                        
+                        if(!empty($res1) && count($res1) > 0 ) {
+                            
+                            return array("error" => "Company name exists","CompanyID"=>"");
+                            echo("Companyname exists");
+                        }else{
+                            $updateFields=array(
+                                    'CompanyID'=>$CompanyID,
+                                    'Companyname'=>$data['Companyname']
+                                 
+                                    );
+                                    
+                            $result = PR_Database::insert("company", $updateFields);
+                            
+                            // return $CompanyID;   
+                            return array("error"=>"","CompanyID" => "$CompanyID");
+                        } */
+                       // 
                         $db->insert(PR_Database::TABLE_USER, array(
                         "UserID" => $User_ID,
                         "firstname" => $data['firstname'],
@@ -86,7 +113,7 @@ class PR_Api_Core_Register
                         "HeardFrom" => $data['HeardFrom'],
                        // "loginname" => $data['loginname'],
                         //"CompanyID"=>$defaultCompanyID
-                         "CompanyID"=>$data['CompanyID']
+                         "CompanyID"=>$CompanyID
                         
             ));
                     }
