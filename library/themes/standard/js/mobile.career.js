@@ -15,7 +15,7 @@ career.prototype = {
         $('#selectSkill').unbind('change').bind('change',this.addSkill);
         $('#selectRequiredTest').unbind('change').bind('change',this.addrequiredtest);
         $('#postcareernew').unbind('click').bind('click',this.postcareernew);
-        $('#CompanyID').unbind('change').bind('change',this.setTestComp);
+        //$('#CompanyID').unbind('change').bind('change',this.setTestComp);
         $('#postcareeredit').unbind('click').bind('click',this.postcareeredit);
         $('#saveCompanyProfile').unbind('click').bind('click',this.saveCompanyProfile);
 
