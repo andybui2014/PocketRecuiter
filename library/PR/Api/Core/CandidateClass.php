@@ -1019,7 +1019,10 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $db = PR_Database::getInstance();
         $select = $db->select();
         $select->from(array('t'=>'test_question'),array('Test_TestID','TestQuestionID','Question'));
-
+        $select->join(array('tt'=>'test'),
+            'tt.TestID = t.Test_TestID',
+            array('TestName')
+        );
 
         if(!empty($questionListID) || count($questionListID)>0){
             $select->where("t.Test_TestID  IN (".implode(",",$questionListID).")");
