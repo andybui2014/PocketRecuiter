@@ -1730,7 +1730,7 @@ class CandidateController extends Application_Controller_Action
         $this->render('upload-photo');                  
                      
      }
-     public function doUploadPhotoAction()
+      public function doUploadPhotoAction()
      {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -1832,8 +1832,8 @@ class CandidateController extends Application_Controller_Action
        
         
      }
-      
-public function skilltestAction()
+
+    public function skilltestAction()
     {
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $UserID=$client["UserID"];
@@ -1883,23 +1883,22 @@ public function skilltestAction()
             $listTestID=$PR_Api->getTestIDbyOpportunity($candidate_applied_list); //getQuestionsAnswer
 
             if(!empty($listTestID) && count($listTestID)>0){
-                $questionAnswerList =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID,0,0);
-
-
+                //$questionAnswerList =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID,0,0);
                 $rsRow =$PR_Api->getQuestionsAnswer($listTestID,$CandidateID, $size,$offset);
                 $countRows = count($questionAnswerList);
-                $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($rsRow));
-                $paginator = Zend_Paginator::factory($rsRow);
-                $paginator->setItemCountPerPage(1)
-                    ->setPageRange(1)
-                    ->setCurrentPageNumber($page);
+               // $paginator = new Zend_Paginator(new Zend_Paginator_Adapter_Array($rsRow));
+               // $paginator = Zend_Paginator::factory($rsRow);
+               // $paginator->setItemCountPerPage(1)
+                //    ->setPageRange(1)
+                //    ->setCurrentPageNumber($page);
             }
         }
        /*echo "<pre>";
             print_r($paginator);
         echo "</pre>"; die(); */
         $this->view->questionAnswerList = $questionAnswerList;
-        $this->view->paginator = $paginator;
+       // $this->view->paginator = $paginator;
+        $this->view->paginator = $rsRow;
         $this->view->numberTestQuests = $countRows;
         $this->view->page = $page;
     }
