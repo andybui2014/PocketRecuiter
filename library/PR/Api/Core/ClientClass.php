@@ -211,23 +211,30 @@ class PR_Api_Core_ClientClass
                     $maxIdSql = "SELECT MAX(CompanyID) AS CompanyID  FROM company";
                     $result = $db->fetchAll($maxIdSql);
                     $CompanyID=$result[0]['CompanyID']+1;
-                   
+                    $Companyname=$Fields['Companyname'];
+                    $select = $db->select()->from(PR_Database::TABLE_COMPANY, 
+                                array('Companyname'));
+                    $select->where("Companyname = '$Companyname'");
+                    $res = $db->fetchAll($select);
+                
+                if(!empty($res) && count($res) > 0 ) {
+                    
+                    return array("error" => "Company name exists","CompanyID"=>"");
+                    echo("Companyname exists");
+                }else{
                     $updateFields=array(
                             'CompanyID'=>$CompanyID,
-                            'Companyname'=>$Fields['Companyname'],
-                            'Industry'=>$Fields['Industry'],
-                            'Address'=>$Fields['Address'],
-                            "Zipcode" => $Fields['Zipcode'],
-                            "Description" => $Fields['Description'],
-                            "images" => $Fields['images'],
-                            "PhoneNumber"=>$Fields['PhoneNumber'],
-                            "country"=>$Fields['country'],
-                            "emailinfo"=>$Fields['emailinfo']
+                            'Companyname'=>$Fields['Companyname']
+                         
                             );
                             
                     $result = PR_Database::insert("company", $updateFields);
                     
-                     return $CompanyID;   
+                    // return $CompanyID;   
+                    return array("error"=>"","CompanyID" => "$CompanyID");
+                } 
+                   
+                    
                 
             }
             public function deleteCompany($companyid)

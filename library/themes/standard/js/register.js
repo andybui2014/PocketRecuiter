@@ -19,7 +19,7 @@ register.prototype = {
          $('#Register :input[name="RetypePassword"]').val('');
         $('#Register :input[name="usertype"]').val('');
     //   $('#Register :input[name="loginname"]').val('');
-        $('#form-companyProfile').find('[name="Companyname"]').value='';
+        $('#Register').find('[name="Companyname"]').value='';
         $('#Register').find('[name="About_us"]').value='';
         $('#Register :input[name="accept"]').val('');
         $('#Register #emailaddress').html('');
@@ -29,7 +29,7 @@ register.prototype = {
         $('#Register #password').html('');
         $('#Register #usertype').html('');
         $('#Register #About_us').html('');
-        $('#form-companyProfile #Companyname').html('');
+        $('#Register #Companyname').html('');
         $('#Register #accept').html('');
        // $('#Register #loginname').html('');
        
@@ -62,10 +62,15 @@ register.prototype = {
                 data: $('#form-companyProfile').serializeArray(),
                     type: 'POST',
                 error : function (xhr,error) {
+                    
                     btn.button('reset');
                 },
-                success: function(data, status, xhr){
-                    if(data){
+             //  success: function(data, status, xhr){
+                success: function(data,xhr){
+                    //alert(data. error)
+                   // console.log(data);
+                    if(data.success){
+                         //if(xhr){
                         btn.button('reset');
                         $("#openModalCompany").modal('hide');
                         var str = "<option value=''>Select Company</option>";
@@ -84,9 +89,10 @@ register.prototype = {
                         });
                         $('#CompanyID').find('option').remove().end().append(str) ;
                        // career.prototype.setTestComp();
-                     
+                       // $("#openModalselectCompany").modal('hide');
                     }else{
                         btn.button('reset');
+                        alert(data. error);
                     }
                 }
             });
@@ -108,7 +114,8 @@ register.prototype = {
             accept: { notEmpty: {message: 'You need to accept the terms of Service.'}},
             About_us: { notEmpty: {message: 'Source is required.'}},
             RetypePassword: { identical: {message: 'Password and Retype Password are not the same.'}},
-            loginname: { notEmpty: {message: 'User Name is required.'}}
+            loginname: { notEmpty: {message: 'User Name is required.'}},
+            Companyname: { notEmpty: {message: 'Company name is required.'}}
             
         }
 
@@ -122,6 +129,8 @@ register.prototype = {
         var pmrm = $('#Register :input[name="emailaddress"]');
       // var lgn = $('#Register :input[name="loginname"]');
         var abu = $('#Register').find('[name="About_us"]');
+        var Companyname = $('#Register').find('[name="Companyname"]');
+        var Companyname_message = $('#Register #Companyname_message');
         var fn_message = $('#Register #FirstName_message');
         var ln_message = $('#Register #LastName_message');
         var pw_message = $('#Register #Password_message');
@@ -136,10 +145,25 @@ register.prototype = {
            typeof pw !=='undefined' && typeof pw !==undefined &&  pw.length > 0 &&
             typeof act !=='undefined' && typeof act !==undefined &&  act.length > 0 &&
             typeof pmrm !=='undefined' && typeof pmrm !==undefined &&  pmrm.length > 0 &&           
-            typeof abu !=='undefined' && typeof abu !==undefined &&  abu.length > 0 
+            typeof abu !=='undefined' && typeof abu !==undefined &&  abu.length > 0 &&
+            typeof Companyname !=='undefined' && typeof Companyname !==undefined &&  Companyname.length > 0
            ){
-            //check value email
             var error = false;
+               var usertype=$( "input:checked" ).val();
+              // if(usertype==1){
+                       if(usertype==1&&(Companyname.val() ==''||Companyname.val().lenght<=1)){
+                       error = true;
+                       Companyname_message.parent().addClass('has-error');
+                       Companyname_message.html(fields.Companyname.notEmpty.message).fadeOut().fadeIn();
+                   }else{
+                       Companyname_message.parent().removeClass('has-error').addClass('has-success');
+                       Companyname_message.html('');
+                  // }
+               
+               }
+              // alert("tetstt"+usertype);
+            //check value email
+            
          /*   if(fn.val() =='' || fn.val().length <= 1){
                 error = true;
                 fn.parent().addClass('has-error');
@@ -225,7 +249,7 @@ register.prototype = {
                 var company=$('#company-form').serializeArray();
                 $.ajax({
                     url:  'register/do-register' ,
-                    data:{Register,company},
+                    data:{Register},
                     type: 'POST',
                     success: function(xhr){
                        
@@ -265,6 +289,10 @@ register.prototype = {
                            {
                             pmrm_message.parent().removeClass('has-success').addClass('has-error');
                             pmrm_message.html(fields.emailaddress.notEmpty.message).fadeOut().fadeIn();
+                           }
+                           if(xhr.error=="Company name exists"){
+                              Companyname_message.parent().addClass('has-error');
+                              Companyname_message.html(fields.Companyname.notEmpty.message).fadeOut().fadeIn(); 
                            }
                          //  if(xhr.error=="User exists")
                           // {
