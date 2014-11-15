@@ -60,52 +60,18 @@
     }
     .colorBlue {color: #2a6496;}
 </style>
-<!--Modal-->
-<div class="modal fade" tabindex="-1" role="dialog" id="openModalCompany" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content modal-dialog-center">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title" id="myModalLabel">Company Profile</h2>
-            </div>
-            <div class="modal-body login-modal">
-                <form id="form-companyProfile" name="form-companyProfile">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <input value="" type="text" name="Companyname" placeholder="Company Name" class="form-control">
-                            <br>
-                            <input value="" type="text" name="Industry"  placeholder="Industry" class="form-control">
-                            <br>
-                            <input value="" type="text" name="Address"  placeholder="Address" class="form-control">
-                            <br>
-                            <textarea val="" name="Description" placeholder="Description" class="form-control"></textarea>
-                            <br>
-                            <input value="" type="text" name="PhoneNumber"  placeholder="PhoneNumber" class="form-control">
-                            <br>
-                            <input value="" type="text" name="country"  placeholder="country" class="form-control">
-                            <br>
-                            <input value="" type="text" name="emailinfo"  placeholder="emailinfo" class="form-control">
-                            <br>
-                        </div>
-                    </div>
-                    <button id="saveCompanyProfile" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Add</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!--end modal-->
+
 <div class="container">
     <div style="height:80px; color: #2a6496">
-        <div class="panel-body">
-            <div><h3 style="margin-top: 10px;margin-left: -16px"><label>Post Career</label> </h3></div>
+        <div class="panel-body" style="padding-left: 0px">
+            <div style="padding-left: 0px"><h3 style="margin-top: 22px;"><label>Post Career</label> </h3></div>
         </div>
     </div>
 
     <div style="background-color: #2a6496">
         <ul class="nav nav-tabs"  style="padding-top:10px" valign="bottom">
-            <li class="active" ><a class="calcareercr" href="javascript: void(0);"><strong>New Career</strong></a></li>
-            <li ><a id="careerlist" href="javascript: void(0);"><strong>Career List</strong></a></li>
+            <li class="active" ><a class="calcareercr" href="javascript: void(0);"><strong>New Oportunity</strong></a></li>
+            <li ><a id="careerlist" href="javascript: void(0);"><strong>Oportunity List</strong></a></li>
         </ul>
     </div>
 
@@ -115,7 +81,7 @@
                 <div class="col-md-12">
                     <div class="menuBar col-md-12">
                     <ul  id="careerTab">
-                        <li class="active"><a class="active" href="#calcareercr" id="calcareercrtab"><strong>1. Create Career &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                        <li class="active"><a class="active" href="#calcareercr" id="calcareercrtab"><strong>1. Create Opportunity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
                         <li><a href="#" id="createPrivate"><strong>&nbsp;2. Create Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
                         <li><a  href="#previewpost" id="previewposttab"><strong>&nbsp;3. Preview &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
                     </ul>
@@ -137,28 +103,12 @@
                                         <div class="col-md-7" style="padding-left: 0px; padding-top: 10px">
                                             <label >Company Name* </label><span id="companynameLable" style="color: red"></span>
                                         </div>
-                                        <div class="col-md-3" style="padding-right: 0px">
-                                            <select class="form-control" id="CompanyID" name="CompanyID">
-                                                <option value="">Select Company</option>
-                                                <?php
-                                                $companyInfo = $this->companyInfo;
-                                                $listCompany = $this->listCompany;
-                                                foreach($listCompany as $k=>$v){
-                                                    $CompanyID = $v['CompanyID'];
-                                                    $Companyname = $v['Companyname'];
-                                                    ?>
-                                                    <option value="<?=$CompanyID?>" <?= ($CompanyID == $companyInfo['CompanyID']) ? 'selected="selected"' : '' ?> ><?=$Companyname?></option>
-                                                <?php
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2>" style="padding-top: 2px">
-                                            <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#openModalCompany"  style="float:right; margin-right: 0px">Add Company</button>
-                                        </div>
+
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$companyInfo['Companyname']?>" class="form-control">
+
+                                        <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$this->companyInfo['Companyname']?>" class="form-control">
+                                        <input type="hidden" name="CompanyID" value="<?=$this->companyInfo['CompanyID']?>">
                                     </div>
                                     <div class="col-md-12">
                                         <label >Career Description*</label><span id="careerdescriptionLable" style="color: red"></span>
