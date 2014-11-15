@@ -1,20 +1,22 @@
 
+<?php
+$AnswerList =  $this->paginator;
+
+                if(!empty($AnswerList)&& count($AnswerList)>0){
+                    foreach ($AnswerList as $k=>$AnswerListInfo){
+
+?>
             <div class="page-header" style="margin:0;">
-                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">... Test</span>
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?=$AnswerListInfo['TestName']?></span>
              </div>
-            <?php
-            $AnswerList =  $this->paginator;
-            ?>
+
             <div class="col-md-12" style="height: 40px; background-color:#ddedfc; padding-left: 0; padding-right: 0;">
                 <div class="col-md-8 text-left" style="font-weight: bold; padding-top: 9px;">Question  <?=$this->page?>  of <?=$this->numberTestQuests?></div>
                 <div class="col-md-4 text-right" style="font-weight: bold; padding-top: 9px; color: #005595">Time Remaining:</div>
             </div>
 
             <div class="col-md-12" style="min-height: 80px; padding-left: 0;background-color:#fff; padding-left: 0;padding-right: 0">
-                <?php
-                if(!empty($AnswerList)&& count($AnswerList)>0){
-                    foreach ($AnswerList as $k=>$AnswerListInfo){
-                        ?>
+
                         <div class="col-md-12" style="padding-left:26px; height: 50px;padding-top:10px; font-weight: bold; color: #005595 "> <?=$AnswerListInfo['Question']?></div>
                    <?php
                     if(!empty($AnswerListInfo['AnswerText'])){
@@ -89,4 +91,6 @@
                     });
 
                 })
+
+
             </script>
