@@ -6,6 +6,7 @@ $AnswerList =  $this->paginator;
                     foreach ($AnswerList as $k=>$AnswerListInfo){
 
 ?>
+
             <div class="page-header" style="margin:0;">
                 <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?=$AnswerListInfo['TestName']?></span>
              </div>
@@ -53,8 +54,8 @@ $AnswerList =  $this->paginator;
 
 
                 <div style="padding-left: 27px; margin-bottom:25px">
-                    <button class="btn btn-sm continue paginator disabled" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
-                    <button class="btn btn-sm paginator" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
+                    <button class="btn btn-sm continue paginator disabled" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
+                    <button class="btn btn-sm paginator" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
 
                 </div>
 

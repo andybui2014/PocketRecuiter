@@ -652,7 +652,7 @@ $(function  () {
         });
     },
 
-    skill_Test_View :function(){
+    skill_Test_View :function(testID){
         var page = $(this).attr('page');
         var size = $("#pagesize").val();
         if (typeof(page) === 'undefined')
@@ -660,7 +660,7 @@ $(function  () {
         $.ajax({
             url: 'skill-test-view',
             dataType: 'html',
-            data: {page:page, size:size},
+            data: {page:page, size:size, testID:testID},
             cache: false,
             type: 'POST',
             context: this,
@@ -680,6 +680,7 @@ $(function  () {
     STV_changepage:function()
     {
         //--- page,size
+        var testID = $(this).attr('testID');
         var page = $(this).attr('page');
         var totalpage = $(this).attr('totalpage');
         var SaveTestAnswer = $(this).attr('SaveTestAnswer');
@@ -705,7 +706,7 @@ $(function  () {
         $.ajax({
             type: "POST",
             url: "skill-test-view",
-            data: {page:page, size:size,SaveTestAnswer:SaveTestAnswer,TestQuestionAnswerID:TestQuestionAnswerID },
+            data: {page:page, size:size,SaveTestAnswer:SaveTestAnswer,TestQuestionAnswerID:TestQuestionAnswerID,testID:testID },
             success:function(html) {
                 jQuery('.contain-right').html(html);
                 jQuery(".paginator").unbind("click").bind("click", pocketCandidate.prototype.STV_changepage);

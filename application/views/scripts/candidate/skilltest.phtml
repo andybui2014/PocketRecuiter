@@ -28,10 +28,14 @@
 
 
 </style>
+<script src="<?=URL_THEMES.'js/pocket.candidate.js?vs=1';?>"></script>
 <script>
+    var objSkTest = new pocketCandidate();
     var urlImage = '<?=URL_THEMES;?>';
     var ico_expand = urlImage+'images/trees/ico_expand.png';
 </script>
+
+
 <?php
     $getUserArray = $this->client;
 ?>
@@ -68,17 +72,83 @@
             <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($getUserArray["Lastsigned"])) ?></p>
         </div>
 
-        <div class="col-md-9 contain-right">
+        <div class="col-md-9 ">
+            <?php
+            $testIDs = $this->listTestID;
+            if(count($testIDs) >1 && !empty($testIDs)){?>
+                    <!---->
+                    <div class="modal fade" tabindex="-1" id="Select-a-Required-Test" role="dialog" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content modal-dialog-center">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h2 class="modal-title" style="font-size: 20px">Select a Required Test</h2>
+                                </div>
+                                <div class="modal-body login-modal">
+                                    <div class="col-md-12">
+                                        <div >
+                                            <select name="testID" id="testID_testID" class="form-control">
+                                                <option value="">Select a Required Test</option>
+                                                <?php
+                                                foreach($testIDs as $k1=>$testIDsInfo){
+                                                    ?>
+                                                    <option value="<?=$testIDsInfo['TestID']?>"><?=$testIDsInfo['TestName']?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button style="background-color:#fff; border:#fff">&nbsp;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!---->
 
+<script type="text/javascript">
+                    $('#Select-a-Required-Test').modal('show');
+                    $("#testID_testID").unbind("change").bind("change",function(){
+                        var testID = "";
+                        testID = $("#testID_testID option:selected").val();
+                        //testName = $("#testID_testID option:selected").text();
+                        if(testID !=""){
+                            $('#Select-a-Required-Test').modal('hide');
+                           // $("#select_require_test").css({"font-size": "30px","color": "#005595","font-weight":"bold"});
+                            //$("#select_require_test").text(testName);
+                            objSkTest.skill_Test_View(testID);
+                        }
+
+                    });
+
+                </script>
+
+            <?php } else if(count($testIDs) == 1){
+            foreach ($testIDs as $k1=>$testIDsInfo){
+                $testID = $testIDsInfo['TestID'];
+            }
+            ?>
+                <script type="text/javascript">
+                    var testID = "";
+                    testID ='<?=$testID?>' ;
+    $(document).ready(function(){
+                        objSkTest.skill_Test_View(testID);
+    })
+</script>
+           <?php } else{ ?>
+                <div class="page-header" style="margin:0;">
+                    <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">NO TEST IS REQUIRED</span>
+                </div>
+           <?php }
+            ?>
+
+            <div class="md-col-12 contain-right" style="padding-left: 0px; padding-right: 0px">
+
+            </div>
 
         </div>
     </div>
 </div>
-<script src="<?=URL_THEMES.'js/pocket.candidate.js?vs=1';?>"></script>
-<script type="text/javascript">
-    var objSkTest = new pocketCandidate();
-    $(document).ready(function(){
-        objSkTest.skill_Test_View();
-    })
-</script>
+
+
 
