@@ -1857,6 +1857,10 @@ class CandidateController extends Application_Controller_Action
 
             $listTestID=$PR_Api->getTestIDbyOpportunity($candidate_applied_list);
         }
+
+
+        $getCandidates=$PR_Api->getCandidateProfile($CandidateID);
+        $this->view->getCandidates=$getCandidates;
        /*echo "<pre>";
         print_r($listTestID);
         echo "</pre>"; die();*/
