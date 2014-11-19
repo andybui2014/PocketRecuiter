@@ -5,8 +5,6 @@ $helper = $this->layout()->_helper;
 ?>
 <style>
 
-
-
     .label-tag{
         border: 1px solid #ddd; padding: 3px;
         background-color: #eee;
@@ -21,6 +19,11 @@ $helper = $this->layout()->_helper;
     .btn-matches{ margin-top: 20px;background-color: #20B2AA;padding: 7px 50px; color: #fff; border: 1px solid #eee}
     .btn-matches:hover{}
 </style>
+<script src="<?=URL_THEMES.'js/pocket.dashboard.js';?>"></script>
+<script type="text/javascript">
+    var objdb = new pocketDashboard();
+</script>
+
 <div class="container" >
 
 <!--
@@ -43,6 +46,20 @@ $helper = $this->layout()->_helper;
             </div>
         </div>
     </div> -->
+<!--Modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="this-test-is-using" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header" style="border-bottom: none">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-title text-center" style="color: red">Can't detelet the test, because it's using</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--End-->
+
     <div class="row" style="padding-top: 40px">
         <div class="col-md-12"><h2><a><strong>Dashboard</strong></a></h2></div>
 
@@ -55,7 +72,7 @@ $helper = $this->layout()->_helper;
                     <div class="col-md-8">
                         <h2><strong>Welcome! to Pocket Cruiter</strong></h2>
                         <small>Donec puere sapien nibh donec puere sapien nibh, nec imperdieDonec puere <br/>sapien nibh donec puere sapien nibh, nec imperdiDonec puere sapien <br/>nibh donec puere sapien nibh, nec imperdi</small>
-                        <p><button type="button" class="btn  btn-matches"><strong>Show Matches Now</strong></button></p>
+                        <!--<p><button type="button" class="btn  btn-matches"><strong>Show Matches Now</strong></button></p>-->
                     </div>
                     <div class="col-md-4">
                         <div class="alert alert-warning fade in" role="alert">
@@ -74,25 +91,41 @@ $helper = $this->layout()->_helper;
 
        <div class="col-md-4">
            <div class="panel  panel-default">
-            <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong>Pocket Recruiter Introduction</strong></div>
+            <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('careermatch','career')?>'>New Matches</></a></strong></div>
             <div class="panel-body" style="height: 300px;">
-               <h1><span style="color: #357ebd">Start Profile...</span></h1>
-               <h4>Donec puere sapien nibh donec puere sapien nibh, nec imperdie</h4>
-               <br>
-               <div style="color: #777">
-                  puere sapien nibh donec puere sapien nibh, nec imperdie
-                   puere sapien nibh donec puere sapien nibh, nec imperdie
-                   puere sapien nibh donec puere sapien nibh, nec imperdie
-
-               </div>
-                <p >
+                <?php
+                if(!empty($this->listCandidate)&& count($this->listCandidate)>0){
+                    foreach($this->listCandidate as $kk=>$listCandidateInfo){
+                        if($listCandidateInfo['minimumsalary'] =="" && $listCandidateInfo['maximumsalary'] ==""){
+                            $salary = "";
+                        } else if($listCandidateInfo['minimumsalary'] ==""){
+                            $salary = $listCandidateInfo['maximumsalary']."K";
+                        } else if($listCandidateInfo['maximumsalary'] ==""){
+                            $salary = $listCandidateInfo['minimumsalary']."K";
+                        } else{
+                            $salary = $listCandidateInfo['minimumsalary']."K"."-".$listCandidateInfo['maximumsalary']."K";
+                        }
+                ?>
+                        <div class="col-md-12" style="color: #777; margin-bottom: 10px;">
+                            <div class="col-md-3" style="padding-left: 0"><img src="<?=URL_MEDIA_PHOTO.$listCandidateInfo['image']?>"></div>
+                            <div class="col-md-9 text-bottom" style="vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0"><div style="color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top: 5px"><?=$listCandidateInfo['firstname']?> &nbsp; <?=$listCandidateInfo['lastname']?></div>
+                               <div style="font-weight: bold;vertical-align: text-bottom; padding-bottom: 0px">Expected Salary:&nbsp;<?=$salary?></div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                }
+                ?>
+                <!--
+                 <p >
                 <button class="btn btn-success" onclick="window.location.href='<?=$helper->url('profile','client')?>'"><strong>Start Here</strong></button></p>
+                -->
            </div>
            </div>
        </div>
         <div class="col-md-4">
             <div class="panel  panel-default">
-                <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong>Pocket Recruiter Notifications</strong></div>
+                <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('list','notifications')?>'>Pocket Recruiter Notifications</a></strong></div>
                 <div class="panel-body" style="height: 300px;">
 
                     <div class="table-responsive">
@@ -127,16 +160,22 @@ $helper = $this->layout()->_helper;
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-4" >
             <div class="panel  panel-default">
-                <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong>Technical Tests</strong></div>
+                <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('index','test')?>'>Technical Tests</></a></strong></div>
                 <div class="panel-body" style="height: 300px;">
-                    <span class="label-tag pull-left">Testing <i class="glyphicon glyphicon-remove text-right tag-remove"></i></span>
-                    <span class="label-tag pull-left">Abbot <i class="glyphicon glyphicon-remove text-right tag-remove"></i></span>
-                    <span class="label-tag pull-left">Mongo <i class="glyphicon glyphicon-remove text-right tag-remove"></i></span>
-                    <span class="label-tag pull-left">Tiddy <i class="glyphicon glyphicon-remove text-right tag-remove"></i></span>
+                    <span id="technical-test">
+                    <?php
+                    if(!empty($this->resultTestList) && count($this->resultTestList)){
+                        foreach($this->resultTestList as $kk=>$resultTestListInfo){
+                            ?>
+                            <span class="label-tag pull-left"><?=$resultTestListInfo['TestName']?> <i class="glyphicon glyphicon-remove text-right tag-remove" onclick="javascript:objdb.deleteTest(<?=$resultTestListInfo['TestID']?>)"></i></span>
+                     <?php   }
+                    }
+                    ?>
+                    </span>
                     <p class="pull-left" style="width: 100%;position: absolute;bottom: 20px;">
-                        <button class="btn btn-primary">Create New Test</button>
+                        <button class="btn btn-primary" onclick="window.location.href='<?=$helper->url('index','test')?>'">Create New Test</button>
                     </p>
                 </div>
 
@@ -150,7 +189,7 @@ $helper = $this->layout()->_helper;
             <div class="panel-heading" style="background-color: #2a6496;color: #fff">
                 <h4 class="panel-title">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                        <strong>Recently Posted Career</strong>
+                        <strong>Recently Posted Opportunities</strong>
                     </a>
                 </h4>
             </div>
@@ -166,9 +205,9 @@ $helper = $this->layout()->_helper;
                             <input type="checkbox"> <strong>Select All</strong>
                         </label>
                     </th>
-                    <th style="width:120px">
+                    <th style="width:135px">
                         <label>
-                            <strong>Career Title</strong>
+                            <strong>Opportunity Title</strong>
                         </label>
                     </th>
                     <th style="width:125px">
@@ -178,7 +217,7 @@ $helper = $this->layout()->_helper;
                     </th>
                     <th>
                         <label>
-                            <strong>Career Discription</strong>
+                            <strong>Opportunity Description</strong>
                         </label>
                     </th>
                     <th style="width:125px">
@@ -248,8 +287,8 @@ $helper = $this->layout()->_helper;
     </div>
 
 </div>
-<script src="<?=URL_THEMES.'js/pocket.dashboard.js';?>"></script>
-<script>
+
+<script type="text/javascript">
     $(document).ready(function () {
         $("#nav li").removeClass("active");//this will remove the active class from previously active menu item
         $('#dasboard-test').addClass('active');

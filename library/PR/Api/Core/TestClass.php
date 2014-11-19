@@ -8,7 +8,7 @@ class PR_Api_Core_TestClass
         return $list;
     }
     
-    public function getTestList($filters=NULL,$orders=NULL,$limit=0, $offset=0)
+    public function getTestList($filters=NULL,$limit=0, $offset=0)
     {             
         $db = PR_Database::getInstance();
         $select = $db->select();
@@ -321,8 +321,19 @@ class PR_Api_Core_TestClass
         }
         $criteria = "TestID IN (".implode(",",$testIDArray).")";
         $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('opportunity_test', array('TestID'));
+        $select->where("TestID IN (".implode(",",$testIDArray).")");
+
+        $records = PR_Database::fetchAll($select);
+        $result =0;
+        if(!empty($records) && count($records)>0){
+            $result =0;
+        } else{
         $result = $db->delete('test', $criteria);
     }
-    
+        return  $result;
+}  
+
 }  
 

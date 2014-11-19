@@ -492,4 +492,48 @@ class PR_Api_Core_CareerClass
         return $listStringWords;
     }
 
+    public function getListReceiveIDbySenderID($senderID)
+{
+    $db = PR_Database::getInstance();
+    $select = $db->select();
+    $select->from(array('n'=>'notification'),array('receiver_iduser'));
+    $select->where("n.sender_iduser = '".$senderID."' ");
+    $records = PR_Database::fetchAll($select);
+    if(empty($records) && count($records)==0){
+        return array();
+    } else {
+        $list = array();
+        foreach($records as $rec){
+            $list[] = $rec['receiver_iduser'];
+        }
+
+        return $list;
+    }
+}
+
+    public function getListCandidateByUserID($userIDs,$limit=0, $offset=0)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('u'=>'user'),array('firstname','lastname','UserID'));
+        $select->joinleft(array('c'=>'candidate_profile'),
+            'c.CandidateProfileID = u.CandidateProfileID',
+            array('CandidateProfileID','image','minimumsalary','maximumsalary'));
+
+        $select->joinleft(array('sk'=>'candidate_skill'),
+            'sk.CandidateProfileID = c.CandidateProfileID',
+            array());
+
+        $select->where("u.UserID IN (".implode(",",$userIDs).") ");
+        $select->distinct('c.CandidateProfileID');
+        if ( $limit != 0 || $offset != 0)
+        {
+            $select->limit($limit, $offset);
+        }
+        $select->order('u.UserID');
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+
+        return $records;
+    }
 }
