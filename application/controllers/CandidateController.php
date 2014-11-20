@@ -1816,9 +1816,10 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='skill_id') $SkillID = $item['value'];
                     if($item['name']=='YearsExperience') $YearsExperience = $item['value'];
                     if($item['name']=='LevelOfExperience')  $LevelOfExperience = $item['value'];
+					if($item['name']=='CandidateSkillID')  $CandidateSkillID = $item['value'];
                 }
                 $core = new PR_Api_Core_CandidateClass();
-                if($core->updateCandidate_skill($CandidateProfileID,$SkillID,$YearsExperience,$LevelOfExperience)){
+               if($core->updateCandidate_skill($CandidateSkillID,$SkillID,$YearsExperience,$LevelOfExperience)){
                     $ajaxRes['success'] = 1;
                 }
             }

@@ -466,7 +466,7 @@ $(function  () {
     }, 
 	
     editContactInfo:function(){
-        $(this).button('loading');
+       // $(this).button('loading');
         var arrValidate = [
             'firstname','lastname','email','country',
             'addResLine','addResLine2','city','stateProvince','zipcode'
