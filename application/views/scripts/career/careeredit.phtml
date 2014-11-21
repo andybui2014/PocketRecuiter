@@ -72,7 +72,7 @@ $resultTestList =  $this->resultTestList;
 <div class="container">
     <div style="height:80px; color: #2a6496">
         <div class="panel-body" style="padding-left: 0px">
-            <div style="padding-left: 0px"><h3 style="margin-top: 22px;"><label>Post Career</label> </h3></div>
+            <div style="padding-left: 0px"><h3 style="margin-top: 22px;"><label>Post Opportunity</label> </h3></div>
         </div>
     </div>
 
@@ -105,7 +105,7 @@ $resultTestList =  $this->resultTestList;
                                 <form id="form-careerEdit" name="form-careerEdit">
                                     <input type="hidden" value="<?=$_REQUEST['opportunityID']?>" name="OpportunityID">
                                     <div class="col-md-12">
-                                        <label >Career Name* </label> <span id="careernameLable" style="color: red"></span>
+                                        <label >Opportunity Name* </label> <span id="careernameLable" style="color: red"></span>
                                         <input type="text"  id="careername" name="careername" value="<?=$getListOpp['title']?>" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
@@ -119,7 +119,7 @@ $resultTestList =  $this->resultTestList;
                                             <input type="hidden" name="CompanyID" value="<?=$this->companyInfo['CompanyID']?>">
                                     </div>
                                     <div class="col-md-12">
-                                        <label >Career Description*</label> <span id="careerdescriptionLable" style="color: red"></span>
+                                        <label >Opportunity Description*</label> <span id="careerdescriptionLable" style="color: red"></span>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"><?=$getListOpp['careerdescription']?></textarea>
                                     </div>
                                     <div class="col-md-12">
@@ -128,7 +128,7 @@ $resultTestList =  $this->resultTestList;
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6" >
-                                            <label>Career Type </label>
+                                            <label>Opportunity Type </label>
                                             <select id="careerType" name="jobtype" class="form-control">
                                                 <?php
                                                 foreach ($CareerList as $k =>$careerInfo){
@@ -152,7 +152,7 @@ $resultTestList =  $this->resultTestList;
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6">
-                                            <label>Career Location </label>
+                                            <label>Opportunity Location </label>
                                             <input id="loacation" name="location" type="text"  class="form-control" value="<?=$getListOpp['location']?>">
                                         </div>
                                         <div class="col-md-6">
@@ -370,7 +370,7 @@ $resultTestList =  $this->resultTestList;
                     <div id="previewpost" class="tab-pane col-md-12">
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label >Career Name*</label>
+                                    <label >Opportunity Name*</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_name"></div>
                             </div>
@@ -382,7 +382,7 @@ $resultTestList =  $this->resultTestList;
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label>Career Description*</label>
+                                    <label>Opportunity Description*</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_des"></div>
                             </div>
@@ -394,13 +394,13 @@ $resultTestList =  $this->resultTestList;
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label>Career Type</label>
+                                    <label>Opportunity Type</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_type"></div>
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label>Career Location</label>
+                                    <label>Opportunity Location</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_location"></div>
                             </div>
@@ -441,10 +441,10 @@ $resultTestList =  $this->resultTestList;
                                 <div class="col-md-10" id="pp_required_test"></div>
                             </div>
 
-                                <button id="postcareeredit" style="width:105px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
+                                <button id="postcareeredit" style="width:135px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Opportunity</strong></button>
                                 <button id="" style="width:105px; margin-left: 20px; color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Edit Post</strong></button>
-                                <button id="" style="width:145px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Career Later</strong></button>
-                                <button id="" style="width:105px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Career</strong></button>
+                                <button id="" style="width:170px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Opportunity Later</strong></button>
+                                <button id="" style="width:135px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Opportunity</strong></button>
 
                         </div>
                     <!--end post preview-->

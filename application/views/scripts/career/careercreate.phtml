@@ -64,14 +64,14 @@
 <div class="container">
     <div style="height:80px; color: #2a6496">
         <div class="panel-body" style="padding-left: 0px">
-            <div style="padding-left: 0px"><h3 style="margin-top: 22px;"><label>Post Career</label> </h3></div>
+            <div style="padding-left: 0px"><h3 style="margin-top: 22px;"><label>Post Opportunity</label> </h3></div>
         </div>
     </div>
 
     <div style="background-color: #2a6496">
         <ul class="nav nav-tabs"  style="padding-top:10px" valign="bottom">
-            <li class="active" ><a class="calcareercr" href="javascript: void(0);"><strong>New Oportunity</strong></a></li>
-            <li ><a id="careerlist" href="javascript: void(0);"><strong>Oportunity List</strong></a></li>
+            <li class="active" ><a class="calcareercr" href="javascript: void(0);"><strong>New Opportunity</strong></a></li>
+            <li ><a id="careerlist" href="javascript: void(0);"><strong>Opportunity List</strong></a></li>
         </ul>
     </div>
 
@@ -96,7 +96,7 @@
                             <div class="col-md-8">
                                 <form id="form-careerCr" name="form-careerCr">
                                     <div class="col-md-12">
-                                        <label >Career Name* </label> <span id="careernameLable" style="color: red"> </span>
+                                        <label >Opportunity Name* </label> <span id="careernameLable" style="color: red"> </span>
                                         <input type="text"  id="careername" name="careername" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
@@ -111,19 +111,19 @@
                                         <input type="hidden" name="CompanyID" value="<?=$this->companyInfo['CompanyID']?>">
                                     </div>
                                     <div class="col-md-12">
-                                        <label >Career Description*</label><span id="careerdescriptionLable" style="color: red"></span>
+                                        <label >Opportunity Description*</label><span id="careerdescriptionLable" style="color: red"></span>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"></textarea>
                                     </div>
                                    <!-- <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
                                         <span style=" float:right"><input type="file" title="Add Attachment"  class="colorBlue" ></span>
                                     </div> -->
                                     <div class="col-md-12">
-                                        <label>Career Industry*</label> <span id="industryLable" style="color: red"></span>
+                                        <label>Opportunity Industry*</label> <span id="industryLable" style="color: red"></span>
                                         <input type="text" id="industry" name="industry" class="form-control">
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6" >
-                                            <label>Career Type </label>
+                                            <label>Opportunity Type </label>
                                             <select id="careerType" name="jobtype" class="form-control">
                                                 <?php
                                                 $careerType =  $this->resultCareerList;
@@ -148,11 +148,11 @@
                                     </div>
                                     <div class="col-md-12" style="margin:0;padding:0">
                                         <div class="col-md-6">
-                                            <label>Career Location </label>
+                                            <label>Opportunity Location </label>
                                             <input id="loacation" name="location" type="text"  class="form-control">
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Career Zip Code</label>
+                                            <label>Opportunity Zip Code</label>
                                             <input id="zipcode" name="zipcode" type="text" class="form-control">
                                         </div>
                                     </div>
@@ -316,7 +316,7 @@
                     <div id="previewpost" class="tab-pane col-md-12">
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label >Career Name*</label>
+                                    <label >Opportunity Name*</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_name"></div>
                             </div>
@@ -328,7 +328,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label>Career Description*</label>
+                                    <label>Opportunity Description*</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_des"></div>
                             </div>
@@ -340,13 +340,13 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label>Career Type</label>
+                                    <label>Opportunity Type</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_type"></div>
                             </div>
                             <div class="col-md-12">
                                 <div class="col-md-2" style="text-align:right">
-                                    <label>Career Location</label>
+                                    <label>Opportunity Location</label>
                                 </div>
                                 <div class="col-md-10" id="pp_career_location"></div>
                             </div>
@@ -387,10 +387,10 @@
                                 <div class="col-md-10" id="pp_required_test"></div>
                             </div>
 
-                                <button id="postcareernew" style="width:105px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Career</strong></button>
+                                <button id="postcareernew" style="width:135px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Opportunity</strong></button>
                                 <button id="" style="width:105px; margin-left: 20px; color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Edit Post</strong></button>
-                                <button id="" style="width:145px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Career Later</strong></button>
-                                <button id="" style="width:105px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Career</strong></button>
+                                <button id="" style="width:170px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Opportunity Later</strong></button>
+                                <button id="" style="width:135px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Opportunity</strong></button>
 
                         </div>
                     <!--end post preview-->
