@@ -1,0 +1,314 @@
+<?php
+$oppportunityList = $this->getListOpp;
+$helper = $this->layout()->_helper;
+
+?>
+<style>
+
+    .label-tag{
+        border: 1px solid #ddd; padding: 3px;
+        background-color: #eee;
+        color: #000;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin-right: 10px;margin-bottom: 5px;text-decoration: underline;
+    }
+    .tag-remove{cursor: pointer; }
+    .tag-remove:hover{color: #777}
+    .btn-matches{ margin-top: 20px;background-color: #20B2AA;padding: 7px 50px; color: #fff; border: 1px solid #eee}
+    .btn-matches:hover{}
+</style>
+<script src="<?=URL_THEMES.'js/pocket.dashboard.js';?>"></script>
+<script type="text/javascript">
+    var objdb = new pocketDashboard();
+</script>
+
+<div class="container" >
+
+<!--
+    <div  style="height:80px; color: #428bca">
+        <div class="panel-body">
+            <div><h3 style="margin-top: 10px"><strong></strong> <span class="name-edit" > <i class="glyphicon glyphicon-pencil"></i></span></h3></div>
+            <div style="float: right; margin-top: -35px; margin-right:-10px">
+            <button class="btn btn-sm btn-success" type="button"><strong>Create New Test</strong></button>
+
+            </div>
+        </div>
+    </div> -->
+<!--
+    <div style="height:80px; color: #2a6496">
+        <div class="panel-body">
+            <div><h3 style="margin-top: 10px; margin-left: -16px"><label></label> </h3></div>
+            <div style="float: right; margin-top: -30px; margin-right:-10px">
+                <button class="btn btn-success" type="button">Create New Test</button>
+
+            </div>
+        </div>
+    </div> -->
+<!--Modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="this-test-is-using" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header" style="border-bottom: none">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-title text-center" style="color: red">Can't detelet the test, because it's using</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END-->
+<!--End-->
+
+    <div class="row" style="padding-top: 40px">
+        <div class="col-md-12"><h2><a><strong>Dashboard</strong></a></h2></div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="col-md-8">
+                        <h2><strong>Welcome! to Pocket Recruiter</strong></h2>
+                        <small>Donec puere sapien nibh donec puere sapien nibh, nec imperdieDonec puere <br/>sapien nibh donec puere sapien nibh, nec imperdiDonec puere sapien <br/>nibh donec puere sapien nibh, nec imperdi</small>
+                        <!--<p><button type="button" class="btn  btn-matches"><strong>Show Matches Now</strong></button></p>-->
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-warning fade in" role="alert">
+                            <h4><strong>Need Help!</strong></h4>
+                            <span style="color: #333"><strong>Published Recruiter Post Here</strong></span>
+                            <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 20px">Donec puere sapien nibh donec puer</a>
+                            <span style="color: #333"><strong>Published Recruiter Post Here</strong></span>
+                            <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 20px">Donec puere sapien nibh donec puer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+       <div class="col-md-4">
+           <div class="panel  panel-default">
+            <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('careermatch','career')?>'>New Matches</></a></strong></div>
+            <div class="panel-body" style="height: 300px;">
+                <?php
+                if(!empty($this->listCandidate)&& count($this->listCandidate)>0){
+                    foreach($this->listCandidate as $kk=>$listCandidateInfo){
+                        if($listCandidateInfo['minimumsalary'] =="" && $listCandidateInfo['maximumsalary'] ==""){
+                            $salary = "";
+                        } else if($listCandidateInfo['minimumsalary'] ==""){
+                            $salary = $listCandidateInfo['maximumsalary']."K";
+                        } else if($listCandidateInfo['maximumsalary'] ==""){
+                            $salary = $listCandidateInfo['minimumsalary']."K";
+                        } else{
+                            $salary = $listCandidateInfo['minimumsalary']."K"."-".$listCandidateInfo['maximumsalary']."K";
+                        }
+                ?>
+                        <div class="col-md-12" style="color: #777; margin-bottom: 10px;">
+                            <div class="col-md-3" style="padding-left: 0"><img src="<?=URL_MEDIA_PHOTO.$listCandidateInfo['image']?>" style="height: 50px; width:40px"></div>
+                            <div class="col-md-9 text-bottom" style="vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0"><div style="color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top: 12px"><?=$listCandidateInfo['firstname']?> &nbsp; <?=$listCandidateInfo['lastname']?></div>
+                               <div style="font-weight: bold;vertical-align: text-bottom; padding-bottom: 0px">Expected Salary:&nbsp;<?=$salary?></div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                }
+                ?>
+                <!--
+                 <p >
+                <button class="btn btn-success" onclick="window.location.href='<?=$helper->url('profile','client')?>'"><strong>Start Here</strong></button></p>
+                -->
+           </div>
+           </div>
+       </div>
+        <div class="col-md-4">
+            <div class="panel  panel-default">
+                <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('list','notifications')?>'>Pocket Recruiter Notifications</a></strong></div>
+                <div class="panel-body" style="height: 300px;">
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <span class="pull-left">
+                                        <label><input type="checkbox" name="" value=""/> Check All</label>
+                                    </span>
+                                    <span class="pull-right"><span class="dropdown">
+                                       Action<span style="cursor:pointer" data-toggle="dropdown" class="caret"></span>
+                                        <ul  class="dropdown-menu" role="menu">
+                                            <li><a id="test-act-remove" href="javascript: void(0)">Delete</a></li>
+                                            <li><a id="test-act-assign" href="javascript: void(0)">Assign</a></li>
+                                        </ul>
+                                    </span></span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            foreach($this->messageList as $item){ ?>
+                                <tr>
+                                    <td><label><input type="checkbox"/> <?=$item['cbContactNameR'];?> <?=$item['cbContactLNameR'];?></label> <?=$item['cbDateTime'];?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4" >
+            <div class="panel  panel-default">
+                <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('index','test')?>'>Technical Tests</></a></strong></div>
+                <div class="panel-body" style="height: 300px;">
+                    <span id="technical-test">
+                    <?php
+                    if(!empty($this->resultTestList) && count($this->resultTestList)){
+                        foreach($this->resultTestList as $kk=>$resultTestListInfo){
+                            ?>
+                            <span class="label-tag pull-left"><?=$resultTestListInfo['TestName']?> <i class="glyphicon glyphicon-remove text-right tag-remove" onclick="javascript:objdb.deleteTest(<?=$resultTestListInfo['TestID']?>)"></i></span>
+                     <?php   }
+                    }
+                    ?>
+                    </span>
+                    <p class="pull-left" style="width: 100%;position: absolute;bottom: 20px;">
+                        <button class="btn btn-primary" onclick="window.location.href='<?=$helper->url('index','test')?>'">Create New Test</button>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-group" id="accordion">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #2a6496;color: #fff">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                        <strong>Recently Posted Opportunities</strong>
+                    </a>
+                </h4>
+            </div>
+
+        </div>
+        <!-- career list-->
+        <div class="tab-pane active" >
+            <table class="table table-striped  table-stripedgray table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+                <thead>
+                <tr role="row" style="background-color: #eeeeee">
+                    <th style="width:135px">
+                        <label>
+                            <input type="checkbox"> <strong>Select All</strong>
+                        </label>
+                    </th>
+                    <th style="width:135px">
+                        <label>
+                            <strong>Opportunity Title</strong>
+                        </label>
+                    </th>
+                    <th style="width:125px">
+                        <label>
+                            <strong>Technical Skills</strong>
+                        </label>
+                    </th>
+                    <th>
+                        <label>
+                            <strong>Opportunity Description</strong>
+                        </label>
+                    </th>
+                    <th style="width:125px">
+                        <label>
+                            <strong>Require Test</strong>
+                        </label>
+                    </th>
+                    <th style="width:100px">
+                        <label>
+                            <strong>Status</strong>
+                        </label>
+                    </th>
+                    <th style="text-left: right; padding-left:10px;width:120px">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #eeeeee; background-color: #eeeeee">
+                                <strong>Action </strong><span class="caret"></span>
+                            </button>
+                            <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                                <li><a  href="javascript: void(0);">Insert</a></li>
+                                <li><a  href="javascript: void(0);">Update</a></li>
+                                <li><a  href="javascript: void(0);">Delete</a></li>
+                            </ul>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                if(!empty($oppportunityList)){
+                    foreach ($oppportunityList as $k=>$info) {
+                        $skillName ="";
+                        $testName ="";
+                        foreach($info['Skills'] as $skID=>$skName){
+                            $skillName = $skillName.'<span><u>'. $skName['SkillName']. '</u></span>'."  ";
+                        }
+                        foreach($info['Tests'] as $t=>$tName){
+                            $testName = $testName .'<span><u>'. $tName['TestName']. '</u></span>'."  ";
+                        }
+                        if($info['status']== 1){
+                            $active = "Active";
+                            $color = '#7aac34';
+                        } else {
+                            $active = "Close";
+                            $color = '#ccc';
+                        }
+                        ?>
+                        <tr role="row" class="odd">
+                            <td>
+                                <input type="checkbox">&nbsp;<?=$info['posteddate']?><!--<span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>-->
+                            </td>
+                            <td><?=$info['title']?></td>
+                            <td><?=$skillName?></td>
+                            <td><?=$info['careerdescription']?></td>
+                            <td ><?=$testName?></td>
+                            <td style="color: <?=$color?>; font-weight: bold">
+                                <?=$active?>
+                            </td>
+                            <td align="left" style="cursor: pointer">
+							<div class="tooltip top" role="tooltip">
+							  <div class="tooltip-arrow"></div>
+							  <div class="tooltip-inner">
+								don’t’ have yet
+							  </div>
+							</div>
+								<input type="hidden" id='<?=$info['OpportunityID']?>'>
+								<span style="float:left; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" id="Test"></span>
+								<span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#ccc; text-indent: 15px"></span>
+								<span class="glyphicon glyphicon-star" style="padding-left:15px;color:#c77405"></span>
+								<span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span>
+							</td>
+                        </tr>
+                    <?php } } ?>
+                </tbody>
+            </table>
+
+
+        </div>
+        <!--career list end-->
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#nav li").removeClass("active");//this will remove the active class from previously active menu item
+        $('#dasboard-test').addClass('active');
+		$("#Test").click(function(){
+			
+		alert("tetstt");
+		});
+
+    });
+
+</script>
