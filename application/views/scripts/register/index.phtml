@@ -43,43 +43,36 @@ border-bottom: 1px solid #ddd;
     padding: 8px 4px;
 }
 #Register .message{color: #b81900;}
+.btn-primary {
+    background-color: #005595;
+}
 </style>
 
 
-<div class="modal fade" tabindex="-1" role="dialog" id="openModalselectCompany" data-keyboard="false" data-backdrop="static">
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalRegister" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title" id="myModalLabel" style="color:#005595">Select or Add Company </h2>
+                <h2 class="modal-title" id="myModalLabel" style="color:#005595">Registration Complete</h2>
             </div>
-            <div class="modal-body login-modal" style="height:150px">
-            <form name="company-form" id="company-form">
+            <div class="modal-body login-modal" style="height:350px">
+            
             <div class="col-md-12" >
             
-                <div class="form-group">
-                    <label >Company Name* </label><span id="companynameLable" style="color: red"></span>
-               
-                    <select class="form-control" id="CompanyID" name="CompanyID">
-                        <option value="">Select Company</option>
-                        <?php
-                        $core= new PR_Api_Core_ClientClass();
-                        $listCompany = $core->getListCompany();
-                        foreach($listCompany as $k=>$v){
-                            $CompanyID = $v['CompanyID'];
-                            $Companyname = $v['Companyname'];
-                            ?>
-                            <option value="<?=$CompanyID?>"><?=$Companyname?></option>
-                        <?php
-                        }
-                        ?>
-                    </select>
-                
-                <div style="padding-top:10px">
-                    <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" data-toggle="modal" data-target="#openModalCompany">Add Company</button></div>
-                </div>    
+                <p>
+                    A confirmation was sent to: <b><span class="mail"></span></b> which you should receive shortly. After you acknowledge that notification, you can go to www.pocket.vienetllc.com as a registered  and view all ....</p>
+<p>
+Your Confirmation email will provide a link to bring you back to your profile so you can complete the remaining sections.
+</p>
+<p>
+Thank you!<br>
+Your Pocket Recruiter Team
+                    
+                </p>
+
                 </div>
-                </form>
+                
             </div>
             </div>
         
@@ -192,6 +185,14 @@ border-bottom: 1px solid #ddd;
                 
             </div>
             <div class="form-group">
+                <label for="credential">Zip code</label>
+                <div class="form-group" style="width:300px">
+                <input type="text" class="form-control" id="PostalCode" name="PostalCode">
+                 <span class="message" id="PostalCode_message"></span>
+              </div>
+                
+            </div>
+            <div class="form-group">
                 <label for="credential">Account type</label>
                 <br><span style="font-size:11px;"> How dou you want to represent yourse to Employ on Candidate?</span></br>
                 
@@ -240,7 +241,8 @@ $SourceHtml .="</select>";
             </div>
             
             <!--<button class="btn btn-primary" type="button" id="cmd-register">Register</button>-->
-            <img src="<?=URL_THEMES?>images/btn_Register_L.png" id="cmd-register" style="cursor: pointer;" width="85px">
+            <!--<img src="<?=URL_THEMES?>images/btn_Register_L.png" id="cmd-register" style="cursor: pointer;" width="85px">-->
+            <div style="padding-bottom:20px;"><a role="button" class="btn btn-primary" id="cmd-register" href="javascript: void(0)">Register</a></div>
         </form>
     <!--</div>-->
 
@@ -322,6 +324,9 @@ $SourceHtml .="</select>";
         }
    
     
+    });
+    $("#openModalRegister").blur(function(){
+        window.location = 'star';
     });
    /* $('#Companyname').blur(function () {
        if($('#Companyname').val()=='')

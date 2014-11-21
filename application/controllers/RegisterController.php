@@ -56,7 +56,7 @@
              
         $datacompany=array("Companyname"=>$Companyname );
              // echo ("data:<pre>");print_r($data);echo("</pre>");die();
-       // $api=new PR_Api_Register();
+       
        $api= new PR_Api_Core_Register();
        $core=new PR_Api_Core_ClientClass();
         
@@ -67,34 +67,40 @@
                 "emailaddress" => $email,
                 "password" => $pass,
                 "HeardFrom" => $About_us,
-                "PostalCode"=>$PostalCode
+                "PostalCode"=>$PostalCode,
+                "Companyname"=>$Companyname
 
                 );
      
       
        
-       if(isset($Companyname)&& $Companyname!=""){
+       /*if(isset($Companyname)&& $Companyname!=""){
           $record=$core->AddCompany($datacompany); 
           if($record["error"]!=''){
               $return['success'] = 0;
               $return['error'] =$record["error"] ;
           }
-       }
-       if(isset($accept)&&(($Acount_type==2)||($Acount_type==1&&$record["error"]=="")))
+       }*/
+       
+        if(isset($accept) )
         {
-                       
+           // echo("test");die();
             $tets=$api->registerClient($data);
+        }
+        
+        
+       // print_r($tets);
        if($tets["error"]=="")
        {
-               if($Acount_type==2||($Acount_type==1&&$record["error"]=="")){
+           
            $return['success'] = 1;
            $userApi = new PR_Api_User();
             $authData = array('emailaddress' => $data["emailaddress"], 'password' => $data["password"]);
             if ($User = $userApi->loadAndCheckAuthentication($authData))
             {
                // PR_Session::setSession($User,PR_Session::SESSION_USER);
-              //  $user = PR_Session::getSession(PR_Session::SESSION_USER);
-               // echo("user:");print_r($user);hgj
+               // $user = PR_Session::getSession(PR_Session::SESSION_USER);
+                //echo("user:");print_r($User);
                 $pageURL = 'http';
                 if (!empty($_SERVER['HTTPS'])) {if($_SERVER['HTTPS'] == 'on'){$pageURL .= "s";}} 
                 $pageURL .= "://";
@@ -110,8 +116,10 @@
                 $fromEmail = "info@vienetllc.com";
                 $link=$pageURL.URL_BASE."confirm?UserID=".base64_encode($User["UserID"])."&&emailaddress=".base64_encode($User["emailaddress"])."&&password=".base64_encode($User["password"]);
                 $subject = "Welcome to Pocket Recruiter!";
-                $body = "Thank you for signing up for a Company account with Pocket Recruiter. Please click on the following link to validate your email address:                       
-".$link."              
+                $body = "Thank you for signing up for a Company account with Pocket Recruiter. Please click on the following link to validate your email address:      
+                                                
+".$link." 
+            
 Thank you,                    
 Your Pocket Recruiter Team
                 ";
@@ -124,25 +132,20 @@ Your Pocket Recruiter Team
                 $mail->setToEmail($toEmail);
                 $mail->setSubject($subject);
                 $mail->send();
-               //
-                
+               // echo("tetstst:".$Acount_type);
                 $return['success'] = 1;
-               // $return['usertype'] = $user["usertype"]; 
-               $return['usertype']=$Acount_type;
+                $return['usertype'] = $Acount_type;
+                
             } 
-              }else{
+       }
+      else
+        {
             $return['success'] = 0;
-                   $return['error'] =$record["error"] ;
-               }
-               
-           }
-          else
-            {
-                $return['success'] = 0;
             $return['error'] =$tets["error"] ;
         }
-        }
-     
+        
+        
+   
        
        
         //return

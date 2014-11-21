@@ -249,7 +249,7 @@ register.prototype = {
                 var company=$('#company-form').serializeArray();
                 $.ajax({
                     url:  'register/do-register' ,
-                    data:{Register},
+                    data:Register,
                     type: 'POST',
                     success: function(xhr){
                        
@@ -262,13 +262,17 @@ register.prototype = {
                             if(xhr.usertype==1)
                                         {
                                            // window.location = 'client/start-profile';
-                                           window.location = 'dashboard/index'; 
+                                           //window.location = 'dashboard/index'; 
+                                           $(".mail").append(pmrm.val());
+                                           $('#openModalRegister').modal('show')
                                             
                                         }
                                          if(xhr.usertype==2)
                                         {
                                             
-                                            window.location = 'candidate/start-profile';
+                                            //window.location = 'candidate/start-profile';
+                                            $(".mail").append(pmrm.val());
+                                            $('#openModalRegister').modal('show')
                                            
                                         }
                            
@@ -284,15 +288,19 @@ register.prototype = {
                                      '<strong>'+xhr.error+'</strong>'+
                                 '</div>'
                             );
-                           alert("erro:"+xhr.error);
+                          // alert("erro:"+xhr.error);
                            if(xhr.error=="email exists")
                            {
+                             //  alert("Error: "+xhr.error);
+                             $('#emailaddress').focus();
                             pmrm_message.parent().removeClass('has-success').addClass('has-error');
-                            pmrm_message.html(fields.emailaddress.notEmpty.message).fadeOut().fadeIn();
+                           // pmrm_message.html(fields.emailaddress.notEmpty.message).fadeOut().fadeIn();
+                           pmrm_message.html("Email address is exists");
                            }
                            if(xhr.error=="Company name exists"){
                               Companyname_message.parent().addClass('has-error');
-                              Companyname_message.html(fields.Companyname.notEmpty.message).fadeOut().fadeIn(); 
+                              //Companyname_message.html(fields.Companyname.notEmpty.message).fadeOut().fadeIn(); 
+                               Companyname_message.html("Company name is exists"); 
                            }
                          //  if(xhr.error=="User exists")
                           // {
