@@ -40,16 +40,17 @@
   // echo ("params:<pre>");print_r($params);echo("</pre>");die();
 
         if(!empty($params)){
-                foreach($params['Register'] as $item){
-                    if($item['name']=='firstname') $firstname = $item['value'];
-                    if($item['name']=='lastname') $lasttname = $item['value'];
-                    if($item['name']=='usertype')  $Acount_type = $item['value'];
-                    if($item['name']=='emailaddress') $email = $item['value'];
-                    if($item['name']=='password') $pass = $item['value'];
-                    if($item['name']=='About_us')  $About_us = $item['value'];
-                    if($item['name']=='accept')  $accept = $item['value'];
-                    if($item['name']=='Companyname')  $Companyname = $item['value'];
-                }
+               
+                    $firstname = $params['firstname'];
+                    $lasttname = $params['lastname'];                    
+                    $Acount_type = $params['usertype'];                    
+                    $email = $params['emailaddress'];                    
+                    $pass = $params['password'];                   
+                    $About_us = $params['About_us'];                     
+                    $accept = $params['accept'];                    
+                    $Companyname = $params['Companyname'];
+                    $PostalCode=$params['PostalCode'];
+               
                               
             }
              
@@ -65,8 +66,8 @@
                 "usertype" => $Acount_type,
                 "emailaddress" => $email,
                 "password" => $pass,
-                "HeardFrom" => $About_us
-                //"Companyname"=>$Companyname
+                "HeardFrom" => $About_us,
+                "PostalCode"=>$PostalCode
 
                 );
      
@@ -91,12 +92,43 @@
             $authData = array('emailaddress' => $data["emailaddress"], 'password' => $data["password"]);
             if ($User = $userApi->loadAndCheckAuthentication($authData))
             {
-                PR_Session::setSession($User,PR_Session::SESSION_USER);
-                $user = PR_Session::getSession(PR_Session::SESSION_USER);
+               // PR_Session::setSession($User,PR_Session::SESSION_USER);
+              //  $user = PR_Session::getSession(PR_Session::SESSION_USER);
                // echo("user:");print_r($user);hgj
+                $pageURL = 'http';
+                if (!empty($_SERVER['HTTPS'])) {if($_SERVER['HTTPS'] == 'on'){$pageURL .= "s";}} 
+                $pageURL .= "://";
+                if ($_SERVER["SERVER_PORT"] != "80") {
+                    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+                } else {
+                    $pageURL .= $_SERVER["SERVER_NAME"];
+                }
+                //echo $pageURL;
+                //send mail
+                $toEmail = $email; //$techEmail;base64_encode($User["password"])
+                $fromName = "Pocket Recruiter";
+                $fromEmail = "info@vienetllc.com";
+                $link=$pageURL.URL_BASE."confirm?UserID=".base64_encode($User["UserID"])."&&emailaddress=".base64_encode($User["emailaddress"])."&&password=".base64_encode($User["password"]);
+                $subject = "Welcome to Pocket Recruiter!";
+                $body = "Thank you for signing up for a Company account with Pocket Recruiter. Please click on the following link to validate your email address:                       
+".$link."              
+Thank you,                    
+Your Pocket Recruiter Team
+                ";
+               
+                $mail = new PR_Api_Core_Mail();
+               // $mail1=new PR_Mail();
+                $mail->setBodyText($body);
+                $mail->setFromName($fromName);
+                $mail->setFromEmail($fromEmail);
+                $mail->setToEmail($toEmail);
+                $mail->setSubject($subject);
+                $mail->send();
+               //
                 
                 $return['success'] = 1;
-                $return['usertype'] = $user["usertype"];
+               // $return['usertype'] = $user["usertype"]; 
+               $return['usertype']=$Acount_type;
             } 
               }else{
             $return['success'] = 0;

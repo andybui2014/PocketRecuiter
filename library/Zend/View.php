@@ -62,7 +62,7 @@ class Zend_View extends Zend_View_Abstract
         if ($this->_useViewStream) {
             if (!in_array('zend.view', stream_get_wrappers())) {
                 require_once 'Zend/View/Stream.php';
-                stream_wrapper_register('zend.view', 'Zend\View\Stream');
+                stream_wrapper_register('zend.view', 'Zend_View_Stream');
             }
         }
 

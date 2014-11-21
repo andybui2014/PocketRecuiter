@@ -82,7 +82,7 @@ $Skills=$this->Skills;
                 <li><a href="<?=$helper->url('vieweducation','candidate');?>">Education</a></li>
                 <li><a class="active" href="<?=$helper->url('skills?utm_source=index','candidate');?>"><strong>Skills</strong></a></li>
                 <li><a href="#">References</a></li>
-                <li><a href="<?=$helper->url('skilltest','candidate');?>">Tests</a></li>
+                <li><a href="#">Tests</a></li>
                 <li><a href="#">Interest</a></li>
             </ul>
             <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($UserArray["Lastsigned"])) ?></p>
@@ -108,7 +108,7 @@ $Skills=$this->Skills;
                                     if(!empty($skillarray["CandidateProfileID"]))
                                     {
                                         $i=$i+1;
-                                        $id=$skillarray["SkillID"];
+                                      //  $id=$skillarray["SkillID"];
                                        // echo $skillarray["SkillName"]."<br>";
                             ?>
                             <li role="presentation" <?php if($skillarray["SkillID"]==$this->SkillID) echo "class='active'"; ?>><a href="<?= URL_BASE ?>candidate/skills-edit?id=<?=$skillarray["SkillID"]?>" style="font-weight:bold;font-size:12px"><?=$skillarray["SkillName"]?></a></li>
@@ -126,16 +126,19 @@ $Skills=$this->Skills;
                             <div class="tab-pane active" >
 
                             <?php
-                            $id=$_REQUEST["id"];
+                            $skillid=$_REQUEST["id"];
+                           // print_r($_REQUEST);
                             $core=new PR_Api_Core_CandidateClass();
-                            $list=$core->get_skill_array($id);
-                          //  echo ("list:<pre>");print_r($list);echo("</pre>");
+                            $list=$core->get_skill_array($skillid,$UserArray["CandidateProfileID"]);
+                           //echo ("list:<pre>");print_r($list);echo("</pre>");
                            foreach($list as $values)
                            {
+                              // echo ("testt:<pre>");print_r($values);echo("</pre>");
                             ?>
                                <div style="padding-top:10px;padding-left:20px"> <strong style="font-size:17px"><?=$values["SkillName"]?> Questionnaire</strong></div>
                                <form role="form" method="post" name="form-skill" id="form-skill">
-                               <input type="hidden" name="skill_id" id="skill_id" value="<?=$id?>">
+                               <input type="hidden" name="skill_id" id="skill_id" value="<?=$skillid?>">
+                               <input type="hidden" name="CandidateSkillID" id="CandidateSkillID" value="<?=$values["CandidateSkillID"]?>">
                                 <div class="col-md-10" style="padding-left:30px;padding-top:20px">
                                     <img src="<?=URL_THEMES.'images/trees/ico_colapse.png'?>"><span style="padding-left:15px;font-size:13px;font-weight:bold"> How many years real world experience in <?=$values["SkillName"]?> overall?</span>
                                    <!-- <div class="form-group" style="margin-left:60px">
