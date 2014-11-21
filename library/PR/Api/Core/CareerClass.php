@@ -515,10 +515,10 @@ class PR_Api_Core_CareerClass
     {
         $db = PR_Database::getInstance();
         $select = $db->select();
-        $select->from(array('u'=>'user'),array('firstname','lastname','UserID'));
+        $select->from(array('u'=>'user'),array('firstname','lastname','UserID','PhoneNumber'));
         $select->joinleft(array('c'=>'candidate_profile'),
             'c.CandidateProfileID = u.CandidateProfileID',
-            array('CandidateProfileID','image','minimumsalary','maximumsalary'));
+            array('CandidateProfileID','image','minimumsalary','maximumsalary','tralveldistanceinmiles'));
 
         $select->joinleft(array('sk'=>'candidate_skill'),
             'sk.CandidateProfileID = c.CandidateProfileID',
@@ -533,7 +533,51 @@ class PR_Api_Core_CareerClass
         $select->order('u.UserID');
         //print_r($select->__toString());die();
         $records = PR_Database::fetchAll($select);
+        if(!empty($records)&& count($records)>0){
+            $list = array();
+            foreach($records as $rec){
+                $rec['Skills'] = $this->getSkillByCandidateID($rec['CandidateProfileID']);
+                $list[] = $rec;
+            }
+            return $list;
+        } else{
+            return array();
+        }
 
-        return $records;
+    }
+
+    public function getSkillByCandidateID($CandidateProfileID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('ck'=>'candidate_skill'),array('SkillID'));
+
+        $select->where("ck.CandidateProfileID = '".$CandidateProfileID."' ");
+
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            return $records;
+        }
+    }
+
+    public function getSkillByCompanyID($CompanyID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('o'=>'opportunity'),array('title'));
+        $select->join(array('Opp_sk'=>'opportunity_skill'),
+            'Opp_sk.OpportunityID = o.OpportunityID',
+            array('SkillID')
+        );
+        $select->where("o.CompanyID = '".$CompanyID."' ");
+
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            return $records;
+        }
     }
 }

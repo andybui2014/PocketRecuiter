@@ -1,6 +1,7 @@
 <?php
 $oppportunityList = $this->getListOpp;
 $helper = $this->layout()->_helper;
+$uselist = $this->uselist;
 
 ?>
 <style>
@@ -58,6 +59,67 @@ $helper = $this->layout()->_helper;
     </div>
 </div>
 <!--END-->
+<!-- Modal Add -->
+<div class="container" style="padding-right: 0px">
+<div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotificationIndex" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header login_modal_header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel">Add a Notification</h2>
+            </div>
+            <div class="modal-body login-modal" style="padding-top:0px">
+                <div class="modal-body" style="padding-top:0px">
+                    <form id="form-addnotification" name="form-addnotification">
+
+                        <div class="col-md-12">
+                            <div class="col-md-5" style="padding-left: 0px">
+                                <div class="form-group">
+                                    &nbsp;
+                                    <select id= "receiverid" class="form-control">
+                                        <option value="">Seclect a Receiver</option>
+                                        <?php
+                                        if(!empty($uselist)){
+                                            foreach ($uselist as $k=>$useinfo){
+                                                $receiverid_user = $useinfo['UserID'];
+                                                $receiver_Name = $useinfo['firstname']." ".$useinfo['lastname'] ;
+                                                if($clientIDLogin != $receiverid_user){
+                                                    ?>
+                                                    <option value="<?=$receiverid_user?>"><?=$receiver_Name?></option>
+                                                <?php  }
+                                            }
+                                        }
+                                        ?>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-7" style="padding-top: 21px; padding-left:0px">
+                                <button data-loading-text="Loading..." class="btn btn-sm btn-primary" type="button" id="addReceiveEmail" >Add</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            To :
+                            <div class="form-control" id="toTheseEmail">
+                            </div>
+                            <br>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input value="" type="text" name="subjectNotification" id="subjectNotification" placeholder="Subject" class="form-control">
+                                <br>
+                                <textarea value="" type="text" name="contentNotification" id="contentNotification" placeholder="Content" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading..." onclick="javascript:objdb.addnotificationIndex()" >Add</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Model-->
 <!--End-->
 
     <div class="row" style="padding-top: 40px">
@@ -92,7 +154,7 @@ $helper = $this->layout()->_helper;
        <div class="col-md-4">
            <div class="panel  panel-default">
             <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('careermatch','career')?>'>New Matches</></a></strong></div>
-            <div class="panel-body" style="height: 300px;">
+            <div class="panel-body" style="height: 450px;">
                 <?php
                 if(!empty($this->listCandidate)&& count($this->listCandidate)>0){
                     foreach($this->listCandidate as $kk=>$listCandidateInfo){
@@ -105,11 +167,43 @@ $helper = $this->layout()->_helper;
                         } else{
                             $salary = $listCandidateInfo['minimumsalary']."K"."-".$listCandidateInfo['maximumsalary']."K";
                         }
+
+                       if($listCandidateInfo['image']==""){
+                           $image = URL_MEDIA_PHOTO."avatar_none.jpg";
+                       } else{
+                            $image = URL_MEDIA_PHOTO.$listCandidateInfo['image'];
+                        }
+
+                        $companyName="";
+                        if(!empty($listCandidateInfo['strTitle']) && count($listCandidateInfo['strTitle'])>0){
+                            $i= 1;
+                            $companyName = "";
+                            foreach($listCandidateInfo['strTitle'] as $strTitleInfo){
+                                if($i==1){
+                                    $companyName = $strTitleInfo;
+                                } else{
+                                    $companyName = $companyName." , ".$strTitleInfo;
+                                }
+                                $i++;
+                            }
+                        }
                 ?>
                         <div class="col-md-12" style="color: #777; margin-bottom: 10px;">
-                            <div class="col-md-3" style="padding-left: 0"><img src="<?=URL_MEDIA_PHOTO.$listCandidateInfo['image']?>" style="height: 50px; width:40px"></div>
-                            <div class="col-md-9 text-bottom" style="vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0"><div style="color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top: 12px"><?=$listCandidateInfo['firstname']?> &nbsp; <?=$listCandidateInfo['lastname']?></div>
-                               <div style="font-weight: bold;vertical-align: text-bottom; padding-bottom: 0px">Expected Salary:&nbsp;<?=$salary?></div>
+                            <div class="col-md-3" style="padding-left: 0"><img src="<?=$image?>" style="height: 55px; width:50px"></div>
+                            <div class="col-md-9 text-bottom" style="vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0">
+                                <div style="color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0"><?=$listCandidateInfo['firstname']?> &nbsp; <?=$listCandidateInfo['lastname']?></div>
+                                <div style="vertical-align: text-bottom; padding-bottom: 0px">Opportunity:&nbsp;<?=$companyName?></div>
+                               <div style="vertical-align: text-bottom; padding-bottom: 0px">Expected Salary:&nbsp;<?=$salary?></div>
+                                <div style="vertical-align: text-bottom; padding-bottom: 0px"> District from job:&nbsp;
+                                    <?php
+                                    if($listCandidateInfo['tralveldistanceinmiles'] >1){
+                                        echo $listCandidateInfo['tralveldistanceinmiles']."miles";
+                                    } else if($listCandidateInfo['tralveldistanceinmiles']== 1){
+                                        echo $listCandidateInfo['tralveldistanceinmiles']."mile";
+                                    }
+                                    ?>
+                                </div>
+                                <div style="vertical-align: text-bottom; padding-bottom: 0px">Mobile:&nbsp;<?=$listCandidateInfo['PhoneNumber']?></div>
                             </div>
                         </div>
                     <?php
@@ -126,7 +220,7 @@ $helper = $this->layout()->_helper;
         <div class="col-md-4">
             <div class="panel  panel-default">
                 <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('list','notifications')?>'>Pocket Recruiter Notifications</a></strong></div>
-                <div class="panel-body" style="height: 300px;">
+                <div class="panel-body" style="height: 450px;">
 
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -134,23 +228,23 @@ $helper = $this->layout()->_helper;
                             <tr>
                                 <th>
                                     <span class="pull-left">
-                                        <label><input type="checkbox" name="" value=""/> Check All</label>
+                                        <label><input id="Index-Check-All" type="checkbox" name="" value=""/> Check All</label>
                                     </span>
                                     <span class="pull-right"><span class="dropdown">
                                        Action<span style="cursor:pointer" data-toggle="dropdown" class="caret"></span>
                                         <ul  class="dropdown-menu" role="menu">
+                                            <li><a id="test-act-assign" data-toggle="modal" data-target="#AddModalNotificationIndex" href="javascript: void(0)">Compose</a></li>
                                             <li><a id="test-act-remove" href="javascript: void(0)">Delete</a></li>
-                                            <li><a id="test-act-assign" href="javascript: void(0)">Assign</a></li>
                                         </ul>
                                     </span></span>
                                 </th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="notification-list">
                             <?php
                             foreach($this->messageList as $item){ ?>
-                                <tr>
-                                    <td><label><input type="checkbox"/> <?=$item['cbContactNameR'];?> <?=$item['cbContactLNameR'];?></label> <?=$item['cbDateTime'];?></td>
+                                <tr class="notification-ischeck">
+                                    <td><label><input type="checkbox" value="<?=$item['NotificationID']?>" class="Index-Is-Check" /> <?=$item['cbContactNameR'];?> <?=$item['cbContactLNameR'];?></label> <?=$item['cbDateTime'];?></td>
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -163,7 +257,7 @@ $helper = $this->layout()->_helper;
         <div class="col-md-4" >
             <div class="panel  panel-default">
                 <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('index','test')?>'>Technical Tests</></a></strong></div>
-                <div class="panel-body" style="height: 300px;">
+                <div class="panel-body" style="height: 450px;">
                     <span id="technical-test">
                     <?php
                     if(!empty($this->resultTestList) && count($this->resultTestList)){
@@ -292,7 +386,10 @@ $helper = $this->layout()->_helper;
     $(document).ready(function () {
         $("#nav li").removeClass("active");//this will remove the active class from previously active menu item
         $('#dasboard-test').addClass('active');
-
+        $('#addReceiveEmail').unbind('click').bind('click',objdb.addReceiveEmail);
+        $('#test-act-remove').unbind('click').bind('click',objdb.deleletNoticcationCheck)
+        $('#Index-Check-All').unbind('click').bind('click',objdb.IndexCheckedAll)
+        $('.Index-Is-Check').unbind('click').bind('click',objdb.IndexIsChecked);
     });
 
 </script>
