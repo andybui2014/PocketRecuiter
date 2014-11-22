@@ -580,4 +580,13 @@ class PR_Api_Core_CareerClass
             return $records;
         }
     }
+
+    public function publibOpportunityByOpportunityID($opportunityID, $status)
+    {
+        $db = PR_Database::getInstance();
+        $updateFields = array('status'=>$status);
+        $criteria = "OpportunityID = '$opportunityID'";
+        $result = PR_Database::update('opportunity',$updateFields,$criteria);
+        return $result;
+    }
 }

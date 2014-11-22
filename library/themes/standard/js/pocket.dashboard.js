@@ -159,6 +159,26 @@ pocketDashboard.prototype = {
                 $('#Index-Check-All').prop('checked',false);
             }
         }
+    },
+
+    publibOpportunity:function(){
+        var status =1 ;
+        var id= $(this).attr('opportunityattr');
+        var active= $(this).closest("tr").find(".opportunity-active");
+        $.ajax({
+            url: 'publib-opportunity',
+            data:{status:status, oppotunityID:id},
+            type: 'POST',
+            error : function (status,xhr,error) {
+            },
+            success: function(xhr,status){
+                if(xhr.success){
+                    active.text("Active");
+                    active.css({"color":"#7aac34"});
+                }
+
+            }
+        });
     }
 
 }
