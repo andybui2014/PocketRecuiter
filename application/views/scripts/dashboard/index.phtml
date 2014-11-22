@@ -316,7 +316,7 @@ $uselist = $this->uselist;
                     </th>
                     <th style="width:125px">
                         <label>
-                            <strong>Require Test</strong>
+                            <strong>Require Tests</strong>
                         </label>
                     </th>
                     <th style="width:100px">
@@ -366,12 +366,15 @@ $uselist = $this->uselist;
                             <td><?=$skillName?></td>
                             <td><?=$info['careerdescription']?></td>
                             <td ><?=$testName?></td>
-                            <td style="color: <?=$color?>; font-weight: bold">
+                            <td style="color: <?=$color?>; font-weight: bold" class="opportunity-active">
                                 <?=$active?>
                             </td>
-							
                             <td align="left" style="cursor: pointer">
 							
+					<?php
+                                $id=$info['OpportunityID'];
+                                ?>
+								
 								<div id="modaleye" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 									
 								  <div class="modal-dialog modal-sm">
@@ -385,10 +388,12 @@ $uselist = $this->uselist;
 								<a id="Test"  href="javascript: void(0);" data-container="body" data-toggle="popover" data-placement="top" data-content="Don't have yet."><span style="float:left; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open"></span></a>
 								<input type="hidden" id='<?=$info['OpportunityID']?>'>
 								
-								<span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#ccc; text-indent: 15px"></span>
-								<span class="glyphicon glyphicon-star" style="padding-left:15px;color:#c77405"></span>
+								<a href="<?=$helper->url('careeredit?opportunityID='.$id.'','career')?>">
+                                    <span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#7aac34; text-indent: 15px"></span>
+                                </a>
+								<span class="glyphicon glyphicon-star publib-notication" style="padding-left:15px;color:#c77405" opportunityattr="<?=$id?>"></span>
 								<!--<span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span>-->
-							</td>
+							</td>				
                         </tr>
                     <?php } } ?>
                 </tbody>
@@ -416,6 +421,7 @@ $uselist = $this->uselist;
         $('#test-act-remove').unbind('click').bind('click',objdb.deleletNoticcationCheck)
         $('#Index-Check-All').unbind('click').bind('click',objdb.IndexCheckedAll)
         $('.Index-Is-Check').unbind('click').bind('click',objdb.IndexIsChecked);
+        $('.publib-notication').unbind('click').bind('click',objdb.publibOpportunity);
     });
 
 </script>

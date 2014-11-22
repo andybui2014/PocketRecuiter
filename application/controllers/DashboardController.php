@@ -217,4 +217,54 @@ class DashboardController extends Application_Controller_Action {
 
     }
 
+    public function publibOpportunityAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $request = $this->getRequest();
+        $params = $this->getRequest()->getParams();
+        $opportunityID = $params['oppotunityID'];
+        $status = $params['status'];
+/*
+        if(isset($params['oppotunityID'])){
+            $opportunityID = $params['oppotunityID'];
+        } else{
+            $opportunityID ="";
+        }
+
+        if(isset($params['status'])){
+            $status = $params['status'];
+        } else{
+            $status ="";
+        }
+
+        $Career_PR_Api = new PR_Api_Core_CareerClass();
+        if($opportunityID !="" && $status!=""){
+
+            $result=  $Career_PR_Api->publibOpportunityByOpportunityID($opportunityID,$status);
+        } */
+        $Career_PR_Api = new PR_Api_Core_CareerClass();
+        $result=  $Career_PR_Api->publibOpportunityByOpportunityID($opportunityID,$status);
+
+       // $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);
+       // $CompanyID = $sestionClient['CompanyID'];
+
+        //$getListOpp = $Career_PR_Api->getListOpportunity(array('CompanyID'=>$CompanyID));
+        /*echo "<pre>";
+        print_r($getListOpp);
+        echo "</pre>"; die(); */
+        if($result){
+            $return = array("success" => 1, "error" => "");
+        } else{
+            $return = array("success" => 0, "error" => "");
+        }
+
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $return = json_encode($return);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($return), true)
+            ->setBody($return);
+    }
+
 }
