@@ -120,7 +120,6 @@ pocketDashboard.prototype = {
                         $(".Contain-candidate-reload").html("");
                         $(".Contain-candidate-reload").html(html_can);
                         //end
-
                     }else{
                         btn.button('reset');
                     }
