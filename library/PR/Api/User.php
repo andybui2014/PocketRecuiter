@@ -253,6 +253,15 @@ class PR_Api_User extends Zend_Db_Table_Abstract
 
         return;
     }
+    public function UpdateActive($userID)
+    {
+
+        PR_Database::update('user',array('active'=>"1"),
+                "UserID = '$userID'"
+        );
+
+        return;
+    }
     
     
 
