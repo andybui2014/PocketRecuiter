@@ -1,0 +1,102 @@
+
+<style>
+body {
+    background: none repeat scroll 0 0 #ededed;
+    
+}
+.container{
+     /*font-family:"Open Sans" ;*/
+     font-size: 13px;
+     max-width: 90%;
+}
+.page-header{
+/*width: 859px;
+border-bottom: 1px solid #ddd;*/
+border-bottom: none;
+}
+.page-header1{
+width: 859px;
+border-bottom: 1px solid #ddd;
+
+}
+.has-error .form-control {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.image1 {
+    background: url('<?=URL_THEMES?>images/img_PrivacyPolicy.jpg') no-repeat ;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+   
+    max-width: 200px;
+    
+    
+    
+   
+}
+.form-control{
+    width: 47%;
+}
+.popover {
+    border:none;
+    max-width: 310px;
+   /* border-right: 3px solid rgba(0, 0, 0, 0.8);*/
+   border-right: 3px solid #005595;
+    
+}
+.popover.right {
+    margin-left: 10px;
+}.popover.right > .arrow{
+    border-right-color: rgba(0, 0, 0, 0);
+    left: -7px;
+}
+.popover-content {
+    padding: 8px 4px;
+}
+#form-login .message{color: #b81900;}
+</style>
+<!--<script src="<?=URL_THEMES.'js/comfirmRegister.js?vs=1';?>"></script>-->
+<div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
+    <div class="container">
+        <span style="font-size:15px">This is the resume of the future! With Pocket Recruiter,</span><br/>
+     <span style="font-weight:bold;font-size:20px;"> You'll not only get the hiring manager's attention-you'll keep it.</span>
+    </div>
+</div>
+<div class="container" >
+<div class="page-header" style="padding:50px;padding-left:0">
+    <?php 
+            //echo ("testtt:<pre>");print_r($_REQUEST);echo("</pre>"); 
+            $id=$_REQUEST["UserID"];
+            $em=$_REQUEST["emailaddress"];
+            $pass=$_REQUEST["password"];
+            
+         //  echo ("UserID:".base64_encode($id));
+          // echo ("<br>emailaddress:".base64_encode($em));
+          // echo ("<br>password:".base64_encode($pass));
+         //  echo ("<br>UserID1:".base64_decode(base64_encode($id)));
+         //  echo ("<br>emailaddress1:".base64_decode(base64_encode($em)));
+         //  echo ("<br>password1:".base64_decode(base64_encode($pass)));
+    ?>
+    <p style="font-size:18px;">
+      <!-- Congratulations, you email have been verified. Please <a href="<?= URL_BASE . 'confirm/do-confirm?UserID='.$id."&&emailaddress=".$em."&&password=".$pass; ?>">click here</a> to log in.-->
+             Congratulations, your email have been verified. Please click <a href="<?= URL_BASE . 'login'?>">here</a> to log in.
+       
+    
+    </p>
+   
+</div>
+
+   
+
+</div>
+    </div>
+<script>
+    //Init main pocket
+    var pkMain = new pocketMain();
+    $(document).ready(function(){
+        
+    })
+</script>
