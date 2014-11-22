@@ -60,7 +60,6 @@ $uselist = $this->uselist;
 </div>
 <!--END-->
 <!-- Modal Add -->
-<div class="container" style="padding-right: 0px">
 <div class="modal fade" tabindex="-1" role="dialog" id="AddModalNotificationIndex" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content modal-dialog-center">
@@ -113,14 +112,15 @@ $uselist = $this->uselist;
                             </div>
                         </div>
                         <button id="addnotification" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading..." onclick="javascript:objdb.addnotificationIndex()" >Add</button>
+                    </form>
                 </div>
-                </form>
+
             </div>
         </div>
     </div>
 </div>
 <!-- End Model-->
-<!--End-->
+
 
     <div class="row" style="padding-top: 40px">
         <div class="col-md-12"><h2><a><strong>Dashboard</strong></a></h2></div>
@@ -316,7 +316,7 @@ $uselist = $this->uselist;
                     </th>
                     <th style="width:125px">
                         <label>
-                            <strong>Require Test</strong>
+                            <strong>Require Tests</strong>
                         </label>
                     </th>
                     <th style="width:100px">
@@ -360,16 +360,40 @@ $uselist = $this->uselist;
                         ?>
                         <tr role="row" class="odd">
                             <td>
-                                <input type="checkbox">&nbsp;<?=$info['posteddate']?><span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>
+                                <input type="checkbox">&nbsp;<?=$info['posteddate']?><!--<span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>-->
                             </td>
                             <td><?=$info['title']?></td>
                             <td><?=$skillName?></td>
                             <td><?=$info['careerdescription']?></td>
                             <td ><?=$testName?></td>
-                            <td style="color: <?=$color?>; font-weight: bold">
+                            <td style="color: <?=$color?>; font-weight: bold" class="opportunity-active">
                                 <?=$active?>
                             </td>
-                            <td align="left" style="cursor: pointer"><input type="hidden" id='<?=$info['OpportunityID']?>'"><span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#ccc; text-indent: 15px"></span><span class="glyphicon glyphicon-star" style="padding-left:15px;color:#c77405"></span><span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span></td>
+                            <td align="left" style="cursor: pointer">
+							
+					<?php
+                                $id=$info['OpportunityID'];
+                                ?>
+								
+								<div id="modaleye" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+									
+								  <div class="modal-dialog modal-sm">
+									<div class="modal-content" style="height:50px;width:150px">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									  Don't have yet.
+									</div>
+								  </div>
+								</div>
+
+								<a id="Test"  href="javascript: void(0);" data-container="body" data-toggle="popover" data-placement="top" data-content="Don't have yet."><span style="float:left; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open"></span></a>
+								<input type="hidden" id='<?=$info['OpportunityID']?>'>
+								
+								<a href="<?=$helper->url('careeredit?opportunityID='.$id.'','career')?>">
+                                    <span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#7aac34; text-indent: 15px"></span>
+                                </a>
+								<span class="glyphicon glyphicon-star publib-notication" style="padding-left:15px;color:#c77405" opportunityattr="<?=$id?>"></span>
+								<!--<span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span>-->
+							</td>				
                         </tr>
                     <?php } } ?>
                 </tbody>
@@ -384,12 +408,20 @@ $uselist = $this->uselist;
 
 <script type="text/javascript">
     $(document).ready(function () {
+		
+		
+		$("a#Test").click(function(){
+		 
+		  $('#modaleye').modal('show')
+
+		});
         $("#nav li").removeClass("active");//this will remove the active class from previously active menu item
         $('#dasboard-test').addClass('active');
         $('#addReceiveEmail').unbind('click').bind('click',objdb.addReceiveEmail);
         $('#test-act-remove').unbind('click').bind('click',objdb.deleletNoticcationCheck)
         $('#Index-Check-All').unbind('click').bind('click',objdb.IndexCheckedAll)
         $('.Index-Is-Check').unbind('click').bind('click',objdb.IndexIsChecked);
+        $('.publib-notication').unbind('click').bind('click',objdb.publibOpportunity);
     });
 
 </script>

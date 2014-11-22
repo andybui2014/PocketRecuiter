@@ -60,6 +60,67 @@ pocketDashboard.prototype = {
 
                         $("#notification-list").html("");
                         $("#notification-list").html(html);
+
+                        //Reload candidate
+                       var html_can =""
+                        $.each(data.listCandidate,function(kk,listCandidateInfo){
+                            var salary = ''; var image='';
+                            if(listCandidateInfo.minimumsalary ==null && listCandidateInfo.maximumsalary ==null){
+                                   salary = '';
+                                } else if(listCandidateInfo.minimumsalary ==null){
+                                    salary = listCandidateInfo.maximumsalary +'K';
+                                } else if(listCandidateInfo.maximumsalary =='null'){
+                                    salary = listCandidateInfo.minimumsalary +'K';
+                                } else{
+                                    salary = listCandidateInfo.minimumsalary+'K'+'-'+listCandidateInfo.maximumsalary+'K';
+                                }
+
+                            if(listCandidateInfo.image==null){
+                                 image = urlImage+'avatar_none.jpg';
+                            } else{
+                                image = urlImage+listCandidateInfo.image;
+                            }
+
+                            var companyName='';
+                            var lengtharray =[];
+                            lengtharray = listCandidateInfo.strTitle
+                            if(listCandidateInfo.strTitle !='' && lengtharray.length>0){
+                                var i= 1;
+                                var companyName = '';
+
+                                $.each(listCandidateInfo.strTitle,function(kkk,strTitleInfo){
+                                    if(i==1){
+                                        companyName = strTitleInfo;
+                                    } else{
+                                        companyName = companyName +' , '+strTitleInfo;
+                                    }
+                                    i++;
+                                });
+                            }
+
+                            if(listCandidateInfo.tralveldistanceinmiles >1){
+                                var travel = listCandidateInfo.tralveldistanceinmiles +'miles';
+                            } else if(listCandidateInfo.tralveldistanceinmiles== 1){
+                                var travel = listCandidateInfo.tralveldistanceinmiles+'mile';
+                            }
+
+                            html_can +="<div class='col-md-12' style='color: #777; margin-bottom: 10px;'>" +
+                                " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 55px; width:50px'></div>" +
+                                    "<div class='col-md-9 text-bottom' style='vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0'>" +
+                                        "<div style='color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0'>"+listCandidateInfo.firstname+"&nbsp;"+listCandidateInfo.lastname+"</div>"+
+                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Opportunity:&nbsp;"+companyName+"</div>"+
+                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Expected Salary:&nbsp;"+salary+"</div>"+
+                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px'> District from job:&nbsp;"+travel+"</div>"+
+                                         "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Mobile:&nbsp;"+listCandidateInfo.PhoneNumber+"</div>"+
+                                     "</div>"+
+                                "</div>";
+
+                        });
+
+                        $(".Contain-candidate-reload").html("");
+                        $(".Contain-candidate-reload").html(html_can);
+                        //end
+
                     }else{
                         btn.button('reset');
                     }
@@ -70,6 +131,10 @@ pocketDashboard.prototype = {
             alert("Seclect a reciever");
             btn.button('reset');
         }
+
+        $("#form-addnotification #toTheseEmail").text("");
+        $("#form-addnotification #subjectNotification").val("");
+        $("#form-addnotification #contentNotification").val("");
 
     },
 
@@ -122,6 +187,65 @@ pocketDashboard.prototype = {
 
                         $("#notification-list").html("");
                         $("#notification-list").html(html);
+                        //Reload candidate
+                        var html_can =""
+                        $.each(data.listCandidate,function(kk,listCandidateInfo){
+                            var salary = ''; var image='';
+                            if(listCandidateInfo.minimumsalary ==null && listCandidateInfo.maximumsalary ==null){
+                                salary = '';
+                            } else if(listCandidateInfo.minimumsalary ==null){
+                                salary = listCandidateInfo.maximumsalary +'K';
+                            } else if(listCandidateInfo.maximumsalary =='null'){
+                                salary = listCandidateInfo.minimumsalary +'K';
+                            } else{
+                                salary = listCandidateInfo.minimumsalary+'K'+'-'+listCandidateInfo.maximumsalary+'K';
+                            }
+
+                            if(listCandidateInfo.image==null){
+                                image = urlImage+'avatar_none.jpg';
+                            } else{
+                                image = urlImage+listCandidateInfo.image;
+                            }
+
+                            var companyName='';
+                            var lengtharray =[];
+                            lengtharray = listCandidateInfo.strTitle
+                            if(listCandidateInfo.strTitle !='' && lengtharray.length>0){
+                                var i= 1;
+                                var companyName = '';
+
+                                $.each(listCandidateInfo.strTitle,function(kkk,strTitleInfo){
+                                    if(i==1){
+                                        companyName = strTitleInfo;
+                                    } else{
+                                        companyName = companyName +' , '+strTitleInfo;
+                                    }
+                                    i++;
+                                });
+                            }
+
+                            if(listCandidateInfo.tralveldistanceinmiles >1){
+                                var travel = listCandidateInfo.tralveldistanceinmiles +'miles';
+                            } else if(listCandidateInfo.tralveldistanceinmiles== 1){
+                                var travel = listCandidateInfo.tralveldistanceinmiles+'mile';
+                            }
+
+                            html_can +="<div class='col-md-12' style='color: #777; margin-bottom: 10px;'>" +
+                                " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 55px; width:50px'></div>" +
+                                "<div class='col-md-9 text-bottom' style='vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0'>" +
+                                "<div style='color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0'>"+listCandidateInfo.firstname+"&nbsp;"+listCandidateInfo.lastname+"</div>"+
+                                "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Opportunity:&nbsp;"+companyName+"</div>"+
+                                "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Expected Salary:&nbsp;"+salary+"</div>"+
+                                "<div style='vertical-align: text-bottom; padding-bottom: 0px'> District from job:&nbsp;"+travel+"</div>"+
+                                "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Mobile:&nbsp;"+listCandidateInfo.PhoneNumber+"</div>"+
+                                "</div>"+
+                                "</div>";
+
+                        });
+
+                        $(".Contain-candidate-reload").html("");
+                        $(".Contain-candidate-reload").html(html_can);
+                        //end
                     }else{
 
                     }
@@ -133,6 +257,8 @@ pocketDashboard.prototype = {
             alert("Please select a notification");
             return;
         }
+
+        $("#are-you-sure-you-want-to-delete").modal('hide');
 },
 
     IndexCheckedAll:function(){
