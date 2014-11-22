@@ -196,7 +196,7 @@ career.prototype = {
         $("#salaryRangeLable").text("");
 
         if(Veridate_careername ==""){
-            $("#careernameLable").text("(Career Name must require)");
+            $("#careernameLable").text("(Opportunity Name must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;
@@ -292,7 +292,7 @@ career.prototype = {
         $("#salaryRangeLable").text("");
 
         if(Veridate_careername ==""){
-            $("#careernameLable").text("(Career Name must require)");
+            $("#careernameLable").text("(Opportunity Name must require)");
             btn.button('reset');
             $("#calcareercrtab").click();
             return;

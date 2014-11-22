@@ -32,11 +32,11 @@ class DashboardController extends Application_Controller_Action {
 
         $listSkill = $Oppotunity_PR_Api->getSkillByCompanyID($CompanyID);
         $listCandidate  = array();
-
+        $list  = array();
         if(!empty($listCandidate1) && count($listCandidate1)>0){
             foreach ($listCandidate1 as $kkk=>$listCandidate1Info) {
                if(!empty($listCandidate1Info['Skills']) && count($listCandidate1Info['Skills'])>0){
-                   $list  = array();
+                   $list  = "";
                     foreach($listCandidate1Info['Skills'] as $listInfor){
 
                         if(!empty($listSkill) && count($listSkill)>0){
@@ -50,9 +50,11 @@ class DashboardController extends Application_Controller_Action {
                    }
 
                 }
+                if(!empty($list)&&count($list)>0){
                 $list = array_unique($list);
                 $listCandidate1Info ['strTitle'] = $list;
                 $listCandidate[] = $listCandidate1Info;
+            }
             }
 
 
@@ -148,11 +150,11 @@ class DashboardController extends Application_Controller_Action {
         $CompanyID = $sestionClient['CompanyID'];
         $listSkill = $Career_PR_Api->getSkillByCompanyID($CompanyID);
         $listCandidate  = array();
-
+        $list  = array();
         if(!empty($listCandidate1) && count($listCandidate1)>0){
             foreach ($listCandidate1 as $kkk=>$listCandidate1Info) {
                 if(!empty($listCandidate1Info['Skills']) && count($listCandidate1Info['Skills'])>0){
-                    $list  = array();
+                    $list ="";
                     foreach($listCandidate1Info['Skills'] as $listInfor){
 
                         if(!empty($listSkill) && count($listSkill)>0){
@@ -166,15 +168,19 @@ class DashboardController extends Application_Controller_Action {
                     }
 
                 }
+
+                if(!empty($list)&& count($list)>0){
                 $list = array_unique($list);
                 $listCandidate1Info ['strTitle'] = $list;
                 $listCandidate[] = $listCandidate1Info;
             }
+
+            }
         }
 
         $result['listCandidate'] = $listCandidate;
-        //
-        /* echo "<pre>";
+
+        /*echo "<pre>";
          print_r($result);
          echo "</pre>"; die(); */
         $response = $this->getResponse();
@@ -207,6 +213,45 @@ class DashboardController extends Application_Controller_Action {
         $result = array();
         $result['list'] = $notiClass->getList($clientID,$limit=10, $offset=0);
         $result['suc'] = $return;
+
+        //reload
+        $Career_PR_Api = new PR_Api_Core_CareerClass();
+        $receivIDs = $Career_PR_Api->getListReceiveIDbySenderID($clientID);
+        $listCandidate1 = $Career_PR_Api->getListCandidateByUserID($receivIDs,3,0);
+
+        $CompanyID = $sestionClient['CompanyID'];
+        $listSkill = $Career_PR_Api->getSkillByCompanyID($CompanyID);
+        $listCandidate  = array();
+        $list  = array();
+        if(!empty($listCandidate1) && count($listCandidate1)>0){
+            foreach ($listCandidate1 as $kkk=>$listCandidate1Info) {
+                if(!empty($listCandidate1Info['Skills']) && count($listCandidate1Info['Skills'])>0){
+                    $list ="";
+                    foreach($listCandidate1Info['Skills'] as $listInfor){
+
+                        if(!empty($listSkill) && count($listSkill)>0){
+                            foreach($listSkill as $keylistskill=>$listSkillInfo){
+                                if($listSkillInfo['SkillID'] == $listInfor['SkillID']){
+                                    $list[] = $listSkillInfo['title'];
+                                }
+        }
+                        }
+
+                    }
+
+                }
+
+                if(!empty($list)&& count($list)>0){
+                    $list = array_unique($list);
+                    $listCandidate1Info ['strTitle'] = $list;
+                    $listCandidate[] = $listCandidate1Info;
+                }
+
+            }
+        }
+
+        $result['listCandidate'] = $listCandidate;
+        //end
 
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
