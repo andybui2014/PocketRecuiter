@@ -1797,6 +1797,7 @@ class CandidateController extends Application_Controller_Action
 			$this->view->getCandidates=$getCandidates;
 			$skills = $api_candidate->getListAll_CandidateSkills($UserID);
 			$this->view->Skills=$skills;
+			$this->view->Candidateprofile_ID=$Candidateprofile_ID;
 			$this->render("skills/editskill");
 		   // echo("testt:<pre>");print_r($params);echo("</pre>");
 		   

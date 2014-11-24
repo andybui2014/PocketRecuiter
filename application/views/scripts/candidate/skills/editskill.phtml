@@ -105,11 +105,11 @@ $Skills=$this->Skills;
                                 foreach($Skills as $skillarray)
                                 {
                                     
-                                    if(!empty($skillarray["CandidateProfileID"]))
+                                    if(!empty($skillarray["CandidateProfileID"])&& $skillarray["CandidateProfileID"]==$this->Candidateprofile_ID)
                                     {
                                         $i=$i+1;
                                       //  $id=$skillarray["SkillID"];
-                                       // echo $skillarray["SkillName"]."<br>";
+                                       // echo $skillarray["SkillName"]."<br>";Candidateprofile_ID
                             ?>
                             <li role="presentation" <?php if($skillarray["SkillID"]==$this->SkillID) echo "class='active'"; ?>><a href="<?= URL_BASE ?>candidate/skills-edit?id=<?=$skillarray["SkillID"]?>" style="font-weight:bold;font-size:12px"><?=$skillarray["SkillName"]?></a></li>
                             <?php
@@ -131,6 +131,7 @@ $Skills=$this->Skills;
                             $core=new PR_Api_Core_CandidateClass();
                             $list=$core->get_skill_array($skillid,$UserArray["CandidateProfileID"]);
                            //echo ("list:<pre>");print_r($list);echo("</pre>");
+                    if(!empty($list)){
                            foreach($list as $values)
                            {
                               // echo ("testt:<pre>");print_r($values);echo("</pre>");
@@ -189,7 +190,7 @@ $Skills=$this->Skills;
                                 </div><!-->
                                 </form>
                                 <?php
-                           }?>
+                           }}?>
                             </div>
                            
                     <div class="col-md-12">
