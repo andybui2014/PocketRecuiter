@@ -34,8 +34,9 @@ class TestController extends Application_Controller_Action {
     }
 
     public function indexAction() {
+		$user = PR_Session::getSession(PR_Session::SESSION_USER);
         $core = new PR_Api_Core_TestClass();
-        $companyID = 1;
+        $companyID = $user["CompanyID"];
         $records = $core->getTestListForCompany($companyID);
         $this->view->list =  $records;
 
