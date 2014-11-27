@@ -262,7 +262,7 @@ $uselist = $this->uselist;
                             <?php
                             foreach($this->messageList as $item){ ?>
                                 <tr class="notification-ischeck">
-                                    <td><label><input type="checkbox" value="<?=$item['NotificationID']?>" class="Index-Is-Check" /> <?=$item['cbContactNameR'];?> <?=$item['cbContactLNameR'];?></label> <?=$item['cbDateTime'];?></td>
+                                    <td><span style="font-weight: bold"><input type="checkbox" value="<?=$item['NotificationID']?>" class="Index-Is-Check" /> <?=$item['cbContactNameR'];?> <?=$item['cbContactLNameR'];?></span> <span>&nbsp;<?=$item['cbDateTime'];?></span></td>
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -383,7 +383,11 @@ $uselist = $this->uselist;
                             </td>
                             <td><?=$info['title']?></td>
                             <td><?=$skillName?></td>
-                            <td><?=$info['careerdescription']?></td>
+							<?php
+								 $words = explode(" ",$info['careerdescription']); 
+								 $str= implode(" ",array_splice($words,0,57));
+							?>
+                            <td><?=$str." ..."?></td>
                             <td ><?=$testName?></td>
                             <td style="color: <?=$color?>; font-weight: bold" class="opportunity-active">
                                 <?=$active?>
