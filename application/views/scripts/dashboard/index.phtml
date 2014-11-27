@@ -169,7 +169,7 @@ $uselist = $this->uselist;
     <div class="row">
 
        <div class="col-md-4">
-           <div class="panel  panel-default">
+           <div class="panel  panel-default" style="font-size:12px">
             <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('careermatch','career')?>'>New Matches</></a></strong></div>
             <div class="panel-body Contain-candidate-reload" style="height: 450px;">
                 <?php
@@ -205,9 +205,9 @@ $uselist = $this->uselist;
                             }
                         }
                 ?>
-                        <div class="col-md-12" style="color: #777; margin-bottom: 10px;">
-                            <div class="col-md-3" style="padding-left: 0"><img src="<?=$image?>" style="height: 55px; width:50px"></div>
-                            <div class="col-md-9 text-bottom" style="vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0">
+                        <div class="col-md-12" style="color: #777; margin-bottom: 10px;padding-left:0">
+                            <div class="col-md-4" style="padding-left: 0"><img src="<?=$image?>" style="height: 85px; width:70px"></div>
+                            <div class="col-md-8 text-bottom" style="vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0">
                                 <div style="color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0"><?=$listCandidateInfo['firstname']?> &nbsp; <?=$listCandidateInfo['lastname']?></div>
                                 <div style="vertical-align: text-bottom; padding-bottom: 0px">Opportunity:&nbsp;<?=$companyName?></div>
                                <div style="vertical-align: text-bottom; padding-bottom: 0px">Expected Salary:&nbsp;<?=$salary?></div>
@@ -235,7 +235,7 @@ $uselist = $this->uselist;
            </div>
        </div>
         <div class="col-md-4">
-            <div class="panel  panel-default">
+            <div class="panel  panel-default" style="font-size:12px">
                 <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('list','notifications')?>'>Pocket Recruiter Notifications</a></strong></div>
                 <div class="panel-body" style="height: 450px;">
 
@@ -273,7 +273,7 @@ $uselist = $this->uselist;
         </div>
 
         <div class="col-md-4" >
-            <div class="panel  panel-default">
+            <div class="panel  panel-default" style="font-size:12px">
                 <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('index','test')?>'>Technical Tests</></a></strong></div>
                 <div class="panel-body" style="height: 450px;">
                     <span id="technical-test">
@@ -295,11 +295,11 @@ $uselist = $this->uselist;
         </div>
     </div>
 
-    <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion" style="font-size:12px">
 
         <div class="panel panel-default">
             <div class="panel-heading" style="background-color: #2a6496;color: #fff">
-                <h4 class="panel-title">
+                <h4 class="panel-title" style="font-size:12px">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                         <strong>Recently Posted Opportunities</strong>
                     </a>
