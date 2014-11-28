@@ -55,7 +55,7 @@ pocketDashboard.prototype = {
                         btn.button('reset');
                         var html ="";
                         $.each(data.list,function(k,notiInfo){
-                            html +="<tr class='notification-ischeck'><td><label><input type='checkbox' value='"+notiInfo['NotificationID']+"' class='Index-Is-Check' /> &nbsp;"+notiInfo['cbContactNameR']+" &nbsp; "+notiInfo['cbContactLNameR']+" </label>"+notiInfo['cbDateTime']+"</td></tr>";
+                            html +="<tr class='notification-ischeck'><td><span style='font-weight: bold'><input type='checkbox' value='"+notiInfo['NotificationID']+"' class='Index-Is-Check' /> &nbsp;"+notiInfo['cbContactNameR']+" &nbsp; "+notiInfo['cbContactLNameR']+" </span><span>&nbsp; "+notiInfo['cbDateTime']+" </span></td></tr>";
                         });
 
                         $("#notification-list").html("");
@@ -98,20 +98,21 @@ pocketDashboard.prototype = {
                                 });
                             }
 
+                            var travel ="";
                             if(listCandidateInfo.tralveldistanceinmiles >1){
-                                var travel = listCandidateInfo.tralveldistanceinmiles +'miles';
+                               travel = listCandidateInfo.tralveldistanceinmiles +'miles';
                             } else if(listCandidateInfo.tralveldistanceinmiles== 1){
-                                var travel = listCandidateInfo.tralveldistanceinmiles+'mile';
+                               travel = listCandidateInfo.tralveldistanceinmiles+'mile';
                             }
 
                             html_can +="<div class='col-md-12' style='color: #777; margin-bottom: 10px;'>" +
                                 " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 55px; width:50px'></div>" +
                                     "<div class='col-md-9 text-bottom' style='vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0'>" +
                                         "<div style='color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0'>"+listCandidateInfo.firstname+"&nbsp;"+listCandidateInfo.lastname+"</div>"+
-                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Opportunity:&nbsp;"+companyName+"</div>"+
-                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Expected Salary:&nbsp;"+salary+"</div>"+
-                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px'> District from job:&nbsp;"+travel+"</div>"+
-                                         "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Mobile:&nbsp;"+listCandidateInfo.PhoneNumber+"</div>"+
+                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px;font-size: 12px'>Opportunity:&nbsp;"+companyName+"</div>"+
+                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px;font-size: 12px'>Expected Salary:&nbsp;"+salary+"</div>"+
+                                        "<div style='vertical-align: text-bottom; padding-bottom: 0px;font-size: 12px'> District from job:&nbsp;"+travel+"</div>"+
+                                         "<div style='vertical-align: text-bottom; padding-bottom: 0px;font-size: 12px'>Mobile:&nbsp;"+listCandidateInfo.PhoneNumber+"</div>"+
                                      "</div>"+
                                 "</div>";
 
@@ -181,7 +182,7 @@ pocketDashboard.prototype = {
 
                         var html ="";
                         $.each(data.list,function(k,notiInfo){
-                            html +="<tr class='notification-ischeck'><td><label><input type='checkbox' value='"+notiInfo['NotificationID']+"' class='Index-Is-Check'  />&nbsp; "+notiInfo['cbContactNameR']+" &nbsp; "+notiInfo['cbContactLNameR']+" </label>"+notiInfo['cbDateTime']+"</td></tr>";
+                            html +="<tr class='notification-ischeck'><td><span style='font-weight: bold'><input type='checkbox' value='"+notiInfo['NotificationID']+"' class='Index-Is-Check'  />&nbsp; "+notiInfo['cbContactNameR']+" &nbsp; "+notiInfo['cbContactLNameR']+" </span><span>&nbsp; "+notiInfo['cbDateTime']+" </span></td></tr>";
                         });
 
                         $("#notification-list").html("");

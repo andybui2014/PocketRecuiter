@@ -1,4 +1,18 @@
-
+<style type="text/css">
+    .form-control1 {
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        color: #555;
+        display: block;
+        font-size: 14px;
+        min-height: 35px;
+        line-height: 1.42857;
+        padding: 6px 12px;
+        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    }
+</style>
 <?php
 $AnswerList =  $this->paginator;
 
@@ -18,7 +32,7 @@ $AnswerList =  $this->paginator;
 
             <div class="col-md-12" style="min-height: 80px; padding-left: 0;background-color:#fff; padding-left: 0;padding-right: 0">
 
-                        <div class="col-md-12" style="padding-left:26px; height: 50px;padding-top:10px; font-weight: bold; color: #005595 "> <?=$AnswerListInfo['Question']?></div>
+                        <div class="col-md-12" style="padding-left:26px; padding-top:10px; padding-bottom: 20px;font-weight: bold; color: #005595 "> <?=nl2br($AnswerListInfo['Question'])?></div>
                    <?php
                     if(!empty($AnswerListInfo['AnswerText'])){
                         foreach($AnswerListInfo['AnswerText'] as $kk=>$AnswerInfo){
@@ -41,7 +55,7 @@ $AnswerList =  $this->paginator;
                             ?>
                             <div <?=$class?> style="margin-bottom:20px">
                                 <div class="col-md-1" style="padding-left:10px"><img <?=$datastatus?> class="img-check" TestQuestionAnswerID="<?=$AnswerInfo['TestQuestionAnswerID']?>" <?=$src?> ></div>
-                                <div class="col-md-11 form-control" style="width:90%;<?=$backgroundcolor?>">
+                                <div class="col-md-11 form-control1" style="width:90%;<?=$backgroundcolor?>;">
                                     <samp><?=$AnswerInfo['AnswerText']?></samp>
                                 </div>
                             </div>

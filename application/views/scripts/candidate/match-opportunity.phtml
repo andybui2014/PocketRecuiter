@@ -5,7 +5,12 @@
     $count =0;
     foreach($result as $k=>$oppListInfo) {
     $count ++;
-    $image= 'avatar_nonex44.jpg';
+    $image= URL_MEDIA_PHOTO.'avatar_none.jpg';
+    if($oppListInfo['image']==""){
+        $image= URL_MEDIA_PHOTO.'avatar_nonex44.jpg';
+    } else{
+        $image = URL_MEDIA_PHOTO.$oppListInfo['image'];
+    }
     ?>
     <div class="col-md-12 borderbottom_Gray" style="padding-right: 0px">
         <?php
@@ -14,21 +19,27 @@
         }
         ?>
         <div class="col-md-12" style="padding-left: 0">
-            <div class="col-md-1" style="padding-left: 5px"> <img src="<?=URL_THEMES?>images/<?=$image?>"></div>
+            <div class="col-md-1" style="padding-left: 5px"> <img src="<?=$image?>" style="height: 60px;width:50px"></div>
             <div class="col-md-11" style="">
                 <div class="col-md-12" style="color: #1a5187"><strong><?=$oppListInfo['title']?></strong></div>
                 <div class="col-md-12"><strong><?=$oppListInfo['Companyname']?></strong></div>
             </div>
         </div>
 
-        <div class="col-md-12" style="margin-left:-10px">
+        <div class="col-md-12" style="padding-left:0">
             <div style="height:10px!important;"></div>
-            <?=$oppListInfo['careerdescription']?>
+            <div class="collapse-group">
+                <?php
+                $words = explode(" ",$oppListInfo['careerdescription']);
+                $str= implode(" ",array_splice($words,0,57))."...";
+                ?>
+                <p class="collapse"><?=$oppListInfo['careerdescription']?></p>
+                <p class="collapse in"><?=$str?></p>
+                <small><span style="color: #1a5187; cursor: pointer" class="glyphicon glyphicon-play readmore"></span></small><span style="color: #1a5187; font-weight: bold">Read more</span>
+            </div>
         </div>
-        <div class="col-md-12" style="margin-left:-10px">
-            <small><span style="color: #1a5187" class="glyphicon glyphicon-play"></span></small><span style="color: #1a5187; font-weight: bold">Read more</span>
-        </div>
-        <div class="col-md-12" style="margin-left:-10px">
+
+        <div class="col-md-12" style="padding-left:0">
             <div style="height:10px!important;"></div>
                                     <span><strong>Skills:</strong>
                                         <?php
@@ -45,7 +56,7 @@
                                         ?>
                                         <?=$skillname?>.</span>
         </div>
-        <div class="col-md-12" style="margin-left:-10px">
+        <div class="col-md-12" style="padding-left:0">
             <div style="height:10px!important;"></div>
             <span><img src="<?=URL_THEMES?>images/USA_flag.jpg"> <strong>United States</strong></span>
                                     <span>|&nbsp;

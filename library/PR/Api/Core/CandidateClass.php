@@ -1183,4 +1183,16 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $result;
         // print_r($select->__toString());die();
     }
+
+    public function get_candidate_list($candidateID){
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('c'=>'candidate_profile'),array('*'));
+
+        $select->where("c.CandidateProfileID='".$candidateID."'");
+        $select->order("c.CandidateProfileID");
+        $records = PR_Database::fetchAll($select);
+        return $records;
+        // print_r($select->__toString());die();
+    }
 }

@@ -492,15 +492,15 @@ career.prototype = {
                 if(data){
                     btn.button('reset');
                     var count =0;
-                    var flagUS =  urlImage+'images/USA_flag.jpg';
+                    var flagUS =  urlImageflag+'images/USA_flag.jpg';
                    // alert(flagUS);
                     $.each(data,function(k,candidateInfo){
                         count ++;
                         btn.button('reset');
                             if($.isEmptyObject(candidateInfo.image)){
-                               var images = urlImage+'images/avatar_nonex44.jpg';
+                               var images = urlImage+'avatar_none.jpg';
                            } else {
-                                var images = urlImage+'images/'+candidateInfo.image;
+                                var images = urlImage+candidateInfo.image;
                            }
 
                             var skillname ="";
@@ -513,13 +513,27 @@ career.prototype = {
                                 }
                                 i = i+1;
                                 });
+
+                            var distance = "";
+                            if(candidateInfo.tralveldistanceinmiles >1){
+                                distance =  candidateInfo.tralveldistanceinmiles + 'miles';
+                            } else if(candidateInfo.tralveldistanceinmiles ==1){
+                                distance = candidateInfo.tralveldistanceinmiles+'mile';
+                            } else{
+
+                            }
+
+                            var words = (candidateInfo.overview).split(" ");
+                            var str = words.slice(0,57)
+                            str = str.join(" ") +'...';
+
                             if(count >1){
                                 html += "<div class='col-md-12' style='height:10px!important'></div>"
                             }
                             html +="<div class='col-md-12 borderbottom_Gray' style='margin-left: 15px; margin-right: 5px' >" +
                                 "<div class='col-md-12' style='padding-left: 0px'>" +
                                 "<div class='col-md-1' style='padding-left: 6px'> " +
-                                "<img src='"+images+"'>" +
+                                        "<img src='"+images+"' style='height:60px; width:50px'>" +
                                 "</div>" +
                                     "<div class='col-md-11' style=''>" +
                                             "<div class='col-md-12' style='color: #1a5187'><strong>" + candidateInfo.firstname +" &nbsp;"+ candidateInfo.lastname +" </strong></div>" +
@@ -536,17 +550,19 @@ career.prototype = {
                                 html +=" &nbsp; </strong></div>" +
                                     "</div>" +
                                 "</div>  " +
-                                "<div class='col-md-12 text-justify' style='margin-left:-10px'> " +
-                                    "<div style='height:10px!important;'></div>  " +  candidateInfo.overview +
+                                "<div class='col-md-12 text-justify' style='padding-left:0'> " +
+                                    "<div style='height:10px!important;'></div>  " +
+                                    "<div class='collapse-group'> " +
+                                        "<p class='collapse'>"+candidateInfo.overview+"</p>" +
+                                        "<p class='collapse in'>"+str+"</p> " +
+                                        "<small><span style='color: #1a5187; cursor: pointer' class='glyphicon glyphicon-play readmore'></span></small> " +
+                                        "<span style='color: #1a5187; font-weight: bold'>Read more</span> " +
+                                    "</div>" +
                                 "</div>" +
-                                "<div class='col-md-12' style='margin-left:-10px'> " +
-                                    "<small><span style='color: #1a5187' class='glyphicon glyphicon-play'></span></small>" +
-                                    "<span style='color: #1a5187; font-weight: bold'>Read more</span>" +
-                                "</div>" +
-                               "<div class='col-md-12' style='margin-left:-10px'>" +
+                               "<div class='col-md-12' style='padding-left:0'>" +
                                 "<div style='height:10px!important;'></div>" +
                                         "<span><strong>Skills:</strong>"+skillname+".</span> </div>" +
-                              "<div class='col-md-12' style='margin-left:-10px'>" +
+                              "<div class='col-md-12' style='padding-left:0'>" +
                                 " <div style='height:10px!important;'></div>" +
                                 "<span><img src='"+flagUS+"'> <strong>Unied States</strong></span><span>"
 
@@ -554,12 +570,9 @@ career.prototype = {
                                     html += candidateInfo.Address1 +"|&nbsp;"
                                 }
 
-                                html +="|&nbsp;<strong>Distance: "
-                                if(candidateInfo.tralveldistanceinmiles!=null){
-                                    html += candidateInfo.tralveldistanceinmiles
-                                }
+                                html +="|&nbsp;<strong>Distance: </strong> " +distance
 
-                                html +=  "</strong> </span>" +
+                                html +=  "</span>" +
                                 "</div> " +
                                 "<div class='col-md-12 text-right'> " +
                                 "<button style='margin-top:15px; margin-right:0px;' class='btn btn-primary' type='button'><strong>Contact</strong></button>" +
@@ -579,6 +592,12 @@ career.prototype = {
                     });
                     $("#addSkillandKeyword").html("");
                     skillSearch =1;
+
+                    $('.readmore').unbind('click').bind('click',function() {
+                        var $this = $(this);
+                        var $collapse = $this.closest('.collapse-group').find('.collapse');
+                        $collapse.collapse('toggle');
+                    });
                 } else {
                     btn.button('reset');
                 }
@@ -668,6 +687,12 @@ career.prototype = {
                 if(data){
                     $(".containerData").html("");
                     $(".containerData").html(data);
+
+                    $('.readmore').unbind('click').bind('click',function() {
+                        var $this = $(this);
+                        var $collapse = $this.closest('.collapse-group').find('.collapse');
+                        $collapse.collapse('toggle');
+                    });
 
                 }
 

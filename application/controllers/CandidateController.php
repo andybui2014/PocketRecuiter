@@ -1405,14 +1405,14 @@ class CandidateController extends Application_Controller_Action
                 $cityUnique[] =trim(strtolower($oppListInfo['city']));
                     }
 
-                $hadApplied = $core->opportunityCandidateHadApplied($oppListInfo['OpportunityID'],$CandidateProfileID);
+               /* $hadApplied = $core->opportunityCandidateHadApplied($oppListInfo['OpportunityID'],$CandidateProfileID);
                 if($hadApplied){
                     $oppListInfo['hadApplied'] =true ;
                     $oppList[] = $oppListInfo;
                 } else {
                     $oppListInfo['hadApplied'] =false ;
                     $oppList[] = $oppListInfo;
-                }
+                } */
                 }
                // $experiencedUnique[] = $oppListInfo['experienced'];
             }
@@ -1463,9 +1463,10 @@ class CandidateController extends Application_Controller_Action
 
         $core = new PR_Api_Core_CandidateClass();
         $opportunityList1 = $core->getOpportunitiesMatch($industry,$experienced,$country,$city,$opportunitiesSearchList);
-        /*echo "<pre>";
-            print_r($opportunityList1Info); echo "<br>";
-        echo "</pre>"; die(); */
+
+        $list_candidate = $core->get_candidate_list($CandidateProfileID);
+        $candidateImg = $list_candidate[0];
+
         $PR_Api = new PR_Api_Core_CareerClass();
 
         $oppList = array();
@@ -1478,6 +1479,7 @@ class CandidateController extends Application_Controller_Action
 
                if($hadApplied){
                     $result['hadApplied'] =true ;
+                    $result['image'] = $candidateImg['image'];
                     $oppList[] = $result;
                } else {
                    $result['hadApplied'] =false ;
@@ -1487,7 +1489,9 @@ class CandidateController extends Application_Controller_Action
 
             }
         }
-
+       /* echo "<pre>";
+            print_r($oppList); echo "<br>";
+        echo "</pre>"; die(); */
         $this->view->oppList = $oppList;
         $this->view->CandidateProfileID = $client['CandidateProfileID'];
 
