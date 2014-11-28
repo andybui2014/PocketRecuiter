@@ -75,7 +75,7 @@ pocketDashboard.prototype = {
                                     salary = listCandidateInfo.minimumsalary+'K'+'-'+listCandidateInfo.maximumsalary+'K';
                                 }
 
-                            if(listCandidateInfo.image==null){
+                            if(listCandidateInfo.image==null || listCandidateInfo.image=='undefined'){
                                  image = urlImage+'avatar_none.jpg';
                             } else{
                                 image = urlImage+listCandidateInfo.image;
@@ -106,7 +106,7 @@ pocketDashboard.prototype = {
                             }
 
                             html_can +="<div class='col-md-12' style='color: #777; margin-bottom: 10px;'>" +
-                                " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 55px; width:50px'></div>" +
+                                " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 85px; width:70px'></div>" +
                                     "<div class='col-md-9 text-bottom' style='vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0'>" +
                                         "<div style='color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0'>"+listCandidateInfo.firstname+"&nbsp;"+listCandidateInfo.lastname+"</div>"+
                                         "<div style='vertical-align: text-bottom; padding-bottom: 0px;font-size: 12px'>Opportunity:&nbsp;"+companyName+"</div>"+
@@ -201,7 +201,7 @@ pocketDashboard.prototype = {
                                 salary = listCandidateInfo.minimumsalary+'K'+'-'+listCandidateInfo.maximumsalary+'K';
                             }
 
-                            if(listCandidateInfo.image==null){
+                            if(listCandidateInfo.image==null || listCandidateInfo.image=='undefined'){
                                 image = urlImage+'avatar_none.jpg';
                             } else{
                                 image = urlImage+listCandidateInfo.image;
@@ -231,7 +231,7 @@ pocketDashboard.prototype = {
                             }
 
                             html_can +="<div class='col-md-12' style='color: #777; margin-bottom: 10px;'>" +
-                                " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 55px; width:50px'></div>" +
+                                " <div class='col-md-3' style='padding-left: 0'><img src='"+image+"' style='height: 85px; width:70px'></div>" +
                                 "<div class='col-md-9 text-bottom' style='vertical-align: text-bottom;padding-bottom: 0px; padding-left: 0'>" +
                                 "<div style='color: #2a6496; font-weight: bold;vertical-align: text-bottom; padding-top:0'>"+listCandidateInfo.firstname+"&nbsp;"+listCandidateInfo.lastname+"</div>"+
                                 "<div style='vertical-align: text-bottom; padding-bottom: 0px'>Opportunity:&nbsp;"+companyName+"</div>"+

@@ -85,21 +85,21 @@ $AnswerList =  $this->paginator;
                             $('.existingCheck').each(function() {
                                 existingFlag = true;
                             });
-                            $(this).parent().next('.form-control').css({"backgroundColor":"#f8f8f8"});
+                            $(this).parent().next('.form-control1').css({"backgroundColor":"#f8f8f8"});
                             if(!existingFlag){
                                 $(this).parent().parent().siblings().find(".continue").css({"backgroundColor":"#f2f2f2","borderColor":"#f2f2f2"});
                                 $(this).parent().parent().siblings().find(".continue").addClass('disabled');
                             }
                         }else if($(this).attr('data-status')=='deselect'){
                             $(this).attr('src',urlImage+'images/trees/ico_colapse.png').attr('data-status','select');
-                            $(this).parent().next('.form-control').css({"backgroundColor":"#fffbd5"});
+                            $(this).parent().next('.form-control1').css({"backgroundColor":"#fffbd5"});
                             $(this).parent().parent().siblings().find(".continue").css({"backgroundColor":"#7aac34","borderColor":"#7aac34"});
                             $(this).parent().parent().siblings().find(".continue").removeClass('disabled');
                             $('.existingCheck').each(function() {
                                 $(this).removeClass("existingCheck");
                                 $(this).find('.img-check').attr('src',urlImage+'images/trees/ico_expand.png')
                                 $(this).find('.img-check').attr('data-status','deselect');
-                                $(this).find('.form-control').css({"backgroundColor":"#f8f8f8"});
+                                $(this).find('.form-control1').css({"backgroundColor":"#f8f8f8"});
                             });
                             $(this).closest('.col-md-12').addClass("existingCheck");
                         }
