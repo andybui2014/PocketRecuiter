@@ -221,7 +221,7 @@
                                        Action<span class="caret" data-toggle="dropdown" class="link" style="cursor:pointer"></span>
                                         <ul role="menu" class="dropdown-menu" style="left:-68px;">
                                             <li><a href="javascript: void(0)" id="test-act-remove">Delete</a></li>
-                                            <li><a href="javascript: void(0)" id="test-act-assign">Assign</a></li>
+                                            <!--<li><a href="javascript: void(0)" id="test-act-assign">Assign</a></li>-->
                                         </ul>
                                     </span>
 
@@ -242,14 +242,18 @@
                                         </span>
                                         <span class="pull-right"><i class="glyphicon glyphicon-eye-open" style="color: #bbb"></i></span>
                                     </td>
-                                    <td class="clWidth200"><a href="#" style="text-decoration: underline; color: #777">
+                                    
+                                    <td class="clWidth200"><a href="#" style="text-decoration: underline;" class="btn-edit" data-id="<?=$item['TestID'];?>">
                                             <?=$item['TestName'];?>
                                     </a></td>
                                     <td style="color: #777"></td>
                                     <td class="clWidth100"><strong>Q. &nbsp<?=$item['NumQuestions'];?></strong></td>
                                     <td class="clWidth100">
-                                        <span class="btn-edit" data-id="<?=$item['TestID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
-                                        <span><i data-text="<?=$item['TestName'];?>" data-id="<?=$item['TestID'];?>" class="glyphicon glyphicon-remove qst-remove"></i></span>
+                                        <span class="glyphicon glyphicon-credit-card btn-edit" data-id="<?=$item['TestID'];?>" style="color:#7aac34; text-indent: 6px; top:3px"></span>&nbsp;&nbsp;
+                                        <span>
+                                            <img class="qst-remove"  src="<?=URL_THEMES?>images/ico_del.png" style="height:15px; width:15px;" data-text="<?=$item['TestName'];?>" data-id="<?=$item['TestID'];?>">
+                                        </span>
+
                                     </td>
                                 </tr>
                             <?php } } ?>
