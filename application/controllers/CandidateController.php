@@ -1483,15 +1483,16 @@ class CandidateController extends Application_Controller_Action
                     $oppList[] = $result;
                } else {
                    $result['hadApplied'] =false ;
+                   $result['image'] = "";
                    $oppList[] = $result;
+            }
                }
-            }
 
-            }
         }
-       /* echo "<pre>";
+        }
+       /*echo "<pre>";
             print_r($oppList); echo "<br>";
-        echo "</pre>"; die(); */
+        echo "</pre>"; die();*/
         $this->view->oppList = $oppList;
         $this->view->CandidateProfileID = $client['CandidateProfileID'];
 
