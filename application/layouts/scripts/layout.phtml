@@ -4,7 +4,7 @@ $helper = $this->layout()->_helper;
 function echoActiveClassIfRequestMatches($requestUri)
 {
     $current_file_name = basename($_SERVER['REQUEST_URI'], ".php");
-
+	//echo "<br><br>testt:".$current_file_name;
     if ($current_file_name == $requestUri)
         echo 'class="active-146EA3"';
 }
@@ -80,7 +80,7 @@ $loginClient = $this->layout()->loginclient;
                 <span class="icon-bar"></span>
             </button>
 
-            <a href="#"><img height="52px" src="<?=URL_THEMES.'images/logo.png'?>" alt="" tilte=""/></a>
+            <a href="<?= URL_BASE . 'star' ?>"><img height="52px" src="<?=URL_THEMES.'images/logo.png'?>" alt="" tilte=""/></a>
 
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -210,7 +210,22 @@ $loginClient = $this->layout()->loginclient;
                             <li><a href="<?=$helper->url('index','test');?>">Manage Test</a></li>
                         </ul>
                     </li>
-                    <li <?=echoActiveClassIfRequestMatches("careerlist")?>><a  href="<?=$helper->url('careerlist','career');?>">Post Opportunity</a></li>
+					<?php
+						 $current_file_name = basename($_SERVER['REQUEST_URI'], ".php");
+						 //echo "testt:".$current_file_name;
+						
+					?>
+					<li class="dropdown <?php if($current_file_name=='careerlist'||$current_file_name=='careercreate') echo 'active-146EA3'?>" id="PostOpportunity">
+					
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Post Opportunity <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" style="margin-top: -1px">
+                            <li><a href="<?=$helper->url('careerlist','career');?>">Opportunity List</a></li>
+                            <li><a href="<?=$helper->url('careercreate','career');?>">New Opportunity</a></li>
+                        </ul>
+                    </li>
+                    <!--<li <?=echoActiveClassIfRequestMatches("careerlist")?>><a  href="<?=$helper->url('careerlist','career');?>">Post Opportunity</a></li>-->
                     <li <?=echoActiveClassIfRequestMatches("careermatch")?>><a  href="<?=$helper->url('careermatch','career');?>">Match Candidate</a></li>
                     <li <?=echoActiveClassIfRequestMatches("activities")?>><a href="<?= URL_BASE . 'candidate/activities' ?>">Activities</a></li>
                     <li <?=echoActiveClassIfRequestMatches("list")?>><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
@@ -314,7 +329,13 @@ $loginClient = $this->layout()->loginclient;
 </footer>
 <!--Footer-->
 <!--End Container-->
-
+<script>
+$('ul.nav li.dropdown').hover(function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+}, function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+});
+</script>
 </body>
 
 </html>
