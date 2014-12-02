@@ -1927,5 +1927,22 @@ class CandidateController extends Application_Controller_Action
         $this->view->page = $page;
         $this->view->TestID = $TestID;
     }
+	public function interestAction()  
+	{
+			$user = PR_Session::getSession(PR_Session::SESSION_USER);
+			$UserID=$user["UserID"];
+			$request = $this->getRequest();
+			$params = $request->getParams();        
+			$api_candidate= new PR_Api_Core_CandidateClass();
+			$getUserArray=$api_candidate->getCandidateInfo($UserID);
+			$this->view->UserArray = $getUserArray;  
+			$Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
+			$getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
+			$this->view->getCandidates=$getCandidates;
+			
+			$this->render("interest");
+		   // echo("testt:<pre>");print_r($params);echo("</pre>");
+		   
+	  }  
 
 }
