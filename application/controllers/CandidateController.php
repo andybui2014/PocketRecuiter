@@ -1090,7 +1090,7 @@ class CandidateController extends Application_Controller_Action
         $CandidateprofileID=$user["CandidateProfileID"];
         $getCandidates=$core->getCandidateProfile($CandidateprofileID);   
         $this->view->getCandidates=$getCandidates;
-        $a=$core->getList_CandidateSkillsDad($UserID);
+       // $a=$core->getList_CandidateSkillsDad($UserID);
        // echo("tetst:<pre>");print_r($a);echo("</pre>");
         $this->render('add-education');
                      
@@ -1853,7 +1853,7 @@ class CandidateController extends Application_Controller_Action
 
         $CandidateID = $client["CandidateProfileID"];
         $PR_Api = new PR_Api_Core_CandidateClass();
-
+	
         $candidate_applied = $PR_Api->getOpportunityCandidateMatchActivities($CandidateID);
         $candidate_applied_list = array();
 

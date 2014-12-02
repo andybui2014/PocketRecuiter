@@ -109,7 +109,7 @@ function uploadFile(file, index) {
                 
             }
         }
-        http.removeEventListener('progress'); 
+        http.removeEventListener('progress');  
     }
     
 }

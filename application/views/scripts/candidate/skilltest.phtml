@@ -1,6 +1,7 @@
 <?php
 $getUserArray = $this->client;
 $getCandidates=$this->getCandidates;
+
 ?>
 <style>
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
@@ -70,14 +71,15 @@ $getCandidates=$this->getCandidates;
                 <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
 
             </div>
-            <span  style="font-size: 12px;color: #005595;">andybui@gmail.com</span><br/>
-            <span style="font-weight:bold">View my profile</span> <br/>
+            <a href="#"><?=$getUserArray["emailaddress"]?></a><br/>
+            <strong>View my profile</strong> <br/>
             <span>
-                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px">United States</span><span style="padding-left:5px;font-size:13px" class="">San Diego, CA, 12345</span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
             </span>
-            <span><strong>Expected Salary: </strong></span><br/>
+            <span><strong>Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
             <p style="padding: 10px 0">
-                <img src="<?=URL_THEMES?>images/btn_edit.png">
+                <!--<i class="lbl-log">Edit</i>-->
+                 <a href="<?= URL_BASE ?>candidate/editoverview"><img src="<?=URL_THEMES?>images/btn_edit.png"></a>
             </p>
             <ul id="nav-left">
                 <li><a href="<?= URL_BASE ?>candidate/profile-builder?utm_source=contact">Profile builder</a></li>
@@ -86,7 +88,7 @@ $getCandidates=$this->getCandidates;
 				<li> <a href="<?= URL_BASE ?>candidate/employment">Employment</a></li>
                 <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
                 <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
-                <li><a href="#">Skills</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/skills?utm_source=index">Skills</a></li>
                 <li><a href="#">References</a></li>
                 <li ><strong><a class="active" href="<?= URL_BASE ?>candidate/skilltest">Tests</a></strong></li>
                 <li><a href="#">Interest</a></li>
