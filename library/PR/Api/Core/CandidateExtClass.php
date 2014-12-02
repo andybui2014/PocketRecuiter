@@ -325,4 +325,16 @@ class PR_Api_Core_CandidateExtClass
 
         return $result;
     }
+	public function getcandidate_Interest($CandidateProfileID)
+    {
+
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('itr'=>'interest'),array('*'));
+        
+       
+        $select->where("itr.CandidateProfileID = '$CandidateProfileID'");
+        $records = PR_Database::fetchAll($select);
+        return $records;
+    }
 }

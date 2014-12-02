@@ -1939,9 +1939,10 @@ class CandidateController extends Application_Controller_Action
 			$Candidateprofile_ID=$getUserArray["CandidateProfileID"]; 
 			$getCandidates=$api_candidate->getCandidateProfile($Candidateprofile_ID);
 			$this->view->getCandidates=$getCandidates;
-			
+			$listInterest=$api_candidate->getcandidate_Interest($Candidateprofile_ID);
+			$this->view->listInterest=$listInterest;
 			$this->render("interest");
-		   // echo("testt:<pre>");print_r($params);echo("</pre>");
+		    //echo("testt:<pre>");print_r($listInterest);echo("</pre>");
 		   
 	  }  
 
