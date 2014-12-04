@@ -376,7 +376,7 @@ class PR_Api_Core_CandidateExtClass
          }   
          else return 0;   
     }
-	 public function updateInterest($interestid,$interesttext)
+	public function updateInterest($interestid,$interesttext)
     {
         
        $result= PR_Database::update('interest',array('interesttext'=>$interesttext),
@@ -385,4 +385,16 @@ class PR_Api_Core_CandidateExtClass
 
         return $result;
     }
+  public function getListInterest_candidateprofile($CandidateProfileID){
+		 $db = PR_Database::getInstance();      
+         $select = $db->select();
+         $select->from('interest', array('*'));
+         $select->where("CandidateProfileID = '$CandidateProfileID'");
+         $records = PR_Database::fetchAll($select);
+         if(!empty($records))
+         {
+             return $records;  
+         }   
+         else return 0;  
+  }
 }

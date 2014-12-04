@@ -1614,6 +1614,8 @@ class CandidateController extends Application_Controller_Action
         $this->view->SkillName=$Skills;
         $portfolio = $api_candidate->getListCandidatePortfolio($UserID);
         $this->view->Portfolio=$portfolio;
+		$interest=$api_candidate->getListInterest_candidateprofile($Candidateprofile_ID);
+		$this->view->interest=$interest;
        // $CandidateEmployment=array();
        // if(!empty($getCandidates["CandidateEmploymentID"])||$getCandidates["CandidateEmploymentID"]!="")
        // {
@@ -1627,7 +1629,7 @@ class CandidateController extends Application_Controller_Action
         //$Education = $api_candidate->getCandidateEducationList(2); 
         //$this->view->Education=$Education;
          
-      // echo ("getUserArray:<pre>");print_r($portfolio);echo("</pre>");
+       //echo ("interest:<pre>");print_r($interest);echo("</pre>");
         $this->render('myprofile');                  
                      
     }
