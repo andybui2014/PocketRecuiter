@@ -59,9 +59,14 @@ $Skills=$this->Skills;
     .qst-remove:hover{color: #333}
 </style>
 
-<?php
-
-?>
+<script src="<?=URL_THEMES;?>js/pocket.interest.js?vs=1"></script>
+ <script>
+     var prInterest= new pocketInterest();
+	 $('#Index-Check-All').unbind('click').bind('click',prInterest.IndexCheckedAll)
+	 $('#test-act-remove').unbind('click').bind('click',prInterest.testRemoveInt)
+	 $('#addInterest').unbind('click').bind('click',prInterest.interestCreate);
+    
+</script>
 <div class="container">
 
     <div class="row" style="padding-top: 40px;">
@@ -89,7 +94,7 @@ $Skills=$this->Skills;
                 <li><a href="<?=$helper->url('skills?utm_source=index','candidate');?>">Skills</a></li>
                 <li><a href="#">References</a></li>
                 <li><a href="<?=$helper->url('skilltest','candidate');?>">Tests</a></li>
-                <li><a class="active" href="#"><strong>Interest</strong></a></li>
+                <li><a class="active" href="<?=$helper->url('interest','candidate');?>"><strong>Interest</strong></a></li>
             </ul>
             <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($UserArray["Lastsigned"])) ?></p>
         </div>
@@ -100,7 +105,7 @@ $Skills=$this->Skills;
             
                 <div class="panel-body" style="padding:0">
 				<div class="col-md-8" style="padding:0">
-				  <form id="Interest-form"  style="font-size:12px"  role="form" >
+				  <form id="Interest-form"  style="font-size:12px"  role="form" action="<?= URL_BASE ?>candidate/do-interest" >
 				   <div class="form-group">
 					<label>Add Interest</label>
 					<input type="hidden" name="interestid" id="interestid" />
@@ -188,11 +193,3 @@ $Skills=$this->Skills;
 </div>
 
 
-<script src="<?=URL_THEMES;?>js/pocket.interest.js?vs=1"></script>
- <script>
-     var prInterest= new pocketInterest();
-	 $('#Index-Check-All').unbind('click').bind('click',prInterest.IndexCheckedAll)
-	 $('#test-act-remove').unbind('click').bind('click',prInterest.testRemoveInt)
-	 $('#addInterest').unbind('click').bind('click',prInterest.interestCreate);
-    
-</script>

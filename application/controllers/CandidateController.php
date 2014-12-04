@@ -1941,6 +1941,7 @@ class CandidateController extends Application_Controller_Action
 		$this->view->getCandidates=$getCandidates;
 		$listInterest=$api_candidate->getcandidate_Interest($Candidateprofile_ID);
 		$this->view->listInterest=$listInterest;
+		
 		$this->render("interest");
 		//echo("testt:<pre>");print_r($listInterest);echo("</pre>");
 		   
@@ -1965,38 +1966,7 @@ class CandidateController extends Application_Controller_Action
         $this->view->result = $result;
 
     }
-	public function addInterestAction()  
-	{
-		$this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
-        $request = $this->getRequest();
-        $params = $request->getParams();
-        $user = PR_Session::getSession(PR_Session::SESSION_USER); 
-        $CandidateProfileID=$user["CandidateProfileID"];
-        $ajaxRes = array('success'=>0,'info'=>null);
-		if(!empty($params["interest"])){
-		 $core = new PR_Api_Core_CandidateClass();
-		 $interestid=$core->AddInterest($CandidateProfileID,$params["interest"]);
-		// echo "Testtt:<pre>";print_r($interestid);echo("</pre>");die();
-               if(empty($interestid["Erorr"])){
-                    $ajaxRes['success'] = 1;
-					 
-                }
-				else{
-				$ajaxRes['success'] = 0;
-				$ajaxRes['info'] = $interestid["Erorr"];
-				}
-				header("Location: interest");  
-		}
-		$response = $this->getResponse();
-        $response->clearAllHeaders()->clearBody();
-        $ajaxRes = json_encode($ajaxRes);
-        $response->setHeader('Content-type', 'application/json');
-        $response->setHeader('Content-Length', strlen($ajaxRes), true)
-            ->setBody($ajaxRes);
-		//echo ("Testt:<pre>");print_r($params);echo("</pre>");die();
-		   
-	}
+	
 	public function deleteInterestAction(){
          $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -2043,8 +2013,7 @@ class CandidateController extends Application_Controller_Action
         $ajaxRes = array('success'=>0,'interestid'=>null,'interesttext'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
-			//echo("testt:<pre>");print_r($params["id"][0]);echo("</pre>");
-            //$id = !empty($params['id']) ? $params['id'] : 0;
+			
 			$id = $params['id'][0];
 			
             if($id > 0){
@@ -2068,19 +2037,51 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
     }
-	public function doEditInterestAction()
-     {
-        $this->_helper->layout->disableLayout();
+	public function addInterestAction()  
+	{
+		$this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $request = $this->getRequest();
         $params = $request->getParams();
         $user = PR_Session::getSession(PR_Session::SESSION_USER); 
         $CandidateProfileID=$user["CandidateProfileID"];
         $ajaxRes = array('success'=>0,'info'=>null);
+		if(!empty($params["interest"])){
+		 $core = new PR_Api_Core_CandidateClass();
+		 $interestid=$core->AddInterest($CandidateProfileID,$params["interest"]);
+		// echo "Testtt:<pre>";print_r($interestid);echo("</pre>");die();
+               if(empty($interestid["Erorr"])){
+                    $ajaxRes['success'] = 1;
+					 
+                }
+				else{
+				$ajaxRes['success'] = 0;
+				$ajaxRes['info'] = $interestid["Erorr"];
+				}
+				header("Location: interest");  
+		}
+		$response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+		//echo ("Testt:<pre>");print_r($params);echo("</pre>");die();
+		   
+	}
+	public function doEditInterestAction()
+     {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $params = $request->getParams();
+        
+        $ajaxRes = array('success'=>0,'info'=>null);
        // echo("testt:<prre>");print_r($params);echo("</pre>");die();
          if(!empty($params)){
                 $interestid=$params["interestid"];
-				$interesttext=$params["interesttext"];
+				$interesttext=$params["interest"];
+				
                 $core = new PR_Api_Core_CandidateClass();
                if($core->updateInterest($interestid,$interesttext)){
                     $ajaxRes['success'] = 1;
@@ -2096,5 +2097,46 @@ class CandidateController extends Application_Controller_Action
        
         
      }
+	 public function doInterestAction()
+     {
+		$this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+        $params = $request->getParams();
+		$user = PR_Session::getSession(PR_Session::SESSION_USER); 
+        $CandidateProfileID=$user["CandidateProfileID"];
+		$ajaxRes = array('success'=>0,'info'=>null);
+		if(!empty($params["interestid"])){
+                $interestid=$params["interestid"];
+				$interesttext=$params["interest"];
+				
+                $core = new PR_Api_Core_CandidateClass();
+               if($core->updateInterest($interestid,$interesttext)){
+                    $ajaxRes['success'] = 1;
+					
+                }
+				header("Location: interest"); 
+            }
+		else{
+		if(!empty($params["interest"])){
+		 $core = new PR_Api_Core_CandidateClass();
+		 $interestid=$core->AddInterest($CandidateProfileID,$params["interest"]);
+		// echo "Testtt:<pre>";print_r($interestid);echo("</pre>");die();
+               if(empty($interestid["Erorr"])){
+                    $ajaxRes['success'] = 1;
+					 
+                }
+				else{
+				$ajaxRes['success'] = 0;
+				$ajaxRes['info'] = $interestid["Erorr"];
+				}
+				header("Location: interest");  
+		}
+		}
+		header("Location: interest");  
+		
+		
+		   
+	 }
 
 }

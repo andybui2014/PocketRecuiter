@@ -379,7 +379,7 @@ class PR_Api_Core_CandidateExtClass
 	 public function updateInterest($interestid,$interesttext)
     {
         
-       $result= PR_Database::update('candidate_skill',array('interesttext'=>$interesttext),
+       $result= PR_Database::update('interest',array('interesttext'=>$interesttext),
                 array("interestid = '$interestid'")
         );
 
