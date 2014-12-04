@@ -65,6 +65,11 @@ $Skills=$this->Skills;
 	 $('#Index-Check-All').unbind('click').bind('click',prInterest.IndexCheckedAll)
 	 $('#test-act-remove').unbind('click').bind('click',prInterest.testRemoveInt)
 	 $('#addInterest').unbind('click').bind('click',prInterest.interestCreate);
+	 $('ul.nav li.dropdown').hover(function() {
+	  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+	}, function() {
+	  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+	});
     
 </script>
 <div class="container">
@@ -142,14 +147,20 @@ $Skills=$this->Skills;
                     </th>
                     <th>
                         <div class="btn-group" style="width:50px;padding:0">
-                            <span class="pull-left"><span class="dropdown">
-                                       Action<span style="cursor:pointer; width:10px; height:2px" data-toggle="dropdown" class="caret"></span>
-                                        <ul  class="dropdown-menu" role="menu">
+						<ul class="nav">
+
+						<li class="dropdown">
+							<span class="dropdown-toggle" data-toggle="dropdown" href="#">
+								<strong>Action</strong><span class="caret"></span>
+							</span>
+							<ul  class="dropdown-menu" role="menu">
                                             <li><a  href="javascript: void(0)" id="test-edit">Edit</a></li>
                                             <li><a href="javascript: void(0)" id="test-act-remove">Delete</a></li>
                                             <!--<li><a data-toggle="modal" data-target="#are-you-sure-you-want-to-delete" href="javascript: void(0);">Delete</a></li>-->
                                         </ul>
-                                    </span></span>
+						</li>
+						</ul>
+                           
                             
                         </div>
                     </th>

@@ -343,6 +343,7 @@ class PR_Api_Core_CandidateExtClass
 		$select = $db->select();
 		$select->from(array('itr'=>'interest'),array('*'));       
         $select->where("itr.interesttext = '$interesttext'");
+		$select->where("itr.CandidateProfileID = '$CandidateProfileID'");
         $records = PR_Database::fetchAll($select);
 		if(empty($records)){
 			$updateFields=array("CandidateProfileID"=>$CandidateProfileID,"interesttext"=>$interesttext);
