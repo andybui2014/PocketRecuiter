@@ -211,7 +211,7 @@ class PR_Api_Core_TestClass
         }
     }
     
-    public function updateQuestion($testQuestionID,$quesName,$answerOtionArray)
+   /* public function updateQuestion($testQuestionID,$quesName,$answerOtionArray)
     {
         if(empty($testQuestionID) || empty($quesName)){
             return;
@@ -243,6 +243,45 @@ class PR_Api_Core_TestClass
              $db = PR_Database::getInstance();
              $criteria = "TestQuestion_TestQuestionID = '$testQuestionID'";
              $result = $db->delete('test_question_answer', $criteria);
+        }
+    } */
+    
+    public function updateQuestion($testQuestionID,$quesName,$answerOtionArray,$qstListID)
+    {
+        if(empty($testQuestionID) || empty($quesName)){
+            return;
+        }
+        //test_question
+        //TestQuestionID,Test_TestID,Question,Point
+        $updateFields=array('Question'=>$quesName);
+         $criteria = "TestQuestionID = '$testQuestionID'";
+        $result = PR_Database::update("test_question", $updateFields,$criteria);
+        
+        //test_question_answer
+//TestQuestionAnswerID,TestQuestion_TestQuestionID,AnswerText
+        if(count($qstListID) >0){
+            $db = PR_Database::getInstance();
+            $criteria = "TestQuestion_TestQuestionID = '$testQuestionID' AND TestQuestionAnswerID NOT IN ('".implode("','",$qstListID)."')";
+            $result = $db->delete('test_question_answer', $criteria);
+        }
+
+        if(count($answerOtionArray) > 0){
+            foreach($answerOtionArray as $key=>$answerOption)
+            {
+                if(empty($answerOption['answerID']) && $answerOption['answerID']==""){
+                    $updateFields=array('TestQuestion_TestQuestionID'=>$testQuestionID, 'AnswerText'=>$answerOption['answerText']);
+                        $result = PR_Database::insert("test_question_answer", $updateFields);
+                } else {
+                    $updateFields = array('AnswerText'=>$answerOption['answerText']);
+                    $criteria = "TestQuestionAnswerID = '".$answerOption["answerID"]."' AND TestQuestion_TestQuestionID = '$testQuestionID'";
+                    $result = PR_Database::update('test_question_answer',$updateFields,$criteria);
+                }
+            }
+
+        } else if(is_array($answerOtionArray) && count($answerOtionArray)==0){
+            $db = PR_Database::getInstance();
+            $criteria = "TestQuestion_TestQuestionID = '$testQuestionID'";
+            $result = $db->delete('test_question_answer', $criteria);
         }
     }
     

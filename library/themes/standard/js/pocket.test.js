@@ -209,11 +209,12 @@ pocketTest.prototype = {
                                 if($.isEmptyObject(data.info)){
                                     html =  '<div class="form-group">'+
                                         '<label><a>Question</a></label>'+
-                                        '<input type="text" placeholder="Question" class="form-control" name="qstName">'+
+                                        '<textarea  placeholder="Question" class="form-control questions-name-class" name="qstName"></textarea>'+
                                         '</div>'+
                                         '<div class="form-group">'+
                                         '<label for="credential"><a>Answer Option</a></label>'+
-                                        '<textarea placeholder="Answer Option" class="form-control" name="qstOpt[]"></textarea>'+
+                                        '<textarea placeholder="Answer Option" class="form-control questions-answer" name="qstOpt[]"></textarea>'+
+                                        '<input type="hidden" value="">'+
                                         '</div>'+
                                         '<div class="col-xs-12">'+
                                         '<p class="pull-right"><a  class="lbl-log" href="javascript: void(0)" id="optMore">Add More Option</a></p>'+
@@ -224,19 +225,25 @@ pocketTest.prototype = {
                                 }else{
                                     html =  '<div class="form-group">'+
                                         '<label><a>Question</a></label>'+
-                                        '<input type="text" value="'+data.info.Question+'" placeholder="Question" class="form-control" name="qstName">'+
+                                        '<textarea  placeholder="Question" class="form-control questions-name-class" name="qstName">'+data.info.Question+'</textarea>'+
                                         '</div>';
                                     if(!$.isEmptyObject(data.info.QuestionAnswers)){
                                         $.each(data.info.QuestionAnswers,function(idx,item){
+                                            var QASID = item.TestQuestionAnswerID;
+                                            if(item.TestQuestionAnswerID ==null || item.TestQuestionAnswerID =='undefined'){
+                                                QASID ="";
+                                            }
                                             html += '<div class="form-group">'+
                                                 '<label for="credential"><a>Answer Option</a></label>'+
-                                                '<textarea placeholder="Answer Option" class="form-control" name="qstOpt[]">'+item.AnswerText+'</textarea>'+
+                                                '<textarea placeholder="Answer Option" class="form-control questions-answer" name="qstOpt[]">'+item.AnswerText+'</textarea>'+
+                                                '<input type="hidden" value="'+QASID+'">'+
                                                 '</div>';
                                         })
                                     }else{
                                         html += '<div class="form-group">'+
                                             '<label for="credential"><a>Answer Option</a></label>'+
-                                            '<textarea placeholder="Answer Option" class="form-control" name="qstOpt[]"></textarea>'+
+                                            '<textarea placeholder="Answer Option" class="form-control questions-answer" name="qstOpt[]"></textarea>'+
+                                            '<input type="hidden" value="">'+
                                             '</div>';
                                     }
                                     html += '<div class="col-xs-12">'+
@@ -252,19 +259,35 @@ pocketTest.prototype = {
                                     $( "#form-qst").find(".form-group").first().after(
                                         '<div class="form-group">'+
                                             '<label for="credential"><a>Answer Option</a></label>'+
-                                            '<textarea placeholder="Answer Option" class="form-control" name="qstOpt[]"></textarea>'+
+                                            '<textarea placeholder="Answer Option" class="form-control questions-answer" name="qstOpt[]"></textarea>'+
+                                            '<input type="hidden" value="">'+
                                             '</div>'
                                     );
                                 });
                                 $('#form-qst').find('#btn-saveQst').unbind('click').bind('click',function(){
                                     var $this = $(this);
                                     $this.button('loading');
-                                    var dataPost = $('#form-qst').serializeArray();
+                                    var qstarr =[];
+                                    var qstListID =[];
+                                    $("#form-qst .questions-answer").each(function(){
+                                        var qstIds ="";
+                                        var qstOpts="";
+
+                                        qstOpts  = $(this).val();
+                                        qstIds  =$(this).siblings(':input').val();
+                                        qstarr.push({answerText:qstOpts,answerID:qstIds});
+                                        qstListID.push(qstIds);
+                                    });
+
+                                    var qstName = $("#form-qst .questions-name-class").val();
+                                   /* var dataPost = $('#form-qst').serializeArray();
                                     dataPost.push({name: "dataTId", value: dataTId});
-                                    dataPost.push({name: "dataQid", value: dataQid});
+                                    dataPost.push({name: "dataQid", value: dataQid}); */
+
                                     $.ajax({
                                         url: '/test/do-add-question',
-                                        data: dataPost,
+                                       // data: dataPost,
+                                        data: {qstName: qstName, dataTId:dataTId,dataQid:dataQid, qasList:qstarr, qstListID:qstListID},
                                         type: 'POST',
                                         success: function(data){
                                             $this.button('reset');

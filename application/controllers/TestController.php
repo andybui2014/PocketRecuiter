@@ -174,13 +174,18 @@ class TestController extends Application_Controller_Action {
         $params = $this->getRequest()->getParams();
 
         $qstName = $params['qstName'];
-        $qstOpt = $params['qstOpt'];
+        //$qstOpt = $params['qstOpt'];
+        $qstListID = $params['qstListID'];
+        $qasList = $params['qasList'];
         $dataTId = $params['dataTId'];
         $dataQid = $params['dataQid'];
-
+        /*echo "<pre>";
+            print_r($params);
+        echo "</pre>"; die();*/
         if($dataTId > 0 && !empty($qstName)){
             $core = new  PR_Api_Core_TestClass();
-            $core->updateQuestion($dataQid,$qstName,$qstOpt);
+            //$core->updateQuestion($dataQid,$qstName,$qstOpt);
+            $core->updateQuestion($dataQid,$qstName,$qasList,$qstListID);
             $ajaxRes['success'] = 1;
         }
 
