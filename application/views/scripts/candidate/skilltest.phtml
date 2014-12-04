@@ -1,7 +1,6 @@
 <?php
 $getUserArray = $this->client;
 $getCandidates=$this->getCandidates;
-
 ?>
 <style>
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
@@ -34,7 +33,23 @@ $getCandidates=$this->getCandidates;
         width: 211px;
     }
 
+    .label-tag {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        color: #000;
+        margin-bottom: 5px;
+        margin-right: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
 
+    .pull-left {
+        float: left !important;
+    }
     }
 
 
@@ -61,17 +76,17 @@ $getCandidates=$this->getCandidates;
     <!----end modal-->
     <div class="row">
         <div class="col-md-3">
-            <!--
-            <div class="well text-center col-md-12" style="padding:0px">
-                <div class="" style='height: 165px; width: 211px; background-position: center center; background-image:url("<?=URL_THEMES?>images/avatar_A.jpg"); background-repeat: no-repeat;display: inline-block;'>
+
+            <div class="well text-center col-md-12" style="padding:0px"> <?php $image=URL_MEDIA_PHOTO.$getCandidates['image']; ?>
+                <div class="" style='height: 165px; width: 211px; background-position: center center; background-image:url("<?=$image?>"); background-repeat: no-repeat;display: inline-block;'>
                 </div>
                 <div class='col-md-12' style="text-align: right; padding-right:0px"><img style="" src="<?=URL_THEMES?>images/bg_grey_text.png"> </div>
-            </div>-->
-            <div class="text-center" style="padding:0px">
+            </div>
+            <!-- <div class="text-center" style="padding:0px">
                 <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
 
-            </div>
-            <a href="#"><?=$getUserArray["emailaddress"]?></a><br/>
+            </div>-->
+             <a href="#"><?=$getUserArray["emailaddress"]?></a><br/>
             <strong>View my profile</strong> <br/>
             <span>
                 <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
@@ -97,85 +112,24 @@ $getCandidates=$this->getCandidates;
         </div>
 
         <div class="col-md-9">
-            <?php
-            $testIDs = $this->listTestID;
-            if(count($testIDs) >1 && !empty($testIDs)){?>
-                    <!---->
-                    <div class="modal fade" tabindex="-1" id="Select-a-Required-Test" role="dialog" data-keyboard="false" data-backdrop="static">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content modal-dialog-center">
-                                <div class="modal-header">
-                                    <button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h2 class="modal-title" style="font-size: 20px">Select a Required Test</h2>
-                                </div>
-                                <div class="modal-body login-modal">
-                                    <div class="col-md-12">
-                                        <div >
-                                            <select name="testID" id="testID_testID" class="form-control">
-                                                <option value="">Select a Required Test</option>
-                                                <?php
-                                                foreach($testIDs as $k1=>$testIDsInfo){
-                                                    ?>
-                                                    <option value="<?=$testIDsInfo['TestID']?>"><?=$testIDsInfo['TestName']?></option>
-                                                <?php
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <button style="background-color:#fff; border:#fff">&nbsp;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!---->
+            <div class="page-header  md-col-12 contain-right" style="margin:0; padding-left: 0px; padding-right: 0px">
+                <div class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">Test</div>
+                <div class="col-xs-8"  style="padding-left:0;padding-right: 0;padding-top: 25px">
+                    <?php
+                    $testIDs = $this->listTestID;
+                    if(!empty($testIDs)&& count($testIDs)>0){
+                        foreach($testIDs as $kk=>$testIDsInfo){?>
 
-<script type="text/javascript">
-                    $('#Select-a-Required-Test').modal('show');
-                    $("#testID_testID").unbind("change").bind("change",function(){
-                        var testID = "";
-                        testID = $("#testID_testID option:selected").val();
-                        //testName = $("#testID_testID option:selected").text();
-                        if(testID !=""){
-                            $('#Select-a-Required-Test').modal('hide');
-                           // $("#select_require_test").css({"font-size": "30px","color": "#005595","font-weight":"bold"});
-                            //$("#select_require_test").text(testName);
-                            objSkTest.skill_Test_View(testID);
-                        }
-
-                    });
-
-                    $(".close-modal").unbind("click").bind("click",function(){
-                        $(".header-header").show();
-                    });
-
-                </script>
-                <div class="page-header header-header" style="margin:0; display: none">
-                    <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">NO TEST IS SELECTED</span>
+                            <span style="cursor: pointer" class="label-tag pull-left" onclick="javascript:objSkTest.skill_Test_View(<?=$testIDsInfo['TestID']?>)"> <?= $testIDsInfo['TestName']?></span>
+                     <?php   }
+                    }
+                    ?>
                 </div>
-
-            <?php } else if(count($testIDs) == 1){
-            foreach ($testIDs as $k1=>$testIDsInfo){
-                $testID = $testIDsInfo['TestID'];
-            }
-            ?>
-                <script type="text/javascript">
-                    var testID = "";
-                    testID ='<?=$testID?>' ;
-                    $(document).ready(function(){
-                        objSkTest.skill_Test_View(testID);
-    })
-</script>
-           <?php } else{ ?>
-                <div class="page-header" style="margin:0;">
-                    <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">NO TEST IS REQUIRED</span>
-                </div>
-           <?php }
-            ?>
-
+            </div>
+           <!--
             <div class="md-col-12 contain-right" style="padding-left: 0px; padding-right: 0px">
 
-            </div>
+            </div> -->
 
         </div>
     </div>

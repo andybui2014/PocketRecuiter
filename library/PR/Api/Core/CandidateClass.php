@@ -1195,4 +1195,15 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         return $records;
         // print_r($select->__toString());die();
     }
+
+    public function get_TestID($id){
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('t'=>'test'),array('*'));
+
+        $select->where("t.TestID='".$id."'");
+        $records = PR_Database::fetchAll($select);
+        return $records;
+        // print_r($select->__toString());die();
+    }
 }

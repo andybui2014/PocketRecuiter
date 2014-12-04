@@ -12,6 +12,7 @@
         padding: 6px 12px;
         transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     }
+
 </style>
 <?php
 $AnswerList =  $this->paginator;
@@ -24,57 +25,70 @@ $AnswerList =  $this->paginator;
             <div class="page-header" style="margin:0;">
                 <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?=$AnswerListInfo['TestName']?></span>
              </div>
+             <div style="height: 15px!important"></div>
+            <!--start test before-->
+             <div style="padding: 0; background-color: #fff; height:650px" class="start-test-before col-md-12">
+                 <div style="padding: 0; background-color: #ccc">
+                     <div class="col-md-3" style="padding-top:10px"><img src="<?=URL_THEMES?>images/img_start_test.png"></div>
+                     <div class="col-md-9" style="padding-left: 0;padding-top:20px; height: 193px ">
+                         <span style="font-size: 25px; font-weight: bold">Total Questions  <?=$this->numberTestQuests?></span>
+                         <p style="color: #005595">Every Question should be tack 2 minutes</p>
+                         <p style="padding-top: 76px" ><button class="btn btn-sm btn-success start-test-before-click" style="" type="button">START TEST</button></p>
+                     </div>
+                 </div>
+             </div>
+            <!--end start test before-->
+             <div class="start-test" style="padding: 0; display: none">
+                <div class="col-md-12" style="height: 40px; background-color:#ddedfc; padding-left: 0; padding-right: 0;">
+                    <div class="col-md-8 text-left" style="font-weight: bold; padding-top: 9px;">Question  <?=$this->page?>  of <?=$this->numberTestQuests?></div>
+                    <div class="col-md-4 text-right" style="font-weight: bold; padding-top: 9px; color: #005595">Time Remaining:</div>
+                </div>
+                <div class="col-md-12" style="min-height: 80px; padding-left: 0;background-color:#fff; padding-left: 0;padding-right: 0">
 
-            <div class="col-md-12" style="height: 40px; background-color:#ddedfc; padding-left: 0; padding-right: 0;">
-                <div class="col-md-8 text-left" style="font-weight: bold; padding-top: 9px;">Question  <?=$this->page?>  of <?=$this->numberTestQuests?></div>
-                <div class="col-md-4 text-right" style="font-weight: bold; padding-top: 9px; color: #005595">Time Remaining:</div>
-            </div>
+                            <div class="col-md-12" style="padding-left:26px; padding-top:10px; padding-bottom: 20px;font-weight: bold; color: #005595 "> <?=nl2br($AnswerListInfo['Question'])?></div>
+                       <?php
+                        if(!empty($AnswerListInfo['AnswerText'])){
+                            foreach($AnswerListInfo['AnswerText'] as $kk=>$AnswerInfo){
+                                $class = 'class = "col-md-12"';
+                                $src ='src="'.URL_THEMES.'images/trees/ico_expand.png"';
+                                $datastatus = 'data-status="deselect"';
+                                $backgroundcolor = 'background-color: #f8f8f8';
+                                foreach($AnswerInfo['TestQuestionAnswerID_existing'] as $TQKey=>$TestQuestionAnswerID_existingInfo){
+                                    if($TestQuestionAnswerID_existingInfo){
+                                        $class = 'class = "col-md-12 existingCheck"';
+                                        $src ='src="'.URL_THEMES.'images/trees/ico_colapse.png"';
+                                        $datastatus = 'data-status="select"';
+                                        $backgroundcolor = 'background-color: #fffbd5';
+                                    }else{
+                                        $class = 'class = "col-md-12"';
+                                    }
 
-            <div class="col-md-12" style="min-height: 80px; padding-left: 0;background-color:#fff; padding-left: 0;padding-right: 0">
+                                };
 
-                        <div class="col-md-12" style="padding-left:26px; padding-top:10px; padding-bottom: 20px;font-weight: bold; color: #005595 "> <?=nl2br($AnswerListInfo['Question'])?></div>
-                   <?php
-                    if(!empty($AnswerListInfo['AnswerText'])){
-                        foreach($AnswerListInfo['AnswerText'] as $kk=>$AnswerInfo){
-                            $class = 'class = "col-md-12"';
-                            $src ='src="'.URL_THEMES.'images/trees/ico_expand.png"';
-                            $datastatus = 'data-status="deselect"';
-                            $backgroundcolor = 'background-color: #f8f8f8';
-                            foreach($AnswerInfo['TestQuestionAnswerID_existing'] as $TQKey=>$TestQuestionAnswerID_existingInfo){
-                                if($TestQuestionAnswerID_existingInfo){
-                                    $class = 'class = "col-md-12 existingCheck"';
-                                    $src ='src="'.URL_THEMES.'images/trees/ico_colapse.png"';
-                                    $datastatus = 'data-status="select"';
-                                    $backgroundcolor = 'background-color: #fffbd5';
-                                }else{
-                                    $class = 'class = "col-md-12"';
-                                }
-
-                            };
-
-                            ?>
-                            <div <?=$class?> style="margin-bottom:20px">
-                                <div class="col-md-1" style="padding-left:10px"><img <?=$datastatus?> class="img-check" TestQuestionAnswerID="<?=$AnswerInfo['TestQuestionAnswerID']?>" <?=$src?> ></div>
-                                <div class="col-md-11 form-control1" style="width:90%;<?=$backgroundcolor?>;">
-                                    <samp><?=$AnswerInfo['AnswerText']?></samp>
+                                ?>
+                                <div <?=$class?> style="margin-bottom:20px">
+                                    <div class="col-md-1" style="padding-left:10px"><img <?=$datastatus?> class="img-check" TestQuestionAnswerID="<?=$AnswerInfo['TestQuestionAnswerID']?>" <?=$src?> ></div>
+                                    <div class="col-md-11 form-control1" style="width:90%;<?=$backgroundcolor?>;">
+                                        <samp><?=$AnswerInfo['AnswerText']?></samp>
+                                    </div>
                                 </div>
-                            </div>
-                     <?php   }
+                         <?php   }
 
+                            }
                         }
                     }
-                }
-                ?>
+                    ?>
 
 
-                <div style="padding-left: 27px; margin-bottom:25px">
-                    <button class="btn btn-sm continue paginator disabled" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
-                    <button class="btn btn-sm paginator" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
+                    <div style="padding-left: 27px; margin-bottom:25px">
+                        <button class="btn btn-sm continue paginator disabled" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
+                        <button class="btn btn-sm paginator" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
+
+                    </div>
 
                 </div>
-
-            </div>
-            <script type="text/javascript">
+             </div>
+                 <script type="text/javascript">
                 $(document).ready(function(){
                     $('.img-check').unbind('click').bind('click',function(){
                         var existingFlag = false;
@@ -104,6 +118,11 @@ $AnswerList =  $this->paginator;
                             $(this).closest('.col-md-12').addClass("existingCheck");
                         }
                     });
+
+                    $(".start-test-before-click").unbind('click').bind('click', function(){
+                        $('.start-test-before').hide();
+                        $('.start-test').show();
+                    })
 
                 })
 

@@ -717,10 +717,33 @@ $(function  () {
             data: {page:page, size:size,SaveTestAnswer:SaveTestAnswer,TestQuestionAnswerID:TestQuestionAnswerID,testID:testID },
             success:function(html) {
                 jQuery('.contain-right').html(html);
+                $('.start-test-before').hide();
+                $('.start-test').show();
                 jQuery(".paginator").unbind("click").bind("click", pocketCandidate.prototype.STV_changepage);
                 if(finish==1){
-                    $("#finish-test").modal('show');
+                    //$("#finish-test").modal('show');
+                    pocketCandidate.prototype.skill_Test_Result(testID);
                 }
+            }
+        });
+    },
+
+    skill_Test_Result :function(testID){
+        $.ajax({
+            url: 'skill-test-result',
+            dataType: 'html',
+            data: {testID:testID},
+            cache: false,
+            type: 'POST',
+            context: this,
+            error : function (status,xhr,error) {
+            },
+            success: function(data,status,xhr){
+                if(data){
+                    $(".contain-right").html("");
+                    $(".contain-right").html(data);
+                }
+
             }
         });
     }

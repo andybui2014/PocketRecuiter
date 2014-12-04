@@ -1946,4 +1946,24 @@ class CandidateController extends Application_Controller_Action
 		   
 	  }  
 
+    public function skillTestResultAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $client = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$client["UserID"];
+
+        $CandidateID = $client["CandidateProfileID"];
+        $PR_Api = new PR_Api_Core_CandidateClass();
+
+        $params = $this->getRequest()->getParams();
+        $TestID = $params['testID'];
+
+        $result=$PR_Api->get_TestID($TestID);
+        /*echo "<pre>";
+         print_r($result);
+         echo "</pre>"; die();*/
+        $this->view->result = $result;
+
+    }
+
 }
