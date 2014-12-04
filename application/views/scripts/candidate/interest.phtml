@@ -52,7 +52,13 @@ $Skills=$this->Skills;
 .btn-group{
     width: 400px;
 }
+ .dropdown-menu {
+  min-width:70px;
+  }
+  .qst-remove{cursor: pointer;color: #ccc}
+    .qst-remove:hover{color: #333}
 </style>
+
 <?php
 
 ?>
@@ -94,13 +100,14 @@ $Skills=$this->Skills;
             
                 <div class="panel-body" style="padding:0">
 				<div class="col-md-8" style="padding:0">
-				  <form id="Interest-form" role="form" style="font-size:12px">
+				  <form id="Interest-form"  style="font-size:12px"  role="form" >
 				   <div class="form-group">
 					<label>Add Interest</label>
+					<input type="hidden" name="interestid" id="interestid" />
 					<input name="interest" id="interest" type="text" class="form-control"  value="">
 					  
 					</div>	
-					<div style="float:right"><button class="btn btn-default"><strong>+Add</strong></button></div>
+					<div style="float:right"><button class="btn btn-default" id="addInterest" data-status="add"><strong>+Add</strong></button></div>
 				</form>		
 					
                   </div>
@@ -120,22 +127,22 @@ $Skills=$this->Skills;
 				</div>
 				 <!-- Interest list-->
         <div class="tab-pane active" style="padding:0" >
-            <table class="table table-striped  table-stripedgray table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
+            <table id="test-list" class="table table-striped  table-stripedgray table-bordered" cellspacing="0" width="100%" style="border-top-color: #eeeeee">
                 <thead height="34px" style="height:34px">
                 <tr role="row" style="background-color: #eeeeee" height="34px">
-                    <th  width="600px" >
+                    <th  width="640px" >
                         
                             <input id="Index-Check-All" type="checkbox" name="" value=""/><strong style="padding-left:10px">Select All</strong>
                         
                     </th>
                     <th>
-                        <div class="btn-group" style="width:100px;padding:0">
+                        <div class="btn-group" style="width:50px;padding:0">
                             <span class="pull-left"><span class="dropdown">
                                        Action<span style="cursor:pointer; width:10px; height:2px" data-toggle="dropdown" class="caret"></span>
                                         <ul  class="dropdown-menu" role="menu">
-                                            <li><a id="test-act-assign" data-toggle="modal" data-target="#AddModalNotificationIndex" href="javascript: void(0)">Edit</a></li>
-                                            <!--<li><a id="test-act-remove" href="javascript: void(0)">Delete</a></li>-->
-                                            <li><a data-toggle="modal" data-target="#are-you-sure-you-want-to-delete" href="javascript: void(0);">Delete</a></li>
+                                            <li><a  href="javascript: void(0)" id="test-edit">Edit</a></li>
+                                            <li><a href="javascript: void(0)" id="test-act-remove">Delete</a></li>
+                                            <!--<li><a data-toggle="modal" data-target="#are-you-sure-you-want-to-delete" href="javascript: void(0);">Delete</a></li>-->
                                         </ul>
                                     </span></span>
                             
@@ -146,14 +153,6 @@ $Skills=$this->Skills;
                 </thead>
                 <tbody style="background-color: #f9f9f9;">
                
-                
-                        <tr role="row" style="background-color: #f9f9f9;">
-                            <td>
-                               <input type="checkbox" value="" class="Index-Is-Check" /><span style="padding-left:10px">gfdgfh </span>
-                            </td>
-							<td>hfggj</td>
-                           			
-                        </tr>
 						<?php
 							if(!empty($this->listInterest)){
 								foreach($this->listInterest as $listInterest){
@@ -161,9 +160,10 @@ $Skills=$this->Skills;
 						<tr role="row"> 
 						
 							<td>
-                               <input type="checkbox" value="<?=$listInterest["interestid"]?>" class="Index-Is-Check" /><span style="padding-left:10px"><?=$listInterest["interesttext"]?> </span>
+								
+                               <input type="checkbox" data-text="<?=$listInterest["interesttext"];?>" data-id="<?=$listInterest["interestid"]?>" value="<?=$listInterest["interestid"]?>" class="Index-Is-Check" /><span style="padding-left:10px"><?=$listInterest["interesttext"]?> </span>
                             </td>
-							<td><img data-id="<?=$listInterest["interestid"]?>" data-text="<?=$listInterest["interesttext"]?> " style="height:15px; width:15px;" src="<?=URL_THEMES?>images/ico_del.png" class="qst-remove"></td>
+							<td><img data-id="<?=$listInterest["interestid"]?>" data-text="<?=$listInterest["interesttext"]?> " style="height:15px; width:15px;" src="<?=URL_THEMES?>images/ico_del.png" class="qst-remove" id="qst-remove"></td>
 						
 						
 						</tr>
@@ -186,22 +186,13 @@ $Skills=$this->Skills;
         </div>
     </div>
 </div>
-<style type='text/css'>
 
-  .dropdown-menu {
-  min-width:100px;
-  }
-</style>
 
-<script src="<?=URL_THEMES;?>js/pocket.candidate.js?vs=1"></script>
+<script src="<?=URL_THEMES;?>js/pocket.interest.js?vs=1"></script>
  <script>
-     var prCandidate= new pocketCandidate();
-     prCandidate.editSkills('<?=URL_THEMES;?>');
-     $('#cmd-save').unbind('click').bind('click',prCandidate.updateskill);
-     $('#cmd-backview').unbind('click').bind('click',prCandidate.skillViewBack);
-     $(document).ready(function(){
-      $("button").click(function(){
-        $("p:first").addClass("intro");
-      });
-    });
+     var prInterest= new pocketInterest();
+	 $('#Index-Check-All').unbind('click').bind('click',prInterest.IndexCheckedAll)
+	 $('#test-act-remove').unbind('click').bind('click',prInterest.testRemoveInt)
+	 $('#addInterest').unbind('click').bind('click',prInterest.interestCreate);
+    
 </script>

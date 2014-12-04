@@ -337,4 +337,52 @@ class PR_Api_Core_CandidateExtClass
         $records = PR_Database::fetchAll($select);
         return $records;
     }
+	public function AddInterest($CandidateProfileID,$interesttext)
+    {
+		$db = PR_Database::getInstance();
+		$select = $db->select();
+		$select->from(array('itr'=>'interest'),array('*'));       
+        $select->where("itr.interesttext = '$interesttext'");
+        $records = PR_Database::fetchAll($select);
+		if(empty($records)){
+			$updateFields=array("CandidateProfileID"=>$CandidateProfileID,"interesttext"=>$interesttext);
+			$CredentialExperienceID = PR_Database::insert('interest',$updateFields, true );
+			return $CredentialExperienceID; 
+		}
+		else{
+		$erorr=array("Erorr"=>"interesttext is exit");
+		return $erorr;
+		}
+        
+    }
+	public function deleteInterest($interestid)
+    {
+         $db = PR_Database::getInstance();
+        // $criteria = "interestid = '$interestid'";
+		 $criteria = "interestid IN (".implode(",",$interestid).")";
+         $result = $db->delete('interest', $criteria);   
+        return $result; 
+    }
+	 public function getInterest($interestid)
+    {
+         $db = PR_Database::getInstance();      
+         $select = $db->select();
+         $select->from('interest', array('*'));
+         $select->where("interestid = '$interestid'");
+         $records = PR_Database::fetchAll($select);
+         if(!empty($records))
+         {
+             return $records;  
+         }   
+         else return 0;   
+    }
+	 public function updateInterest($interestid,$interesttext)
+    {
+        
+       $result= PR_Database::update('candidate_skill',array('interesttext'=>$interesttext),
+                array("interestid = '$interestid'")
+        );
+
+        return $result;
+    }
 }
