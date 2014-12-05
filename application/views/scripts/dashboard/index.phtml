@@ -139,19 +139,20 @@ $uselist = $this->uselist;
 </div>
 <!--end-->
 
-    <div class="row" style="padding-top: 40px">
-        <div class="col-md-12"><h2><a><strong>Dashboard</strong></a></h2></div>
+    <div class="row" style="padding-top: 20px">
+        <div class="col-md-12"><h2 style="height: 48px"><a><strong>Dashboard</strong></a></h2></div>
 
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <div class="panel">
-                <div class="panel-body">
+                <h2 style="height:60px; padding-top:7px; padding-left:30px"><strong>Welcome to Pocket Recruiter</strong></h2>
+                <!-- class="panel-body">
                     <div class="col-md-8">
-                        <h2><strong>Welcome! to Pocket Recruiter</strong></h2>
-                        <small>Donec puere sapien nibh donec puere sapien nibh, nec imperdieDonec puere <br/>sapien nibh donec puere sapien nibh, nec imperdiDonec puere sapien <br/>nibh donec puere sapien nibh, nec imperdi</small>
-                        <!--<p><button type="button" class="btn  btn-matches"><strong>Show Matches Now</strong></button></p>-->
+                        <h2><strong>Welcome to Pocket Recruiter</strong></h2>
+
+                        <p><button type="button" class="btn  btn-matches"><strong>Show Matches Now</strong></button></p>
                     </div>
                     <div class="col-md-4">
                         <div class="alert alert-warning fade in" role="alert">
@@ -162,16 +163,22 @@ $uselist = $this->uselist;
                             <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 20px">Donec puere sapien nibh donec puer</a>
                         </div>
                     </div>
-                </div>
+                </div>  -->
             </div>
         </div>
     </div>
     <div class="row">
-
+        <?php
+        if(empty($this->resultTestList) && empty($this->messageList) && empty($this->listCandidate)){
+            $height = "height:200px";
+        } else{
+            $height = "height:400px";
+        }
+        ?>
        <div class="col-md-4">
            <div class="panel  panel-default" style="font-size:12px">
             <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('careermatch','career')?>'>New Matches</></a></strong></div>
-            <div class="panel-body Contain-candidate-reload" style="height: 450px;">
+            <div class="panel-body Contain-candidate-reload" style="<?=$height?>" >
                 <?php
                 if(!empty($this->listCandidate)&& count($this->listCandidate)>0){
                     foreach($this->listCandidate as $kk=>$listCandidateInfo){
@@ -237,7 +244,7 @@ $uselist = $this->uselist;
         <div class="col-md-4">
             <div class="panel  panel-default" style="font-size:12px">
                 <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('list','notifications')?>'>Pocket Recruiter Notifications</a></strong></div>
-                <div class="panel-body" style="height: 450px;">
+                <div class="panel-body"  style="<?=$height?>" >
 
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -275,7 +282,7 @@ $uselist = $this->uselist;
         <div class="col-md-4" >
             <div class="panel  panel-default" style="font-size:12px">
                 <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('index','test')?>'>Technical Tests</></a></strong></div>
-                <div class="panel-body" style="height: 450px;">
+                <div class="panel-body"  style="<?=$height?>" >
                     <span id="technical-test">
                     <?php
                     if(!empty($this->resultTestList) && count($this->resultTestList)){
@@ -314,41 +321,42 @@ $uselist = $this->uselist;
                 <tr role="row" style="background-color: #eeeeee">
                     <th style="width:135px">
                         <label>
-                            <input type="checkbox"> <strong>Select All</strong>
+                            <input type="checkbox"> Select All
                         </label>
                     </th>
                     <th style="width:135px">
                         <label>
-                            <strong>Opportunity Title</strong>
+                            Opportunity Title
                         </label>
                     </th>
                     <th style="width:125px">
                         <label>
-                            <strong>Technical Skills</strong>
+                            Technical Skills
                         </label>
                     </th>
                     <th>
                         <label>
-                            <strong>Opportunity Description</strong>
+                            Opportunity Description
                         </label>
                     </th>
                     <th style="width:125px">
                         <label>
-                            <strong>Require Tests</strong>
+                            Require Tests
                         </label>
                     </th>
                     <th style="width:100px">
                         <label>
-                            <strong>Status</strong>
+                            Status
                         </label>
                     </th>
                     <th style="text-left: right; padding-left:10px;width:120px">
-                        <div class="btn-group">
+                        <div class="btn-group"> <label> Action </label>
+                            <!--
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #eeeeee; background-color: #eeeeee">
-                                <strong>Action </strong>
-                                <!--<span class="caret"></span>-->
+                            Action
+                               <span class="caret"></span>
                             </button>
-                            <!--<ul id="menu-privacy" class="dropdown-menu" role="menu">
+                            <ul id="menu-privacy" class="dropdown-menu" role="menu">
                                 <li><a  href="javascript: void(0);">Insert</a></li>
                                 <li><a  href="javascript: void(0);">Update</a></li>
                                 <li><a  href="javascript: void(0);">Delete</a></li>
@@ -379,7 +387,7 @@ $uselist = $this->uselist;
                         ?>
                         <tr role="row" class="odd">
                             <td>
-                                <input type="checkbox">&nbsp;<?=$info['posteddate']?><!--<span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>-->
+                                <input type="checkbox" style="margin:0">&nbsp;<?=$info['posteddate']?><!--<span style="float:right; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open" ></span>-->
                             </td>
                             <td><?=$info['title']?></td>
                             <td><?=$skillName?></td>
@@ -408,13 +416,13 @@ $uselist = $this->uselist;
 								  </div>
 								</div>
 
-								<a id="Test"  href="javascript: void(0);" data-container="body" data-toggle="popover" data-placement="top" data-content="Don't have yet."><span style="float:left; padding-top:3px; color:#cccccc" class="glyphicon glyphicon-eye-open"></span></a>
+								<a id="Test"  href="javascript: void(0);" data-container="body" data-toggle="popover" data-placement="top" data-content="Don't have yet."><span style="float:left; padding-top:2px; color:#cccccc" class="glyphicon glyphicon-eye-open"></span></a>
 								<input type="hidden" id='<?=$info['OpportunityID']?>'>
 								
 								<a href="<?=$helper->url('careeredit?opportunityID='.$id.'','career')?>">
-                                    <span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#7aac34; text-indent: 15px"></span>
+                                    <span class="glyphicon glyphicon-credit-card edit-career-btn" style="color:#7aac34; text-indent: 15px;float:left; padding-top:2px;"></span>
                                 </a>
-								<span class="glyphicon glyphicon-star publib-notication" style="padding-left:15px;color:#c77405" opportunityattr="<?=$id?>"></span>
+								<span class="glyphicon glyphicon-star publib-notication" style="padding-left:15px;color:#c77405;float:left; padding-top:1px;" opportunityattr="<?=$id?>"></span>
 								<!--<span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span>-->
 							</td>				
                         </tr>
