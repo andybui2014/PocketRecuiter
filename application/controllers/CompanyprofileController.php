@@ -34,8 +34,10 @@ class CompanyprofileController extends Application_Controller_Action
         $api = new PR_Api_Core_ClientClass();
         $company = $api->getCompany($companyid);
         $this->view->company=$company;
-       
-       
+		$Industry=$company["Industry"];
+		$listOrtherCompany=$api->getCompany_Industry($Industry);
+		//echo("tetstt:<pre>");print_r($listOrtherCompany); echo("</pre>");
+		$this->view->listOrtherCompany=$listOrtherCompany;
         $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
         $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$companyid));
         $this->view->getListOpp = $getListOpp;
@@ -54,7 +56,9 @@ class CompanyprofileController extends Application_Controller_Action
         $api = new PR_Api_Core_ClientClass();
         $company = $api->getCompany($companyid);
         $this->view->company=$company;
-        
+        $contrylist=$api->getListCountry();
+		$this->view->countrylist=$contrylist;
+		//echo ("Tetst:<pre>");print_r($contrylist);echo("</pre>");
 
         $this->render('editprofile');
       
@@ -74,13 +78,13 @@ class CompanyprofileController extends Application_Controller_Action
         $params = $request->getParams();      
         $updateFields=array();
         foreach ($params as $key => $value) {
-            $updateFields[$key]=$value;
+        $updateFields[$key]=$value;
             
-            }
-             if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
-            {
-                $updateFields["images"]="";
-            }
+        }
+		if(isset($updateFields["Company_Logo_Rm"]) && $updateFields["Company_Logo_Rm"]==1)
+		{
+			$updateFields["images"]="";
+		}
        $filename = "";
         if (isset($_FILES["images"])) {
             if ($_FILES["images"]["error"] > 0) {

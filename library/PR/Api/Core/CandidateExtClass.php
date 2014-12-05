@@ -398,4 +398,16 @@ class PR_Api_Core_CandidateExtClass
          }   
          else return 0;  
   }
+  public function getListReferences_candidateprofile($CandidateProfileID){
+		 $db = PR_Database::getInstance();      
+         $select = $db->select();
+         $select->from('reference', array('*'));
+         $select->where("CandidateProfileID = '$CandidateProfileID'");
+         $records = PR_Database::fetchAll($select);
+         if(!empty($records))
+         {
+             return $records;  
+         }   
+         else return 0;  
+  }
 }

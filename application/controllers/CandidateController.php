@@ -2140,5 +2140,84 @@ class CandidateController extends Application_Controller_Action
 		
 		   
 	 }
+	 public function referencesAction(){
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $UserID=$user["UserID"];       
+        $core = new PR_Api_Core_CandidateClass();
+        $CandidateprofileID=$user["CandidateProfileID"];
+        $getReferences=$core->getListReferences_candidateprofile($CandidateprofileID);
+        $this->view->getReferences=$getReferences;
+		//echo "Test:<pre>";print_r($getReferences);echo("</pre>");
+
+         $this->render('references');
+    }
+
+  /*  public function doCandidateEmploymentAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+
+            $companyName = null;
+            $posotionHeld = null;
+            $startDate = null;
+            $endDate = null;
+            $description = null;
+            $errors = array();
+
+            $CandidateEmploymentID = $params['CandidateEmploymentID'];
+            //add new employment
+            if($CandidateEmploymentID==""){
+                $companyName  = $params['CompanyName'];
+                $posotionHeld = $params['PostionHeld'];
+                $startDate = $params['StartDate'];
+                $endDate = $params['EndDate'];
+                $description = $params['Description'];
+
+                if(empty($companyName)) $errors['CompanyName'] = 1;
+                if(empty($posotionHeld)) $errors['PostionHeld'] = 1;
+                if(empty($startDate)) $errors['StartDate'] = 1;
+                if(empty($endDate)) $errors['EndDate'] = 1;
+
+                if(empty($errors)){
+                    $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                    $core = new PR_Api_Core_CandidateClass();
+                    $isSuccess = $core->addCandidateEmployment($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description);
+                    if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+                }
+            } //end new
+            else{
+                $companyName  = $params['CompanyName'];
+                $posotionHeld = $params['PostionHeld'];
+                $startDate = $params['StartDate'];
+                $endDate = $params['EndDate'];
+                $description = $params['Description'];
+
+                if(empty($companyName)) $errors['CompanyName'] = 1;
+                if(empty($posotionHeld)) $errors['PostionHeld'] = 1;
+                if(empty($startDate)) $errors['StartDate'] = 1;
+                if(empty($endDate)) $errors['EndDate'] = 1;
+
+                $core = new PR_Api_Core_CandidateClass();
+                $isSuccess = $core->updateCandidateEmployment($CandidateEmploymentID,$companyName,$posotionHeld,$startDate,$endDate,$description);
+
+                if($isSuccess){ $ajaxRes['success'] = 1;
+                }else{
+                $ajaxRes['info'] = $errors;
+                 }
+            }
+
+
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }*/
 
 }

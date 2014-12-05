@@ -97,7 +97,7 @@ $Skills=$this->Skills;
                 <li><a href="<?=$helper->url('portfolio','candidate');?>">Portfolio</a></li>
                 <li><a href="<?=$helper->url('vieweducation','candidate');?>">Education</a></li>
                 <li><a href="<?=$helper->url('skills?utm_source=index','candidate');?>">Skills</a></li>
-                <li><a href="#">References</a></li>
+                <li><a href="<?=$helper->url('references','candidate');?>">References</a></li>
                 <li><a href="<?=$helper->url('skilltest','candidate');?>">Tests</a></li>
                 <li><a class="active" href="<?=$helper->url('interest','candidate');?>"><strong>Interest</strong></a></li>
             </ul>
@@ -127,7 +127,7 @@ $Skills=$this->Skills;
 
 				<div class="panel panel-default" style="margin:0">
 					<div class="panel-heading" style="background-color: #2a6496;color: #fff">
-						<h4 class="panel-title" style="font-size:12px">
+						<h4 class="panel-title" style="font-size:14px">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 								<strong>Interest</strong>
 							</a>

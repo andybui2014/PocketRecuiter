@@ -2,7 +2,7 @@
 class PR_Api_Core_ClientClass
 {
     private $avaiUpdateFields = array('usertype','firstname','middlename','lastname','dob','CompanyID','CandidateProfileID','loginname','password','emailaddress','URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country','HeardFrom','Role','active');
-    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Description','images','PhoneNumber','country','emailinfo','Zipcode');       
+    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Description','images','PhoneNumber','country','emailinfo','Zipcode','city','state');       
     
     public function  __construct() {
         $errMsg="";
@@ -30,8 +30,7 @@ class PR_Api_Core_ClientClass
     {             
         $db = PR_Database::getInstance();
         $select = $db->select();
-         
-        $select = $db->select();
+        
         $select->from(array('cm'=>'company'),array('CompanyID','Companyname'));
         $select->join(array('us'=>'user'),
                     'us.CompanyID = cm.CompanyID',
@@ -52,8 +51,7 @@ class PR_Api_Core_ClientClass
         $db = PR_Database::getInstance();
         $select = $db->select();
         //$fieldList = array("Companyname","Industry","Address","Decreption");   
-        $select = $db->select();
-       // $select->from(PR_Database::TABLE_COMPANY, $fieldList); 
+       
         $select->from("company", array("*"));             
       
         $companys = PR_Database::fetchAll($select);
@@ -238,13 +236,31 @@ class PR_Api_Core_ClientClass
                 
             }
             public function deleteCompany($companyid)
-        {
-             $db = PR_Database::getInstance();
-             $criteria = "CompanyID = '$companyid'";
-             $result = $db->delete('company', $criteria);
+			{
+				 $db = PR_Database::getInstance();
+				 $criteria = "CompanyID = '$companyid'";
+				 $result = $db->delete('company', $criteria);
                     
-        }
-             
+			}
+			public function getListCountry()
+			{
+				 $db = PR_Database::getInstance();
+				 $select = $db->select();
+				 $select->from("country",array("*"));
+				 $countrys = PR_Database::fetchAll($select);
+				 return $countrys;	
+			}
+			public function getCompany_Industry($Industry)
+			{             
+			   $db = PR_Database::getInstance();
+				$select = $db->select();
+				$select->from("company", array("*"));   
+				$select->where("Industry = '$Industry'");
+				$record = PR_Database::fetchAll($select);
+				if(count($record)<=1) return NULL;
+				else return $record;        
+			}
+					 
 
         
 }  

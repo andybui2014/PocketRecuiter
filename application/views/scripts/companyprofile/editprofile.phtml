@@ -43,7 +43,7 @@ body {
 
 <?php
 $company=$this->company;
-
+$countrylist=$this->countrylist;
 ?>
 <!--<header class="subhead" id="overview">-->
  
@@ -80,6 +80,24 @@ $company=$this->company;
                  <span class="message" id=""></span>
               </div>
             </div>
+			<div class="form-group">
+                <label for="email">Country</label>
+              <div class="form-group">
+                <!--<input type="text" class="form-control" id="country" name="country" value="<?=$company["country"]?>" >-->
+				<select class="form-control" id="country" name="country">
+					<?php
+						if(!empty($countrylist)){
+							foreach($countrylist as $countrys){
+					?>
+						<option value="<?=$countrys["name"]?>" <?php if($company["country"]==$countrys["name"]) echo "selected"?>><?=$countrys["name"]?></option>
+					<?php
+							}
+						}
+					?>
+				</select>
+                 <span class="message" id=""></span>
+              </div>
+            </div>
             <div class="form-group ">
                 <label >Address</label>
               <div class="form-group">
@@ -89,14 +107,31 @@ $company=$this->company;
               </div>
             </div>
            
-            <div class="form-group">
-                <label for="email">Country</label>
+            
+			<div class="form-group">
+                <label for="email">City</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="country" name="country" value="<?=$company["country"]?>" >
+                <input type="text" class="form-control" id="city" name="city" value="<?=$company["city"]?>" >
                  <span class="message" id=""></span>
               </div>
             </div>
-            
+			<div class="col-md-6" style="padding:0;padding-right:5px">
+			<div class="form-group">
+                <label for="email">State</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="state" name="state" value="<?=$company["state"]?>" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
+			
+            </div>
+			<div class="col-md-6 form-group" style="padding:0;padding-left:5px">
+                <label for="email">Zip code</label>
+              <div class="form-group">
+                <input type="text" class="form-control" id="Zipcode" name="Zipcode" value="<?=$company["state"]?>" >
+                 <span class="message" id=""></span>
+              </div>
+            </div>
             <div class="form-group">
                 <label for="credential">Phone</label>
               <div class="form-group">
@@ -138,14 +173,14 @@ $company=$this->company;
            <?php
                     }
            ?>
-              <input type="checkbox" value="1" id="Company_Logo_Rm" name="Company_Logo_Rm"/> Remove &nbsp;
+             <!-- <input type="checkbox" value="1" id="Company_Logo_Rm" name="Company_Logo_Rm"/> Remove &nbsp;
               <div id="Company_Logo_file" style="display:<?=empty($company["images"])?'':'none'?>; ">
                                     <!--<input type="file" name="images" id="images" > -->
               
              <!-- <input type="file" size="30"   name="file" id="file">-->
              <input type="file" size="30"   name="images" id="images">  
                                     
-              </div> 
+              <!--</div> -->
                                
                 
                  <span class="message" id=""></span>
@@ -165,12 +200,13 @@ $company=$this->company;
                 
             </div>
              
-           <div class="">
+           <div >
            
-                    
-                        <button class="btn btn-success" type="submit" id="submit" name="submit">Update</button>
+		
+			<span><button class="btn btn-success" type="submit" id="submit" name="submit"><strong>Update</strong></button></span>
+			<span style="padding-left:10px"><button class="btn btn-success" id="Cancle" style="cursor:pointer;" onclick="document.location='profile'"><strong>Cancel</strong></button></span>
 
-                    
+		
            </div>
                         
         </form>
