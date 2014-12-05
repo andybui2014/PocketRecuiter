@@ -23,6 +23,7 @@ body {
 
   
   <script type="text/javascript">
+
     $(document).ready(function()
     {
          $("#Company_Logo_Rm").click(function() {
@@ -49,6 +50,7 @@ $stateUnitedState = $this->stateUSList;
 <script>
     var compState = "<?=$company["state"]?>";
     var compZipcode = "<?=$company["Zipcode"]?>";
+    var belongCountry = "<?=$company["country"]?>";
 </script>
 <!--<header class="subhead" id="overview">-->
  
@@ -126,7 +128,7 @@ $stateUnitedState = $this->stateUSList;
               <div class="form-group state-united-states">
                   <?php
                   if($company["country"]!='United States'){?>
-                <input type="text" class="form-control" id="state" name="state" value="<?=$company["state"]?>" >
+                      <input type="text" class="form-control" id="state" name="state" value="<?=$company["state"]?>" >
                   <?php } else{ ?>
                       <select class="form-control" id="state" name="state">
                           <option value="">Select State</option>
@@ -311,18 +313,25 @@ $stateUnitedState = $this->stateUSList;
                $("#PhoneNumber_message").removeClass('has-error').addClass('has-success');
                 $("#PhoneNumber_message").html('');
             }
-               
-});
+
+    });
 
      $("#country").unbind('change').bind('change',function(){
       var countryCode = $(this).val();
+         var countryName = $("#country option:selected").text();
       if(countryCode !='US'){
           var html ="";
-          html +='<input type="text" class="form-control" id="state" name="state" value="'+compState+'" >' +
-              '<span class="message" id=""></span>';
-
-          $('.state-united-states').html(html);
-          $('#Zipcode').val(compZipcode);
+          if(countryName == belongCountry){
+              html +='<input type="text" class="form-control" id="state" name="state" value="'+compState+'" >' +
+                  '<span class="message" id=""></span>';
+              $('.state-united-states').html(html);
+              $('#Zipcode').val(compZipcode);
+          } else{
+              html +='<input type="text" class="form-control" id="state" name="state" value="" >' +
+                  '<span class="message" id=""></span>';
+              $('.state-united-states').html(html);
+              $('#Zipcode').val("");
+          }
 
       } else{
           $.ajax({
