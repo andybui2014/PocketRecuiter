@@ -1,0 +1,228 @@
+<?php
+    $getUserArray = $this->client;
+    $list = $this->list;
+    $getCandidates=$this->getCandidates;
+   // echo("<br><br>testt:<pre>");print_r($list);echo("</pre>");
+?>
+<style>
+    ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
+    ul#nav-left li{line-height: 35px;}
+    ul#nav-left a{color: #777}
+    ul#nav-left .active{color: #428bca}
+
+    .page-header {
+        border-bottom: 2px solid #d6d6d6;
+    }
+
+    .btn-primary {
+		background-color: #2a6496;
+	}
+	.btn {
+		font-size:12px;
+	}
+
+   .logo{
+       /* background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;*/
+       <?php
+        $image=URL_MEDIA_PHOTO.$getCandidates["image"];
+       ?>
+       background: url('<?php if(!empty($getCandidates["image"])) echo  $image; else echo URL_THEMES."images/avatar_none.jpg";?>') no-repeat;
+        width: 211px;
+        height: 165px;
+    }
+
+
+</style>
+
+<div class="container" style="padding-top:40px;margin-top:0px">
+    <div class="row">
+        <div class="col-md-3">
+            <!--<div class="text-center">
+                <div class="logo">
+                    <img style="float:right;padding-top:140px;" src="<?=URL_THEMES?>images/bg_grey_text.png">
+                </div>
+            </div> -->
+            <div class="text-center" style="padding:0px">
+                <div class="logo"><a href="<?= URL_BASE ?>candidate/upload-photo"><img src="<?=URL_THEMES?>images/bg_grey_text.png" style="float:right;padding-top:140px;"></a></div>
+
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?= $getUserArray["emailaddress"]?></span><br/>
+            <span style="font-weight:bold;font-size:13px">View my profile</span> <br/>
+            <span>
+                <img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span style="font-size:13px;padding-left:5px"><?=$getUserArray["Country"]?><?php if($getUserArray["Country"]=="") echo "United State";?></span><span style="padding-left:5px;font-size:13px" class=""><?=$getUserArray["Address1"]?><?php if($getUserArray["Address1"]!="") echo ", "; ?> <?=$getUserArray["State"]?></span>
+            </span>
+            <br><span><strong style="font-size:13px">Expected Salary: <?=$getCandidates["minimumsalary"]?><?php if($getCandidates["minimumsalary"]!="") echo "-";?><?=$getCandidates["maximumsalary"]?><?php if($getCandidates["maximumsalary"]!="")echo "K";?></strong></span><br/>
+            <p style="padding: 10px 0">
+                <!--<i class="lbl-log">Edit</i>>-->
+                <a href="<?= URL_BASE ?>candidate/editoverview"><img src="<?=URL_THEMES?>images/btn_edit.png"></a>
+            </p>
+            <ul id="nav-left">
+                <li><a href="<?= URL_BASE ?>candidate/profile-builder?utm_source=contact">Profile builder</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/profile">Overview</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/contact-info">Contact Info</a></li>
+				<li><a href="<?= URL_BASE ?>candidate/employment">Employment</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/portfolio">Portfolio</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/vieweducation">Education</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/skills?utm_source=index">Skills</a></li>
+                <li><a class="active" href="<?= URL_BASE ?>candidate/references"><strong>References</strong></a></li>
+                <li><a href="<?= URL_BASE ?>candidate/skilltest">Tests</a></li>
+                <li><a href="<?= URL_BASE ?>candidate/interest">Interest</a></li>
+            </ul>
+            <p style="font-size:13px;color:#777">Last signed: <?= date('M d, Y',strtotime($getUserArray["Lastsigned"])) ?></p>
+        </div>
+        <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">References</span>
+                <div id="show-case" style="color:#8f8f8f;">"All references checks are done confidential"</div>
+             </div>
+
+            <div style="margin-top:7px; display: " id="view-employment">
+                <button class="btn btn-primary add-career" type="button" style="margin-top:15px;margin-bottom: 15px; margin-right: -31px;">
+                    +<strong>Add More References</strong>
+                </button>
+                <?php
+                if(!empty($this->getReferences)){
+                    foreach($this->getReferences as $References){
+                        ?>
+                       <div style="font-size:12px">
+                            <div ><strong><?=$References["referencename"]?></strong></div>
+							<div style="padding-top:5px;padding-bottom:5px;color:#428bca;"><u><?=$References["referenceemail"]?></u></div>
+                            <div style="color:#8f8f8f; margin-top: 5px;" class="des-edit"><?=$References['referencecomment']?></div>
+                            
+                        </div>
+                <?php
+                    }
+                }
+                ?>
+
+
+
+
+            </div>
+            <!--Add References-->
+            <div id="NewEmployment" style="margin-top:7px; display: none">
+                <form id="form-references" name="form-references">
+                    <input type="hidden" class="Candidate-employmentID" name="CandidateEmploymentID" value="">
+                    <div style="color:#8f8f8f"><input type="checkbox" checked="checked">&nbsp;Display this education. </div>
+                    <div style="margin-top:10px"><label>Client Name(No abbreviations, please)</label></div>
+                    <div class="col-md-12" style="padding-left:0px">
+                        <div class="col-md-6 form-group" style="padding-left:0px">
+                            <input type="text" class="form-control client-name" name="CompanyName">
+                        </div>
+
+                    </div>
+
+                    <div style="height: 1px;clear: both">&nbsp;</div>
+                    <div style="margin-top:10px"><label>Position held</label></div>
+                    <div class="col-md-12" style="padding-left:0px">
+                        <div class="col-md-6" style="padding-left:0px">
+                            <input type="text" class="form-control position-held" name="PostionHeld">
+                        </div>
+                    </div>
+
+                    <div style="height: 1px;clear: both">&nbsp;</div>
+                    <div style="margin-top:10px; padding-left: 0px" class="col-md-12">
+                        <div class="col-md-3" style="padding-left: 0px"><label>Start Date</label></div>
+                        <div class="col-md-3" style="padding-left: 0px"><label>End Date</label></div>
+                    </div>
+                    <div class="col-md-12" style="padding-left:0px">
+                        <div class="col-md-3" style="padding-left:0px">
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker10'>
+                                    <input type='text' class="form-control start-date" name="StartDate" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-left:0px">
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker12'>
+                                    <input type='text' class="form-control end-date" name="EndDate" />
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="height: 1px;clear: both">&nbsp;</div>
+                    <div style="margin-top:10px"><label>Description(Optional)</label></div>
+                    <div class="col-md-12" style="padding-left:0px">
+                        <div class="col-md-6" style="padding-left:0px">
+                            <textarea class="form-control des" name="Description"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div style="height: 1px;clear: both">&nbsp;</div>
+                <div class="col-md-12" style="padding-left: 0px">
+                    <div class="col-md-10" style="padding-left: 0px">
+                        <button class="btn btn-primary add-employment" addemployment="reloadYes" type="button" style="margin-top:15px;">
+                            <strong>Save</strong>
+                        </button>
+						<button class="btn btn-primary add-employment" addemployment="reloadNo"  type="button" style="margin-top:15px;margin-left:9px ">
+                            <strong>Save and Add Another</strong>
+                        </button>
+						<button class="btn btn-default btn-cancel" type="button" style="margin-top:15px;margin-left: 9px;background-color:#ccc;">
+                            <strong>Cancel</strong>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- end Add-->
+        </div>
+    </div>
+</div>
+<script src="<?=URL_THEMES.'js/pocket.candidate.js';?>"></script>
+<script type="text/javascript">
+    $('.add-career').unbind('click').bind('click',function(){
+        $('#view-employment').hide();
+        $('#NewEmployment').show();
+        $('#show-case').show();
+    });
+
+    $('.btn-cancel').unbind('click').bind('click',function(){
+        /*$('#view-employment').show();
+        $('#NewEmployment').hide();
+        $('#show-case').hide();
+
+
+        $('.position-held').val("");
+        $('.Candidate-employmentID').val("");
+        $('.client-name').val("");
+        $('.des').val("");
+        $('.start-date').val("");
+        $('.end-date').val(""); */
+        location.reload();
+    });
+
+    $('.btn-edit').unbind('click').bind('click',function(){
+        $('#view-employment').hide();
+        $('#NewEmployment').show();
+        $('#show-case').show();
+
+        var PostionHeld = $(this).attr('PostionHeld');
+                $('.position-held').val(PostionHeld);
+        var CandidateEmploymentID = $(this).attr('CandidateEmploymentID');
+                $('.Candidate-employmentID').val(CandidateEmploymentID);
+        var $me = $(this).parent().parent();
+
+        var clientName = $me.find('.company-edit').text();
+                $('.client-name').val(clientName);
+        var des = $me.find('.des-edit').text();
+                $('.des').val(des);
+        var sd = $me.find('.start-date-edit').text();
+                $('.start-date').val(sd);
+        var ed = $me.find('.end-date-edit').text();
+                $('.end-date').val(ed);
+
+    });
+
+    $("#datetimepicker10").datepicker({ autoclose: true, todayHighlight: true });
+    $("#datetimepicker12").datepicker({ autoclose: true, todayHighlight: true });
+
+    objempl = new pocketCandidate();
+
+    $('#NewEmployment .add-employment').unbind('click').bind('click',objempl.addNewCandidateEmploy)
+
+</script>

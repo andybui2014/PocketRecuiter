@@ -33,6 +33,7 @@
 ul#nav-left {
     border-bottom: 2px solid #bbb;
     border-top: 2px solid #bbb;}
+	
 </style>
 
 
@@ -65,14 +66,37 @@ ul#nav-left {
              </div>
             <div class="">
                 <div class="panel-body" style="padding:0">
-                    <h4><span style="font-weight:bold">Overview</span></h4>
+                    
                         <div class="col-xs-12"  style="padding:0;font-size:12px" id="limitedTextSpace" >
-                           
+                           <h4><span style="font-weight:bold">Overview</span></h4>
 							<div class="col-xs-8"  style="padding:0">
 							<span style="padding-right:20px;font-size:12px"><?=nl2br($company["Description"])?></span>
 							</div>
 							<div class=".col-xs-4" style="float:right;">
-								<img width="230px" src="<?=URL_THEMES.'images/video.png';?>">
+								<!--<img width="230px" src="<?=URL_THEMES.'images/video.png';?>">-->
+								  <?php
+                            if(!empty($company["video"]))
+                            {   
+                                
+                                $video=URL_MEDIA_VIDEO.$company["video"];
+                               
+                            ?>
+                             <video width="230px" controls autoplay loop>
+                                <source src="<?=$video?>">
+                             </video>
+                           <!--<iframe style="padding:0" id="ytplayer" type="text/html" width="230"  src="http://<?=$_SERVER["SERVER_NAME"].$video?>?autoplay=1&origin=http://example.com" frameborder="0"/></iframe>-->
+                            <?php
+                            }
+                            
+                            else{
+                            ?>
+                                <img width="230px" src="<?=URL_THEMES.'images/video.png';?>">
+                               
+                              <?php
+                            }
+                            ?>
+								<div style="text-align:center"><a href="<?= URL_BASE ?>companyprofile/upload-video?companyid=<?= $company["CompanyID"] ?>">Upload Video</a></div>
+								
 								
 							</div>
 

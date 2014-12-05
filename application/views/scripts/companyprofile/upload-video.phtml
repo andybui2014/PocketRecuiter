@@ -1,0 +1,157 @@
+<?php
+    $company=$this->company;
+	$listOrtherCompany=$this->listOrtherCompany;
+   //echo ("<br><br><pre>");print_r($company);echo("</pre>");
+?>
+<style>
+    body {
+    background: none repeat scroll 0 0 #ededed;
+    
+}
+.text-left{
+    padding-top: 10px;
+}.line-r{
+    border-right: 1px solid #d6d6d6;
+    padding-right: 10px;
+    height: 10px;
+    
+}
+
+.page-header {
+    border-bottom: 2px solid #d6d6d6;
+}
+.logo{
+       /* background: url('<?=URL_THEMES?>images/avatar_none.jpg') no-repeat ;*/
+       <?php
+        $image=URL_MEDIA_COMPANY_PROFILE.$company["images"];
+       ?>
+       background: url('<?php if(!empty($company["images"])) echo  $image; else echo URL_THEMES."images/none.png";?>') no-repeat;
+	   background-size: 100% 100%;
+        width: 211px;
+        height: 105px;
+    }
+ul#nav-left {
+    border-bottom: 2px solid #bbb;
+    border-top: 2px solid #bbb;}
+	.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+         background-color: #2a6496;
+         border-color:  #DFD8DA transparent;
+		 color: #fff;
+    }
+    .nav-tabs > li > a:hover{
+         background-color: transparent;
+         
+    }
+    .nav-tabs {
+    border-bottom: 2px solid #E2E2E4;
+    }
+    .progress {
+         height: 15px;
+          margin-bottom: 5px;
+    }
+    .progress-bar {
+        font-size:10px;
+    }
+    .btn-primary {
+    background-color: #3071a9;
+    
+}
+ 
+
+</style>
+
+
+<div class="container" style="padding-top:40px;">
+
+    <div class="row">
+     <div class="col-md-3">
+        <div class="text-center">
+          <div class="logo"></div>
+
+            </div>
+            <span  style="font-size: 12px;color: #005595;"><?=$company["emailinfo"]?></span><br/>
+            
+            <ul id="nav-left" style="padding-left:0;margin-top:5px">
+                <span ><strong style="font-size:13px">Culture Fits</strong></span>
+            </ul>
+             <div id="nav-left1">
+               <img src="<?=URL_THEMES?>images/img_Abc_1.jpg" width="200px;">
+            </div>
+           <br><br>
+        </div>
+      <div class="col-md-9" >
+            <div class="page-header" style="margin:0;">
+            
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold">Upload Video</span>
+                
+             </div>
+            
+               <!-- <div class="panel-body" style="padding:0;margin-top:20px;background:#fff">-->
+                <div class="panel panel-body" style="padding:0;margin-top:20px;">
+                 <div class="col-md-9" style="padding:0;padding-left:40px">
+                    <ul class="nav nav-tabs" role="tablist" style="font-weight:bold">
+                      <li role="presentation" class="active"><a href="#">Upload Video</a></li>
+                      <li role="presentation"><a href="#" style="color:#ddd;">Embed Video</a></li>
+                      
+                    </ul>   
+                    <div style="">
+                        <h3 class="text-left" style="font-size: 22px;text-shadow: 1px 2px 3px #ddd;">Upload Video from your Computer</h3>
+                     
+                 
+                   
+                        <form role="form" action="" method="post" enctype="multipart/form-data" onsubmit="return doUpload();">
+                          <div class="form-group"; style="padding-top:10px">
+                            <input type="file"  name="myfile" id="myfile" multiple >
+                            <div style="font-size:12px;margin-top:10px">Support Formats mpeg, mov, m4v, mp4, dat, flv, aac, avi, mp3, wav</div> 
+                          </div>    
+                           
+                            <div id="progress-group">
+                                <div class="progress" style="">
+                                  <div class="progress-bar progress-bar-striped" id="progress-bar" >
+                                    
+                                  </div>
+                                  <div class="progress-text">
+
+                                  </div>
+                                </div>   
+                                <span style="font-size:12px" class="completed"> </span>
+                              
+                            </div>
+                          <div style="margin-bottom:40px;padding-top:20px">
+                            <button type="submit" class="btn btn-primary"><b style="font-size:16px">Upload</b> </button/>
+							<span><button type="cancel" class="btn btn-primary" onclick="document.location='profile?companyid=<?=$company["CompanyID"]?>'"><b style="font-size:16px">Cancel</b> </button/></span>
+                            </div>
+                          
+                        </form>
+                       
+                    </div>
+                              
+                    </div>
+                    
+            <div style="padding-top:40px;">
+            </div>
+        </div>
+        
+    </div>
+    </div>
+               
+                 
+                
+               
+                </div>
+                
+                
+           
+        
+</div>
+   
+
+
+<!--</header>-->
+<!-- jQuery Version 1.11.0 -->
+
+<script src="<?=URL_THEMES.'js/uploadvideo.js';?>"></script>
+
+<script type="text/javascript">
+ 
+</script>

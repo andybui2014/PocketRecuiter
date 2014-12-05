@@ -260,6 +260,15 @@ class PR_Api_Core_ClientClass
 				if(count($record)<=1) return NULL;
 				else return $record;        
 			}
+		   public function uploadVideo($CompanyID,$video)
+			{
+				
+			   $result= PR_Database::update('company',array('video'=>$video),
+						"CompanyID = '$CompanyID'"
+				);
+
+				return $result;
+			}
 					 
 
         
