@@ -57,7 +57,12 @@ class CompanyprofileController extends Application_Controller_Action
         $company = $api->getCompany($companyid);
         $this->view->company=$company;
         $contrylist=$api->getListCountry();
+        $stateUSList = $api->getListState();
+        /*echo "<pre>";
+        print_r($stateUSList);
+        echo "</pre>"; die(); */
 		$this->view->countrylist=$contrylist;
+        $this->view->stateUSList = $stateUSList;
 		//echo ("Tetst:<pre>");print_r($contrylist);echo("</pre>");
 
         $this->render('editprofile');
@@ -249,7 +254,23 @@ class CompanyprofileController extends Application_Controller_Action
      }
    
     
+ public function getStateUnitedListAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $api = new PR_Api_Core_ClientClass();
+        $contrylist=$api->getListCountry();
+        $result = $api->getListState();
+        /*echo "<pre>";
+        print_r($result);
+         echo "</pre>";die();*/
 
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $result = json_encode($result);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($result), true)
+            ->setBody($result);
+    }
 
     
 

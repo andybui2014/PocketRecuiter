@@ -44,7 +44,12 @@ body {
 <?php
 $company=$this->company;
 $countrylist=$this->countrylist;
+$stateUnitedState = $this->stateUSList;
 ?>
+<script>
+    var compState = "<?=$company["state"]?>";
+    var compZipcode = "<?=$company["Zipcode"]?>";
+</script>
 <!--<header class="subhead" id="overview">-->
  
 
@@ -89,7 +94,7 @@ $countrylist=$this->countrylist;
 						if(!empty($countrylist)){
 							foreach($countrylist as $countrys){
 					?>
-						<option value="<?=$countrys["name"]?>" <?php if($company["country"]==$countrys["name"]) echo "selected"?>><?=$countrys["name"]?></option>
+						<option value="<?=$countrys["code"]?>" <?php if($company["country"]==$countrys["name"]) echo "selected"?>><?=$countrys["name"]?></option>
 					<?php
 							}
 						}
@@ -117,9 +122,21 @@ $countrylist=$this->countrylist;
             </div>
 			<div class="col-md-6" style="padding:0;padding-right:5px">
 			<div class="form-group">
-                <label for="email">State</label>
-              <div class="form-group">
+                <label>State</label>
+              <div class="form-group state-united-states">
+                  <?php
+                  if($company["country"]!='United States'){?>
                 <input type="text" class="form-control" id="state" name="state" value="<?=$company["state"]?>" >
+                  <?php } else{ ?>
+                      <select class="form-control" id="state" name="state">
+                          <option value="">Select State</option>
+                          <?php
+                          foreach($stateUnitedState as $kk=>$stateInfo){ ?>
+                              <option value="<?=$stateInfo['state_code']?>" <?= ($stateInfo['state_name'] == $company['state']) ? 'selected="selected"' : '' ?> ><?=$stateInfo['state_name']?></option> ;
+                          <?php  }
+                          ?>
+                      </select>
+                 <?php }?>
                  <span class="message" id=""></span>
               </div>
             </div>
@@ -128,7 +145,7 @@ $countrylist=$this->countrylist;
 			<div class="col-md-6 form-group" style="padding:0;padding-left:5px">
                 <label for="email">Zip code</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="Zipcode" name="Zipcode" value="<?=$company["state"]?>" >
+                <input type="text" class="form-control" id="Zipcode" name="Zipcode" value="<?=$company["Zipcode"]?>" >
                  <span class="message" id=""></span>
               </div>
             </div>
@@ -296,7 +313,53 @@ $countrylist=$this->countrylist;
             }
                
 });
+
+     $("#country").unbind('change').bind('change',function(){
+      var countryCode = $(this).val();
+      if(countryCode !='US'){
+          var html ="";
+          html +='<input type="text" class="form-control" id="state" name="state" value="'+compState+'" >' +
+              '<span class="message" id=""></span>';
+
+          $('.state-united-states').html(html);
+          $('#Zipcode').val(compZipcode);
+
+      } else{
+          $.ajax({
+              url: 'get-state-united-list',
+              dataType    : 'json',
+              data: {countryCode: 'US'},
+              type: 'POST',
+              error : function (data,xhr,error) {
+                   var html ="";
+                   html +='<input type="text" class="form-control" id="state" name="state" value="" >' +
+                   '<span class="message" id=""></span>';
+
+                  $('.state-united-states').html(html);
+                  $('#Zipcode').val("");
+              },
+              success: function(data, status, xhr){
+                  if(data){
+                      var html = '<select class="form-control" id="state" name="state"><option value="">Select State</option>';
+
+                      $.each(data,function(k,stateInfo){
+                         html +='<option value="'+stateInfo.state_code+'">'+stateInfo.state_name+'</option>';
+                      });
+
+                        html +='</select><span class="message" id=""></span>';
+                      $('.state-united-states').html(html);
+                      $('#Zipcode').val("");
+                  }
+              }
+          });
+
+      }
+
+
+     });
+
  });
+
 </script>
 
 
