@@ -271,6 +271,16 @@ class PR_Api_Core_ClientClass
 			}
 					 
 
+            public function getListState()
+            {
+                $db = PR_Database::getInstance();
+                $select = $db->select();
+                $select->from(array('s'=>'state'),array('*'));
+                $select->where("s.country_code ='US'");
+                //print_r($select->__toString());die();
+                $result = PR_Database::fetchAll($select);
+                return $result;
+            }
         
 }  
 
