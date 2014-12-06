@@ -23,6 +23,7 @@ $uselist = $this->uselist;
 <script src="<?=URL_THEMES.'js/pocket.dashboard.js';?>"></script>
 <script type="text/javascript">
     var objdb = new pocketDashboard();
+    var urlImage = '<?=URL_MEDIA_PHOTO;?>';
 </script>
 
 <div class="container" >
@@ -64,7 +65,7 @@ $uselist = $this->uselist;
     <div class="modal-dialog">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header login_modal_header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" class="close cancel-notification" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h2 class="modal-title" id="myModalLabel">Add a Notification</h2>
             </div>
             <div class="modal-body login-modal" style="padding-top:0px">
@@ -120,7 +121,23 @@ $uselist = $this->uselist;
     </div>
 </div>
 <!-- End Model-->
+<!-- deletemodal-->
 
+<div class="modal fade" tabindex="-1" role="dialog" id="are-you-sure-you-want-to-delete" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header" style="border-bottom: none">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-title text-center">Are you sure you want to delete all selected messages?</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="test-act-remove">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end-->
 
     <div class="row" style="padding-top: 40px">
         <div class="col-md-12"><h2><a><strong>Dashboard</strong></a></h2></div>
@@ -154,7 +171,7 @@ $uselist = $this->uselist;
        <div class="col-md-4">
            <div class="panel  panel-default">
             <div class="panel-heading" style="background-color: #2a6496;color: #fff "><strong><a style="color: white" href='<?=$helper->url('careermatch','career')?>'>New Matches</></a></strong></div>
-            <div class="panel-body" style="height: 450px;">
+            <div class="panel-body Contain-candidate-reload" style="height: 450px;">
                 <?php
                 if(!empty($this->listCandidate)&& count($this->listCandidate)>0){
                     foreach($this->listCandidate as $kk=>$listCandidateInfo){
@@ -231,10 +248,11 @@ $uselist = $this->uselist;
                                         <label><input id="Index-Check-All" type="checkbox" name="" value=""/> Check All</label>
                                     </span>
                                     <span class="pull-right"><span class="dropdown">
-                                       Action<span style="cursor:pointer" data-toggle="dropdown" class="caret"></span>
+                                       Action<span style="cursor:pointer; width:10px; height:2px" data-toggle="dropdown" class="caret"></span>
                                         <ul  class="dropdown-menu" role="menu">
                                             <li><a id="test-act-assign" data-toggle="modal" data-target="#AddModalNotificationIndex" href="javascript: void(0)">Compose</a></li>
-                                            <li><a id="test-act-remove" href="javascript: void(0)">Delete</a></li>
+                                            <!--<li><a id="test-act-remove" href="javascript: void(0)">Delete</a></li>-->
+                                            <li><a data-toggle="modal" data-target="#are-you-sure-you-want-to-delete" href="javascript: void(0);">Delete</a></li>
                                         </ul>
                                     </span></span>
                                 </th>
@@ -327,13 +345,14 @@ $uselist = $this->uselist;
                     <th style="text-left: right; padding-left:10px;width:120px">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="border-color: #eeeeee; background-color: #eeeeee">
-                                <strong>Action </strong><span class="caret"></span>
+                                <strong>Action </strong>
+                                <!--<span class="caret"></span>-->
                             </button>
-                            <ul id="menu-privacy" class="dropdown-menu" role="menu">
+                            <!--<ul id="menu-privacy" class="dropdown-menu" role="menu">
                                 <li><a  href="javascript: void(0);">Insert</a></li>
                                 <li><a  href="javascript: void(0);">Update</a></li>
                                 <li><a  href="javascript: void(0);">Delete</a></li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </th>
                 </tr>
@@ -378,9 +397,9 @@ $uselist = $this->uselist;
 								<div id="modaleye" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 									
 								  <div class="modal-dialog modal-sm">
-									<div class="modal-content" style="height:50px;width:150px">
+									<div class="modal-content" style="height:50px;width:350px">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									  Don't have yet.
+									  <div style="text-align:center;margin-top:15px">Don't have yet.</div>
 									</div>
 								  </div>
 								</div>
@@ -395,7 +414,10 @@ $uselist = $this->uselist;
 								<!--<span style=" color:#fff; padding-left:12px" class="glyphicon glyphicon-remove delete-career-btn"></span>-->
 							</td>				
                         </tr>
-                    <?php } } ?>
+                    <?php } }
+                else{
+                    echo '<tr role="row" class="odd" ><td colspan="7">No record</td> </tr>';
+                }?>
                 </tbody>
             </table>
 
@@ -408,8 +430,6 @@ $uselist = $this->uselist;
 
 <script type="text/javascript">
     $(document).ready(function () {
-		
-		
 		$("a#Test").click(function(){
 		 
 		  $('#modaleye').modal('show')
@@ -422,6 +442,11 @@ $uselist = $this->uselist;
         $('#Index-Check-All').unbind('click').bind('click',objdb.IndexCheckedAll)
         $('.Index-Is-Check').unbind('click').bind('click',objdb.IndexIsChecked);
         $('.publib-notication').unbind('click').bind('click',objdb.publibOpportunity);
+        $('.cancel-notification').unbind('click').bind('click',function(){
+            $("#form-addnotification #toTheseEmail").text("");
+            $("#form-addnotification #subjectNotification").val("");
+            $("#form-addnotification #contentNotification").val("");
+        });
     });
 
 </script>
