@@ -96,7 +96,7 @@ $stateUnitedState = $this->stateUSList;
 						if(!empty($countrylist)){
 							foreach($countrylist as $countrys){
 					?>
-						<option value="<?=$countrys["code"]?>" <?php if($company["country"]==$countrys["name"]) echo "selected"?>><?=$countrys["name"]?></option>
+						<option value="<?=$countrys["name"]?>" <?php if($company["country"]==$countrys["name"]) echo "selected"?>><?=$countrys["name"]?></option>
 					<?php
 							}
 						}
@@ -319,18 +319,19 @@ $stateUnitedState = $this->stateUSList;
      $("#country").unbind('change').bind('change',function(){
       var countryCode = $(this).val();
          var countryName = $("#country option:selected").text();
-      if(countryCode !='US'){
+      if(countryName !='United States'){
           var html ="";
           if(countryName == belongCountry){
               html +='<input type="text" class="form-control" id="state" name="state" value="'+compState+'" >' +
                   '<span class="message" id=""></span>';
               $('.state-united-states').html(html);
-              $('#Zipcode').val(compZipcode);
+             // $('#Zipcode').val(compZipcode);
           } else{
               html +='<input type="text" class="form-control" id="state" name="state" value="" >' +
                   '<span class="message" id=""></span>';
               $('.state-united-states').html(html);
-              $('#Zipcode').val("");
+             // $('#Zipcode').val("");
+             // $('#Zipcode').val("");
           }
 
       } else{
@@ -345,19 +346,24 @@ $stateUnitedState = $this->stateUSList;
                    '<span class="message" id=""></span>';
 
                   $('.state-united-states').html(html);
-                  $('#Zipcode').val("");
+                  //$('#Zipcode').val("");
+
               },
               success: function(data, status, xhr){
                   if(data){
                       var html = '<select class="form-control" id="state" name="state"><option value="">Select State</option>';
 
                       $.each(data,function(k,stateInfo){
-                         html +='<option value="'+stateInfo.state_code+'">'+stateInfo.state_name+'</option>';
+                          if(compState == stateInfo.state_name){
+                              selected ='';
+                              var selected ="selected = 'seleted'";
+                          }
+                         html +='<option value="'+stateInfo.state_code+'" '+selected+'>'+stateInfo.state_name+'</option>';
                       });
 
                         html +='</select><span class="message" id=""></span>';
                       $('.state-united-states').html(html);
-                      $('#Zipcode').val("");
+                      //$('#Zipcode').val("");
                   }
               }
           });
