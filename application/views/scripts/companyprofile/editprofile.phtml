@@ -92,6 +92,7 @@ $stateUnitedState = $this->stateUSList;
               <div class="form-group">
                 <!--<input type="text" class="form-control" id="country" name="country" value="<?=$company["country"]?>" >-->
 				<select class="form-control" id="country" name="country">
+					<option>Select</option>
 					<?php
 						if(!empty($countrylist)){
 							foreach($countrylist as $countrys){
@@ -127,7 +128,7 @@ $stateUnitedState = $this->stateUSList;
                 <label>State</label>
               <div class="form-group state-united-states">
                   <?php
-                  if($company["country"]!='United States'){?>
+                  if(trim($company["country"])!='United States'){?>
                       <input type="text" class="form-control" id="state" name="state" value="<?=$company["state"]?>" >
                   <?php } else{ ?>
                       <select class="form-control" id="state" name="state">
@@ -243,6 +244,7 @@ $stateUnitedState = $this->stateUSList;
 <!-- jQuery Version 1.11.0 -->
 <script type="text/javascript">
  $(document).ready(function () {
+ $("ul.nav li#dasboard-test").removeClass("active");//this will remove the active class from  
      var error = false; 
          $('#emailinfo').blur(function () {
 
@@ -350,6 +352,7 @@ $stateUnitedState = $this->stateUSList;
               },
               success: function(data, status, xhr){
                   if(data){
+				  //alert("testtt");
                       var html = '<select class="form-control" id="state" name="state"><option value="">Select State</option>';
 
                       $.each(data,function(k,stateInfo){
@@ -371,6 +374,7 @@ $stateUnitedState = $this->stateUSList;
 
 
      });
+	 
 
  });
 

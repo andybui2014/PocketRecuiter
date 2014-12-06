@@ -222,7 +222,15 @@ class PR_Api_Core_ClientClass
                 }else{
                     $updateFields=array(
                             'CompanyID'=>$CompanyID,
-                            'Companyname'=>$Fields['Companyname']
+                            'Companyname'=>$Fields['Companyname'],
+							'Industry'=>$Fields['Industry'],
+							'Address'=>$Fields['Address'],
+							'country'=>$Fields['country'],
+							'PhoneNumber'=>$Fields['PhoneNumber'],
+							'emailinfo'=>$Fields['emailinfo'],
+							'images'=>$Fields['images'],
+							'Description'=>$Fields['Description'],
+							'Zipcode'=>$Fields['Zipcode']
                          
                             );
                             

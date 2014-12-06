@@ -167,9 +167,10 @@ class CompanyprofileController extends Application_Controller_Action
     
         $api = new PR_Api_Core_ClientClass();
         $result = $api->AddCompany($Fields);
-       
+		$CompanyID=$result["CompanyID"];
+		//echo "Result:";print_r($result["CompanyID"]);
        // header("Location: list");                      
-        header("Location: profile?companyid=$result");
+        header("Location: profile?companyid=".$CompanyID);
       
     }
      public function deletecompanyAction()

@@ -131,7 +131,7 @@ $loginClient = $this->layout()->loginclient;
                             <li><a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
                         </ul>
                     </li>
-                    <li><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
+                    <li id='Notifications'><a href="<?=$helper->url('list','notifications');?>">Notifications</a></li>
                     <?php
                     if($loginClient["usertype"]==1)
                     {
