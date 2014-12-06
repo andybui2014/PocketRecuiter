@@ -58,9 +58,7 @@ class CompanyprofileController extends Application_Controller_Action
         $this->view->company=$company;
         $contrylist=$api->getListCountry();
         $stateUSList = $api->getListState();
-        /*echo "<pre>";
-        print_r($stateUSList);
-        echo "</pre>"; die(); */
+        
 		$this->view->countrylist=$contrylist;
         $this->view->stateUSList = $stateUSList;
 		//echo ("Tetst:<pre>");print_r($contrylist);echo("</pre>");
@@ -133,8 +131,12 @@ class CompanyprofileController extends Application_Controller_Action
     {
         $request = $this->getRequest();
         $sestionClient = PR_Session::getSession(PR_Session::SESSION_USER);             
-        //$api = new PR_Api_Core_ClientClass();
-    
+        $api = new PR_Api_Core_ClientClass();
+		$contrylist=$api->getListCountry();
+        $stateUSList = $api->getListState();
+        
+		$this->view->countrylist=$contrylist;
+        $this->view->stateUSList = $stateUSList;
         $this->render("addcompany");
       
     }
