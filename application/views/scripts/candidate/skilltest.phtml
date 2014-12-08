@@ -62,7 +62,7 @@ $getCandidates=$this->getCandidates;
 </script>
 
 <div class="container" style="padding-top:40px;margin-top:0px">
-<!--modal-->
+<!--modal
     <div class="modal fade" tabindex="-1" role="dialog" id="finish-test" data-keyboard="false" data-backdrop="static">
         <div class="modal-dialog modal-sm">
             <div class="modal-content modal-dialog-center">
@@ -73,7 +73,7 @@ $getCandidates=$this->getCandidates;
             </div>
         </div>
     </div>
-    <!----end modal-->
+  end modal-->
     <div class="row">
         <div class="col-md-3">
 
@@ -120,7 +120,7 @@ $getCandidates=$this->getCandidates;
                     if(!empty($testIDs)&& count($testIDs)>0){
                         foreach($testIDs as $kk=>$testIDsInfo){?>
 
-                            <span style="cursor: pointer" class="label-tag pull-left" onclick="javascript:objSkTest.skill_Test_View(<?=$testIDsInfo['TestID']?>)"> <?= $testIDsInfo['TestName']?></span>
+                            <span style="cursor: pointer" class="label-tag pull-left" onclick="javascript:objSkTest.skill_Test_View(<?=$testIDsInfo['TestID']?>, '<?= $testIDsInfo["TestName"]?>')"> <?= $testIDsInfo['TestName']?></span>
                      <?php   }
                     }
                     ?>

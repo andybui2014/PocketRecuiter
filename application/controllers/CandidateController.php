@@ -1887,6 +1887,7 @@ class CandidateController extends Application_Controller_Action
         $request = $this->getRequest();
         $params = $this->getRequest()->getParams();
         $TestID = $params['testID'];
+        $testName = $params['testName'];
         if(isset($params['SaveTestAnswer'])){
             if($params['SaveTestAnswer']){
                 $TestQuestionAnswerID = $params['TestQuestionAnswerID'];
@@ -1920,7 +1921,7 @@ class CandidateController extends Application_Controller_Action
             }
 
        /*echo "<pre>";
-            print_r($rsRow);
+            print_r($questionAnswerList);
         echo "</pre>"; die(); */
         $this->view->questionAnswerList = $questionAnswerList;
        // $this->view->paginator = $paginator;
@@ -1928,6 +1929,7 @@ class CandidateController extends Application_Controller_Action
         $this->view->numberTestQuests = $countRows;
         $this->view->page = $page;
         $this->view->TestID = $TestID;
+        $this->view->testName = $testName;
     }
 	public function interestAction()  
 	{

@@ -658,7 +658,7 @@ $(function  () {
         });
     },
 
-    skill_Test_View :function(testID){
+    skill_Test_View :function(testID, testName){
         var page = $(this).attr('page');
         var size = $("#pagesize").val();
         if (typeof(page) === 'undefined')
@@ -666,7 +666,7 @@ $(function  () {
         $.ajax({
             url: 'skill-test-view',
             dataType: 'html',
-            data: {page:page, size:size, testID:testID},
+            data: {page:page, size:size, testID:testID, testName:testName},
             cache: false,
             type: 'POST',
             context: this,
