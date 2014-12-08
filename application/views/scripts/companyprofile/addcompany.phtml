@@ -260,62 +260,6 @@ $stateUnitedState = $this->stateUSList;
 	});
 	
 	
-     $("#country").unbind('change').bind('change',function(){
-      var countryCode = $(this).val();
-         var countryName = $("#country option:selected").text();
-      if(countryName !='United States'){
-          var html ="";
-          if(countryName == belongCountry){
-              html +='<input type="text" class="form-control" id="state" name="state" value="'+compState+'" >' +
-                  '<span class="message" id=""></span>';
-              $('.state-united-states').html(html);
-             // $('#Zipcode').val(compZipcode);
-          } else{
-              html +='<input type="text" class="form-control" id="state" name="state" value="" >' +
-                  '<span class="message" id=""></span>';
-              $('.state-united-states').html(html);
-
-          }
-
-      } else{
-          $.ajax({
-              url: 'get-state-united-list',
-              dataType    : 'json',
-              data: {countryCode: 'US'},
-              type: 'POST',
-              error : function (data,xhr,error) {
-                   var html ="";
-                   html +='<input type="text" class="form-control" id="state" name="state" value="" >' +
-                   '<span class="message" id=""></span>';
-
-                  $('.state-united-states').html(html);
-                  //$('#Zipcode').val("");
-
-              },
-              success: function(data, status, xhr){
-                  if(data){
-				  //alert("testtt");
-                      var html = '<select class="form-control" id="state" name="state"><option value="">Select State</option>';
-
-                      $.each(data,function(k,stateInfo){
-                          if(compState == stateInfo.state_name){
-                              selected ='';
-                              var selected ="selected = 'seleted'";
-                          }
-                         html +='<option value="'+stateInfo.state_code+'" '+selected+'>'+stateInfo.state_name+'</option>';
-                      });
-
-                        html +='</select><span class="message" id=""></span>';
-                      $('.state-united-states').html(html);
-                      //$('#Zipcode').val("");
-                  }
-              }
-          });
-
-      }
-
-
-     });
 
  });
 </script>

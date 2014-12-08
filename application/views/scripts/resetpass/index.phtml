@@ -1,0 +1,91 @@
+
+<style>
+body {
+    background: none repeat scroll 0 0 #ededed;
+    
+}
+.container{
+     /*font-family:"Open Sans" ;*/
+     font-size: 13px;
+     max-width: 90%;
+}
+
+.has-error .form-control {
+    border-color: #a94442;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.form-control{
+    width: 47%;
+}
+
+
+</style>
+<!--<script src="<?=URL_THEMES.'js/comfirmRegister.js?vs=1';?>"></script>-->
+<div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
+    <div class="container">
+        <span style="font-size:15px">This is the resume of the future! With Pocket Recruiter,</span><br/>
+     <span style="font-weight:bold;font-size:20px;"> You'll not only get the hiring manager's attention-you'll keep it.</span>
+    </div>
+</div>
+<div class="container" >
+<div class="" style="padding:50px;padding-left:0">
+    <?php 
+            //echo ("testtt:<pre>");print_r($_REQUEST);echo("</pre>"); 
+            $id=$_REQUEST["UserID"];
+            $em=$_REQUEST["emailaddress"];
+            //$pass=$_REQUEST["password"];
+            
+         //  echo ("UserID:".base64_encode($id));
+          // echo ("<br>emailaddress:".base64_encode($em));
+          // echo ("<br>password:".base64_encode($pass));
+         //  echo ("<br>UserID1:".base64_decode(base64_encode($id)));
+         //  echo ("<br>emailaddress1:".base64_decode(base64_encode($em)));
+         //  echo ("<br>password1:".base64_decode(base64_encode($pass)));
+    ?>
+    <p style="font-size:18px;">
+      <!-- Congratulations, you email have been verified. Please <a href="<?= URL_BASE . 'confirm/do-confirm?UserID='.$id."&&emailaddress=".$em."&&password=".$pass; ?>">click here</a> to log in.-->
+             Password Recovery.
+			
+       
+    
+    </p>
+	<form id="form-newpass" name="form-newpass" method="POST" action="<?=URL_BASE.'resetpass/do-reset-pass'?>">
+	
+                    <div class="col-md-12" style="padding:0;padding-bottom:40px">
+                        <div class="form-group">
+                          <div class="form-group">
+						  
+						  <label>New Password </label>
+						  <input type="hidden" name="UserID" id="UserID" value="<?=$this->useid?>" class="form-control">
+						  <input  type="hidden" name="emailaddress" id="emailaddress" value="<?=$this->emailaddress?>" class="form-control">
+                            <input  type="text" name="password" id="password" placeholder="" class="form-control">
+                             <span class="message" id="password_message" style="color:#b81900"></span>
+                          </div>
+						  <div class="form-group">
+						  
+						  <label>Confirm New Password </label>
+                            <input type="text" name="newpassword" id="newpassword" placeholder="" class="form-control">
+                             <span class="message" id="newpassword_message" style="color:#b81900"></span>
+                          </div>
+                           
+                    </div>
+                    <button id="newpass" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Submit</button>
+					<span style="padding-left:10px"><button id="Cannewpass" style="width:70px" type="cancel" class="btn btn-primary" data-loading-text="Loading...">Cancel</button></span>
+					</div>
+					</div>
+                </form>  
+   
+</div>
+
+   
+
+</div>
+    </div>
+<script>
+    //Init main pocket
+    var pkMain = new pocketMain();
+    $(document).ready(function(){
+        
+    })
+</script>

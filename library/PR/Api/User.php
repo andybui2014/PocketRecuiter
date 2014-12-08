@@ -262,6 +262,15 @@ class PR_Api_User extends Zend_Db_Table_Abstract
 
         return;
     }
+	public function UpdatePass($userID,$password)
+    {
+
+        PR_Database::update('user',array('password'=>$password),
+                "UserID = '$userID'"
+        );
+
+        return;
+    }
     
     
 

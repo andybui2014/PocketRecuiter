@@ -63,9 +63,13 @@ $loginClient = $this->layout()->loginclient;
             <div class="nav-ribbon-left pull-right">
                 <?php $loginClient = $this->layout()->loginclient; if(!empty($loginClient)){ ?>
                     <strong><?=$loginClient['emailaddress'];?></strong> / <a href="javascript: void(0)" id="btn-logout" data-url="<?=$this->layout()->logout;?>">Logout</a>
-                <?php }else{ ?>
+                <?php }else{
+						if($_SERVER['REQUEST_URI']!=URL_BASE.'login'){
+				?>
+				
                     <a style="font_size:13px;" href="<?=URL_BASE;?>login"><b>Sign In or Join</b></a>
-                <?php } ?>
+                <?php }}
+				?>
             </div>
         </div>
     <?php } ?>
@@ -94,13 +98,13 @@ $loginClient = $this->layout()->loginclient;
                 
             ?>
                 <li><a href="#" style="color:#333"><strong style="font-size:13px">Match Opportunity</strong></a></li>
-            <?php } ?>
+            
                 <li><a href="#" style="color:#333"><strong style="font-size:13px">Features</strong></a></li>
                 <li><a href="#" style="color:#333"><strong style="font-size:13px">Plans</strong></a></li>
                 <li><a href="#" style="color:#333"><strong style="font-size:13px">Success Stones</strong></a></li>
                 <li><a href="#" style="color:#333"><strong style="font-size:13px">Resources</strong></a></li>
                 <li><a href="#" style="color:#333"><strong style="font-size:13px">Contact Us</strong></a></li>
-               
+               <?php } ?>
             </ul>
             <?php }else{ ?>
                 <ul class="nav nav-pills navbar-right small">
@@ -244,9 +248,22 @@ $loginClient = $this->layout()->loginclient;
                 </ul>
             </div>
         </header>
-    <?php }} ?>
-
-
+    <?php }}?>
+	<?php
+	$page=URL_BASE.'login';
+		if($_SERVER['REQUEST_URI']==$page){
+		?>
+		<header class="sb-page-header" style="height:50px">
+            <div class="container">
+                <ul class="nav navbar-nav" id="nav">
+                  
+                </ul>
+            </div>
+        </header>
+<?php
+		}
+	?>
+	
 
     <!-- /.container -->
 
@@ -255,7 +272,10 @@ $loginClient = $this->layout()->loginclient;
 <!--Container-->
 <?php echo $this->layout()->content; ?>
 <!--End Container-->
-
+<?php
+	$page=URL_BASE.'login';
+		if($_SERVER['REQUEST_URI']!=$page){
+?>
 <div id="footer">
     <div class="container">
         <div class="col-sm-2">
@@ -327,6 +347,26 @@ $loginClient = $this->layout()->loginclient;
         </div>
     </div>
 </footer>
+<?php }
+else{
+?>
+<div id="footer" style="padding:2px">
+    <div class="container">
+    </div>
+</div>
+<footer>
+    <div class="small" style="width: 100%;min-height: 100px; text-align: center;border-top: 1px solid #ddd">
+        <div class="panel-body">
+            Copyright &#169; 2014 Recruiter All Rights Reserved
+            <p>
+                <a style="color: #333; text-decoration: underline " href="#">Privacy Policy</a> - <a style="color: #333; text-decoration: underline" href="#">Terms of Use</a>
+            </p>
+        </div>
+    </div>
+</footer>
+<?php
+}
+?>
 <!--Footer-->
 <!--End Container-->
 <script>

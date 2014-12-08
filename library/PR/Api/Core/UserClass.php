@@ -58,6 +58,19 @@ class PR_Api_Core_UserClass {
         $records = PR_Database::fetchAll($select);
         return $records;
     }
+	//===============================================
+	public function checkUser($emailaddress){
+		$db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from('user');
+        $select->where("emailaddress = '$emailaddress'");
+        $records = PR_Database::fetchAll($select);
+		if(!empty($records)){
+		return $records[0];
+		}else{
+		return array("Error"=>"This email is not found.");
+		}
+	}
 
 
 

@@ -61,6 +61,64 @@ class LoginController extends Application_Controller_Action {
                 ->setBody($return);                    
                                 
     }
+	public function resetPassAction(){
+		$this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $request = $this->getRequest();
+		$return = array("success" => 0, "error" => "","UserID"=>"");
+        $emailaddress = $request->getParam("emailaddress");
+		$core= new PR_Api_Core_UserClass();
+		$ismail=$core->checkUser($emailaddress);
+		//echo "username:";print_r($ismail["UserID"]);die();
+		if(empty($ismail["Error"])){
+		$UserID=$ismail["UserID"];
+			  $pageURL = 'http';
+                if (!empty($_SERVER['HTTPS'])) {if($_SERVER['HTTPS'] == 'on'){$pageURL .= "s";}} 
+                $pageURL .= "://";
+                if ($_SERVER["SERVER_PORT"] != "80") {
+                    $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"];
+                } else {
+                    $pageURL .= $_SERVER["SERVER_NAME"];
+                }
+                //echo $pageURL;
+                //send mail
+                $toEmail = $emailaddress; //$techEmail;base64_encode($User["password"])
+                $fromName = "Pocket Recruiter";
+                $fromEmail = "info@vienetllc.com";
+                $link=$pageURL.URL_BASE."resetpass?UserID=".base64_encode($UserID)."&&emailaddress=".base64_encode($emailaddress);
+                $subject = "Welcome to Pocket Recruiter";
+                $body = "Hello,
+				
+Please click on the following link to reset your password:     
+                                                
+".$link." 
+            
+Thank you,                    
+Your Pocket Recruiter Team
+                ";
+               
+                $mail = new PR_Api_Core_Mail();
+               // $mail1=new PR_Mail();
+                $mail->setBodyText($body);
+                $mail->setFromName($fromName);
+                $mail->setFromEmail($fromEmail);
+                $mail->setToEmail($toEmail);
+                $mail->setSubject($subject);
+                $mail->send();
+				$return['success'] = 1;
+                $return['UserID'] = $UserID;
+		}else{
+		$return['success'] = 0;
+		$return['error'] = $ismail["Error"];
+		}
+		
+		$response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $return = json_encode($return);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($return), true)
+                ->setBody($return);    
+	}
     
 
 }

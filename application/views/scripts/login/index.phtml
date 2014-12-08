@@ -8,6 +8,8 @@ body {
      /*font-family:"Open Sans" ;*/
      font-size: 13px;
      max-width: 90%;
+}.small{
+min-height: 60px;
 }
 .page-header{
 /*width: 859px;
@@ -15,7 +17,7 @@ border-bottom: 1px solid #ddd;*/
 border-bottom: none;
 }
 .page-header1{
-width: 859px;
+/*width: 859px;*/
 border-bottom: 1px solid #ddd;
 
 }
@@ -48,7 +50,7 @@ border-bottom: 1px solid #ddd;
     
 }
 .popover.right {
-    margin-left: 10px;
+    margin-left: -1px;
 }.popover.right > .arrow{
     border-right-color: rgba(0, 0, 0, 0);
     left: -7px;
@@ -57,25 +59,85 @@ border-bottom: 1px solid #ddd;
     padding: 8px 4px;
 }
 #form-login .message{color: #b81900;}
+.btn-primary {
+    background-color: #2a6496;}
+	.modal {
+    
+    z-index: 1250;
+	top: 100;
+}
 </style>
-<div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
+<!--<div class="header" style="background-color: #333;padding: 10px 0; color: #fff;">
     <div class="container">
         <span style="font-size:15px">This is the resume of the future! With Pocket Recruiter,</span><br/>
      <span style="font-weight:bold;font-size:20px;"> You'll not only get the hiring manager's attention-you'll keep it.</span>
     </div>
+</div>-->
+<!--Modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalcheckmailFogotpass" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel" style="color:#005595">Please check mail and reset password.</h2>
+            </div>
+            <div class="modal-body login-modal" style="height:250px">
+            <div class="col-md-12" >
+			<p>
+				An email has been sent to <b><span class="mail"></span></b>. Please follow the instructions to retrieve your password.
+			</p>
+			</div>
+             
+            </div>
+            </div>
+        
+    </div>
 </div>
-<div class="container" >
+</div>
+<!--Modal-->
+<!--Modal-->
+<div class="modal fade" tabindex="-1" role="dialog" id="openModalFogotpass" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content modal-dialog-center">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title" id="myModalLabel" style="color:#005595">Forgot password</h2>
+            </div>
+            <div class="modal-body login-modal" style="height:250px">
+            
+    
+             <form id="form-forgotpass" name="form-forgotpass" method="POST" action="">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                          <div class="form-group">
+						  <label><strong>Password Retrieval</strong></label>
+						  <br>Please enter your Primary Email address associated with your profile:
+                            <input value="" type="text" name="emailaddress" id="emailaddress" placeholder="Enter email" class="form-control">
+                             <span class="message" id="emailaddress_message" style="color:#b81900"></span>
+                          </div>
+                           
+                    </div>
+                    <button id="resetpass" style="width:70px" type="button" class="btn btn-primary" data-loading-text="Loading...">Ok</button>
+                </form>    
+            </div>
+            </div>
+        
+    </div>
+</div>
+</div>
+<!--Modal-->
+<div class="container" style="padding-top:40px" >
 <div class="page-header" style="margin:0;">
 
     <h3>
         <span style="color:#005595;font-weight:bold;font-size:25px">Log in</span>
-        <span class="text-right pull-right" style="font-size: 12px;padding-top:8px;padding-right:16px;">Already have a Pocket Recruiter account? <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'login' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_SignIn.png" width="45px"></span></a><a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'register' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_Register.png" width="58px;"> </span></a></span>
+        <!--<span class="text-right pull-right" style="font-size: 12px;padding-top:8px;padding-right:16px;">Already have a Pocket Recruiter account? <a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'login' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_SignIn.png" width="45px"></span></a><a style="text-decoration: none;" rel="" href="<?= URL_BASE . 'register' ?>"><span style="padding-left:5px;"><img src="<?=URL_THEMES?>images/btn_Register.png" width="58px;"> </span></a></span>-->
 
     </h3>
 </div>
-<div class="page-header1" style="margin:0;">
+<div class="col-xs-9 page-header1" style="margin:0;">
 </div>
-    <div class="col-xs-9"  style="padding:0;padding-top:25px;">
+    <div class="col-xs-9"  style="padding:0;padding-top:25px;border-right: 1px solid #ddd;">
 
     <!--<div class="col-md-6" style="margin:0;padding:0">-->
         <form id="form-login" role="form">
@@ -98,35 +160,36 @@ border-bottom: 1px solid #ddd;
             <div class="form-group">
                     <span style="font-size:11px;"><input name="remember" type="checkbox" id="terms"> Remember me</span>
                     <span class="pull-right" style="padding-right:53%">
-                        <a href="#" style="color:#333;font-size:11px">Forgot Password?</a>
+                        <a href="javascript: void(0);" style="color:#2a6496;font-size:11px" id="fogotpass"><strong>Forgot Your Password?</strong></a>
+						<br><a href="#" style="color:#2a6496;font-size:11px"><strong>Not a Member Yet?</strong></a>
                 </span>
             </div>
             <!--<button data-loading-text="Loading..." id="btn-login" class="btn btn-primary" type="button">Log in </button>-->
-            <div style="padding-bottom:50px"><img src="<?=URL_THEMES?>images/btn_logIn.png" id="btn-login" style="cursor: pointer;" width="75px;"></div>
+            <div style="padding-bottom:100px;padding-top:20px">
+			<span class="pull-left">
+				<img src="<?=URL_THEMES?>images/btn_logIn.png" id="btn-login" style="cursor: pointer;" width="75px;">
+				</span>
+				<!--<button class="btn btn-primary" id="btn-login"><strong>&nbsp;Log in&nbsp; </strong></button>-->
+				<span class="pull-right" style="padding-right:53%">
+				<?php
+					$page=URL_BASE . 'register' ;
+				?>
+				
+				<!--<button class="btn btn-primary" onclick="document.location='<?=$page?>'">Sign up</button>-->
+				</span>
+			</div>
+			
+			
         </form>
+		
        <!-- </div>-->
     </div>
    
 
 </div>
-    <div class="col-xs-3" style="padding:0;border-left: 1px solid #ddd; height: 300px;">
-    <div style="height: 40px; ">
-        <!--<p style="float:left;width: 20%;color: #fff;background-color: #4cae4c;padding: 15px 0; text-align: center"><i class="glyphicon glyphicon-lock"></i></p>-->
-        <!--<p style="float:left;width: 80%;color: #fff;background-color: #333;padding: 5px 0; text-align: center">
-            We value your privacy<br/> <small>Privacy Policy</small>
-        </p>-->
-        <div class="image1"><img src="<?=URL_THEMES?>images/img_PrivacyPolicy.jpg" width="200px"></div>
-        
-    </div>
-    <div class="col-lg-12">
-       <h3><span style=""><!--<i class="glyphicon glyphicon-ok"></i>--><img src="<?=URL_THEMES?>images/img_check.png" width="20px;"></span> <span style="color:#005595;font-weight:bold;font-size:18px">Pocket Recruiter</span></h3>
-       <!-- <p><smal>
-            At a bare minimum, the front controller needs one or more paths to directories containing action controllers in order to do its work. A variety of methods may also be invoked to further tailor the front controller environment and that of its helper classes.</smal>
-        </p>-->
-        <p style="font-size:11px;">Ut etgestas consectetur risus eget comomdo. Send ornare aliquam blandit. Nunc eu tristique ante, at dictum ligula ..................... eleifend. </p>
-        <p><a style="text-decoration: none;" rel="" href="#"><span><img src="<?=URL_THEMES?>images/btn_ReadMore.png" width="65px"> </span></a></p>
-    </div>
-</div>
+    <!--<div class="col-xs-3" style="padding:0;border-left: 1px solid #ddd; height: 300px;">
+   
+</div>-->
 </div>
 <script>
     //Init main pocket
@@ -137,6 +200,11 @@ border-bottom: 1px solid #ddd;
         $("#email").popover({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
     $("#email").popover("show");
     $('#email').tooltip({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
-    $('#email').tooltip('show')
+    $('#email').tooltip('show');
+	
+	//
+	$("#fogotpass").click(function(){
+        $('#openModalFogotpass').modal('show')
+    });
     })
 </script>

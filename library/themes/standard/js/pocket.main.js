@@ -13,6 +13,8 @@ pocketMain.prototype = {
         $("#btn-login").unbind('click').bind('click',this.logIn);
         $('#show-login').unbind('click').bind('click',this.reset);
 		$('#btn-logout').unbind('click').bind('click',this.logOut);
+		$('#resetpass').unbind('click').bind('click',this.resetPass);
+		$('#newpass').unbind('click').bind('click',this.setnewPass);
     },
     /**
      *  logOut
@@ -36,6 +38,109 @@ pocketMain.prototype = {
         $('#form-login #password').html('');
        
         $('#btn-login').button('reset');
+    },
+	resetPass:function(){
+        var btn = $(this);
+        btn.button('loading');
+        var fields = {
+             emailaddress: { notEmpty: {message: 'email address is required.'}},
+        }
+        var emailaddress = $('#form-forgotpass').find('[name="emailaddress"]');
+        var emailaddress_message = $('#form-forgotpass #emailaddress_message');
+          if( typeof emailaddress !=='undefined' && typeof emailaddress !==undefined &&  emailaddress.length > 0 ){
+            var error = false;
+               if(emailaddress.val() ==''){
+                error = true;
+               emailaddress_message.parent().addClass('has-error');
+               emailaddress_message.html(fields.emailaddress.notEmpty.message).fadeOut().fadeIn();
+            }else{
+               emailaddress_message.parent().removeClass('has-error').addClass('has-success');
+               emailaddress_message.html('');
+           }
+          }
+          if(error == false)
+          {
+                $.ajax({
+                url: 'login/reset-pass',
+                data: $('#form-forgotpass').serializeArray(),
+                    type: 'POST',
+                
+             //  success: function(data, status, xhr){
+                success: function(data,xhr){
+                    //alert(data. error)
+                   // console.log(data);
+                    if(data.success){
+							$('#openModalFogotpass').modal('hide')
+                          $(".mail").append(emailaddress.val());
+                          $('#openModalcheckmailFogotpass').modal('show')
+                       
+
+                    }else{
+                        btn.button('reset');
+                        alert(data. error);
+                    }
+                }
+            });
+          }
+          else{
+              btn.button('reset');
+          }
+    },
+	setnewPass:function(){
+        var btn = $(this);
+        btn.button('loading');
+        var fields = {
+             password: { notEmpty: {message: 'Password is required.'}},
+			 
+        }
+        var password = $('#form-newpass').find('[name="password"]');
+		var newpassword = $('#form-newpass').find('[name="newpassword"]');
+        var password_message = $('#form-newpass #password_message');
+          if( typeof password !=='undefined' && typeof password !==undefined &&  password.length > 0 ){
+            var error = false;
+               if(password.val() ==''){
+                error = true;
+               password_message.parent().addClass('has-error');
+               password_message.html(fields.password.notEmpty.message).fadeOut().fadeIn();
+            }else{
+               password_message.parent().removeClass('has-error').addClass('has-success');
+               password_message.html('');
+           }
+		   var newpassword_message = $('#form-newpass #newpassword_message');
+          
+           
+               if(password.val() !=newpassword.val()){
+                error = true;
+			   newpassword_message.parent().addClass('has-error');
+               newpassword_message.html("New Password and confirm new password different");
+            }else{
+               newpassword_message.parent().removeClass('has-error').addClass('has-success');
+               newpassword_message.html('');
+           }
+		   
+          
+		  
+		   
+          }
+          if(error == false)
+          {
+                $.ajax({
+                url: 'resetpass/do-reset-pass',
+                data: $('#form-newpass').serializeArray(),
+                    type: 'POST',
+                
+             //  success: function(data, status, xhr){
+                success: function(data,xhr){
+                    //alert(data. error)
+                   // console.log(data);
+				   window.location = 'login';
+                   
+                }
+            });
+          }
+          else{
+              btn.button('reset');
+          }
     },
     logIn: function(){
         var $this = $(this);
