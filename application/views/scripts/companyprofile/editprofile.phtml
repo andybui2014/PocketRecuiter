@@ -107,14 +107,21 @@ $stateUnitedState = $this->stateUSList;
               </div>
             </div>
             <div class="form-group ">
-                <label >Address</label>
+                <label >Address 1</label>
               <div class="form-group">
               
                 <input name="Address"  class="form-control" id="Address" value="<?=$company["Address"]?>">
                
               </div>
             </div>
-           
+          <div class="form-group ">
+              <label >Address 2</label>
+              <div class="form-group">
+
+                  <input name="Address2"  class="form-control" id="Address2" value="<?=$company["Address2"]?>">
+
+              </div>
+          </div>
             
 			<div class="form-group">
                 <label for="email">City</label>
@@ -135,7 +142,7 @@ $stateUnitedState = $this->stateUSList;
                           <option value="">Select State</option>
                           <?php
                           foreach($stateUnitedState as $kk=>$stateInfo){ ?>
-                              <option value="<?=$stateInfo['state_code']?>" <?= ($stateInfo['state_name'] == $company['state']) ? 'selected="selected"' : '' ?> ><?=$stateInfo['state_name']?></option> ;
+                              <option value="<?=$stateInfo['state_code']?>" <?= ($stateInfo['state_code'] == $company['state']) ? 'selected="selected"' : '' ?> ><?=$stateInfo['state_name']?></option> ;
                           <?php  }
                           ?>
                       </select>
@@ -332,7 +339,8 @@ $stateUnitedState = $this->stateUSList;
               html +='<input type="text" class="form-control" id="state" name="state" value="" >' +
                   '<span class="message" id=""></span>';
               $('.state-united-states').html(html);
-
+             // $('#Zipcode').val("");
+             // $('#Zipcode').val("");
           }
 
       } else{
@@ -352,12 +360,11 @@ $stateUnitedState = $this->stateUSList;
               },
               success: function(data, status, xhr){
                   if(data){
-				  //alert("testtt");
                       var html = '<select class="form-control" id="state" name="state"><option value="">Select State</option>';
 
                       $.each(data,function(k,stateInfo){
-                          if(compState == stateInfo.state_name){
                               selected ='';
+                          if(compState == stateInfo.state_code){
                               var selected ="selected = 'seleted'";
                           }
                          html +='<option value="'+stateInfo.state_code+'" '+selected+'>'+stateInfo.state_name+'</option>';
@@ -375,10 +382,10 @@ $stateUnitedState = $this->stateUSList;
 
      });
 	 
-
  });
 
 </script>
+
 
 
 
