@@ -46,7 +46,7 @@ ul#nav-left {
           <div class="logo"></div>
 
             </div>
-            <span  style="font-size: 12px;color: #005595;"><?=$company["emailinfo"]?></span><br/>
+            <div  style="font-size: 12px;color: #005595;margin-top:5px"><?=$company["emailinfo"]?></div>
             
             <ul id="nav-left" style="padding-left:0;margin-top:5px">
                 <span ><strong style="font-size:13px">Culture Fits</strong></span>
@@ -65,14 +65,10 @@ ul#nav-left {
                 </div>
                  <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?php if(!empty($company["country"])) echo $company["country"]; else echo "United States";?></span>
                 <span style="padding-left:5px;font-size:13px" class="line-r">
-                    <?=$company["Address"]?>
-                    <?php if(!empty($company["Address2"])) echo ","?><?=$company["Address2"]?>
-                    <?php if(!empty($company["city"])) echo ","?><?=$company["city"]?>
-                    <?php if(!empty($stateInfo)) echo ","?><?=$stateInfo?>
-                    <?php if(!empty($company["Zipcode"])) echo ","?><?=$company["Zipcode"]?>
+                    <?=$company["Address"]?><?php if(!empty($company["Address2"])) echo ","?> <?=$company["Address2"]?><?php if(!empty($company["city"])) echo ","?> <?=$company["city"]?><?php if(!empty($stateInfo)) echo ","?> <?=$stateInfo?><?php if(!empty($company["Zipcode"])) echo ","?> <?=$company["Zipcode"]?>
                 </span>
                 <span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone: </b><?=$company["PhoneNumber"]?></span>
-                <span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["PhoneNumber"]?>
+                <span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["faxnumber"]?>
                     <span> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>" style="text-decoration: none;"><i class="lbl-log">Edit</i></a></span>
                 </span>
              </div>
@@ -195,7 +191,7 @@ ul#nav-left {
 							if(!empty($listOrtherCompany)){
 						?>
 						<div class="col-xs-12"; style="padding-left:0" >
-							<h4 style="fornt-size:16px"><span style="font-weight:bold;" >Other Companies In This Industry</span></h4><br>
+							<h4 style="fornt-size:16px"><span style="font-weight:bold;" >Other Companies In This Industry</span></h4>
 						<?php
 							
 							foreach($listOrtherCompany as $companys){
@@ -203,7 +199,7 @@ ul#nav-left {
 							
 						?>
 				
-					<div class="col-xs-3">
+					<div class="col-xs-3" style="padding-left:0">
 						<a href="#" style="font-size:12px;color:#333;"><?=$companys["Companyname"]?></a><br>
 			
 					</div>
