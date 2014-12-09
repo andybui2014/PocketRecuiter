@@ -1,6 +1,7 @@
 <?php
     $company=$this->company;
 	$listOrtherCompany=$this->listOrtherCompany;
+    $stateInfo = $this->stateOfCompany;
    //echo ("<br><br><pre>");print_r($company);echo("</pre>");
 ?>
 <style>
@@ -62,7 +63,18 @@ ul#nav-left {
                 <div style="padding-bottom:5px">
 					<?= $company["Industry"]?> Company
                 </div>
-                 <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?php if(!empty($company["country"])) echo $company["country"]; else echo "United States";?></span><span style="padding-left:5px;font-size:13px" class="line-r"><?=$company["Address"]?><?php if(!empty($company["city"])) echo ","?> <?=$company["city"]?><?php if(!empty($company["state"])) echo ","?> <?=$company["state"]?><?php if(!empty($company["Zipcode"])) echo ","?><?=$company["Zipcode"]?></span><span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone: </b><?=$company["PhoneNumber"]?></span><span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["PhoneNumber"]?><span> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>" style="text-decoration: none;"><i class="lbl-log">Edit</i></a></span> </span>
+                 <span style="padding-right:5px;"><img src="<?=URL_THEMES?>images/USA_flag.jpg"></span><span class="line-r"  style="font-weight:bold;font-size:13px"><?php if(!empty($company["country"])) echo $company["country"]; else echo "United States";?></span>
+                <span style="padding-left:5px;font-size:13px" class="line-r">
+                    <?=$company["Address"]?>
+                    <?php if(!empty($company["Address2"])) echo ","?><?=$company["Address2"]?>
+                    <?php if(!empty($company["city"])) echo ","?><?=$company["city"]?>
+                    <?php if(!empty($stateInfo)) echo ","?><?=$stateInfo?>
+                    <?php if(!empty($company["Zipcode"])) echo ","?><?=$company["Zipcode"]?>
+                </span>
+                <span style="padding-left:5px;font-size:13px" class="line-r"><b>Phone: </b><?=$company["PhoneNumber"]?></span>
+                <span style="padding-left:5px;phone-size:13px" ><b>Fax: </b><?=$company["PhoneNumber"]?>
+                    <span> <a href="<?= URL_BASE ?>companyprofile/editprofile?companyid=<?= $company["CompanyID"] ?>" style="text-decoration: none;"><i class="lbl-log">Edit</i></a></span>
+                </span>
              </div>
             <div class="">
                 <div class="panel-body" style="padding:0">

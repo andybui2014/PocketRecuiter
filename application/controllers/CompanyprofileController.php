@@ -33,7 +33,19 @@ class CompanyprofileController extends Application_Controller_Action
         $companyid = $request->getParam("companyid");
         $api = new PR_Api_Core_ClientClass();
         $company = $api->getCompany($companyid);
+        $rslState ="";
+        if(count($company)>0 && !empty($company)){
+            $rslState  = $api->getStateByStateCode(trim($company['state']));
+            if(empty($rslState)){
+                $stateName = trim($company['state']);
+            } else{
+                $stateInfo = $rslState[0];
+                $stateName = $stateInfo['state_name'];
+            }
+        }
         $this->view->company=$company;
+        $this->view->stateOfCompany = $stateName;
+
 		$Industry=$company["Industry"];
 		$listOrtherCompany=$api->getCompany_Industry($Industry);
 		//echo("tetstt:<pre>");print_r($listOrtherCompany); echo("</pre>");
@@ -41,7 +53,6 @@ class CompanyprofileController extends Application_Controller_Action
         $Oppotunity_PR_Api = new PR_Api_Core_CareerClass();
         $getListOpp = $Oppotunity_PR_Api->getListOpportunity(array('CompanyID'=>$companyid));
         $this->view->getListOpp = $getListOpp;
-       
         $this->render('companyprofileview');
        
       
@@ -261,7 +272,7 @@ class CompanyprofileController extends Application_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $api = new PR_Api_Core_ClientClass();
-        $contrylist=$api->getListCountry();
+        //$contrylist=$api->getListCountry();
         $result = $api->getListState();
         /*echo "<pre>";
         print_r($result);

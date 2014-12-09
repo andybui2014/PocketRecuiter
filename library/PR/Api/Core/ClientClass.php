@@ -2,7 +2,7 @@
 class PR_Api_Core_ClientClass
 {
     private $avaiUpdateFields = array('usertype','firstname','middlename','lastname','dob','CompanyID','CandidateProfileID','loginname','password','emailaddress','URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country','HeardFrom','Role','active');
-    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Description','images','PhoneNumber','country','emailinfo','Zipcode','city','state');       
+    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Address2','Description','images','PhoneNumber','country','emailinfo','Zipcode','city','state');
     
     public function  __construct() {
         $errMsg="";
@@ -225,13 +225,15 @@ class PR_Api_Core_ClientClass
                             'Companyname'=>$Fields['Companyname'],
 							'Industry'=>$Fields['Industry'],
 							'Address'=>$Fields['Address'],
+                            'Address2'=>$Fields['Address2'],
 							'country'=>$Fields['country'],
 							'PhoneNumber'=>$Fields['PhoneNumber'],
 							'emailinfo'=>$Fields['emailinfo'],
 							'images'=>$Fields['images'],
 							'Description'=>$Fields['Description'],
-							'Zipcode'=>$Fields['Zipcode']
-                         
+							'Zipcode'=>$Fields['Zipcode'],
+                            'city'=>$Fields['city'],
+                            'state'=>$Fields['state']
                             );
                             
                     $result = PR_Database::insert("company", $updateFields);
@@ -285,6 +287,17 @@ class PR_Api_Core_ClientClass
                 $select = $db->select();
                 $select->from(array('s'=>'state'),array('*'));
                 $select->where("s.country_code ='US'");
+                //print_r($select->__toString());die();
+                $result = PR_Database::fetchAll($select);
+                return $result;
+            }
+        
+            public function getStateByStateCode($stateCode)
+            {
+                $db = PR_Database::getInstance();
+                $select = $db->select();
+                $select->from(array('s'=>'state'),array('*'));
+                $select->where("s.state_code ='".$stateCode."'");
                 //print_r($select->__toString());die();
                 $result = PR_Database::fetchAll($select);
                 return $result;

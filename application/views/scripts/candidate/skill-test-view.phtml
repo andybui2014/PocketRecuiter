@@ -17,8 +17,8 @@
 <?php
 $AnswerList =  $this->paginator;
 
-                if(!empty($AnswerList)&& count($AnswerList)>0){
-                    foreach ($AnswerList as $k=>$AnswerListInfo){
+        if(!empty($AnswerList)&& count($AnswerList)>0){
+            foreach ($AnswerList as $k=>$AnswerListInfo){
 
 ?>
 
@@ -75,19 +75,34 @@ $AnswerList =  $this->paginator;
                          <?php   }
 
                             }
-                        }
-                    }
-                    ?>
-
-
-                    <div style="padding-left: 27px; margin-bottom:25px">
-                        <button class="btn btn-sm continue paginator disabled" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
-                        <button class="btn btn-sm paginator" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
-
+             } ?>
+            <div style="padding-left: 27px; margin-bottom:25px">
+                <button class="btn btn-sm continue paginator disabled" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="1"  type="button" style="background-color: #f2f2f2; border: 1px solid #f2f2f2; font-weight: bold; width: 100px">Continue</button>
+                <button class="btn btn-sm paginator" testID="<?=$this->TestID?>" page ="<?=$this->page?>" TotalPage = "<?=$this->numberTestQuests?>" SaveTestAnswer="0" type="button" style="margin-left: 20px; width:80px; background-color: #aaa; border: 1px solid #aaa; font-weight: bold; width:70px">Skip</button>
+            </div>
+            </div>
+            </div>
+     <?php } else{?>
+            <div class="page-header" style="margin:0;">
+                <span class="text-left" style="font-size: 30px;color: #005595;font-weight:bold"><?=$this->testName?></span>
+            </div>
+            <div style="height: 15px!important"></div>
+            <!--start test before-->
+            <div style="padding: 0; background-color: #fff; height:650px" class="start-test-before col-md-12">
+                <div style="padding: 0; background-color: #ccc">
+                    <div class="col-md-3" style="padding-top:10px"><img src="<?=URL_THEMES?>images/img_start_test.png"></div>
+                    <div class="col-md-9" style="padding-left: 0;padding-top:20px; height: 193px ">
+                        <span style="font-size: 25px; font-weight: bold">Total Questions  0</span>
+                        <p style="color: #005595">Every Question should be tack 2 minutes</p>
+                        <p style="padding-top: 76px" ><button class="btn btn-sm btn-success start-test-before-click disabled" style="" type="button">START TEST</button></p>
                     </div>
-
                 </div>
-             </div>
+            </div>
+            <!--end start test before-->
+      <?php  }
+      ?>
+
+
                  <script type="text/javascript">
                 $(document).ready(function(){
                     $('.img-check').unbind('click').bind('click',function(){
