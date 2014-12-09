@@ -58,7 +58,7 @@ $stateUnitedState = $this->stateUSList;
 
 <div class="container" >       
             
-<div class="page-header" style="margin:0;">
+<div class="page-header" style="margin:0; padding-top: 15px">
     <h1>
         <span class="text-left" style="font-size: 25px;color: #2a6496"><?= $company["Companyname"]?> Profile</span>
         
@@ -67,12 +67,12 @@ $stateUnitedState = $this->stateUSList;
 </div>
     <div class="col-md-8"  style="background:#ffffff;margin-top:15px;margin-botton:50px;border-radius: 10px;">
           
-      <div class="col-md-6"  style="padding:0">     
+      <div class="col-md-6"  style="padding:0; padding-top: 5px">
 
       <form enctype="multipart/form-data"   method="POST" name="profile" id="profile"  action="<?= URL_BASE . 'companyprofile/do-edit-profile'?>" role="form">
       
      <!-- <input type="hidden" id="hidSaveOrUpload" name="hidSaveOrUpload" value="0" />-->
-             <div class="form-group">
+             <div class="form-group" >
                 <label for="credential">Company Name</label>
               <div class="form-group">
               <input type="hidden" class="form-control" id="CompanyID" name="CompanyID" value="<?=$company["CompanyID"]?>">
@@ -225,9 +225,10 @@ $stateUnitedState = $this->stateUSList;
                 <label for="credential">Description</label>
                 <div class="form-group">
                 
-                <textarea class="form-control" rows="3" name="Description" id="Description">
-                    <?=$company["Description"]?>
-                </textarea>
+                <!--<textarea class="form-control" rows="3" name="Description" id="Description">
+
+                </textarea> -->
+                    <textarea class="form-control" name="Description" id="Description" ><?=trim($company["Description"])?></textarea>
                  <span class="message" id=""></span>
               </div>
                 
