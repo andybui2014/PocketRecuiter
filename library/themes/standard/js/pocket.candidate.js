@@ -614,6 +614,7 @@ $(function  () {
                     $('#modal-this-job-was-applied').text(xhr.error);
                 }
                 $me.addClass('disabled');
+                $me.closest('.borderbottom_Gray').find('img:first').attr('src',urlImage+candiateImage);
             }
         });
 

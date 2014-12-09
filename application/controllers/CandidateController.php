@@ -1433,6 +1433,14 @@ class CandidateController extends Application_Controller_Action
 
         $experienced_List = $PR_Api->getListExperiencedTime();
         $country_List = $core->getCountryList($country_code);
+
+        $candID = $client['CandidateProfileID'];
+        $rslCanID = $core->get_candidate_list($candID);
+        /*echo "<pre>";
+        print_r($rslCanID[0]);
+        echo "<pre>"; die(); */
+        $this->view->candidateInfo = $rslCanID[0];
+
         $this->view->skillList = $skillList;
         //$this->view->oppList = $oppList;
         $this->view->industryList = $industryList;

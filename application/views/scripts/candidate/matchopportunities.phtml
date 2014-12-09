@@ -31,8 +31,13 @@
     }
 
 </style>
+<?php
+     $canInformation = $this->candidateInfo;
+     $canInforImage = $canInformation['image'];
+?>
 <script>
-    var urlImage = '<?=URL_THEMES;?>';
+    var urlImage = '<?=URL_MEDIA_PHOTO;?>';
+    var candiateImage = "<?=$canInforImage?>";
 </script>
 
 <!--Modal-->
