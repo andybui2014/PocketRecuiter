@@ -45,7 +45,7 @@ body {
     ?>
     <p style="font-size:18px;">
       <!-- Congratulations, you email have been verified. Please <a href="<?= URL_BASE . 'confirm/do-confirm?UserID='.$id."&&emailaddress=".$em."&&password=".$pass; ?>">click here</a> to log in.-->
-             Password Recovery.
+             Password Recovery
 			
        
     
@@ -59,13 +59,13 @@ body {
 						  <label>New Password </label>
 						  <input type="hidden" name="UserID" id="UserID" value="<?=$this->useid?>" class="form-control">
 						  <input  type="hidden" name="emailaddress" id="emailaddress" value="<?=$this->emailaddress?>" class="form-control">
-                            <input  type="text" name="password" id="password" placeholder="" class="form-control">
+                            <input  type="password" name="password" id="password" placeholder="" class="form-control">
                              <span class="message" id="password_message" style="color:#b81900"></span>
                           </div>
 						  <div class="form-group">
 						  
 						  <label>Confirm New Password </label>
-                            <input type="text" name="newpassword" id="newpassword" placeholder="" class="form-control">
+                            <input type="password" name="newpassword" id="newpassword" placeholder="" class="form-control">
                              <span class="message" id="newpassword_message" style="color:#b81900"></span>
                           </div>
                            

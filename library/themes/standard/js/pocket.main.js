@@ -116,7 +116,7 @@ pocketMain.prototype = {
                if(password.val() !=newpassword.val()){
                 error = true;
 			   newpassword_message.parent().addClass('has-error');
-               newpassword_message.html("New Password and confirm new password different");
+               newpassword_message.html("New Password and confirm new password are not the same.");
             }else{
                newpassword_message.parent().removeClass('has-error').addClass('has-success');
                newpassword_message.html('');
