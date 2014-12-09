@@ -41,6 +41,7 @@ class ResetpassController extends Application_Controller_Action {
         $client = $userApi->loadAndCheckAuthentication($authData);
         if(!empty($useid)){
             $userApi->UpdatePass($useid,$password);
+			$return['success'] = 1;
           //  header("Location:".URL_BASE."login");
        }
        // header("Location:".URL_BASE."login");

@@ -15,6 +15,7 @@ pocketMain.prototype = {
 		$('#btn-logout').unbind('click').bind('click',this.logOut);
 		$('#resetpass').unbind('click').bind('click',this.resetPass);
 		$('#newpass').unbind('click').bind('click',this.setnewPass);
+		$('#Cannewpass').unbind('click').bind('click',this.cancelnewPass);
     },
     /**
      *  logOut
@@ -38,6 +39,9 @@ pocketMain.prototype = {
         $('#form-login #password').html('');
        
         $('#btn-login').button('reset');
+    },
+	cancelnewPass: function(){
+        window.location = 'login';
     },
 	resetPass:function(){
         var btn = $(this);
