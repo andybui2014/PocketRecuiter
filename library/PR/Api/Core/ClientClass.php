@@ -2,7 +2,7 @@
 class PR_Api_Core_ClientClass
 {
     private $avaiUpdateFields = array('usertype','firstname','middlename','lastname','dob','CompanyID','CandidateProfileID','loginname','password','emailaddress','URL','PhoneNumber','Address1','Address2','City','State','PostalCode','Country','HeardFrom','Role','active');
-    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Address2','Description','images','PhoneNumber','country','emailinfo','Zipcode','city','state');
+    private $avaiUpdateFields1 = array('Companyname','Industry','Address','Address2','Description','images','PhoneNumber','faxnumber','country','emailinfo','Zipcode','city','state');
     
     public function  __construct() {
         $errMsg="";
@@ -232,6 +232,7 @@ class PR_Api_Core_ClientClass
 							'images'=>$Fields['images'],
 							'Description'=>$Fields['Description'],
 							'Zipcode'=>$Fields['Zipcode'],
+                            'faxnumber'=>$Fields['faxnumber'],
                             'city'=>$Fields['city'],
                             'state'=>$Fields['state']
                             );
