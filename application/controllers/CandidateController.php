@@ -2154,7 +2154,11 @@ class CandidateController extends Application_Controller_Action
         $user = PR_Session::getSession(PR_Session::SESSION_USER);
         $UserID=$user["UserID"];       
         $core = new PR_Api_Core_CandidateClass();
-        $CandidateprofileID=$user["CandidateProfileID"];
+        $CandidateprofileID=$user["CandidateProfileID"];	
+		$getUserArray=$core->getCandidateInfo($UserID);
+		$this->view->UserArray = $getUserArray;
+		$getCandidates=$core->getCandidateProfile($CandidateprofileID);
+		$this->view->getCandidates=$getCandidates;
         $getReferences=$core->getListReferences_candidateprofile($CandidateprofileID);
         $this->view->getReferences=$getReferences;
 		
