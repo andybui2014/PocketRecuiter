@@ -86,7 +86,7 @@ class LoginController extends Application_Controller_Action {
                 $fromName = "Pocket Recruiter";
                 $fromEmail = "info@vienetllc.com";
                 $link=$pageURL.URL_BASE."resetpass?UserID=".base64_encode($UserID)."&&emailaddress=".base64_encode($emailaddress);
-                $subject = "Welcome to Pocket Recruiter";
+                $subject = "Pocket Recruiter Password Retrieval";
                 $body = "Hello,
 				
 Please click on the following link to reset your password:     

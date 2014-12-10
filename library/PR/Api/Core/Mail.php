@@ -42,7 +42,7 @@
         $tr = new Zend_Mail_Transport_Smtp('smtp.sendgrid.net',
                     array('auth' => 'login',
                              'username' => 'Mkritzman',
-                             'password' => '785smoketree'));
+                             'password' => 'jack1rae'));
         Zend_Mail::setDefaultTransport($tr);
         $mail = new Zend_Mail();
         $mail->setBodyText($this->bodyText);

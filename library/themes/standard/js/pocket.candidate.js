@@ -537,7 +537,61 @@ $(function  () {
             }
         });
     },
+referencesCreate: function(){
+  var $this = $(this);
+  var addemployment = $(this).attr('addemployment');
+   var dataPost = $('#form-references').serializeArray();
 	
+	$.ajax({
+		url: 'do-add-references',
+		data: dataPost,
+		type: 'POST',
+		success: function(xhr){
+			//alert(xhr.success);
+			if(xhr.success)
+			{
+				if(addemployment=='reloadYes'){
+                        location.reload();
+                    } else {
+                        $('.referencename').val("");
+                        $('.referenceemail').val("");                       
+                        $('.referencecomment').val("");
+                        
+                    }
+			}
+			else
+			{
+				//location.reload();
+				//alert("erro:"+xhr.info);
+				var referencename_message = $('#form-references #referencename_message');
+				var referenceemail_message = $('#form-references #referenceemail_message');
+				if(xhr.info=='References name not empty')
+				{
+					 referencename_message.parent().addClass('has-error');
+					 referencename_message.html("References name not empty.");
+				}else{
+					 referencename_message.parent().removeClass('has-error').addClass('has-success');
+					 referencename_message.html('');
+				}
+				var x = $('#referenceemail').val();
+                var atpos = x.indexOf("@");
+                var dotpos = x.lastIndexOf(".");
+                
+                if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                    error = true;
+                    $("#referenceemail_message").addClass('has-error');
+                    $("#referenceemail_message").html("The references mail is not a valid email address");
+                    }else{
+                    $("#referenceemail_message").removeClass('has-error').addClass('has-success');
+                    $("#referenceemail_message").html('');
+                }  
+				
+				
+			}
+			//location.reload();
+		}
+	});
+  },
 	addOppSkillsToSearch:function(){
         var skillText = $("#add-opp-skills option:selected").text();
         var skilIDSelected = $("#add-opp-skills option:selected").val();

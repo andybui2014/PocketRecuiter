@@ -100,70 +100,48 @@
 
             </div>
             <!--Add References-->
-            <div id="NewEmployment" style="margin-top:7px; display: none">
+            <div id="NewReference" style="font-size:12px;margin-top:7px; display: none">
                 <form id="form-references" name="form-references">
-                    <input type="hidden" class="Candidate-employmentID" name="CandidateEmploymentID" value="">
-                    <div style="color:#8f8f8f"><input type="checkbox" checked="checked">&nbsp;Display this education. </div>
-                    <div style="margin-top:10px"><label>Client Name(No abbreviations, please)</label></div>
+                    <input type="hidden" class="Candidate-reference" name="referenceid" value="">
+                    
+                    <div style="margin-top:10px"><label>References Name</label></div>
                     <div class="col-md-12" style="padding-left:0px">
                         <div class="col-md-6 form-group" style="padding-left:0px">
-                            <input type="text" class="form-control client-name" name="CompanyName">
+                            <input type="text" class="form-control referencename" name="referencename">
+							<span class="message" id="referencename_message" style="color:#b81900"></span>
                         </div>
 
                     </div>
 
                     <div style="height: 1px;clear: both">&nbsp;</div>
-                    <div style="margin-top:10px"><label>Position held</label></div>
+                    <div style="margin-top:10px"><label>References E-mail Address</label></div>
                     <div class="col-md-12" style="padding-left:0px">
                         <div class="col-md-6" style="padding-left:0px">
-                            <input type="text" class="form-control position-held" name="PostionHeld">
+                            <input type="text" class="form-control referenceemail" name="referenceemail" id="referenceemail">
+							<span class="message" id="referenceemail_message" style="color:#b81900"></span>
                         </div>
                     </div>
 
-                    <div style="height: 1px;clear: both">&nbsp;</div>
-                    <div style="margin-top:10px; padding-left: 0px" class="col-md-12">
-                        <div class="col-md-3" style="padding-left: 0px"><label>Start Date</label></div>
-                        <div class="col-md-3" style="padding-left: 0px"><label>End Date</label></div>
-                    </div>
-                    <div class="col-md-12" style="padding-left:0px">
-                        <div class="col-md-3" style="padding-left:0px">
-                            <div class="form-group">
-                                <div class='input-group date' id='datetimepicker10'>
-                                    <input type='text' class="form-control start-date" name="StartDate" />
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3" style="padding-left:0px">
-                            <div class="form-group">
-                                <div class='input-group date' id='datetimepicker12'>
-                                    <input type='text' class="form-control end-date" name="EndDate" />
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div style="height: 1px;clear: both">&nbsp;</div>
-                    <div style="margin-top:10px"><label>Description(Optional)</label></div>
+                    <div style="margin-top:10px"><label>Comments</label></div>
                     <div class="col-md-12" style="padding-left:0px">
                         <div class="col-md-6" style="padding-left:0px">
-                            <textarea class="form-control des" name="Description"></textarea>
+                            <textarea class="form-control referencecomment" name="referencecomment"></textarea>
+							
                         </div>
                     </div>
                 </form>
-                <div style="height: 1px;clear: both">&nbsp;</div>
+                <div style="height: 20px;clear: both">&nbsp;</div>
                 <div class="col-md-12" style="padding-left: 0px">
                     <div class="col-md-10" style="padding-left: 0px">
-                        <button class="btn btn-primary add-employment" addemployment="reloadYes" type="button" style="margin-top:15px;">
+                        <button class="btn btn-primary add-references" addemployment="reloadYes" type="button" style="margin-top:15px;">
                             <strong>Save</strong>
                         </button>
-						<button class="btn btn-primary add-employment" addemployment="reloadNo"  type="button" style="margin-top:15px;margin-left:9px ">
+						<button class="btn btn-primary add-references" addemployment="reloadNo"  type="button" style="margin-top:15px;margin-left:9px ">
                             <strong>Save and Add Another</strong>
                         </button>
-						<button class="btn btn-default btn-cancel" type="button" style="margin-top:15px;margin-left: 9px;background-color:#ccc;">
+						<button class="btn btn-default btn-cancel" type="button" style="margin-top:15px;margin-left: 9px;background-color:#333;color:#fff">
                             <strong>Cancel</strong>
                         </button>
                     </div>
@@ -177,28 +155,18 @@
 <script type="text/javascript">
     $('.add-career').unbind('click').bind('click',function(){
         $('#view-employment').hide();
-        $('#NewEmployment').show();
+        $('#NewReference').show();
         $('#show-case').show();
     });
 
     $('.btn-cancel').unbind('click').bind('click',function(){
-        /*$('#view-employment').show();
-        $('#NewEmployment').hide();
-        $('#show-case').hide();
-
-
-        $('.position-held').val("");
-        $('.Candidate-employmentID').val("");
-        $('.client-name').val("");
-        $('.des').val("");
-        $('.start-date').val("");
-        $('.end-date').val(""); */
+       
         location.reload();
     });
 
     $('.btn-edit').unbind('click').bind('click',function(){
         $('#view-employment').hide();
-        $('#NewEmployment').show();
+        $('#NewReference').show();
         $('#show-case').show();
 
         var PostionHeld = $(this).attr('PostionHeld');
@@ -223,6 +191,53 @@
 
     objempl = new pocketCandidate();
 
-    $('#NewEmployment .add-employment').unbind('click').bind('click',objempl.addNewCandidateEmploy)
+    $('#NewReference .add-references').unbind('click').bind('click',objempl.referencesCreate);
+	
+	 $(document).ready(function(){
+       
+        var error = false; 
+         $('#referenceemail').blur(function () {
+              if($('#referenceemail').val()=='')
+                 {
+                     $("#referenceemail_message").addClass('has-error');
+                        $("#referenceemail_message").html("References mail not empty");
+                        
+                }else{
+                        $("#referenceemail_message").removeClass('has-error').addClass('has-success');
+                        $("#referenceemail_message").html('');
+                 }
+                
+
+             if($('#referenceemail').val()!=='')
+             {
+                
+                var x = $('#referenceemail').val();
+                var atpos = x.indexOf("@");
+                var dotpos = x.lastIndexOf(".");
+                
+                if(atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){
+                    error = true;
+                    $("#referenceemail_message").addClass('has-error');
+                    $("#referenceemail_message").html("The references mail is not a valid email address");
+                    }else{
+                    $("#referenceemail_message").removeClass('has-error').addClass('has-success');
+                    $("#referenceemail_message").html('');
+                }  
+             }
+                 
+                 
+            });
+        
+        $("#emailaddress").popover({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $("#emailaddress").popover("show");
+    $('#emailaddress').tooltip({placement:'right',content:"<span style='font-size:11px;'>You'll be asked to verify this later. This email will be used for all communication between yourself and potential clients.</span>", html:true});
+    $('#emailaddress').tooltip('show');
+    
+    
+    
+    
+   
+    });
+	
 
 </script>

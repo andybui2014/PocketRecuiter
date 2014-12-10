@@ -410,4 +410,11 @@ class PR_Api_Core_CandidateExtClass
          }   
          else return 0;  
   }
+  public function addReferences($CandidateProfileID,$referencename,$referenceemail,$referencecomment){
+
+		$reference = array("CandidateProfileID"=>$CandidateProfileID,"referencename"=>$referencename,"referenceemail"=>$referenceemail,"referencecomment"=>$referencecomment);
+        
+		$referenceid = PR_Database::insert('reference',$reference,true);
+        return $referenceid;
+  }
 }
