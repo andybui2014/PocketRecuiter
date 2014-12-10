@@ -82,19 +82,19 @@
                     <div class="menuBar col-md-12">
                     <ul  id="careerTab">
                         <li class="active"><a class="active" href="#calcareercr" id="calcareercrtab"><strong>1. Create Opportunity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
-                        <li><a href="#" id="createPrivate"><strong>&nbsp;2. Create Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
+                        <li><a href="#createPrivate" id="createPrivatetab"><strong>&nbsp;2. Create Private &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
                         <li><a  href="#previewpost" id="previewposttab"><strong>&nbsp;3. Preview &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></a></li>
                     </ul>
                     </div>
                 </div>
-
+                <form id="form-careerCr" name="form-careerCr">
                 <div class="tab-content">
                      <!--Career Create new  -->
                       <div id="calcareercr" class="tab-pane active">
                             <!--LEFT-->
 
                             <div class="col-md-8">
-                                <form id="form-careerCr" name="form-careerCr">
+                                <!--<form id="form-careerCr" name="form-careerCr">-->
                                     <div class="col-md-12">
                                         <label >Opportunity Name* </label> <span id="careernameLable" style="color: red"> </span>
                                         <input type="text"  id="careername" name="careername" class="form-control">
@@ -110,18 +110,18 @@
                                         <input type="text"  readonly="true" id="companyname" name="companyname" value="<?=$this->companyInfo['Companyname']?>" class="form-control">
                                         <input type="hidden" name="CompanyID" value="<?=$this->companyInfo['CompanyID']?>">
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="margin-top:10px">
                                         <label >Opportunity Description*</label><span id="careerdescriptionLable" style="color: red"></span>
                                         <textarea style=" height: 80px" id="careerdescription" name="careerdescription" class="form-control"></textarea>
                                     </div>
                                    <!-- <div class="col-md-12" style="margin-top: 5px; margin-bottom: 5px">
                                         <span style=" float:right"><input type="file" title="Add Attachment"  class="colorBlue" ></span>
                                     </div> -->
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="margin-top:10px">
                                         <label>Opportunity Industry*</label> <span id="industryLable" style="color: red"></span>
                                         <input type="text" id="industry" name="industry" class="form-control">
                                     </div>
-                                    <div class="col-md-12" style="margin:0;padding:0">
+                                    <div class="col-md-12" style="margin:0;padding:0; margin-top: 10px">
                                         <div class="col-md-6" >
                                             <label>Opportunity Type </label>
                                             <select id="careerType" name="jobtype" class="form-control">
@@ -146,7 +146,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="margin:0;padding:0">
+                                    <div class="col-md-12" style="margin:0;padding:0; margin-top: 10px">
                                         <div class="col-md-6">
                                             <label>Opportunity Location </label>
                                             <input id="loacation" name="location" type="text"  class="form-control">
@@ -156,7 +156,7 @@
                                             <input id="zipcode" name="zipcode" type="text" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-12" style="margin:0;padding:0">
+                                    <div class="col-md-12" style="margin:0;padding:0; margin-top: 10px">
                                         <div class="col-md-6">
                                             <label>Country </label>
                                             <select name="country" id="country" class="form-control">
@@ -178,11 +178,11 @@
                                             <input id="city" name="city" type="text" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="margin-top:10px">
                                         <label >Minimum Education*</label> <span id="minimuneducationLable" style="color: red"></span>
                                         <input id="minimuneducation" name="minimuneducation" type="text" class="form-control">
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="margin-top:10px">
                                         <label >Degree Title*</label> <span id="degreetitleLable" style="color: red"></span>
                                         <input id="degreetitle" name="degreetitle" type="text" class="form-control">
                                     </div>
@@ -212,7 +212,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" style="margin-top:10px">
                                         <label >Required Experience*</label><span id="requiredExperienceLable" style="color: red"></span>
                                         <select  id="requiredExperience" name="requiredExperience" class="form-control">
                                             <?php
@@ -229,7 +229,7 @@
 
                                         </select>
                                     </div>
-                                    <div class="col-md-12" style="margin:0;padding:0">
+                                    <div class="col-md-12" style="margin:0;padding:0 ;margin-top: 10px">
                                         <div class="col-md-6">
                                             <label >Salary Range*</label> <span id="salaryRangeLable" style="color: red"></span>
                                             <select  id="salaryRangeF" name="salaryRangeF" class="form-control">
@@ -280,7 +280,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-12" >
+                                    <div class="col-md-12" style="margin-top:10px">
                                         <div id="requiredTest" class="form-control">
 
 
@@ -288,34 +288,116 @@
                                         </div>
                                     </div>
                                     <input type="hidden" id="career_status" name="status" value="">
-                                </form>
+                                <!--</form>-->
                             </div>
 
                         <!-- END LEFT-->
-                        <!--RIGHT-->
+                            <!-- right-->
                         <div class="col-md-4">
                             <div class="col-md-12">
                                     <label>&nbsp;</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="alert alert-warning fade in" role="alert">
-                                    <h4><strong>Need Help!</strong></h4>
-                                    <span style="color: #333"><strong>Published Recruiter Post Here</strong></span>
-                                    <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 20px">Donec puere sapien nibh donec puer</a>
-                                    <span style="color: #333"><strong>Published Recruiter Post Here</strong></span>
-                                    <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 20px">Donec puere sapien nibh donec puer</a>
+                                        <h4><strong>Need Help</strong></h4>
+                                        <div style="color: #333"><strong>Pocket Recruiter User Guid</strong></div>
+                                        <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 0px">Learn how Pocket Recruiter works!</a>
+                                        <div style="color: #333"><strong>Searching for Matches</strong></div>
+                                        <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 0px">Lear how to Match you're looking for.</a>
+                                        <div style="color: #333"><strong>Match Candidate /Require Skill</strong></div>
+                                        <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 0px">Lear how to use pocket recruiter tool.</a>
+                        </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--END RIGHT-->
-                        <div class="col-md-12" style="padding-left:30px; padding-top:10px">
+                            <!-- end right-->
+                        <div class="col-md-12" style="padding-left:30px; margin-top:35px">
                             <button id="careercontinue" style="width:90px" type="button" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
-                            <button id="savePostLater" style="width:140px; margin-left: 20px" type="button" class="btn btn-primary" data-loading-text="Loading...">Save & Post Later</button>
+                            <button  style="width:140px; margin-left: 20px" type="button" class="btn btn-primary savePostLater" data-loading-text="Loading...">Save & Post Later</button>
                         </div>
                     </div>
                     <!--end career create new-->
 
-
+                     <!-- Career Private-->
+                     <div id="createPrivate" class="col-md-12 tab-pane"  style="padding: 0">
+                         <div class="col-md-12">
+                             <div class="col-md-8" style="padding: 0">
+                                <div class="col-md-12" style="padding-bottom: 2px; margin-top: 18px">
+                                    <label style="font-size: 17px; margin-bottom:10px">Location, Privacy and Other Options</label>
+                                    <div style="border-bottom: solid 2px #ccc;"></div>
+                                </div>
+                                 <div class="col-md-12" style="margin-top: 10px; padding: 0">
+                                    <div style="font-weight: bold; padding-left:15px">Location</div>
+                                    <div class="col-md-2" style="line-height: 34px"><input type="radio" name="region" style="background-color: #ccc" checked="checked">&nbsp;Region(s):</div>
+                                     <div class="col-md-4">
+                                         <select class="form-control">
+                                            <option>-Region(s)-</option>
+                                         </select>
+                                     </div>
+                                 </div>
+                                 <div class="col-md-12" style="margin-top: 10px; padding: 0">
+                                     <div class="col-md-12"><input type="radio" name="region" >&nbsp;Country, State, City, Zip:</div>
+                                 </div>
+                                 <div class="col-md-12" style="margin-top: 10px; padding: 0">
+                                     <div class="col-md-4">
+                                         <label>Post This Job For</label>
+                                         <select class="form-control" name="endDate">
+                                             <option value="5" >5 Days</option>
+                                             <option value="10">10 Days</option>
+                                             <option value="15" selected="selected">15 Days</option>
+                                             <option value="20">20 Days</option>
+                                             <option value="25">25 Days</option>
+                                             <option value="30">30 Days</option>
+                                         </select>
+                                     </div>
+                                 </div>
+                                 <?php
+                                 $mydate=getdate(date("U"));
+                                 //echo date('m');
+                                $today =$mydate['mon']."/".$mydate['mday']."/".$mydate['year'];
+                                 ?>
+                                 <div class="col-md-12" style="margin-top: 10px; padding: 0">
+                                     <div style="font-weight: bold; padding-left:15px">Proposed Start Date</div>
+                                     <div style="padding-left: 15px; margin-top: 10px"><input type="radio" name="post_date_or_later" id="post_career_now" checked="checked" >&nbsp;Post carrer now</div>
+                                     <input type="hidden" name="StartDate" value="<?=$today?>" id="post_career_now_input" />
+                                 </div>
+                                 <div class="col-md-12" style="margin-top: 10px; padding: 0">
+                                     <div class="col-md-3" style="line-height: 34px"><input type="radio" name="post_date_or_later" id="Career_will_start_on" />&nbsp;Career will start on:
+                                     </div>
+                                     <div class="col-md-3">
+                                         <div class='input-group date' id='datetimepicker_post'>
+                                             <input type='text' class="form-control start-date" name="StartDate" disabled="disabled" id="Career_will_start_on_input"/>
+                                             <span class="input-group-addon">
+                                                 <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             <!-- right-->
+                             <div class="col-md-4">
+                                 <div class="col-md-12">
+                                     <label>&nbsp;</label>
+                                 </div>
+                                 <div class="col-md-12">
+                                     <div class="alert alert-warning fade in" role="alert">
+                                         <h4><strong>Need Help</strong></h4>
+                                         <div style="color: #333"><strong>Pocket Recruiter User Guid</strong></div>
+                                         <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 0px">Learn how Pocket Recruiter works!</a>
+                                         <div style="color: #333"><strong>Searching for Matches</strong></div>
+                                         <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 0px">Lear how to Match you're looking for.</a>
+                                         <div style="color: #333"><strong>Match Candidate /Require Skill</strong></div>
+                                         <a style="text-decoration: underline; color: #333;font-size: 12px;padding-left: 0px">Lear how to use pocket recruiter tool.</a>
+                                     </div>
+                                 </div>
+                             </div>
+                             <!-- end right-->
+                         </div>
+                         <div class="col-md-12" style="padding-left:30px; margin-top:35px">
+                             <button id="CareerPrivatecontinue" style="width:90px" type="button" class="btn btn-primary" data-loading-text="Loading...">Continue</button>
+                             <button  style="width:140px; margin-left: 20px" type="button" class="btn btn-primary savePostLater" data-loading-text="Loading...">Save & Post Later</button>
+                         </div>
+                     </div>
+                     <!--end Career Private-->
                     <!--Post preview-->
                     <div id="previewpost" class="tab-pane col-md-12">
                             <div class="col-md-12">
@@ -384,22 +466,25 @@
                                 </div>
                                 <div class="col-md-10" id="pp_salary_range"></div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-bottom: 35px">
                                 <div class="col-md-2" style="text-align:right">
                                     <label>Required Test</label>
                                 </div>
                                 <div class="col-md-10" id="pp_required_test"></div>
                             </div>
 
+                            <div >
                                 <button id="postcareernew" style="width:145px" type="button" class="btn btn-primary" data-loading-text="Loading..."><strong>Post Opportunity</strong></button>
                                 <button id="" style="width:105px; margin-left: 20px; color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Edit Post</strong></button>
                                 <button id="" style="width:185px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Post Opportunity Later</strong></button>
                                 <button id="" style="width:145px;margin-left: 20px;color: white;" type="button" class="btn " data-loading-text="Loading..."><strong>Save Opportunity</strong></button>
 
                         </div>
+
+                        </div>
                     <!--end post preview-->
                 </div>
-
+            </form>
           </div>
     </div>
             <!--end create career-->
@@ -419,7 +504,7 @@
                 $('#careerTab').find('li.active').find('a').addClass('tabendBetween');
                 $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
                 $(this).parent().prev('li').find('a').addClass('tabend');
-            } else if($(this).attr("id")=="createPrivate"){
+            } else if($(this).attr("id")=="createPrivatetab"){
                 $('#careerTab').find('li.active').find('a').addClass('active');
                 $('#careerTab').find('li.active').find('a').addClass('tabendBetween');
                 $('#careerTab').find('li.active').find('a').removeClass('tabend');
@@ -428,10 +513,16 @@
             }
         });
         $("#careercontinue").unbind('click').bind('click',function(){
-            $('#careerTab > .active').next('li').next('li').find('a[href="#previewpost"]').trigger('click');
+            $('#careerTab > .active').next('li').find('a[href="#createPrivate"]').trigger('click');
             $('#careerTab').find('li.active').find('a').addClass('active');
             $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
             ///careerPrototype.previewPost();
+        })
+        $("#CareerPrivatecontinue").unbind('click').bind('click',function(){
+            $('#careerTab > .active').next('li').find('a[href="#previewpost"]').trigger('click');
+            $('#careerTab').find('li.active').find('a').addClass('active');
+            $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
+            ///careerPrototype.previewPost(); CareerPrivatecontinue
         })
         $('#careerTab').find('li.active').find('a').addClass('active');
         $('#careerTab').find("li[class!='active']").find('a').removeClass('active');
@@ -439,13 +530,21 @@
         //attachment file
        /* $('input[type=file]').bootstrapFileInput();
         $('.file-inputs').bootstrapFileInput(); */
-        $('#savePostLater').unbind('click').bind('click',careerPrototype.postcareernew)
-		
+        $('.savePostLater').unbind('click').bind('click',careerPrototype.postcareernew)
+        $("#datetimepicker_post").datepicker({ autoclose: true, todayHighlight: true });
+
+        $("#post_career_now").unbind("click").bind("click",function(){
+            $("#Career_will_start_on_input").attr("disabled","disabled")
+            $("#post_career_now_input").removeAttr("disabled")
+        })
+        $("#Career_will_start_on").unbind("click").bind("click",function(){
+            $("#post_career_now_input").attr("disabled","disabled")
+            $("#Career_will_start_on_input").removeAttr("disabled")
+        })
 		$(document).ready(function () {
         $("ul.nav li#dasboard-test").removeClass("active");//this will remove the active class from  
                                            //previously active menu item 
        // $('#PostOpportunity').addClass('active');
-        
     });
     </script>
 
