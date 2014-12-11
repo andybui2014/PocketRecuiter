@@ -233,10 +233,50 @@ $getCandidates=$this->getCandidates;
 
                                 <textarea id="empDesc" name="description" class="form-control"></textarea>
                             </div>
+						<div class="col-md-12" style="padding:0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+								<table width="100%">
+									<tr>
+										<th width="60%">Job Functions</th>
+										<th width="20%">%</th>
+										<th></th>
+									</tr>
+								</table>
+                                
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="table-responsive">
 
+                                    <table id="jobfunction" class="table-hover" width="100%">
+                                       <?php
+									   if(!empty($this->jobfunctions))
+									   {
+											foreach($this->jobfunctions as $jobfunctions){
+											$pecent=100*$jobfunctions["Percentage"];
+									   ?>
+										<tr> 
+											<td width="60%"><?=$jobfunctions["JobFucntion"]?></td>
+											<td width="20%"><?=round($pecent,2)?>%</td>
+											<td style="float:right;padding-right:10px"><span class="btn-edit" data-id="<?=$item['CandidateEmploymentID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                                <span><i data-text="<?=$item['CompanyName'];?>" data-id="<?=$item['CandidateEmploymentID'];?>" class="glyphicon glyphicon-remove qst-remove"></i></span></td>
+										</tr>
+										<?php
+										}}
+										?>
+                                    </table>
+									<div style="margin-top:10px">
+									<button data-status="add" data-step="employment" id="add-anotherjob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong>+ Add Another</strong></button>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
 
                             <div class="form-group">
-                                <button data-status="add" data-step="employment" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> + Add Another</strong></button>
+                                <button data-status="add" data-step="employment" id="add-another" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong> Save</strong></button>
                             </div>
 
 
@@ -251,6 +291,7 @@ $getCandidates=$this->getCandidates;
                             <button class="btn btn-sm btn-success" type="button" id="cmd-next1" data-next="skills"><strong><i class="glyphicon glyphicon-chevron-right"></i></strong></button>
                         </div>
                     </div>
+					
                     <div class="col-md-12" style="padding-left:0">
                         <div class="panel panel-default">
                             <div class="panel-heading">

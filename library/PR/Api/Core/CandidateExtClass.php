@@ -417,4 +417,24 @@ class PR_Api_Core_CandidateExtClass
 		$referenceid = PR_Database::insert('reference',$reference,true);
         return $referenceid;
   }
+ public function get_jobfuntion($CandidateProfileID){
+		
+		$db = PR_Database::getInstance();
+        $sql= $db->select(); 
+        $sql="
+		select jb.JobFunctionID,jb.JobFucntion,crjb.CredentialExperienceID,crjb.Percentage,cre.CandidateProfileID
+		from jobfunction as jb
+		left join credentialexperiencejobfunction as crjb on crjb.JobFunctionID=jb.JobFunctionID
+		left join credentialexperience as cre on cre.CredentialExperienceID=crjb.CredentialExperienceID
+		where cre.CandidateProfileID='$CandidateProfileID' and crjb.Percentage<1;";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        if(count($records)>0){
+            return  $records;
+        }
+         else {
+            return null;
+        }
+ }
 }

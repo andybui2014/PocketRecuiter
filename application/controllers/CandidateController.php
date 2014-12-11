@@ -334,8 +334,11 @@ class CandidateController extends Application_Controller_Action
                     
                     $list = $core->getCandidateEmployments($client['UserID']);
                     $this->view->list = $list;
+					$jobfunctions=$core->get_jobfuntion($client['CandidateProfileID']);
+					$this->view->jobfunctions=$jobfunctions;
                     $this->view->stepCount = '3/5 Steps';
                     $this->render('profile-builder/employment');
+					//echo "tetst:<pre>";print_r($jobfunctions);echo("</pre>");
                     break;
                 case 'skills':
 
