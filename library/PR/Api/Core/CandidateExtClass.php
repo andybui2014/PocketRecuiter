@@ -436,5 +436,68 @@ class PR_Api_Core_CandidateExtClass
          else {
             return null;
         }
+	}
+  public function getExperience($CandidateProfileID){
+		$db = PR_Database::getInstance();
+        $select= $db->select(); 
+		$select->from("credentialexperience",array("*"));
+		$records = PR_Database::fetchAll($select);
+         if(!empty($records))
+         {
+             return $records;  
+         }   
+         else return null; 
+  }
+ public function addjobfunction($CredentialExperienceID,$JobFucntion,$Percentage){
+		
+		$db = PR_Database::getInstance();		
+		$maxIdSql = "SELECT MAX(JobFunctionID) AS JobFunctionID  FROM jobfunction";
+		$result = $db->fetchAll($maxIdSql);
+		$JobFunctionID=$result[0]['JobFunctionID']+1;
+		$updatejobfunction=array("JobFunctionID"=>$JobFunctionID,"JobFucntion"=>$JobFucntion);
+		$JobFunctionID=PR_Database::insert('jobfunction',$updatejobfunction, true );
+		$updateexperiencejob=array("JobFunctionID"=>$JobFunctionID,"CredentialExperienceID"=>$CredentialExperienceID,"Percentage"=>$Percentage);
+		PR_Database::insert('credentialexperiencejobfunction',$updateexperiencejob, true );
+		return $JobFunctionID;
+		
+	}
+ public function getJobFunction($JobFunctionID){
+		$db = PR_Database::getInstance();      
+		$select = $db->select();
+		$select->from(array('jb'=>'jobfunction'), array('*'));
+		$select->join(array('crj'=>'credentialexperiencejobfunction'),
+                    'crj.JobFunctionID = jb.JobFunctionID',
+                    array('*')
+        );
+		$select->where("jb.JobFunctionID = '$JobFunctionID'");
+		//print_r($select->__tostring());
+		$records = PR_Database::fetchAll($select);
+		if(!empty($records))
+		{
+			return $records[0];  
+		}   
+		else return 0;  
+	}
+ public function updateJobFunction($JobFunctionID,$JobFucntion,$CredentialExperienceID,$Percentage){
+		$updatefield=array('JobFunctionID'=>$JobFunctionID,'JobFucntion'=>$JobFucntion);
+		$updatefield1=array('JobFunctionID'=>$JobFunctionID,"CredentialExperienceID"=>$CredentialExperienceID,"Percentage"=>$Percentage);
+		$result=PR_Database::update('jobfunction',$updatefield, array("JobFunctionID = '$JobFunctionID'"));
+		$result1=PR_Database::update('credentialexperiencejobfunction',$updatefield1,array("JobFunctionID = '$JobFunctionID'"));
+        return $result.$result1;
+
+        
+	}
+ public function deleteJobFunction($JobFunctionID){
+		$db = PR_Database::getInstance();
+         $criteria = "JobFunctionID = '$JobFunctionID'";
+		 //$criteria = "JobFunctionID IN (".implode(",",$JobFunctionID).")";
+         $result = $db->delete('credentialexperiencejobfunction', $criteria);   
+		 $result1 = $db->delete('jobfunction', $criteria); 
+       // return $result.$result1; 
  }
+ 
 }
+  
+
+ 
+

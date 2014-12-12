@@ -5,8 +5,11 @@ $getCandidates=$this->getCandidates;
 ?>
 <style>
     .btn-edit:hover{cursor: pointer;text-decoration: underline}
+	.btn-editjob:hover{cursor: pointer;text-decoration: underline}
     .qst-remove{color: #bbb}
     .qst-remove:hover{color: #333; cursor: pointer}
+	.qst-removejob{color: #bbb}
+    .qst-removejob:hover{color: #333; cursor: pointer}
 
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
@@ -195,6 +198,7 @@ $getCandidates=$this->getCandidates;
                     <div class="col-md-9" style="padding-left:0;">
 
                         <form id="employment-form" role="form">
+						 <div id="divemployment">
                             <input type="hidden" name="empId" id="empId"/>
                             <div class="form-group">
                                 <label>Company Name (no abbreviations,please)</label>
@@ -233,6 +237,52 @@ $getCandidates=$this->getCandidates;
 
                                 <textarea id="empDesc" name="description" class="form-control"></textarea>
                             </div>
+						  </div>
+						  
+						   <div id="divjobfunction" style="display:none">
+                            <input type="hidden" name="JobFunctionID" id="JobFunctionID"/>
+                            <div class="form-group">
+                                <label>Job Function Name </label>
+                                <input name="JobFucntion" type="text" class="form-control" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label>Experience</label>
+								
+                                <select name="CredentialExperienceID" id="CredentialExperienceID" class="form-control">
+									<option>Select</option>
+									<?php
+									$core= new PR_Api_Core_CandidateClass();
+									$Experience=$core->getExperience($getCandidates["CandidateProfileID"]);
+									if(!empty($Experience)){
+										foreach($Experience as $list){
+									?>
+									<option value="<?=$list["CredentialExperienceID"]?>"><?=$list["title"]?></option>
+									<?php
+										}
+									}
+									?>
+								</select>
+                            </div>
+							<div class="form-group">
+                                <label>Percentage</label>
+                                <select name="Percentage" id="Percentage" class="form-control">
+									<option>Select</option>
+									<option value="0.1">0.1%</option>
+									<option value="0.2">0.2%</option>
+									<option value="0.3">0.3%</option>
+									<option value="0.4">0.4%</option>
+									<option value="0.5">0.5%</option>
+									<option value="0.6">0.6%</option>
+									<option value="0.7">0.7%</option>
+									<option value="0.8">0.8%</option>
+									<option value="0.9">0.9%</option>
+								</select>
+                            </div>
+
+
+
+						  </div>
+						  
 						<div class="col-md-12" style="padding:0">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -259,8 +309,9 @@ $getCandidates=$this->getCandidates;
 										<tr> 
 											<td width="60%"><?=$jobfunctions["JobFucntion"]?></td>
 											<td width="20%"><?=round($pecent,2)?>%</td>
-											<td style="float:right;padding-right:10px"><span class="btn-edit" data-id="<?=$item['CandidateEmploymentID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
-                                                <span><i data-text="<?=$item['CompanyName'];?>" data-id="<?=$item['CandidateEmploymentID'];?>" class="glyphicon glyphicon-remove qst-remove"></i></span></td>
+											<td style="float:right;padding-right:10px">
+											<span id="btn-editjob" class="btn-editjob" data-id="<?=$jobfunctions['JobFunctionID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
+                                                <span><i data-text="<?=$jobfunctions['JobFucntion'];?>" data-id="<?=$jobfunctions['JobFunctionID'];?>" id='qst-removejob' class="glyphicon glyphicon-remove qst-removejob"></i></span></td>
 										</tr>
 										<?php
 										}}
@@ -366,11 +417,24 @@ $getCandidates=$this->getCandidates;
 </div>
 <script src="<?=URL_THEMES;?>js/pocket.candidate.js?vs=1"></script>
 <script type="text/javascript">
+	 $('#add-anotherjob').unbind('click').bind('click',function(){
+        $('#divemployment').hide();
+        $('#divjobfunction').show();
+        
+    });
+	 $('#btn-editjob').unbind('click').bind('click',function(){
+        $('#divemployment').hide();
+        $('#divjobfunction').show();
+        
+    });
+	//======
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true });
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true });
     //======
     var prCandidate= new pocketCandidate();
     $('#employmentList .btn-edit').unbind('click').bind('click',prCandidate.editEmployment);
+	$('#jobfunction .btn-editjob').unbind('click').bind('click',prCandidate.editJobFuntion);
     $('#employmentList .qst-remove').unbind('click').bind('click',prCandidate.deleteEmployment);
+	//('#jobfunction #qst-removejob').unbind('click').bind('click',prCandidate.deleteJobFunction);
 
 </script>

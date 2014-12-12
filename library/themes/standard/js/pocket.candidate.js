@@ -12,13 +12,17 @@ pocketCandidate.prototype = {
         $('#cmd-back').unbind('click').bind('click',this.back);
         $('#cmd-back1').unbind('click').bind('click',this.back);
         $('#add-another').unbind('click').bind('click',this.addAnother);
+		$('#jobfunction #qst-removejob').unbind('click').bind('click',this.deleteJobFunction);
     },
     editEmployment: function(){
         var $this = $(this);
+		$('#divemployment').show();
+        $('#divjobfunction').hide();
         if($this.attr('data-id') > 0){
             $.post('./detail-employment',{id: $this.attr('data-id') },function(xhr){
 
                 if(xhr.success){
+				//alert(xhr.info.CompanyName);
                     $('#employment-form :input[name="companyName"]').val(xhr.info.CompanyName);
                     $('#employment-form :input[name="posotionHeld"]').val(xhr.info.PostionHeld);
                     $('#employment-form :input[name="startDate"]').val(xhr.info.StartDate);
@@ -26,6 +30,25 @@ pocketCandidate.prototype = {
                     $('#employment-form #empDesc').val(xhr.info.Description);
                     $('#employment-form #add-another').attr('data-status','update').html('<strong> + Update Employment</strong>');
                     $('#employment-form #empId').val(xhr.info.CandidateEmploymentID);
+
+                }
+            })
+        }
+    },
+	   editJobFuntion: function(){
+        var $this = $(this);
+		$('#divemployment').hide();
+        $('#divjobfunction').show();
+        if($this.attr('data-id') > 0){
+            $.post('./detail-job-function',{id: $this.attr('data-id') },function(xhr){
+
+                if(xhr.success){
+				//alert(xhr.info);
+                    $('#employment-form :input[name="JobFucntion"]').val(xhr.info.JobFucntion);
+                    $('#employment-form #CredentialExperienceID').val(xhr.info.CredentialExperienceID);
+					$('#employment-form #Percentage').val(xhr.info.Percentage);
+                    $('#employment-form #add-another').attr('data-status','updateJob').html('<strong> + Update Job Function</strong>');
+                    $('#employment-form #JobFunctionID').val(xhr.info.JobFunctionID);
 
                 }
             })
@@ -48,6 +71,31 @@ pocketCandidate.prototype = {
                 '</p>'
             ).find('#qst-cfRemove').unbind('click').bind('click',function(){
                     $.post('./do-remove-employment',{id: $this.attr('data-id')},function(xhr){
+                        if(xhr.success){
+                            location.reload();
+                        }
+                    })
+                })
+            });
+        }
+    },
+	deleteJobFunction: function(){
+        var $this= $(this);
+        if($this.attr('data-id') > 0){
+            var $modal = $('#modal-dialog');
+            var $qstName = $this.attr('data-text');
+            $modal.modal("show").on("shown.bs.modal", function () {
+            $modal.find('#myModalLabel').html('<span style="color: #b81900">Confirm Delete Job Function</span>');
+            $modal.find('#modal-content').html(
+                '<p>Are you sure delete <span style="color: #b81900"></span> job function : <strong>'+$qstName+'</strong></p>' +
+                '<p>' +
+                '<div class="">'+
+                '<button type="button" id="qst-cfRemove" class="btn btn-primary">Confirm delete</button>&nbsp;&nbsp;&nbsp;' +
+                '<button type="button" aria-hidden="true" data-dismiss="modal"  class="btn btn-default">Close</button>'+
+                '</div>' +
+                '</p>'
+            ).find('#qst-cfRemove').unbind('click').bind('click',function(){
+                    $.post('./do-remove-job-function',{id: $this.attr('data-id')},function(xhr){
                         if(xhr.success){
                             location.reload();
                         }
@@ -225,7 +273,41 @@ pocketCandidate.prototype = {
                     $(this).parent().removeClass('has-error');
                 }
             });
+			//
+			var JobVal = $('#employment-form :input[name="JobFucntion"]');
+			if(JobVal.val() !='' || JobVal.val().length > 0){
+                if($this.attr('data-status')=='add'){
+                    $.post('./do-add-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
+                        if(xhr.success){
+                            location.reload();
+                        }else{
+                            //errors
+                            $.each(xhr.info,function(key,item){
+                                $('#employment-form :input[name="'+key+'"]').parent().addClass('has-error');
+                            })
+                            $this.button('reset');
+                        }
+                    })
+                }else if($this.attr('data-status')=='updateJob'){
+                    $.post('./do-update-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
+                        if(xhr.success){
+                            location.reload();
+                        }else{
+                            //errors
+                            $.each(xhr.info,function(key,item){
+                                $('#employment-form :input[name="'+key+'"]').parent().addClass('has-error');
+                            })
+                            $this.button('reset');
+                        }
+                    })
+                }
 
+            }else{
+                JobVal.focus();
+                JobVal.parent('.form-group').addClass('has-error');
+                $this.button('reset');
+            }
+			//
             var compVal = $('#employment-form :input[name="companyName"]');
             if(compVal.val() !='' || compVal.val().length > 0){
                 if($this.attr('data-status')=='add'){

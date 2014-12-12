@@ -331,7 +331,7 @@ class CandidateController extends Application_Controller_Action
                     break;
                 case 'employment':
                     $core = new PR_Api_Core_CandidateClass();
-                    
+                    //$core->addjobfunction("9","JobFucntion","0.9");
                     $list = $core->getCandidateEmployments($client['UserID']);
                     $this->view->list = $list;
 					$jobfunctions=$core->get_jobfuntion($client['CandidateProfileID']);
@@ -2197,6 +2197,135 @@ class CandidateController extends Application_Controller_Action
 			}
 			
 		}
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+	 public function doAddJobFunctionAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+
+            $JobFucntion = null;
+            $CredentialExperienceID = null;
+            $Percentage = null;
+            if(!empty($params['data']) && sizeof($params['data'])){
+
+                foreach($params['data'] as $key=>$item){
+                    if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
+                    if($item['name']=='CredentialExperienceID')   $CredentialExperienceID = $item['value'];
+                    if($item['name']=='Percentage')      $Percentage = $item['value'];
+                    }
+
+                if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
+                if(empty($CredentialExperienceID)) $errors['CredentialExperienceID'] = 1;
+                if(empty($Percentage)) $errors['Percentage'] = 1;
+                
+
+                if(empty($errors)){
+                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                $core = new PR_Api_Core_CandidateClass();
+                $isSuccess = $core->addjobfunction($CredentialExperienceID,$JobFucntion,$Percentage);
+                if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+                }
+
+
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+	public function detailJobFunctionAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+		$ajaxRes = array('success'=>0,'info'=>null);
+        //$ajaxRes = array('success'=>0,'JobFunctionID'=>null,'JobFucntion'=>null,'CredentialExperienceID'=>null,'Percentage'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $id = isset($params['id']) ? $params['id'] : null;
+            $core = new PR_Api_Core_CandidateClass();
+           // $jobfunction= $core->getJobFunction($id);
+			$ajaxRes['info'] = $core->getJobFunction($id);
+			$Percentage=$ajaxRes['info']['Percentage'];
+			$ajaxRes['info']['Percentage']=round($Percentage,2);
+			//echo $ajaxRes['info']['Percentage'];die();
+            if(sizeof($ajaxRes['info']) > 0) $ajaxRes['success'] = 1;
+
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+	public function doUpdateJobFunctionAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $JobFunctionID = null;
+            $JobFucntion = null;
+            $CredentialExperienceID = null;
+            $Percentage = null;      
+            $errors = array();
+
+            if(!empty($params['data']) && sizeof($params['data'])){
+
+                foreach($params['data'] as $key=>$item){
+                    if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
+                    if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
+                    if($item['name']=='CredentialExperienceID')   $CredentialExperienceID = $item['value'];
+                    if($item['name']=='Percentage')      $Percentage = $item['value'];
+                   
+                }
+                if(empty($JobFunctionID)) $errors['empId'] = 1;
+                if(empty($JobFucntion)) $errors['companyName'] = 1;
+                if(empty($CredentialExperienceID)) $errors['posotionHeld'] = 1;
+                if(empty($Percentage)) $errors['startDate'] = 1;
+                
+
+                if(empty($errors)){
+                    //$client = PR_Session::getSession(PR_Session::SESSION_USER);
+                $core = new PR_Api_Core_CandidateClass();
+                $isSuccess = $core->updateJobFunction($JobFunctionID,$JobFucntion,$CredentialExperienceID,$Percentage);
+                if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+                    $ajaxRes['info'] = $errors;
+                }
+            }
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+	public function doRemoveJobFunctionAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $id = $params['id'];
+            $core = new PR_Api_Core_CandidateClass();
+			//echo "Testt:";echo $id;die();
+            $core->deleteJobFunction($id);
+            $ajaxRes['success'] = 1;
+        }
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
         $ajaxRes = json_encode($ajaxRes);
