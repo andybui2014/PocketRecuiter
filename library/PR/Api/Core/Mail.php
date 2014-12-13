@@ -41,7 +41,7 @@
       //  include 'Zend\Mail\Transport\Smtp.php';
         $tr = new Zend_Mail_Transport_Smtp('smtp.sendgrid.net',
                     array('auth' => 'login',
-                             'username' => 'Mkritzman',
+                             'username' => 'Mkritzman123',
                              'password' => 'jack1rae'));
         Zend_Mail::setDefaultTransport($tr);
         $mail = new Zend_Mail();
