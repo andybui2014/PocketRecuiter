@@ -1192,8 +1192,8 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $select->where("c.CandidateProfileID='".$candidateID."'");
         $select->order("c.CandidateProfileID");
         $records = PR_Database::fetchAll($select);
+        //print_r($select->__toString());die();
         return $records;
-        // print_r($select->__toString());die();
     }
 
     public function get_TestID($id){
@@ -1205,5 +1205,198 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $records = PR_Database::fetchAll($select);
         return $records;
         // print_r($select->__toString());die();
+    }
+
+    public function get_attribute_rubrics($TemplateID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('att'=>'attribute_rubrics'),array('*'));
+        $select->where("att.TemplateID = '".$TemplateID."' ");
+
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            return $records;
+        }
+    }
+
+    public function get_candidate_attribute_value($Candidate_ProfileID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cav'=>'candidate_attribute_value'),array('*'));
+        $select->where("cav.Candidate_ProfileID = '".$Candidate_ProfileID."' ");
+
+        $records = PR_Database::fetchAll($select);
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            return $records;
+        }
+    }
+
+    public function get_attribute_p0($ID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('attr'=>'attribute'),array('ID','ParentAttributeID','AtttributeCategoryID'));
+        $select->joinleft(array('ct'=>'attribute_category'),
+            'attr.AtttributeCategoryID = ct.AttributeCatetoryID',
+            array('AttributeCategory')
+        );
+
+        $select->joinleft(array('cav'=>'candidate_attribute_value'),
+            'attr.ID = cav.AttributeID',
+            array('Candidate_ProfileID')
+        );
+
+        //$select->where("attr.ID IN (".implode(',',$IDs).") && attr.ParentAttributeID = 0");
+
+        //$select->where("cav.Candidate_ProfileID ='".$ID."' && attr.ParentAttributeID = 0");
+        $select->where("attr.ParentAttributeID = 0");
+
+        $select->group('attr.AtttributeCategoryID');
+
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+
+        return $records;
+    }
+
+    public function get_attribute_parent($ID,$ParentAttributeID,$AtttributeCategoryID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('attr'=>'attribute'),array('*'));
+        $select->joinleft(array('ct'=>'attribute_category'),
+            'attr.AtttributeCategoryID = ct.AttributeCatetoryID',
+            array('AttributeCategory')
+        );
+
+        $select->joinleft(array('cav'=>'candidate_attribute_value'),
+            'attr.ID = cav.AttributeID',
+            array('YearsofExperience','LevelofInterest','Candidate_ProfileID','Value')
+        );
+
+        //$select->where("attr.ID IN (".implode(',',$IDs).") && attr.ParentAttributeID = 0");
+
+       // $select->where("cav.Candidate_ProfileID ='".$ID."' && attr.ParentAttributeID = '".$ParentAttributeID."' && attr.AtttributeCategoryID = '".$AtttributeCategoryID."' " );
+        $select->where("attr.ParentAttributeID = '".$ParentAttributeID."' && attr.AtttributeCategoryID = '".$AtttributeCategoryID."' " );
+
+        $select->order(array('attr.AtttributeCategoryID ASC','attr.ID ASC' ));
+
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $rec){
+                $rec['TemplateID'] = $this->get_attribute_rubrics($rec['AttributeRubricTemplateID']);
+
+                $list[] = $rec;
+            }
+            return $list;
+        }
+    }
+
+    public function get_attribute_child($cadidate_profileID, $ID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('attr'=>'attribute'),array('*'));
+        $select->joinleft(array('ct'=>'attribute_category'),
+            'attr.AtttributeCategoryID = ct.AttributeCatetoryID',
+            array('AttributeCategory')
+        );
+        $select->joinleft(array('cav'=>'candidate_attribute_value'),
+            'attr.ID = cav.AttributeID',
+            array('YearsofExperience','LevelofInterest','Candidate_ProfileID','Value')
+        );
+       // $select->where("cav.Candidate_ProfileID ='".$cadidate_profileID."' && attr.ParentAttributeID = '".$ID."'");
+        $select->where("attr.ParentAttributeID = '".$ID."'");
+
+        $records = PR_Database::fetchAll($select);
+
+        if(empty($records) && count($records)==0){
+            return array();
+        } else {
+            $list = array();
+            foreach($records as $rec){
+                $rec['TemplateID'] = $this->get_attribute_rubrics($rec['AttributeRubricTemplateID']);
+
+                $list[] = $rec;
+            }
+            return $list;
+        }
+    }
+
+    public function updateCandidateAttribute($CandidateProfileID,$attrs){
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        $select->from(array('cav'=>'candidate_attribute_value'),
+            array('*')
+        );
+
+        $select->where("cav.Candidate_ProfileID = '$CandidateProfileID'");
+        $records = PR_Database::fetchAll($select);
+        if(count($records)>0){
+            if(empty($attrs) || count($attrs)==0){
+                $criteria = "Candidate_ProfileID = '$CandidateProfileID'";
+                $result = $db->delete('candidate_attribute_value', $criteria);
+            } else{
+                /*echo "<pre>";
+                echo "test1 = "; print_r($attributeIDs);
+                echo "</pre>"; die();*/
+                //if database not exist $attrs then delete
+                foreach($records as $rec){
+                    $database_Exist=$rec['AttributeID'];
+                    $flag_exsist = false;
+                    foreach($attrs as $attrInfo){
+                        if($database_Exist == $attrInfo['attr_id']){
+                            $flag_exsist = true;
+                            break;
+                        }
+                    }
+
+                    if(!$flag_exsist){
+                        $criteria = "Candidate_ProfileID = '$CandidateProfileID' AND AttributeID = '$database_Exist'";
+                        $result = $db->delete('candidate_attribute_value', $criteria);
+                    }
+                }
+
+                // if $attr not exist in database then insert, else update
+                foreach($attrs as $attributeInfo){
+                    $attr_Exist=$attributeInfo['attr_id'];
+                    $flag_exsist = false;
+                    foreach($records as $recordsInfo){
+                        if($attr_Exist == $recordsInfo['AttributeID']){
+                            $updateFields=array('Candidate_ProfileID'=>$CandidateProfileID,'AttributeID'=>$attributeInfo['attr_id'],'Value'=>$attributeInfo['attr_value'],'YearsofExperience'=>$attributeInfo['attr_YoE'],'LevelofInterest'=>$attributeInfo['attr_LevelofInterest']);
+                            $criteria = "Candidate_ProfileID = '$CandidateProfileID' AND AttributeID = '$attr_Exist'";
+                            $result = PR_Database::update("candidate_attribute_value", $updateFields, $criteria);
+                            $flag_exsist = true;
+                            break;
+                        }
+                    }
+
+                    if(!$flag_exsist){
+                        $updateFields=array('Candidate_ProfileID'=>$CandidateProfileID,'AttributeID'=>$attributeInfo['attr_id'],'Value'=>$attributeInfo['attr_value'],'YearsofExperience'=>$attributeInfo['attr_YoE'],'LevelofInterest'=>$attributeInfo['attr_LevelofInterest']);
+                        $result = PR_Database::insert("candidate_attribute_value", $updateFields);
+                    }
+                }
+
+            }
+        } else {
+            if(!empty($attrs) && count($attrs)>0){
+                foreach($attrs as $id){
+                    $updateFields=array('Candidate_ProfileID'=>$CandidateProfileID,'AttributeID'=>$id['attr_id'],'Value'=>$id['attr_value'],'YearsofExperience'=>$id['attr_YoE'],'LevelofInterest'=>$id['attr_LevelofInterest']);
+                    $result = PR_Database::insert("candidate_attribute_value", $updateFields);
+                }
+            }
+        }
+        return true;
     }
 }

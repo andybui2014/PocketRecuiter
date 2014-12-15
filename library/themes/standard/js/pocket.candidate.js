@@ -403,17 +403,58 @@ pocketCandidate.prototype = {
                 }
             });
         }else if(dataId=='skills'){
-            var data = [];
-            $('#tree-lst').find('img').each(function(idx,item){
+            var data = []; //attribute-lst
+            /* $('#tree-lst').find('img').each(function(idx,item){
                 if($(this).attr('class') !=='img-toggle' && $(this).attr('data-status')=='select'){
                     data.push($(this).attr('data-id'));
                 }
+            }); */
+
+            var data_attr =[];
+            $('#attribute-lst .tree').each(function(idx,item){
+                if($(this).find('img').attr('class') !=='img-toggle' && $(this).find('img').attr('data-status')=='select'){
+
+                    $(this).find('.attr-attr').each(function(){
+                         var attr_id = $(this).find('.attrid').attr('attr-id');
+                         var attr_value = $(this).find('.attr-value option:selected').val();
+                         var attr_YoE = $(this).find('.attr-YoE').val();
+                         var attr_LevelofInterest = $(this) .find('.attr-LevelofInterest option:selected').val();
+
+                         if(typeof(attr_value) === 'undefined'){
+                             attr_value = '';
+                         }
+
+                        if(typeof(attr_YoE) === 'undefined'){
+                            attr_YoE = '';
+                        }
+
+                        if(typeof(attr_LevelofInterest) === 'undefined'){
+                            attr_LevelofInterest = '';
+                        }
+
+                        data_attr.push({attr_id:attr_id, attr_value:attr_value,attr_YoE:attr_YoE,attr_LevelofInterest:attr_LevelofInterest});
+
+                    });
+                }
             });
-            $.post('./do-update-skills',{data:data},function(xhr){
+            //console.log(data_attr);
+
+            /*$.post('./do-update-skills',{data:data},function(xhr){
                 if(xhr.success){
                     location.href = './profile-builder?utm_source=' + $this.attr('data-next');
                 }
-            })
+            })  */
+            $.ajax({
+                url: './do-update-skills',
+                data: {data:data_attr},
+                type: 'POST',
+                success: function(xhr){
+                    if(xhr.success){
+                        location.href = './profile-builder?utm_source=' + $this.attr('data-next');
+                    }
+
+                }
+            });
         }else{
             location.href = './profile-builder?utm_source=' + $this.attr('data-next');
         }

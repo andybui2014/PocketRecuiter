@@ -231,18 +231,103 @@ class CandidateController extends Application_Controller_Action
         return $source;
     }
 
+    private function attribute_child($candiate_id, $ID) {
+        $source1 = "";
+        if(!empty($ID)){
+            $core = new PR_Api_Core_CandidateClass();
+            $client = PR_Session::getSession(PR_Session::SESSION_USER);
+            $Child = $core->get_attribute_child($candiate_id,$ID);
+            if(!empty($Child)){
+
+                foreach($Child as $item){
+                    $sub = $this->attribute_child($candiate_id, $item['ID']);
+                    $sel1 ="<div class='col-md-2'></div>";
+                    $Track1 ='';
+                    if(!empty($item['TemplateID'])){
+                        $option = "";
+
+                        foreach($item['TemplateID'] as $itemInfo){
+                            if($itemInfo['Value'] == $item['Value']){
+                                $selected11 = 'selected="selected"';
+                            } else{
+                                $selected11 ='';
+                            }
+                            $option .= "<option value='".$itemInfo['Value']."' ".$selected11.">".$itemInfo['Description']."</option>";
+                        }
+                        $sel1 = " <select class='form-control attr-value'  style='color:#5d629c'> ".$option."</select>";
+                    }
+
+                    if($item['TrackYearsOfExperience'] && $item['TrackLevelofInterest']){
+                        $selected = '';
+                        $option_exp ='';
+
+                        for($i=1; $i<6; $i++){
+                            if($i==$item['LevelofInterest']){
+                                $selected = 'selected="selected"';
+                            } else{
+                                $selected ='';
+                            }
+                            $option_exp .= "<option value='".$i."' ".$selected.">".$i."</option>";
+                        }
+
+                        $Track1 = "<div class='col-md-2' style='padding-right:0; color:#706d67'>Track Years Of Experience </div>
+                                                                  <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' class='form-control attr-YoE' value='".$item['YearsofExperience']."'></div>
+                                                                  <div class='col-md-2' style='padding-right:0; color:#706d67'>Track Level of Interest</div>
+                                                                  <div class='col-md-1' style='padding:0'>
+                                                                    <select class='form-control attr-LevelofInterest'   style='color:#706d67'>
+                                                                            '.$option_exp.'
+                                                                    </select>
+                                                                  </div>";
+                   }
+
+                    $source1 .="<ul style='margin-top:10px' class='attr-attr'>
+                                                            <li>
+                                                                <div class='col-md-12' style='padding:0'>
+                                                                     <div style='line-height:34px;padding:0;margin-bottom:10px' attr-id=".$item['ID']." class='col-md-4 attrid'>".$item['Attribute']."</div>
+                                                                    <div class='col-md-2' style='padding:0; margin-bottom:10px'>
+                                                                        ".$sel1."
+                                                                    </div>
+                                                                    ".$Track1."
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>";
+                    $source1 .=  $sub;
+                }
+
+            }
+        }
+        return $source1;
+    }
+
     public function doUpdateSkillsAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         $ajaxRes = array('success'=>0,'info'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
+            /*
             if(!empty($params['data']) && sizeof($params['data']) > 0){
                 $core = new PR_Api_Core_CandidateClass();
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
                 if($core->updateCandidateSkill($client['CandidateProfileID'],$params['data'])){
                     $ajaxRes['success'] = 1;
                 }
+            } */
+
+            if(isset($params['data'])){
+                $attributeIDs = $params['data'];
+            } else{
+                $attributeIDs = array();
+            }
+
+           /* echo "<pre>";
+            echo "test = "; print_r($attributeIDs);
+            echo "</pre>"; die(); */
+                $core = new PR_Api_Core_CandidateClass();
+                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                if($core->updateCandidateAttribute($client['CandidateProfileID'],$attributeIDs)){
+                    $ajaxRes['success'] = 1;
             }
         }
         $response = $this->getResponse();
@@ -345,10 +430,99 @@ class CandidateController extends Application_Controller_Action
 
                     $tree = '';
                     $core = new PR_Api_Core_CandidateClass();
-                   
-                    $skills = $core->getListAll_CandidateSkills($client['UserID']);
+                    // -----------------Attribute-----------------------------
+
+                    $html ='';
+                    $attr_p0_list = $core->get_attribute_p0($Candidateprofile_ID);
+                    if(!empty($attr_p0_list)){
+
+                        foreach($attr_p0_list as $attr_p0Info){
+                            $select = (!empty($attr_p0Info['Candidate_ProfileID']))? 'select':'deselect';
+                            $src = (!empty($attr_p0Info['Candidate_ProfileID'])) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
+
+                            $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
+
+                                $html .= "<div class='col-md-12' style='margin:0;padding:0; color: #5d629c'><div class='tree'><ul>";
+
+                                $html .= "<li>
+                                            <img data-id='".$attr_p0Info['ID']."' data-status='".$select."' class='img-parent' src='".$src."'/>
+                                            <a href='#' style='color:#5d629c'><strong>" . $attr_p0Info['AttributeCategory'] . "</strong></a>
+                                        <span><img class='img-toggle' src='".$toggle."'/></span>";
+
+                                           $AttributeID_Parents = $core->get_attribute_parent($Candidateprofile_ID, $attr_p0Info['ParentAttributeID'], $attr_p0Info['AtttributeCategoryID']);
+                                            //$AttributeID_Parents = $core->get_attribute_parent($Candidateprofile_ID, 0, 5);
+                                            if(!empty($AttributeID_Parents)){
+                                                foreach ($AttributeID_Parents as $attrInfo){
+                                                    $sel ="<div class='col-md-2'></div>";
+
+                                                    if(!empty($attrInfo['TemplateID'])){
+                                                        $option = "";
+                                                        foreach($attrInfo['TemplateID'] as $TemplateIDInfo){
+                                                            if($TemplateIDInfo['Value'] == $attrInfo['Value']){
+                                                                $selected1 = 'selected="selected"';
+                                                            } else{
+                                                                $selected1 ='';
+                                                            }
+                                                            $option .= "<option value='".$TemplateIDInfo['Value']."' ".$selected1." >".$TemplateIDInfo['Description']."</option>";
+                                                        }
+                                                        $sel = " <select class='form-control attr-value'  style='color:#5d629c'> ".$option."</select>";
+                                                    }
+
+                                                    $Track ='';
+                                                    if($attrInfo['TrackYearsOfExperience'] && $attrInfo['TrackLevelofInterest']){
+                                                        $selected = '';
+                                                        $option_exp ='';
+
+                                                        for($i=1; $i<6; $i++){
+                                                            if($i==$attrInfo['LevelofInterest']){
+                                                                $selected = 'selected="selected"';
+                                                            } else{
+                                                                $selected ='';
+                                                            }
+                                                            $option_exp .= "<option value='".$i."' ".$selected.">".$i."</option>";
+                                                        }
+
+                                                        $Track = "<div class='col-md-2' style='padding-right:0; color:#706d67'>Track Years Of Experience </div>
+                                                                  <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' class='form-control attr-YoE' value='".$attrInfo['YearsofExperience']."'></div>
+                                                                  <div class='col-md-2' style='padding-right:0;color:#706d67'>Track Level of Interest</div>
+                                                                  <div class='col-md-1' style='padding:0'>
+                                                                    <select class='form-control attr-LevelofInterest' style='color:#706d67'>
+                                                                            '.$option_exp.'
+                                                                    </select>
+                                                                  </div>";
+                                                    }
 
 
+
+                                                    $html .="<ul style='margin-top:10px' class='attr-attr'>
+                                                            <li>
+                                                                <div class='col-md-12' style='padding:0'>
+                                                                    <div style='line-height:34px;padding:0;margin-bottom:10px' attr-id=".$attrInfo['ID']." class='col-md-4 attrid'>".$attrInfo['Attribute']."</div>
+                                                                    <div class='col-md-2' style='padding:0; margin-bottom:10px'>
+                                                                        ".$sel."
+                                                                    </div>
+                                                                    ".$Track."
+                                                               </div>
+
+                                                            </li>
+
+                                                        </ul>";
+
+                                                   $html .= $this->attribute_child($Candidateprofile_ID,$attrInfo['ID']);
+
+                                                }
+                                            }
+
+                                $html .= "</li></ul></div></div>";
+                        }
+
+                    }
+                    $this->view->html = $html;
+                    /*echo "<pre>";
+                    print_r($skills);
+                    echo "</pre>"; die(); */
+                   //-------------------- end attribute---------------------//
+                    /*$skills = $core->getListAll_CandidateSkills($client['UserID']);
                     if(!empty($skills)){
                         foreach($skills as $item){
                             $select = (!empty($item['CandidateProfileID']) && !empty($item['UserID'])) ? 'select':'deselect';
@@ -364,9 +538,8 @@ class CandidateController extends Application_Controller_Action
                             $tree .= "</li></ul></div></div>";
                         }
                     }
-                    //die();
+                    $this->view->tree = $tree; */
                     $this->view->stepCount = '4/5 Steps';
-                    $this->view->tree = $tree;
                     $this->render('profile-builder/skills');
                     break;
                 case 'portfolio':
