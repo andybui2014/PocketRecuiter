@@ -441,6 +441,7 @@ class PR_Api_Core_CandidateExtClass
 		$db = PR_Database::getInstance();
         $select= $db->select(); 
 		$select->from("credentialexperience",array("*"));
+		$select->where("CandidateProfileID = '$CandidateProfileID'");
 		$records = PR_Database::fetchAll($select);
          if(!empty($records))
          {

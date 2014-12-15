@@ -708,7 +708,8 @@ class CandidateController extends Application_Controller_Action
                     //$client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->updateCandidateEmployment($empId,$companyName,$positionHeld,$startDate,$endDate,$description);
-                if($isSuccess) $ajaxRes['success'] = 1;
+                //if($isSuccess)
+				$ajaxRes['success'] = 1;
                 }else{
                     $ajaxRes['info'] = $errors;
                 }
