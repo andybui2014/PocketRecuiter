@@ -231,7 +231,7 @@ class CandidateController extends Application_Controller_Action
         return $source;
     }
 
-    private function attribute_child($candiate_id, $ID) {
+    private function attribute_child($candiate_id, $ID, $disable) {
         $source1 = "";
         if(!empty($ID)){
             $core = new PR_Api_Core_CandidateClass();
@@ -240,7 +240,7 @@ class CandidateController extends Application_Controller_Action
             if(!empty($Child)){
 
                 foreach($Child as $item){
-                    $sub = $this->attribute_child($candiate_id, $item['ID']);
+                    $sub = $this->attribute_child($candiate_id, $item['ID'],$disable);
                     $sel1 ="<div class='col-md-2'></div>";
                     $Track1 ='';
                     if(!empty($item['TemplateID'])){
@@ -254,7 +254,7 @@ class CandidateController extends Application_Controller_Action
                             }
                             $option .= "<option value='".$itemInfo['Value']."' ".$selected11.">".$itemInfo['Description']."</option>";
                         }
-                        $sel1 = " <select class='form-control attr-value'  style='color:#5d629c'> ".$option."</select>";
+                        $sel1 = " <select class='form-control attr-value'  style='color:#5d629c' ".$disable."> ".$option."</select>";
                     }
 
                     if($item['TrackYearsOfExperience'] && $item['TrackLevelofInterest']){
@@ -271,10 +271,10 @@ class CandidateController extends Application_Controller_Action
                         }
 
                         $Track1 = "<div class='col-md-2' style='padding-right:0; color:#706d67;line-height:34px'>Years of Experience </div>
-                                                                  <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' class='form-control attr-YoE' value='".$item['YearsofExperience']."'></div>
+                                                                  <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' ".$disable." class='form-control attr-YoE' value='".$item['YearsofExperience']."'></div>
                                                                   <div class='col-md-2' style='padding-right:0; color:#706d67;line-height:34px'>Level of Interest</div>
                                                                   <div class='col-md-1' style='padding:0'>
-                                                                    <select class='form-control attr-LevelofInterest'   style='color:#706d67'>
+                                                                    <select class='form-control attr-LevelofInterest' ".$disable."  style='color:#706d67'>
                                                                             '.$option_exp.'
                                                                     </select>
                                                                   </div>";
@@ -440,7 +440,14 @@ class CandidateController extends Application_Controller_Action
                     if(!empty($attr_p0_list)){
 
                         foreach($attr_p0_list as $attr_p0Info){
-                            $select = (!empty($attr_p0Info['Candidate_ProfileID']))? 'select':'deselect';
+                            //$select = (!empty($attr_p0Info['Candidate_ProfileID']))? 'select':'deselect';
+                            if(!empty($attr_p0Info['Candidate_ProfileID'])){
+                                $select = 'select';
+                                $disable = '';
+                            } else {
+                                $select = 'deselect';
+                                $disable = 'disabled';
+                            }
                             $src = (!empty($attr_p0Info['Candidate_ProfileID'])) ?  URL_THEMES.'images/trees/ico_colapse.png' : URL_THEMES.'images/trees/ico_expand.png';
 
                             $toggle = URL_THEMES .'images/trees/ico_sub_sm.png';
@@ -448,7 +455,7 @@ class CandidateController extends Application_Controller_Action
                                 $html .= "<div class='col-md-12' style='margin:0;padding:0; color: #5d629c'><div class='tree'><ul>";
 
                                 $html .= "<li>
-                                            <img data-id='".$attr_p0Info['ID']."' data-status='".$select."' class='img-parent' src='".$src."'/>
+                                            <img data-id='".$attr_p0Info['ID']."' data-status='".$select."' class='img-parent-attr' src='".$src."'/>
                                             <a href='#' style='color:#5d629c'><strong>" . $attr_p0Info['AttributeCategory'] . "</strong></a>
                                         <span><img class='img-toggle' src='".$toggle."'/></span>";
 
@@ -468,7 +475,7 @@ class CandidateController extends Application_Controller_Action
                                                             }
                                                             $option .= "<option value='".$TemplateIDInfo['Value']."' ".$selected1." >".$TemplateIDInfo['Description']."</option>";
                                                         }
-                                                        $sel = " <select class='form-control attr-value'  style='color:#5d629c'> ".$option."</select>";
+                                                        $sel = " <select class='form-control attr-value'  style='color:#5d629c' ".$disable."> ".$option."</select>";
                                                     }
 
                                                     $Track ='';
@@ -486,10 +493,10 @@ class CandidateController extends Application_Controller_Action
                                                         }
 
                                                         $Track = "<div class='col-md-2' style='padding-right:0; color:#706d67;line-height:34px'>Years of Experience </div>
-                                                                  <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' class='form-control attr-YoE' value='".$attrInfo['YearsofExperience']."'></div>
+                                                                  <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' ".$disable." class='form-control attr-YoE' value='".$attrInfo['YearsofExperience']."'></div>
                                                                   <div class='col-md-2' style='padding-right:0;color:#706d67;line-height:34px'>Level of Interest</div>
                                                                   <div class='col-md-1' style='padding:0'>
-                                                                    <select class='form-control attr-LevelofInterest' style='color:#706d67'>
+                                                                    <select class='form-control attr-LevelofInterest' style='color:#706d67' ".$disable.">
                                                                             '.$option_exp.'
                                                                     </select>
                                                                   </div>";
@@ -511,7 +518,7 @@ class CandidateController extends Application_Controller_Action
 
                                                         </ul>";
 
-                                                   $html .= $this->attribute_child($Candidateprofile_ID,$attrInfo['ID']);
+                                                   $html .= $this->attribute_child($Candidateprofile_ID,$attrInfo['ID'],$disable);
 
                                                 }
                                             }

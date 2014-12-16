@@ -1237,7 +1237,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         }
     }
 
-    public function get_attribute_p0($ID)
+   /* public function get_attribute_p0($ID)
     {
         $db = PR_Database::getInstance();
         $select = $db->select();
@@ -1248,16 +1248,44 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         );
 
         $select->joinleft(array('cav'=>'candidate_attribute_value'),
-            'attr.ID = cav.AttributeID',
+            'attr.ID = cav.AttributeID AND cav.Candidate_ProfileID = "'.$ID.'"',
             array('Candidate_ProfileID')
         );
-
         //$select->where("attr.ID IN (".implode(',',$IDs).") && attr.ParentAttributeID = 0");
 
         //$select->where("cav.Candidate_ProfileID ='".$ID."' && attr.ParentAttributeID = 0");
         $select->where("attr.ParentAttributeID = 0");
 
         $select->group('attr.AtttributeCategoryID');
+
+        //print_r($select->__toString());die();
+        $records = PR_Database::fetchAll($select);
+
+        return $records;
+    } */
+
+    public function get_attribute_p0($ID)
+    {
+        $db = PR_Database::getInstance();
+        $select = $db->select();
+        //$select->from(array('attr'=>'attribute'),array('ID','ParentAttributeID','AtttributeCategoryID'));
+        $select->from(array('ct'=>'attribute_category'),array('*'));
+        $select->joinleft(array('attr'=>'attribute'),
+            'attr.AtttributeCategoryID = ct.AttributeCatetoryID',
+            array('*')
+        );
+
+        $select->joinleft(array('cav'=>'candidate_attribute_value'),
+            'attr.ID = cav.AttributeID AND cav.Candidate_ProfileID = "'.$ID.'"',
+            array('Candidate_ProfileID')
+        );
+        //$select->where("attr.ID IN (".implode(',',$IDs).") && attr.ParentAttributeID = 0");
+
+        //$select->where("cav.Candidate_ProfileID ='".$ID."' && attr.ParentAttributeID = 0");
+        //$select->where("attr.ParentAttributeID = 0");
+
+        $select->group('ct.AttributeCatetoryID');
+        //$select->order('ct.AttributeCategory');
 
         //print_r($select->__toString());die();
         $records = PR_Database::fetchAll($select);
@@ -1276,7 +1304,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         );
 
         $select->joinleft(array('cav'=>'candidate_attribute_value'),
-            'attr.ID = cav.AttributeID',
+            'attr.ID = cav.AttributeID AND cav.Candidate_ProfileID ="'.$ID.'"',
             array('YearsofExperience','LevelofInterest','Candidate_ProfileID','Value')
         );
 
@@ -1313,7 +1341,7 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
             array('AttributeCategory')
         );
         $select->joinleft(array('cav'=>'candidate_attribute_value'),
-            'attr.ID = cav.AttributeID',
+            'attr.ID = cav.AttributeID AND cav.Candidate_ProfileID ="'.$cadidate_profileID.'"',
             array('YearsofExperience','LevelofInterest','Candidate_ProfileID','Value')
         );
        // $select->where("cav.Candidate_ProfileID ='".$cadidate_profileID."' && attr.ParentAttributeID = '".$ID."'");

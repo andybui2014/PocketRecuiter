@@ -694,6 +694,41 @@ $(function  () {
                     }
                 })
 
+               $('.img-parent-attr').unbind('click').bind('click',function(){
+                    if($(this).attr('data-status')=='select'){
+                        $(this)
+                            .attr('src',url+'images/trees/ico_expand.png')
+                            .attr('data-status','deselect');
+
+                        $(this).parent()
+                            .find('.img-item')
+                            .attr('src',url+'images/trees/ico_expand_sm.png')
+                            .attr('data-status',$(this).attr('data-status'));
+
+
+                        $(this).closest('.parent_li').find('.attr-attr').each(function(){
+                            $(this).find('.attr-value').prop("disabled", true);
+                            $(this).find('.attr-YoE').prop("disabled", true);
+                            $(this) .find('.attr-LevelofInterest').prop("disabled", true);
+
+                        });
+
+
+                    }else if($(this).attr('data-status')=='deselect'){
+                        $(this).attr('src',url+'images/trees/ico_colapse.png').attr('data-status','select');
+                        $(this).parent()
+                            .find('.img-item')
+                            .attr('src',url+'images/trees/ico_colapse_sm.png')
+                            .attr('data-status',$(this).attr('data-status'));
+                        $(this).closest('.parent_li').find('.attr-attr').each(function(){
+                            $(this).find('.attr-value').prop("disabled", false);
+                            $(this).find('.attr-YoE').prop("disabled", false);
+                            $(this) .find('.attr-LevelofInterest').prop("disabled", false);
+
+                        });
+                    }
+                })
+
                 $('.img-item').unbind('click').bind('click',function(){
                     var parentLi = $(this).closest('.parent_li');
                     if($(this).attr('data-status')=='select'){
