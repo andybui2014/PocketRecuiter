@@ -1270,6 +1270,11 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         $select = $db->select();
         //$select->from(array('attr'=>'attribute'),array('ID','ParentAttributeID','AtttributeCategoryID'));
         $select->from(array('ct'=>'attribute_category'),array('*'));
+        $select->join(array('jft'=>'jobfunctionattributecategory'),
+            'jft.AttributeCategoryID = ct.AttributeCatetoryID',
+            array('*')
+        );
+
         $select->joinleft(array('attr'=>'attribute'),
             'attr.AtttributeCategoryID = ct.AttributeCatetoryID',
             array('*')

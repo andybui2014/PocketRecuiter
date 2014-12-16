@@ -272,7 +272,7 @@ class CandidateController extends Application_Controller_Action
 
                         $Track1 = "<div class='col-md-2' style='padding-right:0; color:#706d67;line-height:34px'>Years of Experience </div>
                                                                   <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' ".$disable." class='form-control attr-YoE' value='".$item['YearsofExperience']."'></div>
-                                                                  <div class='col-md-2' style='padding-right:0; color:#706d67;line-height:34px'>Level of Interest</div>
+                                                                  <div class='col-md-2' style='text-align:right; color:#706d67;line-height:34px'>Level of Interest</div>
                                                                   <div class='col-md-1' style='padding:0'>
                                                                     <select class='form-control attr-LevelofInterest' ".$disable."  style='color:#706d67'>
                                                                             '.$option_exp.'
@@ -494,7 +494,7 @@ class CandidateController extends Application_Controller_Action
 
                                                         $Track = "<div class='col-md-2' style='padding-right:0; color:#706d67;line-height:34px'>Years of Experience </div>
                                                                   <div class='col-md-1' style='padding:0'><input type='text' style='color:#706d67' ".$disable." class='form-control attr-YoE' value='".$attrInfo['YearsofExperience']."'></div>
-                                                                  <div class='col-md-2' style='padding-right:0;color:#706d67;line-height:34px'>Level of Interest</div>
+                                                                  <div class='col-md-2' style='text-align:right;color:#706d67;line-height:34px'>Level of Interest</div>
                                                                   <div class='col-md-1' style='padding:0'>
                                                                     <select class='form-control attr-LevelofInterest' style='color:#706d67' ".$disable.">
                                                                             '.$option_exp.'
