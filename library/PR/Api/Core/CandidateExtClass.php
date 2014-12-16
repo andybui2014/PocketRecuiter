@@ -496,6 +496,19 @@ class PR_Api_Core_CandidateExtClass
 		 $result1 = $db->delete('jobfunction', $criteria); 
        // return $result.$result1; 
  }
+ public function totalPercentage($CandidateProfileID){
+		$db = PR_Database::getInstance();
+        $sql= $db->select(); 
+        $sql="
+		select SUM(crjb.Percentage) as totalPercentage
+		from credentialexperiencejobfunction as crjb
+		left join credentialexperience as cre on cre.CredentialExperienceID=crjb.CredentialExperienceID
+		where cre.CandidateProfileID='$CandidateProfileID';";
+        $select = $db->query($sql);
+       
+        $records = $select->fetchAll();
+        return $records[0];
+  } 
  
 }
   

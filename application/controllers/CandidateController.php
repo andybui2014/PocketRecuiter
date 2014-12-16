@@ -420,10 +420,13 @@ class CandidateController extends Application_Controller_Action
                     $list = $core->getCandidateEmployments($client['UserID']);
                     $this->view->list = $list;
 					$jobfunctions=$core->get_jobfuntion($client['CandidateProfileID']);
+					$totalPercentage=$core->totalPercentage($client['CandidateProfileID']);
+					$totalprcent=round($totalPercentage["totalPercentage"],2);
 					$this->view->jobfunctions=$jobfunctions;
+					$this->view->totalPercentage=$totalprcent;
                     $this->view->stepCount = '3/5 Steps';
                     $this->render('profile-builder/employment');
-					//echo "tetst:<pre>";print_r($jobfunctions);echo("</pre>");
+					//echo "tetst:<pre>";print_r($totalprcent);echo("</pre>");
                     break;
                 case 'skills':
 
@@ -2381,6 +2384,7 @@ class CandidateController extends Application_Controller_Action
 	 public function doAddJobFunctionAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
+		$user = PR_Session::getSession(PR_Session::SESSION_USER);
         $ajaxRes = array('success'=>0,'info'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
@@ -2395,7 +2399,15 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='CredentialExperienceID')   $CredentialExperienceID = $item['value'];
                     if($item['name']=='Percentage')      $Percentage = $item['value'];
                     }
-
+				if($CredentialExperienceID ==""||$CredentialExperienceID=="Select"){
+					$ajaxRes['success'] = 0;
+					$ajaxRes['info'] = "Experience not empty";
+					
+				}
+				if($Percentage ==""||$Percentage=="Select"){
+					$ajaxRes['success'] = 0;
+					$ajaxRes['info'] = "Percentage not empty";
+				}
                 if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
                 if(empty($CredentialExperienceID)) $errors['CredentialExperienceID'] = 1;
                 if(empty($Percentage)) $errors['Percentage'] = 1;
@@ -2404,11 +2416,27 @@ class CandidateController extends Application_Controller_Action
                 if(empty($errors)){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
+				$totalPercentage=$core->totalPercentage($user["CandidateProfileID"]);
+				$totalPercentage=round($totalPercentage["totalPercentage"],2);
+				$Percentage=round($Percentage,2);
+				$total=$totalPercentage+$Percentage;
+				//echo "testt:".$total;die();
+				if($total<=1)
+				{
                 $isSuccess = $core->addjobfunction($CredentialExperienceID,$JobFucntion,$Percentage);
                 if($isSuccess) $ajaxRes['success'] = 1;
                 }else{
+					$ajaxRes['success'] = 0;
+					$ajaxRes['info'] = "Total Percentage greater 100%";
+					
+				 }
+                
+                
+                }else{
+					
                     $ajaxRes['info'] = $errors;
                 }
+				
 
 
             }
@@ -2465,17 +2493,39 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='Percentage')      $Percentage = $item['value'];
                    
                 }
-                if(empty($JobFunctionID)) $errors['empId'] = 1;
-                if(empty($JobFucntion)) $errors['companyName'] = 1;
-                if(empty($CredentialExperienceID)) $errors['posotionHeld'] = 1;
-                if(empty($Percentage)) $errors['startDate'] = 1;
+				if($CredentialExperienceID ==""||$CredentialExperienceID=="Select"){
+					$ajaxRes['success'] = 0;
+					$ajaxRes['info'] = "Experience not empty";
+					
+				}
+				if($Percentage ==""||$Percentage=="Select"){
+					$ajaxRes['success'] = 0;
+					$ajaxRes['info'] = "Percentage not empty";
+				}
+                if(empty($JobFunctionID)) $errors['JobFunctionID'] = 1;
+                if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
+                if(empty($CredentialExperienceID)) $errors['CredentialExperienceID'] = 1;
+                if(empty($Percentage)) $errors['Percentage'] = 1;
                 
 
                 if(empty($errors)){
-                    //$client = PR_Session::getSession(PR_Session::SESSION_USER);
+                $user = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
+				$job=$core->getJobFunction($JobFunctionID);
+				$percent=round($job["Percentage"],2);
+				$totalPercentage=$core->totalPercentage($user["CandidateProfileID"]);
+				$totalPercentage=round($totalPercentage["totalPercentage"],2);
+				$Percentage=round($Percentage,2);
+				$total=$totalPercentage-$percent+$Percentage;
+				if($total<=1){
                 $isSuccess = $core->updateJobFunction($JobFunctionID,$JobFucntion,$CredentialExperienceID,$Percentage);
                 if($isSuccess) $ajaxRes['success'] = 1;
+                }else{
+					$ajaxRes['success'] = 0;
+					$ajaxRes['info'] = "Total Percentage greater 100%";
+					
+				 }
+                
                 }else{
                     $ajaxRes['info'] = $errors;
                 }
