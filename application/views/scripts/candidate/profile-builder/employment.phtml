@@ -240,10 +240,12 @@ $getCandidates=$this->getCandidates;
 						  </div>
 						  
 						   
-						  
+						 <div><a id="Job_Functions" href="#">&nbsp;</a></div>
 						<div class="col-md-12" style="padding:0">
                         <div class="panel panel-default">
+						
                             <div class="panel-heading">
+							
 								<table width="100%">
 									<tr>
 										<th width="60%">Job Functions</th>
@@ -257,7 +259,7 @@ $getCandidates=$this->getCandidates;
                             <div class="panel-body">
                                 <div class="table-responsive">
 
-                                    <table id="jobfunction" class="table-hover" width="100%" 
+                                    <table id="jobfunction" class="table-hover" width="100%" >
                                        <?php
 									   if(!empty($this->jobfunctions))
 									   {
@@ -275,13 +277,28 @@ $getCandidates=$this->getCandidates;
 										}}
 										?>
                                     </table>
-									<div id="divjobfunction" style="display:none;margin-top:20px">
+							<div id="divjobfunction" style="display:none;margin-top:20px">
                             <input type="hidden" name="JobFunctionID" id="JobFunctionID"/>
                             <div class="form-group">
                                 <label>Job Function Name </label>
-                                <input name="JobFucntion" type="text" class="form-control" placeholder="">
+								<select name="JobFucntion" id="JobFucntion" class="form-control">
+									
+									<?php
+									$core= new PR_Api_Core_CandidateClass();
+									$getjob=$core->getjobfunctions();
+									
+									if(!empty($getjob)){
+										foreach($getjob as $list){
+									?>
+									<option value="<?=$list["JobFunctionID"]?>" <?php if($list["JobFunctionID"]=="1") echo "selected";?>><?=$list["JobFucntion"]?></option>
+									<?php
+										}
+									}
+									?>
+								</select>
+                                <!--<input name="JobFucntion" type="text" class="form-control" placeholder="Project Manager" >-->
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label>Experience</label>
 								
                                 <select name="CredentialExperienceID" id="CredentialExperienceID" class="form-control">
@@ -298,15 +315,15 @@ $getCandidates=$this->getCandidates;
 									}
 									?>
 								</select>
-                            </div>
+                            </div>-->
 							<div class="form-group">
 								<?php
 									$pecent=$this->totalPercentage;
-									$total=1-$pecent;
+									$total=100-$pecent;
 									//echo "tetst:".$total
 								?>
-                                <label>Percentage</label>
-                                <select name="Percentage" id="Percentage" class="form-control">
+                                <label>Percentage (%)</label>
+                                <!--<select name="Percentage" id="Percentage" class="form-control">
 									<option>Select</option>
 									<option value="0.05"<?php if($total==0.05) echo "selected" ?>>5 %</option>
 									<option value="0.1" <?php if($total==0.1) echo "selected" ?>>10 %</option>
@@ -328,7 +345,8 @@ $getCandidates=$this->getCandidates;
 									<option value="0.9" <?php if($total==0.9) echo "selected" ?>>90 %</option>
 									<option value="0.95" <?php if($total==0.95) echo "selected" ?>>95 %</option>
 									<option value="1" <?php if($total==1) echo "selected" ?> >100 %</option>
-								</select>
+								</select>-->
+								<input name="Percentage" id="Percentage" type="text" class="form-control" placeholder="" value="<?=$total?>" >
                             </div>
 
 
@@ -336,12 +354,13 @@ $getCandidates=$this->getCandidates;
 						  </div>
 									<div style="margin-top:10px">
 									<?php 
-										if($this->totalPercentage<1){
+										//if($this->totalPercentage data-status<100 ){
 									?>
-									<button data-status="add" data-step="employment" id="add-anotherjob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong>+ Add Another</strong></button>
-									<span style="padding-left:10px;"><button data-step="employment" id="cancel" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong>Cancel</strong></button></span>
+									<input type="hidden" id="totalPercentage" value="<?=$this->totalPercentage?>">
+									<button data-status="view" data-step="employment" id="add-anotherjob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>+ Add Another</strong></button>
+									<span style="padding-left:10px;"><button data-step="employment" id="cancel" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" style="display:none"><strong>Cancel</strong></button></span>
 									<?php
-									}
+									//}
 									?>
 									</div>
                                 </div>
@@ -458,6 +477,21 @@ $getCandidates=$this->getCandidates;
         $('#divjobfunction').show();
         
     });*/
+	var totalPercentage = $('#employment-form #totalPercentage').val();
+	var status=$('#employment-form #add-anotherjob').attr('data-status');
+	//alert("totalPercentage:"+totalPercentage );
+	//alert("status:"+status );
+	if(totalPercentage >=100 && status=="view"){
+        //$('#divemployment').hide();
+		$('#add-anotherjob').hide();
+		}
+	else{
+		$('#add-anotherjob').show();
+	}
+        
+        
+   
+	
 	//======
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true });
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true });
