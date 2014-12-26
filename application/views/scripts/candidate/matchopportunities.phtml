@@ -30,6 +30,12 @@
         margin-right: 10px;margin-bottom: 5px;
     }
 
+    .modal-wrapper{
+        display: table;  outline: 0 none; overflow-x: auto; overflow-y: scroll; transition:all 0.4s ease 0s;
+        position: absolute;
+        top: 40%;
+        left: 40%;
+    }
 </style>
 <?php
      $canInformation = $this->candidateInfo;
@@ -72,13 +78,15 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="this-job-was-applied" data-keyboard="false" data-backdrop="static">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-wrapper">
+        <div class="modal-dialog modal-sm">
         <div class="modal-content modal-dialog-center">
             <div class="modal-header" style="border-bottom: none">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <div class="modal-title text-center" id="modal-this-job-was-applied"></div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 <!--END-->
