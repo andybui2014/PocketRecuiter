@@ -146,6 +146,23 @@ $getCandidates=$this->getCandidates;
     }
 
         /****/
+	.modal {
+  text-align: center;
+}
+
+.modal:before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 100%;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
 
 </style>
 <div class="container">
@@ -198,15 +215,25 @@ $getCandidates=$this->getCandidates;
                     <div class="col-md-9" style="padding-left:0;">
 
                         <form id="employment-form" role="form">
+                        <?php
+                            
+                               // foreach($this->employment as $key=>$Item){
+                               $Item=$this->employment;  
+                                
+                            
+                         ?>
 						 <div id="divemployment">
-                            <input type="hidden" name="empId" id="empId"/>
+                         
+                            <input type="hidden" name="empId" id="empId" value="<?=$Item["CandidateEmploymentID"]?>" />
+                          
                             <div class="form-group">
                                 <label>Company Name (no abbreviations,please)</label>
-                                <input name="companyName" type="text" class="form-control" placeholder="">
+                                <input name="companyName" type="text" class="form-control" value="<?=$Item["CompanyName"]?>">
+                               
                             </div>
                             <div class="form-group">
                                 <label>Position Held</label>
-                                <input name="posotionHeld"  type="text" class="form-control" placeholder="">
+                                <input name="posotionHeld"  type="text" class="form-control" value="<?=$Item["PostionHeld"]?>">
                             </div>
 
 
@@ -215,7 +242,12 @@ $getCandidates=$this->getCandidates;
                                 <div class="form-group">
                                     <label> <strong>Start Date</strong></label>
                                     <div class="input-group date" id="datetimepicker8">
-                                        <input type="text" name="startDate" class="form-control">
+                                    <?php
+                                     $startDate = $Item["StartDate"];
+                                    if (($timestamp = strtotime($startDate)) !== false)
+                                        $startDate = date("m/d/Y", $timestamp);
+                                    ?>
+                                        <input type="text" name="startDate" class="form-control" value="<?=$startDate?>">
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                     </div>
@@ -225,7 +257,12 @@ $getCandidates=$this->getCandidates;
                                 <div class="form-group">
                                     <label> <strong>End Date</strong></label>
                                     <div class="input-group date" id="datetimepicker9">
-                                        <input type="text" name="endDate" class="form-control">
+                                    <?php
+                                    $endDate = $Item["EndDate"];
+                                    if (($timestamp = strtotime($endDate)) !== false)
+                                        $endDate = date("m/d/Y", $timestamp);
+                                    ?>
+                                        <input type="text" name="endDate" class="form-control" value="<?=$endDate?>">
                                     <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                     </span>
                                     </div>
@@ -235,15 +272,20 @@ $getCandidates=$this->getCandidates;
                             <div class="form-group">
                                 <label><strong>Description (optional)</strong></label>
 
-                                <textarea id="empDesc" name="description" class="form-control"></textarea>
+                                <textarea id="empDesc" name="description" class="form-control"><?=$Item["Description"]?></textarea>
                             </div>
 						  </div>
-						  
+						  <?php
+                              //  }
+                           // }
+                          ?>
 						   
-						  
+						 <!--<div><a id="Job_Functions" href="#">&nbsp;</a></div>-->
 						<div class="col-md-12" style="padding:0">
                         <div class="panel panel-default">
+						
                             <div class="panel-heading">
+							
 								<table width="100%">
 									<tr>
 										<th width="60%">Job Functions</th>
@@ -257,92 +299,142 @@ $getCandidates=$this->getCandidates;
                             <div class="panel-body">
                                 <div class="table-responsive">
 
-                                    <table id="jobfunction" class="table-hover" width="100%" 
+                                    <table id="jobfunction" class="table-hover" width="100%" >
                                        <?php
-									   if(!empty($this->jobfunctions))
-									   {
-											foreach($this->jobfunctions as $jobfunctions){
-											$pecent=100*$jobfunctions["Percentage"];
+									
+                                            if(!empty($this->jobfunctions)){
+                                               // print_r($this->jobfunctions);
+                                                foreach($this->jobfunctions as $jobfunctions){
+											        $pecent=100*$jobfunctions["Percentage"];
 									   ?>
 										<tr> 
 											<td width="60%"><?=$jobfunctions["JobFucntion"]?></td>
 											<td width="20%"><?=round($pecent,2)?>%</td>
 											<td style="float:right;padding-right:10px">
 											<span id="btn-editjob" class="btn-editjob" data-id="<?=$jobfunctions['JobFunctionID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
-                                                <span><i data-text="<?=$jobfunctions['JobFucntion'];?>" data-id="<?=$jobfunctions['JobFunctionID'];?>" id='qst-removejob' class="glyphicon glyphicon-remove qst-removejob"></i></span></td>
+                                                <span><i data-text="<?=$jobfunctions['JobFucntion'];?>" data-id="<?=$jobfunctions['id'];?>" id='qst-removejob' class="glyphicon glyphicon-remove qst-removejob"></i></span></td>
 										</tr>
 										<?php
 										}}
+                                        //}}
 										?>
                                     </table>
-									<div id="divjobfunction" style="display:none;margin-top:20px">
+							<!--<div id="divjobfunction" style="display:none;margin-top:20px">
                             <input type="hidden" name="JobFunctionID" id="JobFunctionID"/>
                             <div class="form-group">
                                 <label>Job Function Name </label>
-                                <input name="JobFucntion" type="text" class="form-control" placeholder="">
-                            </div>
-                            <div class="form-group">
-                                <label>Experience</label>
-								
-                                <select name="CredentialExperienceID" id="CredentialExperienceID" class="form-control">
-									<option >Select</option>
+								<select name="JobFucntion" id="JobFucntion" class="form-control">
+									
 									<?php
 									$core= new PR_Api_Core_CandidateClass();
-									$Experience=$core->getExperience($getCandidates["CandidateProfileID"]);
-									if(!empty($Experience)){
-										foreach($Experience as $list){
+									$getjob=$core->getjobfunctions();
+									
+									if(!empty($getjob)){
+										foreach($getjob as $list){
 									?>
-									<option value="<?=$list["CredentialExperienceID"]?>"><?=$list["title"]?></option>
+									<option value="<?=$list["JobFunctionID"]?>" <?php if($list["JobFunctionID"]=="1") echo "selected";?>><?=$list["JobFucntion"]?></option>
 									<?php
 										}
 									}
 									?>
 								</select>
-                            </div>
+                              </div>
 							<div class="form-group">
 								<?php
 									$pecent=$this->totalPercentage;
-									$total=1-$pecent;
+									$total=100-$pecent;
 									//echo "tetst:".$total
 								?>
-                                <label>Percentage</label>
-                                <select name="Percentage" id="Percentage" class="form-control">
-									<option>Select</option>
-									<option value="0.05"<?php if($total==0.05) echo "selected" ?>>5 %</option>
-									<option value="0.1" <?php if($total==0.1) echo "selected" ?>>10 %</option>
-									<option value="0.15" <?php if($total==0.15) echo "selected" ?>>15 %</option>
-									<option value="0.2" <?php if($total==0.2) echo "selected" ?>>20 %</option>
-									<option value="0.25" <?php if($total==0.25) echo "selected" ?>>25 %</option>
-									<option value="0.3" <?php if($total==0.3) echo "selected" ?>>30 %</option>
-									<option value="0.35" <?php if($total==0.35) echo "selected" ?>>35 %</option>
-									<option value="0.4" <?php if($total==0.4) echo "selected" ?>>40 %</option>
-									<option value="0.45" <?php if($total==0.45) echo "selected" ?>>45 %</option>
-									<option value="0.5" <?php if($total==0.5) echo "selected" ?>>50 %</option>
-									<option value="0.55" <?php if($total==0.55) echo "selected" ?>>55 %</option>
-									<option value="0.6" <?php if($total==0.6) echo "selected" ?>>60 %</option>
-									<option value="0.65" <?php if($total==0.65) echo "selected" ?>>65 %</option>
-									<option value="0.7" <?php if($total==0.7) echo "selected" ?>>70 %</option>
-									<option value="0.75" <?php if($total==0.75) echo "selected" ?>>75 %</option>
-									<option value="0.8" <?php if($total==0.8) echo "selected" ?>>80 %</option>
-									<option value="0.85" <?php if($total==0.85) echo "selected" ?>>85 %</option>
-									<option value="0.9" <?php if($total==0.9) echo "selected" ?>>90 %</option>
-									<option value="0.95" <?php if($total==0.95) echo "selected" ?>>95 %</option>
-									<option value="1" <?php if($total==1) echo "selected" ?> >100 %</option>
-								</select>
+                                <label>Percentage (%)</label>
+                                
+								<input name="Percentage" id="Percentage" type="text" class="form-control" placeholder="" value="<?=$total?>" >
                             </div>
 
 
 
-						  </div>
-									<div style="margin-top:10px">
-									<?php 
-										if($this->totalPercentage<1){
-									?>
-									<button data-status="add" data-step="employment" id="add-anotherjob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong>+ Add Another</strong></button>
-									<span style="padding-left:10px;"><button data-step="employment" id="cancel" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" type="button"><strong>Cancel</strong></button></span>
-									<?php
-									}
-									?>
+						  </div>-->
+                          <!--modal-->
+                          <div class="modal fade" tabindex="-1" role="dialog" id="openModalJobFunction" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog">
+                                <div class="modal-content modal-dialog-center">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h2 class="modal-title" id="myModalLabel" style="color:#005595">Job Functions</h2>
+                                    </div>
+                                    <div class="modal-body login-modal" style="height:350px">
+                                    
+                                    <div class="col-md-12" >
+                                    
+                                           <div id="divjobfunction" style="margin-top:20px">
+                                                    <input type="hidden" name="JobFunctionID" id="JobFunctionID"/>
+                                                    <input type="hidden" name="JobID" id="JobID"/>
+                                                    
+                                                    <div class="form-group">
+                                                        <label>Job Function Name </label>
+                                                        <?php
+                                                        
+                                                        ?>
+                                                        <select name="JobFucntion" id="JobFucntion" class="form-control">
+                                                            
+                                                            <?php
+                                                            $core= new PR_Api_Core_CandidateClass();
+                                                            $getjob=$core->getjobfunctions();
+                                                            
+                                                            if(!empty($getjob)){
+                                                              //  $rray=array();
+                                                              //  $list1=$this->jobfunctions;
+                                                              //  if(!empty($list1)){
+                                                              //  foreach($list1 as $Item){
+                                                                 //   $rray[]=$Item["JobFunctionID"];
+                                                               // }}
+                                                                foreach($getjob as $list){
+                                                                 
+                                                                 //  if(!in_array($list["JobFunctionID"],$rray)){
+                                                                                
+                                                                           
+                                                                //<?php if($list["JobFunctionID"]=="1") echo "selected";
+                                                            ?>
+                                                            
+                                                            <option value="<?=$list["JobFunctionID"]?>" ><?=$list["JobFucntion"]?></option>
+                                                            <?php
+                                                               // }
+                                                            } }
+                                                                        
+                                                                    
+                                                            ?>
+                                                        </select>
+                                                      </div>
+                                                    <div class="form-group">
+                                                        <?php
+                                                            $total=0;
+                                                            $pecent=$this->totalPercentage;
+                                                            $total=100-$pecent;
+                                                            //echo "tetst:".$total
+                                                        ?>
+                                                        <label>Percentage (%)</label>
+                                                        
+                                                        <input name="Percentage" id="Percentage" type="text" class="form-control"  value="<?=$total?>" >
+                                                    </div>
+
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob" data-status="add" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+
+                                                  </div>      
+
+                                    </div>
+                                        
+                                    </div>
+                                  </div>
+                                
+                            </div>
+                        </div>
+                          <!--modal-->
+                          
+						  <div style="margin-top:10px">
+									
+									<input type="hidden" id="totalPercentage" value="<?=$this->totalPercentage?>">
+									<button  data-step="employment" id="add-anotherjob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>+ Add Another</strong></button>
+									<span style="padding-left:10px;"><button data-step="employment" id="cancel" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" style="display:none"><strong>Cancel</strong></button></span>
+									
 									</div>
                                 </div>
                             </div>
@@ -446,18 +538,27 @@ $getCandidates=$this->getCandidates;
 </div>
 <script src="<?=URL_THEMES;?>js/pocket.candidate.js?vs=1"></script>
 <script type="text/javascript">
-	/* $('#employment-form #employment-form#add-anotherjob').unbind('click').bind('click',function(){
-        $('#divemployment').hide();
-		$('#add-another').hide()
-        $('#divjobfunction').show();
-		//$('#employment-form #add-anotherjob').attr('data-status','add').html('<strong> + add Job Function</strong>');
+	var empId=$('#employment-form #empId').val();
+    if((empId!="")){
+        $('#employment-form #add-another').attr('data-status','update').html('<strong> + Update Employment</strong>');
+    }else{
+        $('#employment-form #add-another').attr('data-status','add').html('<strong>Save</strong>');
+    }
+	var totalPercentage = $('#employment-form #totalPercentage').val();
+	var status=$('#employment-form #add-anotherjob').attr('data-status');
+	
+	//if(totalPercentage >=100 && status=="view"){
+    if(totalPercentage >=100){
+        //$('#divemployment').hide();
+		$('#add-anotherjob').hide();
+		}
+	else{
+		$('#add-anotherjob').show();
+	}
         
-    });
-	 $('#btn-editjob').unbind('click').bind('click',function(){
-        $('#divemployment').hide();
-        $('#divjobfunction').show();
         
-    });*/
+   
+	
 	//======
     $("#datetimepicker8").datepicker({ autoclose: true, todayHighlight: true });
     $("#datetimepicker9").datepicker({ autoclose: true, todayHighlight: true });

@@ -13,19 +13,22 @@ pocketCandidate.prototype = {
         $('#cmd-back1').unbind('click').bind('click',this.back);
         $('#add-another').unbind('click').bind('click',this.addAnother);
 		$('#add-anotherjob').unbind('click').bind('click',this.addAnotherJob);
+        $('#save-anotherjob').unbind('click').bind('click',this.saveAnotherJob);
 		$('#cancel').unbind('click').bind('click',this.cancelJobFunction);
 		$('#jobfunction #qst-removejob').unbind('click').bind('click',this.deleteJobFunction);
     },
 	
     editEmployment: function(){
         var $this = $(this);
-		$('#divemployment').show();
-        $('#divjobfunction').hide();
+		//$('#divemployment').show();
+       // $('#divjobfunction').hide();
         if($this.attr('data-id') > 0){
             $.post('./detail-employment',{id: $this.attr('data-id') },function(xhr){
 
                 if(xhr.success){
 				//alert(xhr.info.CompanyName);
+                   // location.reload();
+                   
                     $('#employment-form :input[name="companyName"]').val(xhr.info.CompanyName);
                     $('#employment-form :input[name="posotionHeld"]').val(xhr.info.PostionHeld);
                     $('#employment-form :input[name="startDate"]').val(xhr.info.StartDate);
@@ -33,118 +36,111 @@ pocketCandidate.prototype = {
                     $('#employment-form #empDesc').val(xhr.info.Description);
                     $('#employment-form #add-another').attr('data-status','update').html('<strong> + Update Employment</strong>');
                     $('#employment-form #empId').val(xhr.info.CandidateEmploymentID);
+                    location.href = './profile-builder?utm_source=employment&id=' + $this.attr('data-id');
 
                 }
             })
         }
     },
 	cancelJobFunction: function(){
-		location.reload();
+		//location.reload();
+        $('#openModalJobFunction').modal('hide');
 	},
 	   editJobFuntion: function(){
         var $this = $(this);
-		$('#divemployment').hide();
-        $('#divjobfunction').show();
-		$('#add-another').hide();
+		//$('#divemployment').hide();
+        $('#openModalJobFunction').modal('show');
+
+		$('#add-anotherjob').show();
+		var empId=$('#empId').val();
+        //alert(empId);
         if($this.attr('data-id') > 0){
-            $.post('./detail-job-function',{id: $this.attr('data-id') },function(xhr){
+            $.post('./detail-job-function',{id: $this.attr('data-id'),empId:empId },function(xhr){
 
                 if(xhr.success){
 				//alert(xhr.info);
-                    $('#employment-form :input[name="JobFucntion"]').val(xhr.info.JobFucntion);
-                    $('#employment-form #CredentialExperienceID').val(xhr.info.CredentialExperienceID);
+                    $('#employment-form #JobFucntion').val(xhr.info.JobFunctionID);
+                    $('#employment-form #JobID').val(xhr.info.id);
 					$('#employment-form #Percentage').val(xhr.info.Percentage);
-                    $('#employment-form #add-anotherjob').attr('data-status','updateJob').html('<strong>Save</strong>');
+                    $('#employment-form #save-anotherjob').attr('data-status','updateJob').html('<strong>Save</strong>');
                     $('#employment-form #JobFunctionID').val(xhr.info.JobFunctionID);
 
                 }
             })
         }
     },
-	addAnotherJob: function(){
-		
-	var $this = $(this);
-	$('#divemployment').hide();
-	$('#divjobfunction').show();
-	$('#add-another').hide();
-	$('#add-anotherjob').html('<strong>Save</strong>');
-	//$this.button('loading');
-	
-
+    saveAnotherJob: function(){
+       var $this = $(this); 
+       var status=$('#save-anotherjob').attr("data-status");
+        /* if(status=="view")
+         {
+            $('#employment-form #save-anotherjob').attr('data-status','add');
+            
+         }*/
 	$('#employment-form :input[type="text"]').change(function(){
 		if($(this).val() !='' && $(this).val().length > 0){
 		$(this).parent().removeClass('has-error');
 		}
 	});
-	var JobVal = $('#employment-form :input[name="JobFucntion"]');
-				if(JobVal.val() !='' || JobVal.val().length > 0){
-					if($this.attr('data-status')=='add'){
+	var JobVal = $('#employment-form #Percentage');
+	var JobFucntion = $('#employment-form #JobFucntion');
+	//alert(status);
+
+
+					if(status=='add'){
 						$.post('./do-add-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
 							
-							if(xhr.info=='Total Percentage greater 100%' || xhr.info=='Percentage not empty')
+							if(xhr.info=='Total Percentage greater than 100%' || xhr.info=='Percentage not empty' || xhr.info=='Percentage must be integer')
 							{
 								alert(xhr.info);
 								$('#employment-form #Percentage').parent().addClass('has-error');
 							}else{
 								$('#employment-form #Percentage').parent().removeClass('has-error');
 							}
-							if(xhr.info=='Experience not empty'){
-								//alert(xhr.info);
-								$('#employment-form #CredentialExperienceID').parent().addClass('has-error');
+                            if(xhr.info=='Job Fucntion not empty'){
+                                alert(xhr.info);
+                                $('#employment-form #JobFucntion').parent().addClass('has-error');
 							}else {
-								$('#employment-form #CredentialExperienceID').parent().removeClass('has-error');
+                                $('#employment-form #JobFucntion').parent().removeClass('has-error');
 							}
-							
+							//alert(xhr.info);
 							if(xhr.info==null || xhr.info==""){
-								location.reload();
+                                $('#openModalJobFunction').modal('hide');
 							}
-							//if(xhr.success){
-							  //  location.reload();
-						   // }else{
-								//errors
-							   // $.each(xhr.info,function(key,item){
-								//alert(key);
-								  //  $('#employment-form #"'+key+'"]').parent().addClass('has-error');
-							   // })
-								//$this.button('reset');
-							//}
+                            
 						})
-					}else if($this.attr('data-status')=='updateJob'){
+					}else if(status=='updateJob'){
+						
 						$.post('./do-update-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
-							if(xhr.info=='Total Percentage greater 100%' || xhr.info=='Percentage not empty')
+							if(xhr.info=='Total Percentage greater than 100%' || xhr.info=='Percentage not empty')
 							{
 								alert(xhr.info);
 								$('#employment-form #Percentage').parent().addClass('has-error');
 							}else{
 								$('#employment-form #Percentage').parent().removeClass('has-error');
 							}
-							if(xhr.info=='Experience not empty'){
-								//alert(xhr.info);
-								$('#employment-form #CredentialExperienceID').parent().addClass('has-error');
+                            if(xhr.info=='Job Fucntion not empty'){
+                                alert(xhr.info);
+                                $('#employment-form #JobFucntion').parent().addClass('has-error');
 							}else {
-								$('#employment-form #CredentialExperienceID').parent().removeClass('has-error');
+                                $('#employment-form #JobFucntion').parent().removeClass('has-error');
 							}
-							
-							if(xhr.info==null || xhr.info==""){
-								location.reload();
-							}
-						   /* if(xhr.success){
-								location.reload();
-							}else{
-								//errors
-								$.each(xhr.info,function(key,item){
-									$('#employment-form :input[name="'+key+'"]').parent().addClass('has-error');
-								})
-								$this.button('reset');
-							}*/
-						})
-					}
+                            
+							if(xhr.success==1){
+                           //if(xhr.info==null || xhr.info==""){
+                               //$('#employment-form #JobFucntion').val(xhr.info.JobFucntion);
+                                $('#openModalJobFunction').modal('hide');
+                            }
+                           
+                        })
+                    }
+    },
+	addAnotherJob: function(){
+		
+	
 
-				}else{
-					JobVal.focus();
-					//JobVal.parent('.form-group').addClass('has-error');
-					$this.button('reset');
-				}
+    $('#openModalJobFunction').modal('show');
+
 		},
     deleteEmployment: function(){
         var $this= $(this);
@@ -173,6 +169,8 @@ pocketCandidate.prototype = {
     },
 	deleteJobFunction: function(){
         var $this= $(this);
+        var empId=$('empId').val();
+        //alert(empId);
         if($this.attr('data-id') > 0){
             var $modal = $('#modal-dialog');
             var $qstName = $this.attr('data-text');
@@ -187,7 +185,7 @@ pocketCandidate.prototype = {
                 '</div>' +
                 '</p>'
             ).find('#qst-cfRemove').unbind('click').bind('click',function(){
-                    $.post('./do-remove-job-function',{id: $this.attr('data-id')},function(xhr){
+                    $.post('./do-remove-job-function',{id: $this.attr('data-id'),empId:empId},function(xhr){
                         if(xhr.success){
                             location.reload();
                         }
@@ -365,77 +363,7 @@ pocketCandidate.prototype = {
                     $(this).parent().removeClass('has-error');
                 }
             });
-			//
-			/*var JobVal = $('#employment-form :input[name="JobFucntion"]');
-			if(JobVal.val() !='' || JobVal.val().length > 0){
-                if($this.attr('data-status')=='add'){
-                    $.post('./do-add-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
-                        
-						if(xhr.info=='Total Percentage greater 100%' || xhr.info=='Percentage not empty')
-						{
-							alert(xhr.info);
-							$('#employment-form #Percentage').parent().addClass('has-error');
-						}else{
-							$('#employment-form #Percentage').parent().removeClass('has-error');
-						}
-						if(xhr.info=='Experience not empty'){
-							//alert(xhr.info);
-							$('#employment-form #CredentialExperienceID').parent().addClass('has-error');
-						}else {
-							$('#employment-form #CredentialExperienceID').parent().removeClass('has-error');
-						}
-						
-						if(xhr.info==null || xhr.info==""){
-							location.reload();
-						}
-						//if(xhr.success){
-                          //  location.reload();
-                       // }else{
-                            //errors
-                           // $.each(xhr.info,function(key,item){
-							//alert(key);
-                              //  $('#employment-form #"'+key+'"]').parent().addClass('has-error');
-                           // })
-                            //$this.button('reset');
-                        //}
-                    })
-                }else if($this.attr('data-status')=='updateJob'){
-                    $.post('./do-update-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
-						if(xhr.info=='Total Percentage greater 100%' || xhr.info=='Percentage not empty')
-						{
-							alert(xhr.info);
-							$('#employment-form #Percentage').parent().addClass('has-error');
-						}else{
-							$('#employment-form #Percentage').parent().removeClass('has-error');
-						}
-						if(xhr.info=='Experience not empty'){
-							//alert(xhr.info);
-							$('#employment-form #CredentialExperienceID').parent().addClass('has-error');
-						}else {
-							$('#employment-form #CredentialExperienceID').parent().removeClass('has-error');
-						}
-						
-						if(xhr.info==null || xhr.info==""){
-							location.reload();
-						}
-                       /* if(xhr.success){
-                            location.reload();
-                        }else{
-                            //errors
-                            $.each(xhr.info,function(key,item){
-                                $('#employment-form :input[name="'+key+'"]').parent().addClass('has-error');
-                            })
-                            $this.button('reset');
-                        }*/
-                   /* })
-                }
-
-            }else{
-                JobVal.focus();
-                JobVal.parent('.form-group').addClass('has-error');
-                $this.button('reset');
-            }*/
-			//
+			
             var compVal = $('#employment-form :input[name="companyName"]');
             if(compVal.val() !='' || compVal.val().length > 0){
                 if($this.attr('data-status')=='add'){
@@ -453,7 +381,7 @@ pocketCandidate.prototype = {
                 }else if($this.attr('data-status')=='update'){
                     $.post('./do-update-employment',{data: $('#employment-form').serializeArray()},function(xhr){
                         if(xhr.success){
-                            location.reload();
+                            location.href = './profile-builder?utm_source=employment';
                         }else{
                             //errors
                             $.each(xhr.info,function(key,item){
