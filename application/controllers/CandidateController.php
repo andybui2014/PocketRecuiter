@@ -36,11 +36,11 @@ class CandidateController extends Application_Controller_Action
             $id = isset($params['id']) ? $params['id'] : null;
             $core = new PR_Api_Core_CandidateClass();
             $ajaxRes['info'] = $core->getCandidateEmployment($id);
-            //echo '<pre>';
-            //print_r($ajaxRes['info']);
-            //echo '</pre>';
-            //die();
-
+           // $this->view->list = $ajaxRes['info'];
+           // $jobfunctions=$core->get_jobfuntion($id);
+            // $this->view->jobfunctions = $jobfunctions;
+           // $this->view->id=$id;
+             //print_r($params);
             //Convert m/d/Y StartDate
             $startDate = $ajaxRes['info']['StartDate'];
             if (($timestamp = strtotime($startDate)) !== false)
@@ -63,7 +63,7 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
     }
-
+   
     public function contactInfoAction(){
         $client = PR_Session::getSession(PR_Session::SESSION_USER);
         $core = new PR_Api_Core_CandidateClass();
@@ -419,16 +419,24 @@ class CandidateController extends Application_Controller_Action
                     //$core->addjobfunction("9","JobFucntion","0.9");
                     $list = $core->getCandidateEmployments($client['UserID']);
                     $this->view->list = $list;
-					$jobfunctions=$core->get_jobfuntion($client['CandidateProfileID']);
-					$totalPercentage=$core->totalPercentage($client['CandidateProfileID']);
-					$totalprcent=round($totalPercentage["totalPercentage"]*100,2);
-					$this->view->jobfunctions=$jobfunctions;
-					$this->view->totalPercentage=$totalprcent;
+                    if(isset($params["id"])||!empty($params["id"])){
+                    $id=$params["id"];
+                    $jobfunctions=$core->get_jobfuntion($id);
+                    $employment=$core->getCandidateEmployment($id);
+                    $this->view->jobfunctions=$jobfunctions;
+                    $this->view->employment=$employment;
+                    $totalPercentage=$core->totalPercentage($id);
+                    $totalprcent=round($totalPercentage["totalPercentage"]*100,2);
+                    
+                    $this->view->totalPercentage=$totalprcent;
+                    }
+					
+					//$core->deleteJobFunction(5,2);
 					$getjob=$core->getjobfunctions();
 					$this->getjob=$getjob;
                     $this->view->stepCount = '3/5 Steps';
                     $this->render('profile-builder/employment');
-					//echo "tetst:<pre>";print_r($totalprcent);echo("</pre>");
+					//echo "tetst:<pre>";print_r($employment);echo("</pre>");
                     break;
                 case 'skills':
 
@@ -881,6 +889,10 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='startDate')      $startDate = $item['value'];
                     if($item['name']=='endDate')        $endDate = $item['value'];
                     if($item['name']=='description')    $description = $item['value'];
+                    if($item['name']=='JobID')          $jobid = $item['value'];
+                    if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
+                    if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
+                    if($item['name']=='Percentage')     $Percentage = $item['value'];
                 }
                 if(empty($empId)) $errors['empId'] = 1;
                 if(empty($companyName)) $errors['companyName'] = 1;
@@ -893,6 +905,17 @@ class CandidateController extends Application_Controller_Action
                     //$client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->updateCandidateEmployment($empId,$companyName,$positionHeld,$startDate,$endDate,$description);
+                $Percentage=round($Percentage/100,2);
+                //echo "tetst:".$JobFucntion;
+                //$jobid=$core->getJobFunction($JobFunctionID,$empId);
+                //$jobid=$jobid["id"];
+                if(isset($jobid) && !empty($jobid)){
+                $core->updateJobFunction($JobFucntion,$empId,$Percentage,$jobid);
+                }
+                else{
+                    $core->addjobfunction($empId,$JobFucntion,$Percentage);
+                    
+                }
                 //if($isSuccess)
 				$ajaxRes['success'] = 1;
                 }else{
@@ -928,6 +951,10 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='startDate')      $startDate = $item['value'];
                     if($item['name']=='endDate')        $endDate = $item['value'];
                     if($item['name']=='description')    $description = $item['value'];
+                    if($item['name']=='JobID')          $jobid = $item['value'];
+                    if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
+                    if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
+                    if($item['name']=='Percentage')     $Percentage = $item['value'];
                 }
 
                 if(empty($companyName)) $errors['companyName'] = 1;
@@ -939,7 +966,11 @@ class CandidateController extends Application_Controller_Action
                 if(empty($errors)){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
-                $isSuccess = $core->addCandidateEmployment($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description);
+                $Percentage=round($Percentage/100,2);
+                //$isSuccess = $core->addCandidateEmployment($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description);
+                $isSuccess = $core->addCandidateEmploymentJob($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description,$JobFucntion,$Percentage);
+                
+               // $core->addjobfunction($empId,$JobFucntion,$Percentage);
                 if($isSuccess) $ajaxRes['success'] = 1;
                 }else{
                     $ajaxRes['info'] = $errors;
@@ -2397,26 +2428,26 @@ class CandidateController extends Application_Controller_Action
         $ajaxRes = array('success'=>0,'info'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
-
+            //echo "testt:<pre>";print_r($params);echo("</pre>");die();
             $JobFucntion = null;
             $CredentialExperienceID = null;
             $Percentage = null;
             if(!empty($params['data']) && sizeof($params['data'])){
 
                 foreach($params['data'] as $key=>$item){
+                    if($item['name']=='empId')    $empId  = $item['value'];
                     if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
-                    //if($item['name']=='CredentialExperienceID')   $CredentialExperienceID = $item['value'];
+                    
                     if($item['name']=='Percentage')      $Percentage = $item['value'];
-                    }
-				//if($CredentialExperienceID ==""||$CredentialExperienceID=="Select"){
-					//$ajaxRes['success'] = 0;
-					//$ajaxRes['info'] = "Experience not empty";
-					
-				//}
-				//echo $JobFucntion;die();
+                  
+                }
 				if($Percentage ==""){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Percentage not empty";
+                }
+				if($JobFucntion ==""){
 					$ajaxRes['success'] = 0;
-					$ajaxRes['info'] = "Percentage not empty";
+					$ajaxRes['info'] = "Job Fucntion not empty";
 				}
 				if(!is_numeric ($Percentage )){
 					$ajaxRes['success'] = 0;
@@ -2424,35 +2455,29 @@ class CandidateController extends Application_Controller_Action
 					
 				}
 				
-                if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
-               // if(empty($CredentialExperienceID)) $errors['CredentialExperienceID'] = 1;
-                //if(empty($Percentage)) $errors['Percentage'] = 1;
+                //if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
+               
                 
-
-                if(empty($errors)){
+						
+                if($Percentage!="" && $JobFucntion!=""){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
-				$totalPercentage=$core->totalPercentage($user["CandidateProfileID"]);
+				$totalPercentage=$core->totalPercentage($empId);
 				$totalPercentage=round($totalPercentage["totalPercentage"],2);
 				$Percentage=$Percentage/100;
 				$total=$totalPercentage+$Percentage;
-				//echo "Percentage:".$Percentage;
-				//echo "totalPercentage:".$totalPercentage;
-				//echo "total:".$total;die();
-				if($total<=1)
+				
+				if($total>=1)
 				{
-					$isSuccess = $core->addjobfunction($user["CandidateProfileID"],$JobFucntion,$Percentage);
-                if($isSuccess) $ajaxRes['success'] = 1;
-                }else{
 					$ajaxRes['success'] = 0;
-					$ajaxRes['info'] = "Total Percentage greater 100%";
-					
-				 }
-                
+                    $ajaxRes['info'] = "Total Percentage greater than 100%";
+				}else{
+                    $ajaxRes['success'] = 1;
+                }
                 
                 }else{
 					
-                    $ajaxRes['info'] = $errors;
+                   // $ajaxRes['info'] = $errors;
                 }
 				
 
@@ -2474,11 +2499,14 @@ class CandidateController extends Application_Controller_Action
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
             $id = isset($params['id']) ? $params['id'] : null;
+            $empId=$params['empId'];
+			//echo "tetst:<pre>";print_r($empId);echo("</pre>");die();
             $core = new PR_Api_Core_CandidateClass();
            // $jobfunction= $core->getJobFunction($id);
-			$ajaxRes['info'] = $core->getJobFunction($id);
+			$ajaxRes['info'] = $core->getJobFunction($id,$empId);
 			$Percentage=$ajaxRes['info']['Percentage'];
 			$ajaxRes['info']['Percentage']=round($Percentage*100,2);
+			
 			//echo $ajaxRes['info']['Percentage'];die();
             if(sizeof($ajaxRes['info']) > 0) $ajaxRes['success'] = 1;
 
@@ -2505,54 +2533,55 @@ class CandidateController extends Application_Controller_Action
             if(!empty($params['data']) && sizeof($params['data'])){
 
                 foreach($params['data'] as $key=>$item){
+                    if($item['name']=='empId')    $empId  = $item['value'];
                     if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
                     if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
                   //  if($item['name']=='CredentialExperienceID')   $CredentialExperienceID = $item['value'];
                     if($item['name']=='Percentage')      $Percentage = $item['value'];
                    
                 }
-				//if($CredentialExperienceID ==""||$CredentialExperienceID=="Select"){
-					//$ajaxRes['success'] = 0;
-					//$ajaxRes['info'] = "Experience not empty";
-					
-				//}
-				if($Percentage ==""||$Percentage=="Select"){
+				
+				if($Percentage ==""){
 					$ajaxRes['success'] = 0;
 					$ajaxRes['info'] = "Percentage not empty";
 				}
-                if(empty($JobFunctionID)) $errors['JobFunctionID'] = 1;
-                if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
-               // if(empty($CredentialExperienceID)) $errors['CredentialExperienceID'] = 1;
-                if(empty($Percentage)) $errors['Percentage'] = 1;
-                
+                if($JobFucntion ==""){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Job Fucntion not empty";
+                }            
 
-                if(empty($errors)){
+                if($Percentage!="" && $JobFucntion!=""){
                 $user = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
-				$job=$core->getJobFunction($JobFunctionID);
+				$job=$core->getJobFunction($JobFunctionID,$empId);
+				//db value
 				$percent=round($job["Percentage"],2);
-				$totalPercentage=$core->totalPercentage($user["CandidateProfileID"]);
+				//total db values
+				$totalPercentage=$core->totalPercentage($empId);
 				$totalPercentage=round($totalPercentage["totalPercentage"],2);
+				//new value
 				$Percentage=round($Percentage/100,2);
+				
 				$total=$totalPercentage-$percent+$Percentage;
-				if($total<=1){
-					$isSuccess = $core->updateJobFunction($JobFunctionID,$user["CandidateProfileID"],$Percentage);
-                if($isSuccess) $ajaxRes['success'] = 1;
-					$getjobfunctionsid=$core->getjobfunctionsid($JobFucntion);
+				if($total>=1){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Total Percentage greater than 100%";
 					
-					$getjob=$getjobfunctionsid["JobFucntion"];
+					//if($isSuccess) 
+                    
+					//$getjobfunctionsid=$core->getjobfunctionsid($JobFucntion);
 					
-					$ajaxRes['info']["JobFucntion"]=$getjob;
+					//$getjob=$getjobfunctionsid["JobFucntion"];
+					
+					//$ajaxRes['info']["JobFucntion"]=$getjob;
 					//echo "tetst1<pre>";print_r($ajaxRes);echo("</pre>");die();
-                }else{
-					$ajaxRes['success'] = 0;
-					$ajaxRes['info'] = "Total Percentage greater 100%";
-					//$ajaxRes['info']["JobFucntion"]="";
+				}else{
+					$ajaxRes['success'] = 1;
+                    $ajaxRes['info']["JobFucntion"]=$JobFucntion;
+					//$isSuccess = $core->updateJobFunction($JobFunctionID,$empId,$Percentage);
 					
 				 }
                 
-                }else{
-                    $ajaxRes['info'] = $errors;
                 }
             }
         }
