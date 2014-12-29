@@ -2511,7 +2511,7 @@ class CandidateController extends Application_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 		$user = PR_Session::getSession(PR_Session::SESSION_USER);
-        $ajaxRes = array('success'=>0,'info'=>null);
+        $ajaxRes = array('success'=>0,'info'=>null,'pecent'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
             //echo "testt:<pre>";print_r($params);echo("</pre>");die();
@@ -2580,6 +2580,7 @@ class CandidateController extends Application_Controller_Action
                     $ajaxRes['info'] = "Total Percentage greater than 100%";
 				}else{
                     $ajaxRes['success'] = 1;
+                     $ajaxRes['pecent']=$total;
                     
                 }
                 

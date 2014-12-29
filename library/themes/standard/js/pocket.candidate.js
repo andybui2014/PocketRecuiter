@@ -184,7 +184,7 @@ pocketCandidate.prototype = {
                             }else {
                                 $('#employment-form #JobFucntion_add').parent().removeClass('has-error');
                             }
-                            //alert(xhr.info);
+                            //alert(xhr.pecent);
                             if(xhr.info==null || xhr.info==""){
                                 $('#openModalJobFunction1').modal('hide');
                                 var JobFucntion=$('#JobFucntion_add option:selected').text();
@@ -209,6 +209,9 @@ pocketCandidate.prototype = {
                                 
                                 
                                 
+                            }
+                            if(xhr.pecent==1){
+                                $("#add-anotherjob").hide();
                             }
                             
                         })
