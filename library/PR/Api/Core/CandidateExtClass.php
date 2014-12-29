@@ -450,13 +450,13 @@ class PR_Api_Core_CandidateExtClass
          else return null; 
   }
  
-public function addjobfunction($CandidateEmploymentID,$JobFucntion,$Percentage)
+/*public function addjobfunction($CandidateEmploymentID,$JobFucntion,$Percentage)
     {
         //echo "Percentage:".$Percentage;die();       
         $updateFields = array("JobFunctionID"=>$JobFucntion,"Percentage"=>$Percentage,"CandidateEmploymentID"=>$CandidateEmploymentID);       
         $result = PR_Database::insert('credentialexperiencejobfunction',$updateFields);
         return $result;
-    }
+    }*/
  public function getJobFunction($JobFunctionID,$CandidateEmploymentID){
 		$db = PR_Database::getInstance();      
 		$select = $db->select();
@@ -526,9 +526,13 @@ public function addjobfunction($CandidateEmploymentID,$JobFucntion,$Percentage)
 		}   
 		else return null;  
    }
+  //public function addCandidateEmploymentJob($userID,$companyName,$position,
+   //     $startDate,$endDate,$description,$JobFunctionID,$Percentage)
   public function addCandidateEmploymentJob($userID,$companyName,$position,
-        $startDate,$endDate,$description,$JobFunctionID,$Percentage)
+        $startDate,$endDate,$description,$Text)
     {
+       // echo "testt:<pre>";print_r(count($Text["JobFucntion1"]));echo("</pre>");die();
+       
         //candidate_employments:CandidateEmploymentID,CandidateProfileID,
         //CompanyName,PostionHeld,StartDate,EndDate,Description,LastUpdated,LastUpdatedByUserID
         $db = PR_Database::getInstance();
@@ -559,13 +563,37 @@ public function addjobfunction($CandidateEmploymentID,$JobFucntion,$Percentage)
             $updateFields['EndDate'] = date("Y-m-d",strtotime($endDate));
         }
         $CandidateEmploymentID = PR_Database::insert('candidate_employments',$updateFields,true);
-        if(!empty($JobFunctionID) && !empty($Percentage))
+        /*if(!empty($JobFunctionID) && !empty($Percentage))
         {
             PR_Database::insert('credentialexperiencejobfunction',array("JobFunctionID"=>$JobFunctionID,"CandidateEmploymentID"=>$CandidateEmploymentID,"Percentage"=>$Percentage));
+        }*/
+        if(!empty($Text))
+        {
+            for($i=0;$i<count($Text["JobFucntion1"]);$i++){
+          //  echo "JobFucntion:".$Text["JobFucntion1"][$i]." "."Percentage:".$Text["Percentage1"][$i]."<br>";
+             PR_Database::insert('credentialexperiencejobfunction',array("JobFunctionID"=>$Text["JobFucntion1"][$i],"CandidateEmploymentID"=>$CandidateEmploymentID,"Percentage"=>$Text["Percentage1"][$i]));
+            
         }
+        }
+         
+        
         return $CandidateEmploymentID;
     }
-    
+   public function addjobfunction($CandidateEmploymentID,$Text)
+    {
+        //echo "Percentage:".$Percentage;die();       
+       // $updateFields = array("JobFunctionID"=>$JobFucntion,"Percentage"=>$Percentage,"CandidateEmploymentID"=>                      $CandidateEmploymentID);       
+       // $result = PR_Database::insert('credentialexperiencejobfunction',$updateFields);
+        if(!empty($Text))
+        {
+            for($i=0;$i<count($Text["JobFucntion1"]);$i++){
+          //  echo "JobFucntion:".$Text["JobFucntion1"][$i]." "."Percentage:".$Text["Percentage1"][$i]."<br>";
+            $result= PR_Database::insert('credentialexperiencejobfunction',array("JobFunctionID"=>$Text["JobFucntion1"][$i],"CandidateEmploymentID"=>$CandidateEmploymentID,"Percentage"=>$Text["Percentage1"][$i]));
+            
+        }
+        }
+        return $result;
+    } 
  
 }
   

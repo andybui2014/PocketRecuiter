@@ -6,10 +6,13 @@ $getCandidates=$this->getCandidates;
 <style>
     .btn-edit:hover{cursor: pointer;text-decoration: underline}
 	.btn-editjob:hover{cursor: pointer;text-decoration: underline}
+    .btn-editjob1:hover{cursor: pointer;text-decoration: underline}
     .qst-remove{color: #bbb}
     .qst-remove:hover{color: #333; cursor: pointer}
 	.qst-removejob{color: #bbb}
     .qst-removejob:hover{color: #333; cursor: pointer}
+    .qst-removejob1{color:#bbb}
+    .qst-removejob1:hover{color: #333; cursor: pointer}
 
     ul#nav-left{margin:0;padding:7px 0;margin-bottom: 10px;list-style: none; border-top: 1px solid #bbb;border-bottom: 1px solid #bbb}
     ul#nav-left li{line-height: 35px;}
@@ -146,7 +149,7 @@ $getCandidates=$this->getCandidates;
     }
 
         /****/
-	.modal {
+        .modal {
   text-align: center;
 }
 
@@ -162,7 +165,6 @@ $getCandidates=$this->getCandidates;
   text-align: left;
   vertical-align: middle;
 }
-
 
 </style>
 <div class="container">
@@ -300,6 +302,7 @@ $getCandidates=$this->getCandidates;
                                 <div class="table-responsive">
 
                                     <table id="jobfunction" class="table-hover" width="100%" >
+                                    <tbody>
                                        <?php
 									
                                             if(!empty($this->jobfunctions)){
@@ -318,6 +321,7 @@ $getCandidates=$this->getCandidates;
 										}}
                                         //}}
 										?>
+                                        </tbody>
                                     </table>
 							<!--<div id="divjobfunction" style="display:none;margin-top:20px">
                             <input type="hidden" name="JobFunctionID" id="JobFunctionID"/>
@@ -406,17 +410,17 @@ $getCandidates=$this->getCandidates;
                                                       </div>
                                                     <div class="form-group">
                                                         <?php
-                                                            $total=0;
-                                                            $pecent=$this->totalPercentage;
-                                                            $total=100-$pecent;
+                                                          //  $total=0;
+                                                         //   $pecent=$this->totalPercentage;
+                                                          //  $total=100-$pecent;
                                                             //echo "tetst:".$total
                                                         ?>
                                                         <label>Percentage (%)</label>
                                                         
-                                                        <input name="Percentage" id="Percentage" type="text" class="form-control"  value="<?=$total?>" >
+                                                        <input name="Percentage" id="Percentage" type="text" class="form-control"  >
                                                     </div>
 
-                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob" data-status="add" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob" data-status="updateJob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
 
                                                   </div>      
 
@@ -428,6 +432,141 @@ $getCandidates=$this->getCandidates;
                             </div>
                         </div>
                           <!--modal-->
+                            <!--modal1-->
+                          <div class="modal fade" tabindex="-1" role="dialog" id="openModalJobFunction1" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog">
+                                <div class="modal-content modal-dialog-center">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h2 class="modal-title" id="myModalLabel" style="color:#005595">Add Job Functions</h2>
+                                    </div>
+                                    <div class="modal-body login-modal" style="height:350px">
+                                    
+                                    <div class="col-md-12" >
+                                    
+                                           <div id="divjobfunction" style="margin-top:20px">
+                                                    <input type="hidden" name="JobFunctionID_ad" id="JobFunctionID_ad"/>
+                                                    <input type="hidden" name="JobID_add" id="JobID_add"/>
+                                                    
+                                                    <div class="form-group">
+                                                        <label>Job Function Name </label>
+                                                        <?php
+                                                        
+                                                        ?>
+                                                        <select name="JobFucntion_add" id="JobFucntion_add" class="form-control">
+                                                            
+                                                            <?php
+                                                            $core= new PR_Api_Core_CandidateClass();
+                                                            $getjob=$core->getjobfunctions();
+                                                            
+                                                            if(!empty($getjob)){
+                                                                $values=array();
+                                                                if(!empty($this->jobfunctions))
+                                                                {
+                                                                    foreach ($this->jobfunctions as $gestlist){
+                                                                      $values[]=$gestlist["JobFunctionID"];  
+                                                                    }
+                                                                }
+                                                             
+                                                                foreach($getjob as $list){
+                                                                 if(!in_array($list["JobFunctionID"],$values)){
+                                                                
+                                                            ?>
+                                                            
+                                                            <option value="<?=$list["JobFunctionID"]?>" ><?=$list["JobFucntion"]?></option>
+                                                            <?php
+                                                               // }
+                                                            } }}
+                                                                        
+                                                                    
+                                                            ?>
+                                                        </select>
+                                                      </div>
+                                                    <div class="form-group">
+                                                    
+                                                        <?php
+                                                            $total=0;
+                                                            $pecent=$this->totalPercentage;
+                                                            $total=100-$pecent;
+                                                            //echo "tetst:".$total
+                                                        ?>
+                                                        <label>Percentage (%)</label>
+                                                        
+                                                        <input name="Percentage_add" id="Percentage_add" type="text" class="form-control"  value="<?=$total?>" >
+                                                    </div>
+
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob1" data-status="add" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+
+                                                  </div>      
+
+                                    </div>
+                                        
+                                    </div>
+                                  </div>
+                                
+                            </div>
+                        </div>
+                          <!--modal1-->
+                           <!--modal2-->
+                          <div class="modal fade" tabindex="-1" role="dialog" id="openModalJobFunctionEditnew" data-keyboard="false" data-backdrop="static">
+                            <div class="modal-dialog">
+                                <div class="modal-content modal-dialog-center">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h2 class="modal-title" id="myModalLabel" style="color:#005595">Edit Job Functions</h2>
+                                    </div>
+                                    <div class="modal-body login-modal" style="height:350px">
+                                    
+                                    <div class="col-md-12" >
+                                    
+                                           <div id="divjobfunction" style="margin-top:20px">
+                                                   <input type="hidden" name="JobFunctionID_Edit" id="JobFunctionID_Edit"/>
+                                                   <!--  <input type="hidden" name="JobID" id="JobID"/>-->
+                                                    
+                                                    <div class="form-group">
+                                                        <label>Job Function Name </label>
+                                                        <?php
+                                                        
+                                                        ?>
+                                                        <select name="JobFucntion_Edit" id="JobFucntion_Edit" class="form-control">
+                                                            
+                                                            <?php
+                                                            $core= new PR_Api_Core_CandidateClass();
+                                                            $getjob=$core->getjobfunctions();
+                                                            
+                                                            if(!empty($getjob)){
+                                                              
+                                                                foreach($getjob as $list){
+                                                            ?>
+                                                            
+                                                            <option value="<?=$list["JobFunctionID"]?>" ><?=$list["JobFucntion"]?></option>
+                                                            <?php
+                                                               
+                                                            } }
+                                                                   
+                                                            ?>
+                                                        </select>
+                                                      </div>
+                                                    <div class="form-group">
+                                                        
+                                                        <label>Percentage (%)</label>
+                                                        
+                                                        <input name="Percentage_Edit" id="Percentage_Edit" type="text" class="form-control"  >
+                                                        <input type="hidden" name="pecent_edit" id="pecent_edit"/>
+                                                    </div>
+
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjobnew" data-status="updateJob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+
+                                                  </div>      
+
+                                    </div>
+                                        
+                                    </div>
+                                  </div>
+                                
+                            </div>
+                        </div>
+                          <!--modal2-->
                           
 						  <div style="margin-top:10px">
 									
@@ -567,6 +706,8 @@ $getCandidates=$this->getCandidates;
     $('#employmentList .btn-edit').unbind('click').bind('click',prCandidate.editEmployment);
 	$('#jobfunction .btn-editjob').unbind('click').bind('click',prCandidate.editJobFuntion);
     $('#employmentList .qst-remove').unbind('click').bind('click',prCandidate.deleteEmployment);
-	//('#jobfunction #qst-removejob').unbind('click').bind('click',prCandidate.deleteJobFunction);
+	$('#jobfunction #qst-removejob').unbind('click').bind('click',prCandidate.deleteJobFunction);
+    $('#jobfunction .btn-editjob1').unbind('click').bind('click',prCandidate.edit_JobFuntionnew);
+   $('#jobfunction #btn-removejob1').unbind('click').bind('click',prCandidate.deleteJobFunction1);
 
 </script>

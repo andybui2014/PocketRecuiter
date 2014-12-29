@@ -14,8 +14,10 @@ pocketCandidate.prototype = {
         $('#add-another').unbind('click').bind('click',this.addAnother);
 		$('#add-anotherjob').unbind('click').bind('click',this.addAnotherJob);
         $('#save-anotherjob').unbind('click').bind('click',this.saveAnotherJob);
+        $('#save-anotherjob1').unbind('click').bind('click',this.saveAddAnotherJob);
 		$('#cancel').unbind('click').bind('click',this.cancelJobFunction);
-		$('#jobfunction #qst-removejob').unbind('click').bind('click',this.deleteJobFunction);
+        $('#save-anotherjobnew').unbind('click').bind('click',this.saveAnotherJobnew);
+		//$('#btn-removejob1').unbind('click').bind('click',this.deleteJobFunction1);
     },
 	
     editEmployment: function(){
@@ -42,6 +44,33 @@ pocketCandidate.prototype = {
             })
         }
     },
+    deleteJobFunction: function(){
+        var $this= $(this);
+        var empId=$('empId').val();
+       // alert("testtt");
+        if($this.attr('data-id') > 0){
+            var $modal = $('#modal-dialog');
+            var $qstName = $this.attr('data-text');
+            $modal.modal("show").on("shown.bs.modal", function () {
+            $modal.find('#myModalLabel').html('<span style="color: #b81900">Confirm Delete Job Function</span>');
+            $modal.find('#modal-content').html(
+                '<p>Are you sure delete <span style="color: #b81900"></span> job function : <strong>'+$qstName+'</strong></p>' +
+                '<p>' +
+                '<div class="">'+
+                '<button type="button" id="qst-cfRemove" class="btn btn-primary">Confirm delete</button>&nbsp;&nbsp;&nbsp;' +
+                '<button type="button" aria-hidden="true" data-dismiss="modal"  class="btn btn-default">Close</button>'+
+                '</div>' +
+                '</p>'
+            ).find('#qst-cfRemove').unbind('click').bind('click',function(){
+                    $.post('./do-remove-job-function',{id: $this.attr('data-id'),empId:empId},function(xhr){
+                        if(xhr.success){
+                            location.reload();
+                        }
+                    })
+                })
+            });
+        }
+    },
 	cancelJobFunction: function(){
 		//location.reload();
         $('#openModalJobFunction').modal('hide');
@@ -53,9 +82,10 @@ pocketCandidate.prototype = {
 
 		$('#add-anotherjob').show();
 		var empId=$('#empId').val();
+        var JobID=$('#JobID').val();
         //alert(empId);
         if($this.attr('data-id') > 0){
-            $.post('./detail-job-function',{id: $this.attr('data-id'),empId:empId },function(xhr){
+            $.post('./detail-job-function',{id: $this.attr('data-id'),empId:empId,JobID:JobID },function(xhr){
 
                 if(xhr.success){
 				//alert(xhr.info);
@@ -69,14 +99,155 @@ pocketCandidate.prototype = {
             })
         }
     },
+    edit_JobFuntionnew: function(){
+        var $this = $(this);
+        //$('#divemployment').hide();
+        $('#openModalJobFunctionEditnew').modal('show');
+
+        $('#add-anotherjob').show();
+        var empId=$('#empId').val();
+        var JobID=$('#JobID').val();
+        //alert(empId);
+        if($this.attr('data-id') > 0){
+            $.post('./edit-job-function-new',{id: $this.attr('data-id')},function(xhr){
+
+                if(xhr.success){
+                //alert(xhr.info);
+                var i=0;
+                var j=0
+                var aValue=[];
+                var pecent=[];
+                $('input[name="JobFucntion1[]"]').each(function()
+                 { 
+                     
+                      aValue[i] = $(this).val(); 
+                     i=i+1;
+                    
+                 }
+                 );
+                // alert(aValue);
+                $('input[name="Percentage1[]"]').each(function()
+                 { 
+                     
+                      pecent[j] = $(this).val(); 
+                      j=j+1;
+                   // alert(pecent);
+                 }
+                 );
+                 var Percentage_Edit = "";
+            for (var i = 0; i < aValue.length; i++) {
+               
+                if(aValue[i]==xhr.info.JobFunctionID)
+                {
+                   // alert("tetst");
+                   for(var j=0;j<pecent.length;j++){
+                      // alert("i:"+i+"j:"+j)
+                       if(i==j ){
+                           Percentage_Edit=pecent[j];
+                       }
+                   }
+                }
+            }
+               // alert(Percentage_Edit);
+                    $('#employment-form #JobFucntion_Edit').val(xhr.info.JobFunctionID);
+                  //  $('#employment-form #JobID').val(xhr.info.id);
+                    $('#employment-form #Percentage_Edit').val(Percentage_Edit);
+                   $('#employment-form #pecent_edit').val(Percentage_Edit);
+                    $('#employment-form #JobFunctionID_Edit').val(xhr.info.JobFunctionID);
+                    
+
+                }
+            })
+        }
+    },
+    saveAddAnotherJob: function(){
+        var $this = $(this); 
+       // var pecent=$('#Percentage1').val();
+        //alert(pecent);
+        $('#employment-form :input[type="text"]').change(function(){
+        if($(this).val() !='' && $(this).val().length > 0){
+        $(this).parent().removeClass('has-error');
+        }
+         });
+         $.post('./do-add-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
+                            
+                            if(xhr.info=='Total Percentage greater than 100%' || xhr.info=='Percentage not empty' || xhr.info=='Percentage must be integer')
+                            {
+                                alert(xhr.info);
+                                $('#employment-form #Percentage_add').parent().addClass('has-error');
+                            }else{
+                                $('#employment-form #Percentageddd_add').parent().removeClass('has-error');
+                            }
+                            if(xhr.info=='Job Fucntion is exit.'){
+                                alert(xhr.info);
+                                $('#employment-form #JobFucntion_add').parent().addClass('has-error');
+                            }else {
+                                $('#employment-form #JobFucntion_add').parent().removeClass('has-error');
+                            }
+                            //alert(xhr.info);
+                            if(xhr.info==null || xhr.info==""){
+                                $('#openModalJobFunction1').modal('hide');
+                                var JobFucntion=$('#JobFucntion_add option:selected').text();
+                                var Percentage=$('#Percentage_add').val();
+                                var dataid=$('#JobFucntion_add').val();
+                                //alert(JobFucntion);
+                               // alert(dataid);
+                                var string="<span id='btn-editjob1' class='btn-editjob1' style='color:#4cae4c;' data-id="+dataid+"> <strong>Edit</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;<span  id='btn-removejob1' class='btn-removejob1' data-id="+dataid+" data-text="+JobFucntion+"><i class='glyphicon glyphicon-remove qst-removejob1'></i></span>";
+                                //
+                                $('#jobfunction').find("tbody")
+                        .append($("<tr id="+dataid+">")
+                .append($("<td style='width: 60%;'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+dataid+"' ></span>")
+                .append($("<td style='width: 20%;'>").text(Percentage+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+Percentage+"' ></span>")
+                .append($("<td style='float:right; padding-right: 10px;'>").append(string))
+                );
+                $('#jobfunction .btn-editjob1').unbind('click').bind('click',prCandidate.edit_JobFuntionnew);
+                $('#jobfunction #btn-removejob1').unbind('click').bind('click',prCandidate.deleteJobFunction1);
+                
+                                //
+                                
+                                
+                                
+                                
+                                
+                            }
+                            
+                        })
+    },
+    deleteJobFunction1:function(){
+        var $this= $(this);
+        var empId=$('empId').val();
+        
+        if($this.attr('data-id') > 0){
+            var $modal = $('#modal-dialog');
+            var $qstName = $this.attr('data-text');
+            $modal.modal("show").on("shown.bs.modal", function () {
+            $modal.find('#myModalLabel').html('<span style="color: #b81900">Confirm Delete Job Function</span>');
+            $modal.find('#modal-content').html(
+                '<p>Are you sure delete <span style="color: #b81900"></span> job function : <strong>'+$qstName+'</strong></p>' +
+                '<p>' +
+                '<div class="">'+
+                '<button type="button" id="qst-cfRemove" class="btn btn-primary">Confirm delete</button>&nbsp;&nbsp;&nbsp;' +
+                '<button type="button" aria-hidden="true" data-dismiss="modal"  class="btn btn-default">Close</button>'+
+                '</div>' +
+                '</p>'
+            ).find('#qst-cfRemove').unbind('click').bind('click',function(){
+                   // $.post('./do-remove-job-function',{id: $this.attr('data-id'),empId:empId},function(xhr){
+                     //   if(xhr.success){
+                          //  location.reload();
+                       // }
+                      var idtr= $this.attr('data-id')
+                       $('table#jobfunction tr#'+idtr).remove();
+                       $('#modal-dialog').modal('hide');
+                       
+                    });
+                });
+           // });
+        }
+    },
     saveAnotherJob: function(){
        var $this = $(this); 
        var status=$('#save-anotherjob').attr("data-status");
-        /* if(status=="view")
-         {
-            $('#employment-form #save-anotherjob').attr('data-status','add');
-            
-         }*/
+        
 	$('#employment-form :input[type="text"]').change(function(){
 		if($(this).val() !='' && $(this).val().length > 0){
 		$(this).parent().removeClass('has-error');
@@ -85,31 +256,8 @@ pocketCandidate.prototype = {
 	var JobVal = $('#employment-form #Percentage');
 	var JobFucntion = $('#employment-form #JobFucntion');
 	//alert(status);
-
-
-					if(status=='add'){
-						$.post('./do-add-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
-							
-							if(xhr.info=='Total Percentage greater than 100%' || xhr.info=='Percentage not empty' || xhr.info=='Percentage must be integer')
-							{
-								alert(xhr.info);
-								$('#employment-form #Percentage').parent().addClass('has-error');
-							}else{
-								$('#employment-form #Percentage').parent().removeClass('has-error');
-							}
-                            if(xhr.info=='Job Fucntion not empty'){
-                                alert(xhr.info);
-                                $('#employment-form #JobFucntion').parent().addClass('has-error');
-							}else {
-                                $('#employment-form #JobFucntion').parent().removeClass('has-error');
-							}
-							//alert(xhr.info);
-							if(xhr.info==null || xhr.info==""){
-                                $('#openModalJobFunction').modal('hide');
-							}
-                            
-						})
-					}else if(status=='updateJob'){
+				
+                        var empId=$('#empId').val();
 						
 						$.post('./do-update-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
 							if(xhr.info=='Total Percentage greater than 100%' || xhr.info=='Percentage not empty')
@@ -130,16 +278,74 @@ pocketCandidate.prototype = {
                            //if(xhr.info==null || xhr.info==""){
                                //$('#employment-form #JobFucntion').val(xhr.info.JobFucntion);
                                 $('#openModalJobFunction').modal('hide');
+                               // location.reload();
+                               // location.href = './profile-builder?utm_source=employment&id=' + empId;
                             }
                            
                         })
-                    }
+                   
+    },
+     saveAnotherJobnew: function(){
+       var $this = $(this); 
+      
+        
+    $('#employment-form :input[type="text"]').change(function(){
+        if($(this).val() !='' && $(this).val().length > 0){
+        $(this).parent().removeClass('has-error');
+        }
+    });
+   
+                        $.post('./do-update-job-function-new',{data: $('#employment-form').serializeArray()},function(xhr){
+                            if(xhr.info=='Total Percentage greater than 100%' || xhr.info=='Percentage not empty')
+                            {
+                                alert(xhr.info);
+                                $('#employment-form #Percentage_Edit').parent().addClass('has-error');
+                            }else{
+                                $('#employment-form #Percentage_Edit').parent().removeClass('has-error');
+                            }
+                            if(xhr.info=='Job Fucntion not empty'){
+                                alert(xhr.info);
+                                $('#employment-form #JobFucntion_Edit').parent().addClass('has-error');
+                            }else {
+                                $('#employment-form #JobFucntion_Edit').parent().removeClass('has-error');
+                            }
+                            
+                            if(xhr.success==1){
+                                var idtr=xhr.info.JobFunctionID_old;
+                                var idjob=xhr.info.JobFucntion_ID;
+                                var idpecnt=xhr.info.Percentage;
+                                var JobFucntion=$('#JobFucntion_Edit option:selected').text();
+                               // alert(JobFucntion);
+                                $('#openModalJobFunctionEditnew').modal('hide');
+                                
+                                $('table#jobfunction tr#'+idtr).remove();
+                                
+                                 var string="<span id='btn-editjob1' class='btn-editjob1' style='color:#4cae4c;' data-id="+idjob+"> <strong>Edit</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;<span  id='btn-removejob1' class='btn-removejob1' data-id="+idjob+" data-text="+JobFucntion+"><i class='glyphicon glyphicon-remove qst-removejob1'></i></span>";
+                                //
+                                $('#jobfunction').find("tbody")
+                        .append($("<tr id="+idjob+">")
+                .append($("<td style='width: 60%;'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+idjob+"' ></span>")
+                .append($("<td style='width: 20%;'>").text(idpecnt+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+idpecnt+"' ></span>")
+                .append($("<td style='float:right; padding-right: 10px;'>").append(string))
+                );
+                $('#jobfunction .btn-editjob1').unbind('click').bind('click',prCandidate.edit_JobFuntionnew);
+                $('#jobfunction #btn-removejob1').unbind('click').bind('click',prCandidate.deleteJobFunction1);
+                                
+                            }
+                        });
+                                
+                   
     },
 	addAnotherJob: function(){
 		
 	
 
-    $('#openModalJobFunction').modal('show');
+    $('#openModalJobFunction1').modal('show');
+     $.post('./add-job-function',{data: $('#employment-form').serializeArray()},function(xhr){
+         if(xhr.pecent<=100){
+             $('#employment-form #Percentage_add').val(xhr.pecent);
+         }
+     })
 
 		},
     deleteEmployment: function(){
@@ -167,33 +373,7 @@ pocketCandidate.prototype = {
             });
         }
     },
-	deleteJobFunction: function(){
-        var $this= $(this);
-        var empId=$('empId').val();
-        //alert(empId);
-        if($this.attr('data-id') > 0){
-            var $modal = $('#modal-dialog');
-            var $qstName = $this.attr('data-text');
-            $modal.modal("show").on("shown.bs.modal", function () {
-            $modal.find('#myModalLabel').html('<span style="color: #b81900">Confirm Delete Job Function</span>');
-            $modal.find('#modal-content').html(
-                '<p>Are you sure delete <span style="color: #b81900"></span> job function : <strong>'+$qstName+'</strong></p>' +
-                '<p>' +
-                '<div class="">'+
-                '<button type="button" id="qst-cfRemove" class="btn btn-primary">Confirm delete</button>&nbsp;&nbsp;&nbsp;' +
-                '<button type="button" aria-hidden="true" data-dismiss="modal"  class="btn btn-default">Close</button>'+
-                '</div>' +
-                '</p>'
-            ).find('#qst-cfRemove').unbind('click').bind('click',function(){
-                    $.post('./do-remove-job-function',{id: $this.attr('data-id'),empId:empId},function(xhr){
-                        if(xhr.success){
-                            location.reload();
-                        }
-                    })
-                })
-            });
-        }
-    },
+	
     deleteEducation:function(){
         var $this= $(this);
         if($this.attr('data-id') > 0){

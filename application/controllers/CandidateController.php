@@ -881,7 +881,7 @@ class CandidateController extends Application_Controller_Action
             $errors = array();
 
             if(!empty($params['data']) && sizeof($params['data'])){
-
+                $Text=array("JobFucntion1"=>"","Percentage1"=>"");
                 foreach($params['data'] as $key=>$item){
                     if($item['name']=='empId')          $empId = $item['value'];
                     if($item['name']=='companyName')    $companyName  = $item['value'];
@@ -893,6 +893,15 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
                     if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
                     if($item['name']=='Percentage')     $Percentage = $item['value'];
+                    
+                    if($item['name']=='JobFucntion1[]')
+                    {
+                       $Text["JobFucntion1"][]=$item['value'];
+                    }
+                    if($item['name']=='Percentage1[]')
+                    {
+                       $Text["Percentage1"][]=$Percentage=round($item['value']/100,2);
+                    }
                 }
                 if(empty($empId)) $errors['empId'] = 1;
                 if(empty($companyName)) $errors['companyName'] = 1;
@@ -900,21 +909,24 @@ class CandidateController extends Application_Controller_Action
                 if(empty($startDate)) $errors['startDate'] = 1;
                 //if(empty($endDate)) $errors['endDate'] = 1;
                 //if(empty($description)) $errors['description'] = 1;
-
+               // die();
                 if(empty($errors)){
                     //$client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
                 $isSuccess = $core->updateCandidateEmployment($empId,$companyName,$positionHeld,$startDate,$endDate,$description);
                 $Percentage=round($Percentage/100,2);
-                //echo "tetst:".$JobFucntion;
-                //$jobid=$core->getJobFunction($JobFunctionID,$empId);
-                //$jobid=$jobid["id"];
+               
                 if(isset($jobid) && !empty($jobid)){
                 $core->updateJobFunction($JobFucntion,$empId,$Percentage,$jobid);
                 }
-                else{
-                    $core->addjobfunction($empId,$JobFucntion,$Percentage);
+                
+               // else{
+              //      $core->addjobfunction($empId,$Text);
                     
+              //  }
+                if(!empty($Text["JobFucntion1"])&&!empty($Text["Percentage1"]))
+                {
+                    $core->addjobfunction($empId,$Text);
                 }
                 //if($isSuccess)
 				$ajaxRes['success'] = 1;
@@ -944,7 +956,8 @@ class CandidateController extends Application_Controller_Action
             $description = null;
             $errors = array();
             if(!empty($params['data']) && sizeof($params['data'])){
-
+               
+                $Text=array("JobFucntion1"=>"","Percentage1"=>"");
                 foreach($params['data'] as $key=>$item){
                     if($item['name']=='companyName')    $companyName  = $item['value'];
                     if($item['name']=='posotionHeld')   $posotionHeld = $item['value'];
@@ -955,7 +968,20 @@ class CandidateController extends Application_Controller_Action
                     if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
                     if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
                     if($item['name']=='Percentage')     $Percentage = $item['value'];
+                    
+                    if($item['name']=='JobFucntion1[]')
+                    {
+                       $Text["JobFucntion1"][]=$item['value'];
+                    }
+                    if($item['name']=='Percentage1[]')
+                    {
+                       $Text["Percentage1"][]=$Percentage=round($item['value']/100,2);
+                    }
+                  
+                    
                 }
+                //echo "test:<pre>";print_r($Text);echo("</pre>") ;
+               // echo "test:<pre>";print_r(count($Text["JobFucntion1"]));echo("</pre>") ;
 
                 if(empty($companyName)) $errors['companyName'] = 1;
                 if(empty($posotionHeld)) $errors['posotionHeld'] = 1;
@@ -968,7 +994,8 @@ class CandidateController extends Application_Controller_Action
                 $core = new PR_Api_Core_CandidateClass();
                 $Percentage=round($Percentage/100,2);
                 //$isSuccess = $core->addCandidateEmployment($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description);
-                $isSuccess = $core->addCandidateEmploymentJob($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description,$JobFucntion,$Percentage);
+               // $isSuccess = $core->addCandidateEmploymentJob($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description,$JobFucntion,$Percentage);
+                $isSuccess = $core->addCandidateEmploymentJob($client['UserID'],$companyName,$posotionHeld,$startDate,$endDate,$description,$Text);
                 
                // $core->addjobfunction($empId,$JobFucntion,$Percentage);
                 if($isSuccess) $ajaxRes['success'] = 1;
@@ -2421,6 +2448,65 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
     }
+    public function addJobFunctionAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $user = PR_Session::getSession(PR_Session::SESSION_USER);
+        $ajaxRes = array('success'=>0,'pecent'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $Text=array("JobFucntion1"=>"","Percentage1"=>"");
+            
+            foreach($params['data'] as $key=>$item){
+                    if($item['name']=='empId')    $empId  = $item['value'];
+                    if($item['name']=='JobFucntion_add')    $JobFucntion  = $item['value'];
+                    //if($item['name']=='JobFucntion1[]')      $JobFucntion1 = $item['value'];
+                    if($item['name']=='Percentage_add')      $Percentage = $item['value'];
+
+                    
+                    if($item['name']=='Percentage1[]')
+                    {
+                       $Text["Percentage1"][]=$item['value'];
+                    }
+                    if($item['name']=='JobFucntion1[]')
+                    {
+                       $Text["JobFucntion1"][]=$item['value'];
+                    }
+                   
+                  
+                }
+                
+                $pecent=0;
+                $core = new PR_Api_Core_CandidateClass();
+                $totalPercentage=$core->totalPercentage($empId);
+                $totalPercentage=round($totalPercentage["totalPercentage"]*100,2);
+               
+                $Percentage1=0;
+                if(!empty($Text["Percentage1"])){
+                   for($i=0;$i<count($Text["Percentage1"]);$i++){
+                       
+                       $Percentage1=$Percentage1+$Text["Percentage1"][$i];
+                       
+                   } 
+                   
+                }
+                $pecent=$totalPercentage+$Percentage1;
+                $ajaxRes['pecent'] = 100-$pecent;
+                 
+              //  $selectarray=array();
+               // if(!empty($Text["JobFucntion1"])){
+              //  foreach($Text["JobFucntion1"] as $Values){
+                //    $selectarray[]=$Values;
+               // }}
+               // echo "tetst:";print_r($selectarray);die();
+    }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
 	 public function doAddJobFunctionAction(){
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -2432,13 +2518,23 @@ class CandidateController extends Application_Controller_Action
             $JobFucntion = null;
             $CredentialExperienceID = null;
             $Percentage = null;
+            $pecent=0;
+            $Percentage1=0;
+            $Text=array("JobFucntion1"=>"");
             if(!empty($params['data']) && sizeof($params['data'])){
 
                 foreach($params['data'] as $key=>$item){
                     if($item['name']=='empId')    $empId  = $item['value'];
-                    if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
+                    if($item['name']=='JobFucntion_add')    $JobFucntion  = $item['value'];
+                    //if($item['name']=='JobFucntion1[]')      $JobFucntion1 = $item['value'];
+                    if($item['name']=='Percentage_add')      $Percentage = $item['value'];
+                    if($item['name']=='Percentage1[]')      $Percentage1 = $item['value']+$Percentage1;
                     
-                    if($item['name']=='Percentage')      $Percentage = $item['value'];
+                     if($item['name']=='JobFucntion1[]')
+                    {
+                       $Text["JobFucntion1"][]=$item['value'];
+                    }
+                   
                   
                 }
 				if($Percentage ==""){
@@ -2454,25 +2550,37 @@ class CandidateController extends Application_Controller_Action
 					$ajaxRes['info'] = "Percentage must be integer";
 					
 				}
-				
+                $selectarray=array();
+                if(!empty($Text["JobFucntion1"])){
+                foreach($Text["JobFucntion1"] as $Values){
+                    $selectarray[]=$Values;
+                }}
+                if(in_array($JobFucntion,$selectarray)){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Job Fucntion is exit.";
+                }
+				//print_r($selectarray);
                 //if(empty($JobFucntion)) $errors['JobFucntion'] = 1;
                
+                $pecent=$Percentage+$pecent+$Percentage1;
                 
-						
+				//echo "tetst:".$pecent;		
                 if($Percentage!="" && $JobFucntion!=""){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
                 $core = new PR_Api_Core_CandidateClass();
 				$totalPercentage=$core->totalPercentage($empId);
 				$totalPercentage=round($totalPercentage["totalPercentage"],2);
-				$Percentage=$Percentage/100;
-				$total=$totalPercentage+$Percentage;
-				
-				if($total>=1)
+				//$Percentage=($Percentage/100);
+                $pecent=($pecent/100);
+				$total=$totalPercentage+$pecent;
+				//echo "tetst:".$total;
+				if($total>1)
 				{
 					$ajaxRes['success'] = 0;
                     $ajaxRes['info'] = "Total Percentage greater than 100%";
 				}else{
                     $ajaxRes['success'] = 1;
+                    
                 }
                 
                 }else{
@@ -2495,19 +2603,47 @@ class CandidateController extends Application_Controller_Action
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
 		$ajaxRes = array('success'=>0,'info'=>null);
-        //$ajaxRes = array('success'=>0,'JobFunctionID'=>null,'JobFucntion'=>null,'CredentialExperienceID'=>null,'Percentage'=>null);
+        
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
             $id = isset($params['id']) ? $params['id'] : null;
             $empId=$params['empId'];
-			//echo "tetst:<pre>";print_r($empId);echo("</pre>");die();
+			
             $core = new PR_Api_Core_CandidateClass();
-           // $jobfunction= $core->getJobFunction($id);
+           
 			$ajaxRes['info'] = $core->getJobFunction($id,$empId);
 			$Percentage=$ajaxRes['info']['Percentage'];
 			$ajaxRes['info']['Percentage']=round($Percentage*100,2);
 			
-			//echo $ajaxRes['info']['Percentage'];die();
+			
+            if(sizeof($ajaxRes['info']) > 0) $ajaxRes['success'] = 1;
+
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+    public function editJobFunctionNewAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $id = isset($params['id']) ? $params['id'] : null;
+            
+            
+            $core = new PR_Api_Core_CandidateClass();
+           
+            $ajaxRes['info'] = $core->getjobfunctionsid($id);
+           // echo "tetst:<pre>";print_r($ajaxRes['info']);echo("</pre>");
+          //  $Percentage=$ajaxRes['info']['Percentage'];
+           // $ajaxRes['info']['Percentage']=round($Percentage*100,2);
+            
+            
             if(sizeof($ajaxRes['info']) > 0) $ajaxRes['success'] = 1;
 
         }
@@ -2529,14 +2665,14 @@ class CandidateController extends Application_Controller_Action
             $CredentialExperienceID = null;
             $Percentage = null;      
             $errors = array();
-
+           // echo "tetst:<pre>";print_r($params);echo("</pre>");
             if(!empty($params['data']) && sizeof($params['data'])){
 
                 foreach($params['data'] as $key=>$item){
                     if($item['name']=='empId')    $empId  = $item['value'];
                     if($item['name']=='JobFunctionID')  $JobFunctionID = $item['value'];
                     if($item['name']=='JobFucntion')    $JobFucntion  = $item['value'];
-                  //  if($item['name']=='CredentialExperienceID')   $CredentialExperienceID = $item['value'];
+                    if($item['name']=='JobID')          $JobID = $item['value'];
                     if($item['name']=='Percentage')      $Percentage = $item['value'];
                    
                 }
@@ -2563,7 +2699,7 @@ class CandidateController extends Application_Controller_Action
 				$Percentage=round($Percentage/100,2);
 				
 				$total=$totalPercentage-$percent+$Percentage;
-				if($total>=1){
+				if($total>1){
                     $ajaxRes['success'] = 0;
                     $ajaxRes['info'] = "Total Percentage greater than 100%";
 					
@@ -2578,13 +2714,110 @@ class CandidateController extends Application_Controller_Action
 				}else{
 					$ajaxRes['success'] = 1;
                     $ajaxRes['info']["JobFucntion"]=$JobFucntion;
-					//$isSuccess = $core->updateJobFunction($JobFunctionID,$empId,$Percentage);
+					//$isSuccess = $core->updateJobFunction($JobFunctionID,$empId,$Percentage,$JobID);
 					
 				 }
                 
                 }
             }
         }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+    }
+    public function doUpdateJobFunctionNewAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        $Text=array("JobFucntion1"=>"","Percentage1"=>"");
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            $JobFunctionID = null;
+            $JobFucntion = null;
+            $CredentialExperienceID = null;
+            $Percentage = null;      
+            $errors = array();
+           // echo "tetst:<pre>";print_r($params);echo("</pre>");
+            if(!empty($params['data']) && sizeof($params['data'])){
+
+                foreach($params['data'] as $key=>$item){
+                    if($item['name']=='empId')    $empId  = $item['value'];
+                    if($item['name']=='JobFunctionID_Edit')  $JobFunctionID_old = $item['value'];
+                    if($item['name']=='JobFucntion_Edit')    $JobFucntion  = $item['value'];
+                    if($item['name']=='pecent_edit')          $pecent_edit = $item['value'];
+                    if($item['name']=='Percentage_Edit')      $Percentage = $item['value'];
+                    
+                    if($item['name']=='Percentage1[]')
+                    {
+                       $Text["Percentage1"][]=$item['value'];
+                    }
+                    if($item['name']=='JobFucntion1[]')
+                    {
+                       $Text["JobFucntion1"][]=$item['value'];
+                    }
+                   
+                }
+                
+                if($Percentage ==""){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Percentage not empty";
+                }
+                if($JobFucntion ==""){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Job Fucntion not empty";
+                }            
+
+            
+                
+                $pecent=0;
+                $core = new PR_Api_Core_CandidateClass();
+                $totalPercentage=$core->totalPercentage($empId);
+                $totalPercentage=round($totalPercentage["totalPercentage"],2);
+               
+                $Percentage1=0;
+                if(!empty($Text["Percentage1"])){
+                   for($i=0;$i<count($Text["Percentage1"]);$i++){
+                       
+                       $Percentage1=$Percentage1+$Text["Percentage1"][$i];
+                       
+                   } 
+                   
+                }
+                $total=$totalPercentage+round($Percentage1/100,2)+round($Percentage/100,2)-round($pecent_edit/100,2);
+        
+                if($total>1){
+                    $ajaxRes['success'] = 0;
+                    $ajaxRes['info'] = "Total Percentage greater than 100%";
+                    
+                   
+                }else{
+                    $ajaxRes['success'] = 1;
+                    $ajaxRes['info']["JobFunctionID_old"]=$JobFunctionID_old;
+                    $ajaxRes['info']["Percentage"]=$Percentage;
+                    $ajaxRes['info']["JobFucntion_ID"]=$JobFucntion;
+                  /*  for($i=0;$i<count($Text["JobFucntion1"]);$i++)
+                    {
+                        if($Text["JobFucntion1"][$i]==$JobFunctionID_old){
+                            $Text["JobFucntion1"][$i]=$JobFucntion;
+                        }
+                        for($j=0;$j<count($Text["Percentage1"]);$j++)
+                        {
+                            if($Text["Percentage1"][$j]==$pecent_edit && $i=$j){
+                                $Text["Percentage1"][$j]=$Percentage;
+                            }
+                        }
+                    }*/
+                    
+                    
+                    
+                 }
+                
+                }
+            }
+        //}
         $response = $this->getResponse();
         $response->clearAllHeaders()->clearBody();
         $ajaxRes = json_encode($ajaxRes);
