@@ -917,7 +917,8 @@ class CandidateController extends Application_Controller_Action
                 $Percentage=round($Percentage/100,2);
                
                 if(isset($jobid) && !empty($jobid)){
-                $core->updateJobFunction($JobFucntion,$empId,$Percentage,$jobid);
+               // $core->updateJobFunction($JobFucntion,$empId,$Percentage,$jobid);
+                $core->deleteJobFunction($jobid);
                 }
                 
                // else{
@@ -2455,12 +2456,12 @@ class CandidateController extends Application_Controller_Action
         $ajaxRes = array('success'=>0,'pecent'=>null);
         if($this->getRequest()->isXmlHttpRequest()){
             $params = $this->getRequest()->getParams();
-            $Text=array("JobFucntion1"=>"","Percentage1"=>"");
+            $Text=array("JobFucntion1"=>"","Percentage1"=>"","Percentage_old"=>"");
             
             foreach($params['data'] as $key=>$item){
                     if($item['name']=='empId')    $empId  = $item['value'];
                     if($item['name']=='JobFucntion_add')    $JobFucntion  = $item['value'];
-                    //if($item['name']=='JobFucntion1[]')      $JobFucntion1 = $item['value'];
+                    
                     if($item['name']=='Percentage_add')      $Percentage = $item['value'];
 
                     
@@ -2472,7 +2473,10 @@ class CandidateController extends Application_Controller_Action
                     {
                        $Text["JobFucntion1"][]=$item['value'];
                     }
-                   
+                   if($item['name']=='Percentage1_old[]')   
+                   {
+                       $Text["Percentage_old"][]=$item['value'];
+                   }   //$Percentage1_old = $item['value'];
                   
                 }
                 
@@ -2490,7 +2494,18 @@ class CandidateController extends Application_Controller_Action
                    } 
                    
                 }
-                $pecent=$totalPercentage+$Percentage1;
+                $Percentage_old=0;
+                 if(!empty($Text["Percentage_old"])){
+                   for($i=0;$i<count($Text["Percentage_old"]);$i++){
+                       
+                       $Percentage_old=$Percentage_old+round($Text["Percentage_old"][$i]*100,2);
+                       
+                   } 
+                   
+                }
+               // $Percentage_old=$Percentage_old*100;
+                $pecent=$totalPercentage+$Percentage1-$Percentage_old;
+                //echo "tetst:".$pecent;
                 $ajaxRes['pecent'] = 100-$pecent;
                  
               //  $selectarray=array();
@@ -2555,7 +2570,14 @@ class CandidateController extends Application_Controller_Action
                 foreach($Text["JobFucntion1"] as $Values){
                     $selectarray[]=$Values;
                 }}
-                if(in_array($JobFucntion,$selectarray)){
+                $core = new PR_Api_Core_CandidateClass();
+                $jobdb=$core->get_jobfuntion($empId);
+                $jobaray=array();
+                if(!empty($jobdb)){
+                foreach($jobdb as $job){
+                   $jobaray[] =$job["JobFunctionID"];
+                }}
+                if(in_array($JobFucntion,$selectarray) || in_array($JobFucntion,$jobaray)){
                     $ajaxRes['success'] = 0;
                     $ajaxRes['info'] = "Job Fucntion is exit.";
                 }
@@ -2567,13 +2589,14 @@ class CandidateController extends Application_Controller_Action
 				//echo "tetst:".$pecent;		
                 if($Percentage!="" && $JobFucntion!=""){
                 $client = PR_Session::getSession(PR_Session::SESSION_USER);
-                $core = new PR_Api_Core_CandidateClass();
+                
 				$totalPercentage=$core->totalPercentage($empId);
 				$totalPercentage=round($totalPercentage["totalPercentage"],2);
 				//$Percentage=($Percentage/100);
                 $pecent=($pecent/100);
 				$total=$totalPercentage+$pecent;
-				//echo "tetst:".$total;
+                
+               // echo "tetst:<pre>";print_r($total);echo("</pre>");die();
 				if($total>1)
 				{
 					$ajaxRes['success'] = 0;
@@ -2704,18 +2727,15 @@ class CandidateController extends Application_Controller_Action
                     $ajaxRes['success'] = 0;
                     $ajaxRes['info'] = "Total Percentage greater than 100%";
 					
-					//if($isSuccess) 
-                    
-					//$getjobfunctionsid=$core->getjobfunctionsid($JobFucntion);
 					
-					//$getjob=$getjobfunctionsid["JobFucntion"];
-					
-					//$ajaxRes['info']["JobFucntion"]=$getjob;
-					//echo "tetst1<pre>";print_r($ajaxRes);echo("</pre>");die();
 				}else{
+                   // $core->deleteJobFunction($JobID);
 					$ajaxRes['success'] = 1;
-                    $ajaxRes['info']["JobFucntion"]=$JobFucntion;
-					//$isSuccess = $core->updateJobFunction($JobFunctionID,$empId,$Percentage,$JobID);
+                    $ajaxRes['info']["JobFucntion_ID"]=$JobFucntion;
+                    $ajaxRes['info']["JobFunctionID_old"]=$JobFunctionID;
+                    $ajaxRes['info']["Percentage"]=$Percentage*100;
+                    $ajaxRes['info']["Percentage_old"]=$percent;
+					
 					
 				 }
                 
@@ -2789,12 +2809,12 @@ class CandidateController extends Application_Controller_Action
                 }
                 $total=$totalPercentage+round($Percentage1/100,2)+round($Percentage/100,2)-round($pecent_edit/100,2);
         
-                if($total>1){
-                    $ajaxRes['success'] = 0;
-                    $ajaxRes['info'] = "Total Percentage greater than 100%";
+              //  if($total>1){
+                   // $ajaxRes['success'] = 0;
+                   // $ajaxRes['info'] = "Total Percentage greater than 100%";
                     
                    
-                }else{
+              //  }else{
                     $ajaxRes['success'] = 1;
                     $ajaxRes['info']["JobFunctionID_old"]=$JobFunctionID_old;
                     $ajaxRes['info']["Percentage"]=$Percentage;
@@ -2814,7 +2834,7 @@ class CandidateController extends Application_Controller_Action
                     
                     
                     
-                 }
+               //  }
                 
                 }
             }

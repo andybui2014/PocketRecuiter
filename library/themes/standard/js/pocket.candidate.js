@@ -92,7 +92,7 @@ pocketCandidate.prototype = {
                     $('#employment-form #JobFucntion').val(xhr.info.JobFunctionID);
                     $('#employment-form #JobID').val(xhr.info.id);
 					$('#employment-form #Percentage').val(xhr.info.Percentage);
-                    $('#employment-form #save-anotherjob').attr('data-status','updateJob').html('<strong>Save</strong>');
+                   // $('#employment-form #save-anotherjob').attr('data-status','updateJob').html('<strong>Save</strong>');
                     $('#employment-form #JobFunctionID').val(xhr.info.JobFunctionID);
 
                 }
@@ -196,10 +196,13 @@ pocketCandidate.prototype = {
                                 //
                                 $('#jobfunction').find("tbody")
                         .append($("<tr id="+dataid+">")
-                .append($("<td style='width: 60%;'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+dataid+"' ></span>")
-                .append($("<td style='width: 20%;'>").text(Percentage+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+Percentage+"' ></span>")
-                .append($("<td style='float:right; padding-right: 10px;'>").append(string))
+                .append($("<td id='jobfun' style='width: 60%;'>").text(JobFucntion))
+                .append($("<td id='pecent' style='width: 20%;'>").text(Percentage+'%'))
+                .append($("<td id='tol' style='float:right; padding-right: 10px;'>").append(string))
                 );
+                
+                 $('table#jobfunction tr#'+dataid).find('td#jobfun').append($("<input type='hidden'  name='JobFucntion1[]'  value='"+dataid+"' >"));
+                 $('table#jobfunction tr#'+dataid).find('td#pecent').append($("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+Percentage+"' >"));
                 $('#jobfunction .btn-editjob1').unbind('click').bind('click',prCandidate.edit_JobFuntionnew);
                 $('#jobfunction #btn-removejob1').unbind('click').bind('click',prCandidate.deleteJobFunction1);
                 
@@ -277,12 +280,38 @@ pocketCandidate.prototype = {
                                 $('#employment-form #JobFucntion').parent().removeClass('has-error');
 							}
                             
-							if(xhr.success==1){
-                           //if(xhr.info==null || xhr.info==""){
-                               //$('#employment-form #JobFucntion').val(xhr.info.JobFucntion);
-                                $('#openModalJobFunction').modal('hide');
-                               // location.reload();
-                               // location.href = './profile-builder?utm_source=employment&id=' + empId;
+							if(xhr.success==1){   
+                             var idtr=xhr.info.JobFunctionID_old;
+                                var idjob=xhr.info.JobFucntion_ID;
+                                var idpecnt=xhr.info.Percentage;
+                                var pecent_old=xhr.info.Percentage_old;
+                                var JobFucntion=$('#JobFucntion option:selected').text();
+                               // alert(JobFucntion);
+                                 $('#openModalJobFunction').modal('hide');
+                                
+                               // $('table#jobfunction tr#'+idtr).remove();
+                               $('table#jobfunction tr#'+idtr).find('td#jobfun').remove();
+                               $('table#jobfunction tr#'+idtr).find('td#pecent').remove();
+                               $('table#jobfunction tr#'+idtr).find('td#tol').remove();
+                                
+                                 var string="<span id='btn-editjob1' class='btn-editjob1' style='color:#4cae4c;' data-id="+idjob+"> <strong>Edit</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;<span  id='btn-removejob1' class='btn-removejob1' data-id="+idjob+" data-text="+JobFucntion+"><i class='glyphicon glyphicon-remove qst-removejob1'></i></span>";
+                                //
+                                $('table#jobfunction').find('tr#'+idtr).append(($("<td style='width: 60%;' id='jobfun'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+idjob+"' >"));
+                                 $('table#jobfunction').find('tr#'+idtr).append(($("<td style='width: 20%;' id='pecent'>").text(idpecnt+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+idpecnt+"' ><input type='hidden'  name='Percentage1_old[]' id='Percentage1_old[]' value='"+pecent_old+"' >"));
+                                  $('table#jobfunction').find('tr#'+idtr).append($("<td style='float:right; padding-right: 10px;' id='tol'>").append(string));
+                                 
+                                
+                                
+                              /*  $('#jobfunction').find("tbody")
+                        .append($("<tr id="+idjob+">")
+                .append($("<td style='width: 60%;'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+idjob+"' ></span>")
+                .append($("<td style='width: 20%;'>").text(idpecnt+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+idpecnt+"' ></span>")
+                .append($("<td style='float:right; padding-right: 10px;'>").append(string))
+                );*/
+                $('#jobfunction .btn-editjob1').unbind('click').bind('click',prCandidate.edit_JobFuntionnew);
+                $('#jobfunction #btn-removejob1').unbind('click').bind('click',prCandidate.deleteJobFunction1);                        
+                               
+                               
                             }
                            
                         })
@@ -321,16 +350,27 @@ pocketCandidate.prototype = {
                                // alert(JobFucntion);
                                 $('#openModalJobFunctionEditnew').modal('hide');
                                 
-                                $('table#jobfunction tr#'+idtr).remove();
+                               // $('table#jobfunction tr#'+idtr).remove();
+                               $('table#jobfunction tr#'+idtr).find('td#jobfun').remove();
+                               $('table#jobfunction tr#'+idtr).find('td#pecent').remove();
+                               $('table#jobfunction tr#'+idtr).find('td#tol').remove();
                                 
                                  var string="<span id='btn-editjob1' class='btn-editjob1' style='color:#4cae4c;' data-id="+idjob+"> <strong>Edit</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;<span  id='btn-removejob1' class='btn-removejob1' data-id="+idjob+" data-text="+JobFucntion+"><i class='glyphicon glyphicon-remove qst-removejob1'></i></span>";
                                 //
-                                $('#jobfunction').find("tbody")
+                                $('table#jobfunction').find('tr#'+idtr).append(($("<td style='width: 60%;' id='jobfun'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+idjob+"' >"));
+                                
+                                $('table#jobfunction').find('tr#'+idtr).append(($("<td style='width: 20%;' id='pecent'>").text(idpecnt+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+idpecnt+"' >"));
+                                
+$('table#jobfunction').find('tr#'+idtr).append($("<td style='float:right; padding-right: 10px;' id='tol'>").append(string));
+                              /*  $('#jobfunction').find("tbody")
                         .append($("<tr id="+idjob+">")
-                .append($("<td style='width: 60%;'>").text(JobFucntion)).append("<input type='hidden'  name='JobFucntion1[]'  value='"+idjob+"' ></span>")
-                .append($("<td style='width: 20%;'>").text(idpecnt+'%')).append("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+idpecnt+"' ></span>")
+                .append($("<td style='width: 60%;' id='jobfun'>").text(JobFucntion))
+                .append($("<td style='width: 20%;' id='pecent'>").text(idpecnt+'%'))
                 .append($("<td style='float:right; padding-right: 10px;'>").append(string))
                 );
+                 $('table#jobfunction tr#'+idjob).find('td#jobfun').append($("<input type='hidden'  name='JobFucntion1[]'  value='"+idjob+"' >"));
+                 $('table#jobfunction tr#'+idjob).find('td#pecent').append($("<input type='hidden'  name='Percentage1[]' id='Percentage1[]' value='"+idpecnt+"' >"));*/
+
                 $('#jobfunction .btn-editjob1').unbind('click').bind('click',prCandidate.edit_JobFuntionnew);
                 $('#jobfunction #btn-removejob1').unbind('click').bind('click',prCandidate.deleteJobFunction1);
                                 

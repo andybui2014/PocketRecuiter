@@ -310,10 +310,10 @@ $getCandidates=$this->getCandidates;
                                                 foreach($this->jobfunctions as $jobfunctions){
 											        $pecent=100*$jobfunctions["Percentage"];
 									   ?>
-										<tr> 
-											<td width="60%"><?=$jobfunctions["JobFucntion"]?></td>
-											<td width="20%"><?=round($pecent,2)?>%</td>
-											<td style="float:right;padding-right:10px">
+										<tr id="<?=$jobfunctions['JobFunctionID'];?>"> 
+											<td width="60%" id='jobfun'><?=$jobfunctions["JobFucntion"]?></td>
+											<td width="20%" id='pecent'><?=round($pecent,2)?>%</td>
+											<td id="tol" style="float:right;padding-right:10px">
 											<span id="btn-editjob" class="btn-editjob" data-id="<?=$jobfunctions['JobFunctionID'];?>" style="color: #4cae4c"><strong>Edit</strong></span> &nbsp;&nbsp;
                                                 <span><i data-text="<?=$jobfunctions['JobFucntion'];?>" data-id="<?=$jobfunctions['id'];?>" id='qst-removejob' class="glyphicon glyphicon-remove qst-removejob"></i></span></td>
 										</tr>
@@ -363,9 +363,9 @@ $getCandidates=$this->getCandidates;
                                 <div class="modal-content modal-dialog-center">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h2 class="modal-title" id="myModalLabel" style="color:#005595">Job Functions</h2>
+                                        <h2 class="modal-title" id="myModalLabel" style="color:#005595">Edit Job Functions</h2>
                                     </div>
-                                    <div class="modal-body login-modal" style="height:350px">
+                                    <div class="modal-body login-modal" style="height:270px">
                                     
                                     <div class="col-md-12" >
                                     
@@ -420,7 +420,7 @@ $getCandidates=$this->getCandidates;
                                                         <input name="Percentage" id="Percentage" type="text" class="form-control"  >
                                                     </div>
 
-                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob" data-status="updateJob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob" data-status="updateJob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Edit</strong></button></div>
 
                                                   </div>      
 
@@ -440,7 +440,7 @@ $getCandidates=$this->getCandidates;
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h2 class="modal-title" id="myModalLabel" style="color:#005595">Add Job Functions</h2>
                                     </div>
-                                    <div class="modal-body login-modal" style="height:350px">
+                                    <div class="modal-body login-modal" style="height:270px">
                                     
                                     <div class="col-md-12" >
                                     
@@ -469,14 +469,15 @@ $getCandidates=$this->getCandidates;
                                                                 }
                                                              
                                                                 foreach($getjob as $list){
-                                                                 if(!in_array($list["JobFunctionID"],$values)){
+                                                                // if(!in_array($list["JobFunctionID"],$values)){
                                                                 
                                                             ?>
                                                             
                                                             <option value="<?=$list["JobFunctionID"]?>" ><?=$list["JobFucntion"]?></option>
                                                             <?php
                                                                // }
-                                                            } }}
+                                                           // }
+                                                            }}
                                                                         
                                                                     
                                                             ?>
@@ -495,7 +496,7 @@ $getCandidates=$this->getCandidates;
                                                         <input name="Percentage_add" id="Percentage_add" type="text" class="form-control"  value="<?=$total?>" >
                                                     </div>
 
-                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob1" data-status="add" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjob1" data-status="add" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Add</strong></button></div>
 
                                                   </div>      
 
@@ -515,7 +516,7 @@ $getCandidates=$this->getCandidates;
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h2 class="modal-title" id="myModalLabel" style="color:#005595">Edit Job Functions</h2>
                                     </div>
-                                    <div class="modal-body login-modal" style="height:350px">
+                                    <div class="modal-body login-modal" style="height:270px">
                                     
                                     <div class="col-md-12" >
                                     
@@ -555,7 +556,7 @@ $getCandidates=$this->getCandidates;
                                                         <input type="hidden" name="pecent_edit" id="pecent_edit"/>
                                                     </div>
 
-                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjobnew" data-status="updateJob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Save</strong></button></div>
+                                                    <div class="form-group" style="margin-top:20px"><button data-step="employment" id="save-anotherjobnew" data-status="updateJob" data-loading-text="Loading..." type="button" class="btn btn-sm btn-success" ><strong>Edit</strong></button></div>
 
                                                   </div>      
 
