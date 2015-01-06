@@ -772,7 +772,7 @@ $('table#jobfunction').find('tr#'+idtr).append($("<td style='float:right; paddin
             
         });
         
-        $.post('./do-update-skills',{data:data},function(xhr){
+        $.post('./do-update-skillsnew',{data:data},function(xhr){
             if(xhr.success){
                 //console.log(data);
             

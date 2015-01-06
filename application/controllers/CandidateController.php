@@ -2062,6 +2062,7 @@ class CandidateController extends Application_Controller_Action
 		$this->view->Skills=$skills;
 		$this->view->Candidateprofile_ID=$Candidateprofile_ID;
 		$this->render("skills/editskill");
+       // $api_candidate->updateCandidate_skill(4,11,7,'Intermediate');
 	   // echo("testt:<pre>");print_r($params);echo("</pre>");
 		   
 	  }  
@@ -2864,6 +2865,31 @@ class CandidateController extends Application_Controller_Action
         $response->setHeader('Content-type', 'application/json');
         $response->setHeader('Content-Length', strlen($ajaxRes), true)
             ->setBody($ajaxRes);
+    }
+     public function doUpdateSkillsnewAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        $ajaxRes = array('success'=>0,'info'=>null);
+        if($this->getRequest()->isXmlHttpRequest()){
+            $params = $this->getRequest()->getParams();
+            
+            if(!empty($params['data']) && sizeof($params['data']) > 0){
+                $core = new PR_Api_Core_CandidateClass();
+                $client = PR_Session::getSession(PR_Session::SESSION_USER);
+                if($core->updateCandidateSkill($client['CandidateProfileID'],$params['data'])){
+                    $ajaxRes['success'] = 1;
+                }
+            } 
+
+
+        }
+        $response = $this->getResponse();
+        $response->clearAllHeaders()->clearBody();
+        $ajaxRes = json_encode($ajaxRes);
+        $response->setHeader('Content-type', 'application/json');
+        $response->setHeader('Content-Length', strlen($ajaxRes), true)
+            ->setBody($ajaxRes);
+
     }
 
 }

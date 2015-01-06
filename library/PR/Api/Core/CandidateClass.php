@@ -481,7 +481,8 @@ class PR_Api_Core_CandidateClass extends PR_Api_Core_CandidateExtClass
         WHERE (us.UserID IS NULL OR us.UserID='$userID') and sk.Level=0
         Order By sk.SkillName";
         $select = $db->query($sql);
-       
+        //$sql = $select->__toString();
+       // echo "$sql\n";;die();
         $records = $select->fetchAll();
         if(count($records)>0){
            

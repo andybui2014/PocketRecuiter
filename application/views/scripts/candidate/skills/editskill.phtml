@@ -109,7 +109,7 @@ $Skills=$this->Skills;
                                     {
                                         $i=$i+1;
                                       //  $id=$skillarray["SkillID"];
-                                       // echo $skillarray["SkillName"]."<br>";Candidateprofile_ID
+                                        //echo $skillarray["SkillName"]."<br>";
                             ?>
                             <li role="presentation" <?php if($skillarray["SkillID"]==$this->SkillID) echo "class='active'"; ?>><a href="<?= URL_BASE ?>candidate/skills-edit?id=<?=$skillarray["SkillID"]?>" style="font-weight:bold;font-size:12px"><?=$skillarray["SkillName"]?></a></li>
                             <?php
